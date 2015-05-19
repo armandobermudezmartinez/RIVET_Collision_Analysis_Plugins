@@ -16,13 +16,18 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_TOP_12_028', 'CMS_TOP_12_028_Parton',)
 
-#process.p = cms.Path(process.generator*process.rivetAnalyzer)
-process.p = cms.Path(process.rivetAnalyzer)
+process.p = cms.Path(process.generator*process.rivetAnalyzer)
 
 process.source.fileNames = [
-    '/store/relval/CMSSW_5_3_6-START53_V14/RelValProdTTbar/GEN-SIM/v2/00000/6478E706-FF29-E211-A8EE-001A92811714.root',
-    '/store/relval/CMSSW_5_3_6-START53_V14/RelValProdTTbar/GEN-SIM/v2/00000/6ACD603E-F329-E211-A450-003048679164.root',
-    '/store/relval/CMSSW_5_3_6-START53_V14/RelValProdTTbar/GEN-SIM/v2/00000/6E4F77D7-F929-E211-A049-001A92971B90.root',
-    '/store/relval/CMSSW_5_3_6-START53_V14/RelValProdTTbar/GEN-SIM/v2/00000/BAD0CC54-FF29-E211-A1FF-00261894396D.root',
-    '/store/relval/CMSSW_5_3_6-START53_V14/RelValProdTTbar/GEN-SIM/v2/00000/DE03BB7E-F429-E211-A0B4-001A928116CC.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FE35E100-7544-E311-8869-7845C4FC36AD.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FE608E15-7246-E311-8197-00266CF9AB88.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FEA8DB51-F343-E311-A964-848F69FD2484.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FEAD2571-1144-E311-B217-00266CF279F8.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FEB69B4F-4F44-E311-AE3B-00A0D1EEF4F8.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FEC65AA8-E643-E311-8E83-7845C4FC3CA1.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FECF8EA4-3E44-E311-848E-00A0D1EE8D00.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FECFC705-C046-E311-B9AF-008CFA001F78.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FED1F9F4-B744-E311-AFD6-00266CFAEA68.root',
+    '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FEEA3B27-EA43-E311-8DC2-00266CF24EEC.root',
+
 ]

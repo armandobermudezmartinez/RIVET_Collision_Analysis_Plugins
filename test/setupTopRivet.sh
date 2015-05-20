@@ -12,6 +12,6 @@ for I in `\ls $RIVETTOP/data/*.yoda`; do
     cd -
 done
 
-RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
-RIVET_INFO_PATH=$RIVET_INFO_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
-RIVET_PLOT_PATH=$RIVET_PLOT_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
+export RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
+export RIVET_INFO_PATH=$RIVET_INFO_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
+export RIVET_PLOT_PATH=$RIVET_PLOT_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data

@@ -1,6 +1,5 @@
 #include "Rivet/Analysis.hh"
 #include "Rivet/AnalysisLoader.hh"
-#include "Rivet/RivetAIDA.hh"
 #include "Rivet/Particle.fhh"
 #include "Rivet/Math/LorentzTrans.hh"
 #include "Rivet/Projections/FastJets.hh"
@@ -32,28 +31,28 @@ public:
     fj.useInvisibles();
     addProjection(fj, "Jets");
 
-    _h00_diffXSecTopSemiLepHadronPhaseSpacelepPt    = bookHistogram1D("h00_diffXSecTopSemiLepHadronPhaseSpacelepPt"    );
-    _h01_diffXSecTopSemiLepHadronPhaseSpacelepEta   = bookHistogram1D("h01_diffXSecTopSemiLepHadronPhaseSpacelepEta"   );
-    _h02_diffXSecTopSemiLepHadronPhaseSpacebqPt     = bookHistogram1D("h02_diffXSecTopSemiLepHadronPhaseSpacebqPt"     );
-    _h03_diffXSecTopSemiLepHadronPhaseSpacebqEta    = bookHistogram1D("h03_diffXSecTopSemiLepHadronPhaseSpacebqEta"    );
-    _h04_diffXSecTopSemiLepHadronPhaseSpacebbbarPt  = bookHistogram1D("h04_diffXSecTopSemiLepHadronPhaseSpacebbbarPt"  );
-    _h05_diffXSecTopSemiLepHadronPhaseSpacebbbarMass= bookHistogram1D("h05_diffXSecTopSemiLepHadronPhaseSpacebbbarMass");
+    _h00_diffXSecTopSemiLepHadronPhaseSpacelepPt    = bookHisto1D("h00_diffXSecTopSemiLepHadronPhaseSpacelepPt"    );
+    _h01_diffXSecTopSemiLepHadronPhaseSpacelepEta   = bookHisto1D("h01_diffXSecTopSemiLepHadronPhaseSpacelepEta"   );
+    _h02_diffXSecTopSemiLepHadronPhaseSpacebqPt     = bookHisto1D("h02_diffXSecTopSemiLepHadronPhaseSpacebqPt"     );
+    _h03_diffXSecTopSemiLepHadronPhaseSpacebqEta    = bookHisto1D("h03_diffXSecTopSemiLepHadronPhaseSpacebqEta"    );
+    _h04_diffXSecTopSemiLepHadronPhaseSpacebbbarPt  = bookHisto1D("h04_diffXSecTopSemiLepHadronPhaseSpacebbbarPt"  );
+    _h05_diffXSecTopSemiLepHadronPhaseSpacebbbarMass= bookHisto1D("h05_diffXSecTopSemiLepHadronPhaseSpacebbbarMass");
                                                                           
-    _h06_diffXSecTopDiLepHadronPhaseSpacelepPt      = bookHistogram1D("h06_diffXSecTopDiLepHadronPhaseSpacelepPt"      );
-    _h07_diffXSecTopDiLepHadronPhaseSpacelepEta     = bookHistogram1D("h07_diffXSecTopDiLepHadronPhaseSpacelepEta"     );
-    _h08_diffXSecTopDiLepHadronPhaseSpacedilepPt    = bookHistogram1D("h08_diffXSecTopDiLepHadronPhaseSpacedilepPt"    );
-    _h09_diffXSecTopDiLepHadronPhaseSpacedilepMass  = bookHistogram1D("h09_diffXSecTopDiLepHadronPhaseSpacedilepMass"  );
-    _h10_diffXSecTopDiLepHadronPhaseSpacebqPt       = bookHistogram1D("h10_diffXSecTopDiLepHadronPhaseSpacebqPt"       );
-    _h11_diffXSecTopDiLepHadronPhaseSpacebqEta      = bookHistogram1D("h11_diffXSecTopDiLepHadronPhaseSpacebqEta"      );
-    _h12_diffXSecTopDiLepHadronPhaseSpacebbbarPt    = bookHistogram1D("h12_diffXSecTopDiLepHadronPhaseSpacebbbarPt"    );
-    _h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass  = bookHistogram1D("h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass"  );
+    _h06_diffXSecTopDiLepHadronPhaseSpacelepPt      = bookHisto1D("h06_diffXSecTopDiLepHadronPhaseSpacelepPt"      );
+    _h07_diffXSecTopDiLepHadronPhaseSpacelepEta     = bookHisto1D("h07_diffXSecTopDiLepHadronPhaseSpacelepEta"     );
+    _h08_diffXSecTopDiLepHadronPhaseSpacedilepPt    = bookHisto1D("h08_diffXSecTopDiLepHadronPhaseSpacedilepPt"    );
+    _h09_diffXSecTopDiLepHadronPhaseSpacedilepMass  = bookHisto1D("h09_diffXSecTopDiLepHadronPhaseSpacedilepMass"  );
+    _h10_diffXSecTopDiLepHadronPhaseSpacebqPt       = bookHisto1D("h10_diffXSecTopDiLepHadronPhaseSpacebqPt"       );
+    _h11_diffXSecTopDiLepHadronPhaseSpacebqEta      = bookHisto1D("h11_diffXSecTopDiLepHadronPhaseSpacebqEta"      );
+    _h12_diffXSecTopDiLepHadronPhaseSpacebbbarPt    = bookHisto1D("h12_diffXSecTopDiLepHadronPhaseSpacebbbarPt"    );
+    _h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass  = bookHisto1D("h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass"  );
   };
 
   void findBAncestors(const ParticleVector& ps, std::set<int>& bAncestors) {
     bAncestors.clear();
 
     foreach (const Particle& p, ps) {
-      GenVertex* v = p.genParticle().production_vertex();
+      GenVertex* v = p.genParticle()->production_vertex();
       if ( !v ) continue;
 
       foreach (const GenParticle* ancestor, Rivet::particles(v, HepMC::ancestors)) {
@@ -66,7 +65,7 @@ public:
 
         bool isDuplicated = false;
         foreach (const GenParticle* ap, Rivet::particles(av, HepMC::parents)) {
-          if ( &(p.genParticle()) != ap && pid == ap->pdg_id() ) {
+          if ( p.genParticle() != ap && pid == ap->pdg_id() ) {
             isDuplicated = true;
             break;
           }
@@ -209,21 +208,21 @@ public:
   };
 
 private:
-  AIDA::IHistogram1D* _h00_diffXSecTopSemiLepHadronPhaseSpacelepPt;
-  AIDA::IHistogram1D* _h01_diffXSecTopSemiLepHadronPhaseSpacelepEta;
-  AIDA::IHistogram1D* _h02_diffXSecTopSemiLepHadronPhaseSpacebqPt;
-  AIDA::IHistogram1D* _h03_diffXSecTopSemiLepHadronPhaseSpacebqEta;
-  AIDA::IHistogram1D* _h04_diffXSecTopSemiLepHadronPhaseSpacebbbarPt;
-  AIDA::IHistogram1D* _h05_diffXSecTopSemiLepHadronPhaseSpacebbbarMass;
+  Histo1DPtr _h00_diffXSecTopSemiLepHadronPhaseSpacelepPt;
+  Histo1DPtr _h01_diffXSecTopSemiLepHadronPhaseSpacelepEta;
+  Histo1DPtr _h02_diffXSecTopSemiLepHadronPhaseSpacebqPt;
+  Histo1DPtr _h03_diffXSecTopSemiLepHadronPhaseSpacebqEta;
+  Histo1DPtr _h04_diffXSecTopSemiLepHadronPhaseSpacebbbarPt;
+  Histo1DPtr _h05_diffXSecTopSemiLepHadronPhaseSpacebbbarMass;
                           
-  AIDA::IHistogram1D* _h06_diffXSecTopDiLepHadronPhaseSpacelepPt;
-  AIDA::IHistogram1D* _h07_diffXSecTopDiLepHadronPhaseSpacelepEta;
-  AIDA::IHistogram1D* _h08_diffXSecTopDiLepHadronPhaseSpacedilepPt;
-  AIDA::IHistogram1D* _h09_diffXSecTopDiLepHadronPhaseSpacedilepMass;
-  AIDA::IHistogram1D* _h10_diffXSecTopDiLepHadronPhaseSpacebqPt;
-  AIDA::IHistogram1D* _h11_diffXSecTopDiLepHadronPhaseSpacebqEta;
-  AIDA::IHistogram1D* _h12_diffXSecTopDiLepHadronPhaseSpacebbbarPt;
-  AIDA::IHistogram1D* _h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass;
+  Histo1DPtr _h06_diffXSecTopDiLepHadronPhaseSpacelepPt;
+  Histo1DPtr _h07_diffXSecTopDiLepHadronPhaseSpacelepEta;
+  Histo1DPtr _h08_diffXSecTopDiLepHadronPhaseSpacedilepPt;
+  Histo1DPtr _h09_diffXSecTopDiLepHadronPhaseSpacedilepMass;
+  Histo1DPtr _h10_diffXSecTopDiLepHadronPhaseSpacebqPt;
+  Histo1DPtr _h11_diffXSecTopDiLepHadronPhaseSpacebqEta;
+  Histo1DPtr _h12_diffXSecTopDiLepHadronPhaseSpacebbbarPt;
+  Histo1DPtr _h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass;
 };
 
 // This global object acts as a hook for the plugin system

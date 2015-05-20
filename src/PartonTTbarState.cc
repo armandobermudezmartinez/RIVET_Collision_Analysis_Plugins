@@ -10,15 +10,8 @@ void PartonTTbarState::project(const Event& e) {
   _wDecays2.clear();
   _mode1 = _mode2 = CH_HADRON; // Set default decay mode to full-hadronic
 
-  double etamin, etamax;
-  if ( _etaRanges.empty() ) {
-    etamin = -MAXDOUBLE;
-    etamax =  MAXDOUBLE;
-  } else {
-    assert( _etaRanges.size() == 1 );
-    etamin = _etaRanges[0].first;
-    etamax = _etaRanges[0].second;
-  }
+  const double ptmin = 0;
+  const double etamin = -MAXDOUBLE, etamax = MAXDOUBLE;
 
   int nTop = 0;
   bool isTau1 = false, isTau2 = false;
@@ -30,7 +23,7 @@ void PartonTTbarState::project(const Event& e) {
     if ( PID::isHadron(pdgId) ) continue; // skip hadrons
     if ( pdgId == 22 ) continue; // skip photons
 
-    if ( isZero(p->momentum().perp()) || p->momentum().perp() < _ptmin ) continue;
+    if ( isZero(p->momentum().perp()) || p->momentum().perp() < ptmin ) continue;
     if ( !inRange(p->momentum().eta(), etamin, etamax) ) continue;
 
     // Avoid double counting by skipping if particle ID == parent ID

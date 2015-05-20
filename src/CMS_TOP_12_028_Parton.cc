@@ -1,6 +1,5 @@
 #include "Rivet/Analysis.hh"
 #include "Rivet/AnalysisLoader.hh"
-#include "Rivet/RivetAIDA.hh"
 #include "Rivet/Particle.fhh"
 #include "Rivet/Math/LorentzTrans.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
@@ -22,25 +21,25 @@ public:
     PartonTTbarState ttbarState;
     addProjection(ttbarState, "ttbar");
 
-    _h14_diffXSecTopSemiLepPartontopPt         = bookHistogram1D("h14_diffXSecTopSemiLepPartontopPt"        );
-    _h15_diffXSecTopSemiLepPartontopPtTtbarSys = bookHistogram1D("h15_diffXSecTopSemiLepPartontopPtTtbarSys");
-    _h16_diffXSecTopSemiLepPartontopY          = bookHistogram1D("h16_diffXSecTopSemiLepPartontopY"         );
-    _h17_diffXSecTopSemiLepPartonttbarDelPhi   = bookHistogram1D("h17_diffXSecTopSemiLepPartonttbarDelPhi"  );
-    _h18_diffXSecTopSemiLepPartontopPtLead     = bookHistogram1D("h18_diffXSecTopSemiLepPartontopPtLead"    );
-    _h19_diffXSecTopSemiLepPartontopPtSubLead  = bookHistogram1D("h19_diffXSecTopSemiLepPartontopPtSubLead" );
-    _h20_diffXSecTopSemiLepPartonttbarPt       = bookHistogram1D("h20_diffXSecTopSemiLepPartonttbarPt"      );
-    _h21_diffXSecTopSemiLepPartonttbarY        = bookHistogram1D("h21_diffXSecTopSemiLepPartonttbarY"       );
-    _h22_diffXSecTopSemiLepPartonttbarMass     = bookHistogram1D("h22_diffXSecTopSemiLepPartonttbarMass"    );
+    _h14_diffXSecTopSemiLepPartontopPt         = bookHisto1D("h14_diffXSecTopSemiLepPartontopPt"        );
+    _h15_diffXSecTopSemiLepPartontopPtTtbarSys = bookHisto1D("h15_diffXSecTopSemiLepPartontopPtTtbarSys");
+    _h16_diffXSecTopSemiLepPartontopY          = bookHisto1D("h16_diffXSecTopSemiLepPartontopY"         );
+    _h17_diffXSecTopSemiLepPartonttbarDelPhi   = bookHisto1D("h17_diffXSecTopSemiLepPartonttbarDelPhi"  );
+    _h18_diffXSecTopSemiLepPartontopPtLead     = bookHisto1D("h18_diffXSecTopSemiLepPartontopPtLead"    );
+    _h19_diffXSecTopSemiLepPartontopPtSubLead  = bookHisto1D("h19_diffXSecTopSemiLepPartontopPtSubLead" );
+    _h20_diffXSecTopSemiLepPartonttbarPt       = bookHisto1D("h20_diffXSecTopSemiLepPartonttbarPt"      );
+    _h21_diffXSecTopSemiLepPartonttbarY        = bookHisto1D("h21_diffXSecTopSemiLepPartonttbarY"       );
+    _h22_diffXSecTopSemiLepPartonttbarMass     = bookHisto1D("h22_diffXSecTopSemiLepPartonttbarMass"    );
 
-    _h23_diffXSecTopDiLepPartontopPt           = bookHistogram1D("h23_diffXSecTopDiLepPartontopPt"          );
-    _h24_diffXSecTopDiLepPartontopPtTtbarSys   = bookHistogram1D("h24_diffXSecTopDiLepPartontopPtTtbarSys"  );
-    _h25_diffXSecTopDiLepPartontopY            = bookHistogram1D("h25_diffXSecTopDiLepPartontopY"           );
-    _h26_diffXSecTopDiLepPartonttbarDelPhi     = bookHistogram1D("h26_diffXSecTopDiLepPartonttbarDelPhi"    );
-    _h27_diffXSecTopDiLepPartontopPtLead       = bookHistogram1D("h27_diffXSecTopDiLepPartontopPtLead"      );
-    _h28_diffXSecTopDiLepPartontopPtSubLead    = bookHistogram1D("h28_diffXSecTopDiLepPartontopPtSubLead"   );
-    _h29_diffXSecTopDiLepPartonttbarPt         = bookHistogram1D("h29_diffXSecTopDiLepPartonttbarPt"        );
-    _h30_diffXSecTopDiLepPartonttbarY          = bookHistogram1D("h30_diffXSecTopDiLepPartonttbarY"         );
-    _h31_diffXSecTopDiLepPartonttbarMass       = bookHistogram1D("h31_diffXSecTopDiLepPartonttbarMass"      );
+    _h23_diffXSecTopDiLepPartontopPt           = bookHisto1D("h23_diffXSecTopDiLepPartontopPt"          );
+    _h24_diffXSecTopDiLepPartontopPtTtbarSys   = bookHisto1D("h24_diffXSecTopDiLepPartontopPtTtbarSys"  );
+    _h25_diffXSecTopDiLepPartontopY            = bookHisto1D("h25_diffXSecTopDiLepPartontopY"           );
+    _h26_diffXSecTopDiLepPartonttbarDelPhi     = bookHisto1D("h26_diffXSecTopDiLepPartonttbarDelPhi"    );
+    _h27_diffXSecTopDiLepPartontopPtLead       = bookHisto1D("h27_diffXSecTopDiLepPartontopPtLead"      );
+    _h28_diffXSecTopDiLepPartontopPtSubLead    = bookHisto1D("h28_diffXSecTopDiLepPartontopPtSubLead"   );
+    _h29_diffXSecTopDiLepPartonttbarPt         = bookHisto1D("h29_diffXSecTopDiLepPartonttbarPt"        );
+    _h30_diffXSecTopDiLepPartonttbarY          = bookHisto1D("h30_diffXSecTopDiLepPartonttbarY"         );
+    _h31_diffXSecTopDiLepPartonttbarMass       = bookHisto1D("h31_diffXSecTopDiLepPartonttbarMass"      );
   };
 
   void analyze(const Event& event) {
@@ -117,25 +116,25 @@ public:
   };
 
 private:
-  AIDA::IHistogram1D* _h14_diffXSecTopSemiLepPartontopPt        ;
-  AIDA::IHistogram1D* _h15_diffXSecTopSemiLepPartontopPtTtbarSys;
-  AIDA::IHistogram1D* _h16_diffXSecTopSemiLepPartontopY         ;
-  AIDA::IHistogram1D* _h17_diffXSecTopSemiLepPartonttbarDelPhi  ;
-  AIDA::IHistogram1D* _h18_diffXSecTopSemiLepPartontopPtLead    ;
-  AIDA::IHistogram1D* _h19_diffXSecTopSemiLepPartontopPtSubLead ;
-  AIDA::IHistogram1D* _h20_diffXSecTopSemiLepPartonttbarPt      ;
-  AIDA::IHistogram1D* _h21_diffXSecTopSemiLepPartonttbarY       ;
-  AIDA::IHistogram1D* _h22_diffXSecTopSemiLepPartonttbarMass    ;
+  Histo1DPtr _h14_diffXSecTopSemiLepPartontopPt        ;
+  Histo1DPtr _h15_diffXSecTopSemiLepPartontopPtTtbarSys;
+  Histo1DPtr _h16_diffXSecTopSemiLepPartontopY         ;
+  Histo1DPtr _h17_diffXSecTopSemiLepPartonttbarDelPhi  ;
+  Histo1DPtr _h18_diffXSecTopSemiLepPartontopPtLead    ;
+  Histo1DPtr _h19_diffXSecTopSemiLepPartontopPtSubLead ;
+  Histo1DPtr _h20_diffXSecTopSemiLepPartonttbarPt      ;
+  Histo1DPtr _h21_diffXSecTopSemiLepPartonttbarY       ;
+  Histo1DPtr _h22_diffXSecTopSemiLepPartonttbarMass    ;
                                                                 ;
-  AIDA::IHistogram1D* _h23_diffXSecTopDiLepPartontopPt        ;
-  AIDA::IHistogram1D* _h24_diffXSecTopDiLepPartontopPtTtbarSys;
-  AIDA::IHistogram1D* _h25_diffXSecTopDiLepPartontopY         ;
-  AIDA::IHistogram1D* _h26_diffXSecTopDiLepPartonttbarDelPhi  ;
-  AIDA::IHistogram1D* _h27_diffXSecTopDiLepPartontopPtLead    ;
-  AIDA::IHistogram1D* _h28_diffXSecTopDiLepPartontopPtSubLead ;
-  AIDA::IHistogram1D* _h29_diffXSecTopDiLepPartonttbarPt      ;
-  AIDA::IHistogram1D* _h30_diffXSecTopDiLepPartonttbarY       ;
-  AIDA::IHistogram1D* _h31_diffXSecTopDiLepPartonttbarMass    ;
+  Histo1DPtr _h23_diffXSecTopDiLepPartontopPt        ;
+  Histo1DPtr _h24_diffXSecTopDiLepPartontopPtTtbarSys;
+  Histo1DPtr _h25_diffXSecTopDiLepPartontopY         ;
+  Histo1DPtr _h26_diffXSecTopDiLepPartonttbarDelPhi  ;
+  Histo1DPtr _h27_diffXSecTopDiLepPartontopPtLead    ;
+  Histo1DPtr _h28_diffXSecTopDiLepPartontopPtSubLead ;
+  Histo1DPtr _h29_diffXSecTopDiLepPartonttbarPt      ;
+  Histo1DPtr _h30_diffXSecTopDiLepPartonttbarY       ;
+  Histo1DPtr _h31_diffXSecTopDiLepPartonttbarMass    ;
 };
 
 // This global object acts as a hook for the plugin system

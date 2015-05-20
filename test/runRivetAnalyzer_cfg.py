@@ -15,6 +15,7 @@ process.generator = cms.EDProducer("GenParticles2HepMCConverter",
 process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_TOP_12_028', 'CMS_TOP_12_028_Parton',)
+process.rivetAnalyzer.OutputFile = "MC.yoda"
 
 process.p = cms.Path(process.generator*process.rivetAnalyzer)
 

@@ -2,7 +2,7 @@
 source $CMSSW_BASE/src/GeneratorInterface/RivetInterface/test/rivetSetup.sh
 
 RIVETTOP=$CMSSW_BASE/src/GeneratorInterface/RivetTop
-for I in `\ls $RIVETTOP/data/*.aida`; do
+for I in `\ls $RIVETTOP/data/*.yoda`; do
     F=`basename $I`
     cd $CMSSW_BASE/src/GeneratorInterface/RivetInterface/data
     if [ ! -f $F ]; then 

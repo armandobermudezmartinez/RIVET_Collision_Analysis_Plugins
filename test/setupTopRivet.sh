@@ -14,3 +14,8 @@ done
 export RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
 export RIVET_INFO_PATH=$RIVET_INFO_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
 export RIVET_PLOT_PATH=$RIVET_PLOT_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
+
+if [ which yodamerge &> /dev/null -ne 0 ]; then
+  wget https://yoda.hepforge.org/trac/browser/bin/yodamerge?format=txt -O yodamerge
+  chmod +x yodamerge
+fi

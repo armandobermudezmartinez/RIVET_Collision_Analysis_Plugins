@@ -28,7 +28,7 @@ public:
     fsForJets.addDecayProductsVeto(-24);
 
     FastJets fj(fsForJets, FastJets::ANTIKT, 0.5);
-    fj.useInvisibles();
+    //fj.useInvisibles();
     addProjection(fj, "Jets");
 
     _h00_diffXSecTopSemiLepHadronPhaseSpacelepPt    = bookHisto1D("h00_diffXSecTopSemiLepHadronPhaseSpacelepPt"    );
@@ -130,10 +130,12 @@ public:
       // Do the semileptonic channel
       Particle lCand;
       foreach (const Particle& p, ttbarState.wDecays1()) {
-        if ( PID::isLepton(p.pdgId()) ) { lCand = p; break; }
+        const int absId = std::abs(p.pdgId());
+        if ( absId == 11 or absId == 13 ) { lCand = p; break; }
       }
       foreach (const Particle& p, ttbarState.wDecays2()) {
-        if ( PID::isLepton(p.pdgId()) ) { lCand = p; break; }
+        const int absId = std::abs(p.pdgId());
+        if ( absId == 11 or absId == 13 ) { lCand = p; break; }
       }
 
       // Build lepton
@@ -157,10 +159,12 @@ public:
       // Do the dileptonic channel
       Particle l1Cand, l2Cand;
       foreach (const Particle& p, ttbarState.wDecays1()) {
-        if ( PID::isLepton(p.pdgId()) ) { l1Cand = p; break; }
+        const int absId = std::abs(p.pdgId());
+        if ( absId == 11 or absId == 13 ) { l1Cand = p; break; }
       }
       foreach (const Particle& p, ttbarState.wDecays2()) {
-        if ( PID::isLepton(p.pdgId()) ) { l2Cand = p; break; }
+        const int absId = std::abs(p.pdgId());
+        if ( absId == 11 or absId == 13 ) { l2Cand = p; break; }
       }
 
       // Build lepton

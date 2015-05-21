@@ -6,8 +6,7 @@ for I in `\ls $RIVETTOP/data/*.yoda`; do
     F=`basename $I`
     cd $CMSSW_BASE/src/GeneratorInterface/RivetInterface/data
     if [ ! -f $F ]; then 
-      echo ln -s $RIVETTOP/data/$F
-      ln -s $RIVETTOP/data/$F
+      cp $RIVETTOP/data/$F .
     fi
     cd -
 done

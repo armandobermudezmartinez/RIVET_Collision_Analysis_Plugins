@@ -125,7 +125,7 @@ private:
   Histo1DPtr _h20_diffXSecTopSemiLepPartonttbarPt      ;
   Histo1DPtr _h21_diffXSecTopSemiLepPartonttbarY       ;
   Histo1DPtr _h22_diffXSecTopSemiLepPartonttbarMass    ;
-                                                                ;
+
   Histo1DPtr _h23_diffXSecTopDiLepPartontopPt        ;
   Histo1DPtr _h24_diffXSecTopDiLepPartontopPtTtbarSys;
   Histo1DPtr _h25_diffXSecTopDiLepPartontopY         ;

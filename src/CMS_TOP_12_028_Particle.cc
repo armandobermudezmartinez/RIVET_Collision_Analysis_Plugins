@@ -1,35 +1,35 @@
 #include "Rivet/Analysis.hh"
 #include "Rivet/AnalysisLoader.hh"
-#include "Rivet/Particle.fhh"
-#include "Rivet/Math/LorentzTrans.hh"
 #include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/IdentifiedFinalState.hh"
 #include "Rivet/Projections/VetoedFinalState.hh"
-#include "Rivet/Projections/MergedFinalState.hh"
+#include "Rivet/Projections/WFinder.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
+#include "Rivet/Cuts.hh"
 
-#include "GeneratorInterface/RivetTop/interface/PartonTTbarState.hh"
+// This is an approximate version of TOP-12-028
 
 namespace Rivet {
 
-class CMS_TOP_12_028 : public Analysis {
+class CMS_TOP_12_028_Particle : public Analysis {
 public:
-  CMS_TOP_12_028() : Analysis("CMS_TOP_12_028") {
+  CMS_TOP_12_028_Particle() : Analysis("CMS_TOP_12_028_Particle") {
   }
 
   void init() {
-    // Parton level top quarks
-    PartonTTbarState ttbarState;
-    addProjection(ttbarState, "ttbar");
-
     FinalState fs(-5.0, 5.0, 0*GeV);
+
+    WFinder wefs(fs, Cuts::open(), PID::ELECTRON, 0*GeV, 160*GeV, 0);
+    WFinder wmfs(fs, Cuts::open(), PID::MUON, 0*GeV, 160*GeV, 0);
+    addProjection(wefs, "wefs");
+    addProjection(wmfs, "wmfs");
+
     VetoedFinalState fsForJets(fs);
     fsForJets.addDecayProductsVeto(+24);
     fsForJets.addDecayProductsVeto(-24);
 
     FastJets fj(fsForJets, FastJets::ANTIKT, 0.5);
     fj.useInvisibles();
-    addProjection(fj, "Jets");
+    addProjection(fj, "JetsParticle");
 
     _h00_diffXSecTopSemiLepHadronPhaseSpacelepPt    = bookHisto1D("h00_diffXSecTopSemiLepHadronPhaseSpacelepPt"    );
     _h01_diffXSecTopSemiLepHadronPhaseSpacelepEta   = bookHisto1D("h01_diffXSecTopSemiLepHadronPhaseSpacelepEta"   );
@@ -48,116 +48,76 @@ public:
     _h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass  = bookHisto1D("h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass"  );
   };
 
-  void findBAncestors(const ParticleVector& ps, std::set<int>& bAncestors) {
-    bAncestors.clear();
-
-    foreach (const Particle& p, ps) {
-      GenVertex* v = p.genParticle()->production_vertex();
-      if ( !v ) continue;
-
-      foreach (const GenParticle* ancestor, Rivet::particles(v, HepMC::ancestors)) {
-        if ( ancestor->status() != 2 ) continue;
-        const PdgId pid = ancestor->pdg_id();
-        if ( !PID::isHadron(pid) or !PID::hasBottom(pid) ) continue;
-
-        GenVertex* av = ancestor->production_vertex();
-        if ( !av ) continue;
-
-        bool isDuplicated = false;
-        foreach (const GenParticle* ap, Rivet::particles(av, HepMC::parents)) {
-          if ( p.genParticle() != ap && pid == ap->pdg_id() ) {
-            isDuplicated = true;
-            break;
-          }
-        }
-
-        if ( !isDuplicated ) {
-          bAncestors.insert(ancestor->barcode());
-        }
-      }
-    }
-  }
-
   void analyze(const Event& event) {
     const double weight = event.weight();
 
-    // Get the parton level ttbar candidate
-    const PartonTTbarState& ttbarState = applyProjection<PartonTTbarState>(event, "ttbar");
+    const Particles elFromW = applyProjection<WFinder>(event, "wefs").constituentLeptons();
+    const Particles muFromW = applyProjection<WFinder>(event, "wmfs").constituentLeptons();
 
-    // Do the analysis only for the ttbar full leptonic or semileptonic channel, without tau decay
-    if ( ttbarState.mode() != PartonTTbarState::CH_SEMILEPTON and
-         ttbarState.mode() != PartonTTbarState::CH_FULLLEPTON ) vetoEvent;
-    if ( ttbarState.mode1() >= PartonTTbarState::CH_TAU_HADRON ||
-         ttbarState.mode2() >= PartonTTbarState::CH_TAU_HADRON ) vetoEvent;
+    Particles leptons;
+    if ( true ) {
+      Particles leptonsForSemiLep, leptonsForDiLep;
+      foreach ( const Particle& p, elFromW ) {
+        const double abseta = std::abs(p.eta());
+        const double pt = p.pT();
+        if ( abseta < 2.1 && pt > 33*GeV ) leptonsForSemiLep.push_back(p);
+        if ( abseta < 2.4 && pt > 20*GeV ) leptonsForDiLep.push_back(p);
+      }
+      foreach ( const Particle& p, muFromW ) {
+        const double abseta = std::abs(p.eta());
+        const double pt = p.pT();
+        if ( abseta < 2.1 && pt > 33*GeV ) leptonsForSemiLep.push_back(p);
+        if ( abseta < 2.4 && pt > 20*GeV ) leptonsForDiLep.push_back(p);
+      }
 
-    // Find leptons
-    Particles lCands;
-    if ( ttbarState.mode() == PartonTTbarState::CH_SEMILEPTON ) {
-      lCands.push_back(Particle());
-      foreach (const Particle& p, ttbarState.wDecays1()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[0] = p; break; }
-      }
-      foreach (const Particle& p, ttbarState.wDecays2()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[0] = p; break; }
-      }
-      // Apply the particle level phase space cut
-      if ( lCands[0].pT() <= 33 or std::abs(lCands[0].eta()) >= 2.1 ) vetoEvent;
-    }
-    else if ( ttbarState.mode() == PartonTTbarState::CH_FULLLEPTON ) {
-      lCands.push_back(Particle());
-      foreach (const Particle& p, ttbarState.wDecays1()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[0] = p; break; }
-      }
-      lCands.push_back(Particle());
-      foreach (const Particle& p, ttbarState.wDecays2()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[1] = p; break; }
-      }
-      if ( lCands[0].pT() < lCands[1].pT() ) std::swap(lCands[0], lCands[1]);
-      const double l1Pt = lCands[0].pT(), l1Abseta = std::abs(lCands[0].eta());
-      const double l2Pt = lCands[0].pT(), l2Abseta = std::abs(lCands[1].eta());
-
-      // Apply the particle level phase space cut
-      if ( l1Pt <= 20 or l1Abseta >= 2.4 or l2Pt <= 20 or l2Abseta >= 2.4 ) vetoEvent;
-    }
-
-    // Build genJets
-    const Jets& jetsIn = applyProjection<JetAlg>(event, "Jets").jetsByPt(30*GeV, MAXDOUBLE, -2.4, 2.4);
-    Jets jets;
-    foreach ( const Jet& jet, jetsIn ) {
-      foreach ( const Particle& lCand, lCands ) {
-        if ( deltaR(lCand.momentum(), jet.momentum()) < 0.3 ) continue;
-        jets.push_back(jet);
-      }
-    }
-    if ( ttbarState.mode() != PartonTTbarState::CH_SEMILEPTON and jets.size() < 4 ) vetoEvent;
-    else if ( ttbarState.mode() != PartonTTbarState::CH_FULLLEPTON and jets.size() < 2 ) vetoEvent;
-
-    // Get Leading two jets
-    std::set<int> bAncestors;
-    const Jet* bjet1 = 0, * bjet2 = 0;
-    foreach (const Jet& jet, jets) {
-      if ( !bjet1 ) {
-        findBAncestors(jet.particles(), bAncestors);
-        if ( !bAncestors.empty() ) bjet1 = &jet;
-      } else if ( !bjet2 ) {
-        std::set<int> bAncestors2;
-        findBAncestors(jet.particles(), bAncestors2);
-        bool hasUniqueB = false;
-        foreach (int barCode, bAncestors2) {
-          if ( bAncestors.find(barCode) == bAncestors.end() ) {
-            hasUniqueB = true;
-            break;
+      if ( leptonsForDiLep.size() >= 2 ) {
+        leptons.push_back(Particle());
+        leptons.push_back(Particle());
+        foreach ( Particle& lepton, leptonsForDiLep ) {
+          if ( leptons[0].pT() < lepton.pT() ) {
+            leptons[1] = leptons[0];
+            leptons[0] = lepton;
+          }
+          else if ( leptons[1].pT() < lepton.pT() ) {
+            leptons[1] = lepton;
           }
         }
-        if ( hasUniqueB ) {
-          bjet2 = &jet;
+      }
+      else if ( leptonsForSemiLep.size() == 1 ) {
+        leptons.push_back(leptonsForSemiLep[0]);
+      }
+    }
+    if ( leptons.empty() ) vetoEvent; // dilepton or semilepton channel
+    const int nLepton = leptons.size();
+
+    // Build genJets
+    const Jets& jetsIn = applyProjection<JetAlg>(event, "JetsParticle").jetsByPt(30*GeV, MAXDOUBLE, -2.4, 2.4);
+    Jets jets;
+    // Check overlap with leptons
+    foreach ( const Jet& jet, jetsIn ) {
+      bool isOverlap = false;
+      foreach ( const Particle& lep, leptons ) {
+        if ( deltaR(lep.momentum(), jet.momentum()) < 0.3 ) {
+          isOverlap = true;
           break;
         }
-      } else break;
+      }
+      if ( !isOverlap ) jets.push_back(jet);
+    }
+    const int nJet = jets.size();
+    if ( nLepton == 1 && nJet < 4 ) vetoEvent;
+    if ( nLepton == 2 && nJet < 2 ) vetoEvent;
+
+    // Get leading two b-jets. Note that jets are already sorted by pT.
+    const Jet* bjet1 = 0, * bjet2 = 0;
+    foreach (const Jet& jet, jets) {
+      if ( !jet.containsBottom() ) continue;
+      if ( !bjet1 ) {
+        bjet1 = &jet;
+      } else if ( !bjet2 ) {
+        bjet2 = &jet;
+        break;
+      }
     }
     // Require at least 2 b jets.
     // It is safe with checking bjet2 only. But let's check bjet1 for clearity.
@@ -171,9 +131,9 @@ public:
     const double bbPt = bbP4.pT(), bbMass = bbP4.mass();
 
     // Find leptons, apply channel dependent phase space cuts, fill histograms
-    if ( ttbarState.mode() == PartonTTbarState::CH_SEMILEPTON ) {
+    if ( leptons.size() == 1 ) {
       // Do the semileptonic channel
-      const FourMomentum& lP4 = lCands[0].momentum();
+      const FourMomentum& lP4 = leptons[0].momentum();
       const double lPt = lP4.pT(), lEta = lP4.eta();
 
       _h00_diffXSecTopSemiLepHadronPhaseSpacelepPt->fill(lPt, weight);
@@ -185,10 +145,11 @@ public:
       _h04_diffXSecTopSemiLepHadronPhaseSpacebbbarPt->fill(bbPt, weight);
       _h05_diffXSecTopSemiLepHadronPhaseSpacebbbarMass->fill(bbMass, weight);
     }
-    else if ( ttbarState.mode() == PartonTTbarState::CH_FULLLEPTON ) {
+    else {
       // Do the dileptonic channel
-      const FourMomentum& l1P4 = lCands[0].momentum();
-      const FourMomentum& l2P4 = lCands[1].momentum();
+      const FourMomentum l1P4 = leptons[0].momentum();
+      const FourMomentum l2P4 = leptons[1].momentum();
+
       const FourMomentum dilP4 = l1P4+l2P4;
       const double l1Pt = l1P4.pT(), l1Eta = l1P4.eta();
       const double l2Pt = l2P4.pT(), l2Eta = l2P4.eta();
@@ -246,6 +207,6 @@ private:
 };
 
 // This global object acts as a hook for the plugin system
-AnalysisBuilder<CMS_TOP_12_028> plugin_CMS_TOP_12_028;
+AnalysisBuilder<CMS_TOP_12_028_Particle> plugin_CMS_TOP_12_028_Particle;
 
 }

@@ -118,7 +118,7 @@ public:
       }
       if ( lCands[0].pT() < lCands[1].pT() ) std::swap(lCands[0], lCands[1]);
       const double l1Pt = lCands[0].pT(), l1Abseta = std::abs(lCands[0].eta());
-      const double l2Pt = lCands[0].pT(), l2Abseta = std::abs(lCands[1].eta());
+      const double l2Pt = lCands[1].pT(), l2Abseta = std::abs(lCands[1].eta());
 
       // Apply the particle level phase space cut
       if ( l1Pt <= 20 or l1Abseta >= 2.4 or l2Pt <= 20 or l2Abseta >= 2.4 ) vetoEvent;
@@ -190,6 +190,8 @@ public:
       const FourMomentum& l1P4 = lCands[0].momentum();
       const FourMomentum& l2P4 = lCands[1].momentum();
       const FourMomentum dilP4 = l1P4+l2P4;
+      const double dilMass = dilP4.mass();
+      if ( dilMass < 20 ) vetoEvent;
       const double l1Pt = l1P4.pT(), l1Eta = l1P4.eta();
       const double l2Pt = l2P4.pT(), l2Eta = l2P4.eta();
 

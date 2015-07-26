@@ -7,7 +7,7 @@
 #include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
-#include "GeneratorInterface/RivetTop/interface/PartonTTbarState.hh"
+#include "GeneratorInterface/RivetTop/interface/PartonTop.hh"
 
 namespace Rivet {
 
@@ -18,7 +18,7 @@ public:
 
   void init() {
     // Parton level top quarks
-    PartonTTbarState ttbarState;
+    PartonTop ttbarState;
     addProjection(ttbarState, "ttbar");
 
     _h14_diffXSecTopSemiLepPartontopPt         = bookHisto1D("h14_diffXSecTopSemiLepPartontopPt"        );
@@ -46,16 +46,16 @@ public:
     const double weight = event.weight();
 
     // Get the parton level ttbar candidate
-    const PartonTTbarState& ttbarState = applyProjection<PartonTTbarState>(event, "ttbar");
+    const PartonTop& ttbarState = applyProjection<PartonTop>(event, "ttbar");
     const Particle& tCand1 = ttbarState.t1();
     const Particle& tCand2 = ttbarState.t2();
 
     // Do the anlaysis only for semileptonic and full leptonic channels.
     // Veto tau decays
-    if ( ttbarState.mode() != PartonTTbarState::CH_SEMILEPTON and
-         ttbarState.mode() != PartonTTbarState::CH_FULLLEPTON ) vetoEvent;
-    if ( ttbarState.mode1() >= PartonTTbarState::CH_TAU_HADRON ||
-         ttbarState.mode2() >= PartonTTbarState::CH_TAU_HADRON ) vetoEvent;
+    if ( ttbarState.mode() != PartonTop::CH_SEMILEPTON and
+         ttbarState.mode() != PartonTop::CH_FULLLEPTON ) vetoEvent;
+    if ( ttbarState.mode1() >= PartonTop::CH_TAU_HADRON ||
+         ttbarState.mode2() >= PartonTop::CH_TAU_HADRON ) vetoEvent;
 
     // Fill top quarks they are defined in the parton level, full phase space
     const FourMomentum& t1P4 = tCand1.momentum();
@@ -65,7 +65,7 @@ public:
     const FourMomentum t1P4AtCM = LorentzTransform(-ttbarP4.boostVector()).transform(t1P4);
     const double dPhi = deltaPhi(t1P4.phi(), t2P4.phi());
 
-    if ( ttbarState.mode() == PartonTTbarState::CH_SEMILEPTON ) {
+    if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON ) {
       _h14_diffXSecTopSemiLepPartontopPt->fill(t1Pt, weight); 
       _h14_diffXSecTopSemiLepPartontopPt->fill(t2Pt, weight); 
       _h15_diffXSecTopSemiLepPartontopPtTtbarSys->fill(t1P4AtCM.pT(), weight); 
@@ -78,7 +78,7 @@ public:
       _h21_diffXSecTopSemiLepPartonttbarY->fill(ttbarP4.rapidity(), weight); 
       _h22_diffXSecTopSemiLepPartonttbarMass->fill(ttbarP4.mass(), weight); 
     }
-    else if ( ttbarState.mode() == PartonTTbarState::CH_FULLLEPTON ) {
+    else if ( ttbarState.mode() == PartonTop::CH_FULLLEPTON ) {
       _h23_diffXSecTopDiLepPartontopPt->fill(t1Pt, weight);
       _h23_diffXSecTopDiLepPartontopPt->fill(t2Pt, weight);
       _h24_diffXSecTopDiLepPartontopPtTtbarSys->fill(t1P4AtCM.pT(), weight);
@@ -135,6 +135,7 @@ private:
   Histo1DPtr _h29_diffXSecTopDiLepPartonttbarPt      ;
   Histo1DPtr _h30_diffXSecTopDiLepPartonttbarY       ;
   Histo1DPtr _h31_diffXSecTopDiLepPartonttbarMass    ;
+
 };
 
 // This global object acts as a hook for the plugin system

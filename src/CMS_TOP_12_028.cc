@@ -8,11 +8,12 @@
 #include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
-#include "GeneratorInterface/RivetTop/interface/PartonTTbarState.hh"
-
 namespace Rivet {
 
 class CMS_TOP_12_028 : public Analysis {
+private:
+  class PartonTTbarState;
+
 public:
   CMS_TOP_12_028() : Analysis("CMS_TOP_12_028") {
   }
@@ -125,9 +126,10 @@ public:
     }
 
     // Build genJets
-    const Jets& jetsIn = applyProjection<JetAlg>(event, "Jets").jetsByPt(30*GeV, MAXDOUBLE, -2.4, 2.4);
+    const Jets& jetsIn = applyProjection<JetAlg>(event, "Jets").jetsByPt(30*GeV);
     Jets jets;
     foreach ( const Jet& jet, jetsIn ) {
+      if ( std::abs(jet.eta()) > 2.4 ) continue;
       foreach ( const Particle& lCand, lCands ) {
         if ( deltaR(lCand.momentum(), jet.momentum()) < 0.3 ) continue;
         jets.push_back(jet);
@@ -245,7 +247,130 @@ private:
   Histo1DPtr _h11_diffXSecTopDiLepHadronPhaseSpacebqEta;
   Histo1DPtr _h12_diffXSecTopDiLepHadronPhaseSpacebbbarPt;
   Histo1DPtr _h13_diffXSecTopDiLepHadronPhaseSpacebbbarMass;
+
+private:
+  class PartonTTbarState : public FinalState {
+  public:
+    enum TTbarMode { CH_FULLHADRON = 0, CH_SEMILEPTON, CH_FULLLEPTON };
+    enum DecayMode { CH_HADRON = 0, CH_MUON, CH_ELECTRON, CH_TAU_HADRON, CH_TAU_MUON, CH_TAU_ELECTRON };
+
+    /// @name Standard constructors and destructors.
+    //@{
+
+    /// The default constructor. May specify the minimum and maximum
+    /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
+    PartonTTbarState(double mineta = -MAXDOUBLE,
+                    double maxeta =  MAXDOUBLE,
+                    double minpt = 0.0*GeV)
+      : FinalState(mineta, maxeta, minpt)
+    {
+      setName("PartonTop");
+    }
+
+    /// Clone on the heap.
+    virtual const Projection* clone() const {
+      return new PartonTTbarState(*this);
+    }
+
+    //@}
+
+  public:
+    TTbarMode mode() const { 
+      if ( _mode1 == CH_HADRON && _mode2 == CH_HADRON ) return CH_FULLHADRON;
+      else if ( _mode1 != CH_HADRON && _mode2 != CH_HADRON ) return CH_FULLLEPTON;
+      else return CH_SEMILEPTON;
+    }
+    DecayMode mode1() const { return _mode1; }
+    DecayMode mode2() const { return _mode2; }
+
+    Particle t1() const { return _t1; }
+    Particle t2() const { return _t2; }
+    Particle b1() const { return _b1; }
+    Particle b2() const { return _b2; }
+    ParticleVector wDecays1() const { return _wDecays1; }
+    ParticleVector wDecays2() const { return _wDecays2; }
+
+  protected:
+    // Apply the projection to the event
+    void project(const Event& e);
+
+  private:
+    DecayMode _mode1, _mode2;
+    Particle _t1, _t2;
+    Particle _b1, _b2;
+    ParticleVector _wDecays1, _wDecays2;
+  };
+
 };
+
+void CMS_TOP_12_028::PartonTTbarState::project(const Event& e) {
+  _theParticles.clear();
+  _wDecays1.clear();
+  _wDecays2.clear();
+  _mode1 = _mode2 = CH_HADRON; // Set default decay mode to full-hadronic
+
+  const double ptmin = 0;
+  const double etamin = -MAXDOUBLE, etamax = MAXDOUBLE;
+
+  int nTop = 0;
+  bool isTau1 = false, isTau2 = false;
+  foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
+    const int status = p->status();
+    if ( status == 1 ) continue;
+
+    const int pdgId = p->pdg_id();
+    if ( PID::isHadron(pdgId) ) continue; // skip hadrons
+    if ( pdgId == 22 ) continue; // skip photons
+
+    if ( isZero(p->momentum().perp()) || p->momentum().perp() < ptmin ) continue;
+    if ( !inRange(p->momentum().eta(), etamin, etamax) ) continue;
+
+    // Avoid double counting by skipping if particle ID == parent ID
+    std::vector<GenParticle*> pps;
+    if ( abs(pdgId) == 6 and p->end_vertex() != 0 ) {
+      pps = Rivet::particles(p->end_vertex(), HepMC::children);
+    }
+    else if ( abs(pdgId) != 6 and p->production_vertex() != 0 )
+    {
+      pps = Rivet::particles(p->production_vertex(), HepMC::parents);
+    }
+    else continue;
+
+    bool isDuplicated = false;
+    foreach (GenParticle* pp, pps) {
+      if ( p != pp && p->pdg_id() == pp->pdg_id() ) {
+        isDuplicated = true;
+        break;
+      }
+    }
+    if ( isDuplicated ) continue;
+
+    // Build Rivet::Particle
+    Particle rp(*p);
+
+    // Skip particles from hadronization (and keep tau decay)
+    if ( rp.fromDecay() and !rp.hasAncestor(15) and !rp.hasAncestor(-15) ) continue;
+
+    if      ( pdgId ==  6 ) { nTop++; _t1 = Particle(rp); }
+    else if ( pdgId == -6 ) { nTop++; _t2 = Particle(rp); }
+    else if ( pdgId ==  5 ) _b1 = Particle(rp);
+    else if ( pdgId == -5 ) _b2 = Particle(rp);
+    else if ( pdgId != 24 && rp.hasAncestor( 24) ) {
+      if ( pdgId == -15 ) isTau1 = true;
+      else if ( pdgId == -11 ) _mode1 = CH_ELECTRON;
+      else if ( pdgId == -13 ) _mode1 = CH_MUON;
+      _wDecays1.push_back(rp);
+    }
+    else if ( pdgId != -24 && rp.hasAncestor(-24) ) {
+      if ( pdgId == 15 ) isTau2 = true;
+      else if ( pdgId == 11 ) _mode2 = CH_ELECTRON;
+      else if ( pdgId == 13 ) _mode2 = CH_MUON;
+      _wDecays2.push_back(rp);
+    }
+  }
+  if ( isTau1 ) _mode1 = static_cast<DecayMode>(_mode1+3);
+  if ( isTau2 ) _mode2 = static_cast<DecayMode>(_mode2+3);
+}
 
 // This global object acts as a hook for the plugin system
 AnalysisBuilder<CMS_TOP_12_028> plugin_CMS_TOP_12_028;

@@ -1,10 +1,10 @@
-#include "GeneratorInterface/RivetTop/interface/PartonTTbarState.hh"
+#include "GeneratorInterface/RivetTop/interface/PartonTop.hh"
 //#include "Rivet/Config/RivetCommon.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
 using namespace Rivet;
 
-void PartonTTbarState::project(const Event& e) {
+void PartonTop::project(const Event& e) {
   _theParticles.clear();
   _wDecays1.clear();
   _wDecays2.clear();

@@ -1,4 +1,4 @@
-#ifndef RIVET_PartonTTbarState_HH
+#ifndef RIVET_PartonTop_HH
 #define RIVET_PartonTopFinter_HH
 
 #include "Rivet/Projections/FinalState.hh"
@@ -13,7 +13,7 @@ namespace Rivet {
   // Find top quark in the parton level directly tracking particle history.
   // This does not fit with the Rivet philosophy and can be generator dependent,
   // so please use this with your own risks.
-  class PartonTTbarState : public FinalState {
+  class PartonTop : public FinalState {
   public:
     enum TTbarMode { CH_FULLHADRON = 0, CH_SEMILEPTON, CH_FULLLEPTON };
     enum DecayMode { CH_HADRON = 0, CH_MUON, CH_ELECTRON, CH_TAU_HADRON, CH_TAU_MUON, CH_TAU_ELECTRON };
@@ -23,7 +23,7 @@ namespace Rivet {
 
     /// The default constructor. May specify the minimum and maximum
     /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
-    PartonTTbarState(double mineta = -MAXDOUBLE,
+    PartonTop(double mineta = -MAXDOUBLE,
                     double maxeta =  MAXDOUBLE,
                     double minpt = 0.0*GeV)
       : FinalState(mineta, maxeta, minpt)
@@ -33,7 +33,7 @@ namespace Rivet {
 
     /// Clone on the heap.
     virtual const Projection* clone() const {
-      return new PartonTTbarState(*this);
+      return new PartonTop(*this);
     }
 
     //@}

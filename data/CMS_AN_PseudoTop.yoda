@@ -1,5 +1,5 @@
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h14_diffXSecTopSemiLepPartontopPt
-Path=/REF/CMS_TOP_12_028_Parton/h14_diffXSecTopSemiLepPartontopPt
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h14_diffXSecTopSemiLepPartontopPt
+Path=/REF/CMS_AN_PseudoTop/h14_diffXSecTopSemiLepPartontopPt
 Title=diffXSecTopSemiLepPartontopPt
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -13,8 +13,8 @@ Type=Scatter2D
 4.4625000000e+02 4.6250000000e+01 5.3750000000e+01 3.7000000000e-05 4.0330000000e-06 4.0330000000e-06
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h15_diffXSecTopSemiLepPartontopPtTtbarSys
-Path=/REF/CMS_TOP_12_028_Parton/h15_diffXSecTopSemiLepPartontopPtTtbarSys
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h15_diffXSecTopSemiLepPartontopPtTtbarSys
+Path=/REF/CMS_AN_PseudoTop/h15_diffXSecTopSemiLepPartontopPtTtbarSys
 Title=diffXSecTopSemiLepPartontopPtTtbarSys
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -28,8 +28,8 @@ Type=Scatter2D
 4.4375000000e+02 4.3750000000e+01 5.6250000000e+01 2.5000000000e-05 3.3500000000e-06 3.3500000000e-06
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h16_diffXSecTopSemiLepPartontopY
-Path=/REF/CMS_TOP_12_028_Parton/h16_diffXSecTopSemiLepPartontopY
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h16_diffXSecTopSemiLepPartontopY
+Path=/REF/CMS_AN_PseudoTop/h16_diffXSecTopSemiLepPartontopY
 Title=diffXSecTopSemiLepPartontopY
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -45,8 +45,8 @@ Type=Scatter2D
 2.0100000000e+00 4.1000000000e-01 4.9000000000e-01 7.7700000000e-02 3.1857000000e-03 3.1857000000e-03
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h17_diffXSecTopSemiLepPartonttbarDelPhi
-Path=/REF/CMS_TOP_12_028_Parton/h17_diffXSecTopSemiLepPartonttbarDelPhi
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h17_diffXSecTopSemiLepPartonttbarDelPhi
+Path=/REF/CMS_AN_PseudoTop/h17_diffXSecTopSemiLepPartonttbarDelPhi
 Title=diffXSecTopSemiLepPartonttbarDelPhi
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -56,8 +56,8 @@ Type=Scatter2D
 3.1400000000e+00 1.4000000000e-01 1.0000000000e-02 2.2700000000e+00 1.5436000000e-01 1.5436000000e-01
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h18_diffXSecTopSemiLepPartontopPtLead
-Path=/REF/CMS_TOP_12_028_Parton/h18_diffXSecTopSemiLepPartontopPtLead
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h18_diffXSecTopSemiLepPartontopPtLead
+Path=/REF/CMS_AN_PseudoTop/h18_diffXSecTopSemiLepPartontopPtLead
 Title=diffXSecTopSemiLepPartontopPtLead
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -71,8 +71,8 @@ Type=Scatter2D
 4.4625000000e+02 4.6250000000e+01 5.3750000000e+01 5.6000000000e-05 6.7760000000e-06 6.7760000000e-06
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h19_diffXSecTopSemiLepPartontopPtSubLead
-Path=/REF/CMS_TOP_12_028_Parton/h19_diffXSecTopSemiLepPartontopPtSubLead
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h19_diffXSecTopSemiLepPartontopPtSubLead
+Path=/REF/CMS_AN_PseudoTop/h19_diffXSecTopSemiLepPartontopPtSubLead
 Title=diffXSecTopSemiLepPartontopPtSubLead
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -86,8 +86,8 @@ Type=Scatter2D
 4.4375000000e+02 4.3750000000e+01 5.6250000000e+01 1.9000000000e-05 3.0400000000e-06 3.0400000000e-06
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h20_diffXSecTopSemiLepPartonttbarPt
-Path=/REF/CMS_TOP_12_028_Parton/h20_diffXSecTopSemiLepPartonttbarPt
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h20_diffXSecTopSemiLepPartonttbarPt
+Path=/REF/CMS_AN_PseudoTop/h20_diffXSecTopSemiLepPartonttbarPt
 Title=diffXSecTopSemiLepPartonttbarPt
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -99,8 +99,8 @@ Type=Scatter2D
 2.3750000000e+02 4.7500000000e+01 6.2500000000e+01 3.0600000000e-04 3.9168000000e-05 3.9168000000e-05
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h21_diffXSecTopSemiLepPartonttbarY
-Path=/REF/CMS_TOP_12_028_Parton/h21_diffXSecTopSemiLepPartonttbarY
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h21_diffXSecTopSemiLepPartonttbarY
+Path=/REF/CMS_AN_PseudoTop/h21_diffXSecTopSemiLepPartonttbarY
 Title=diffXSecTopSemiLepPartonttbarY
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -116,8 +116,8 @@ Type=Scatter2D
 1.8200000000e+00 5.2000000000e-01 6.8000000000e-01 6.4100000000e-02 3.2691000000e-03 3.2691000000e-03
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h22_diffXSecTopSemiLepPartonttbarMass
-Path=/REF/CMS_TOP_12_028_Parton/h22_diffXSecTopSemiLepPartonttbarMass
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h22_diffXSecTopSemiLepPartonttbarMass
+Path=/REF/CMS_AN_PseudoTop/h22_diffXSecTopSemiLepPartonttbarMass
 Title=diffXSecTopSemiLepPartonttbarMass
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -130,8 +130,8 @@ Type=Scatter2D
 1.3285000000e+03 2.2850000000e+02 2.7150000000e+02 1.1000000000e-05 1.3970000000e-06 1.3970000000e-06
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h23_diffXSecTopDiLepPartontopPt
-Path=/REF/CMS_TOP_12_028_Parton/h23_diffXSecTopDiLepPartontopPt
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h23_diffXSecTopDiLepPartontopPt
+Path=/REF/CMS_AN_PseudoTop/h23_diffXSecTopDiLepPartontopPt
 Title=diffXSecTopDiLepPartontopPt
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -142,8 +142,8 @@ Type=Scatter2D
 3.3625000000e+02 4.6250000000e+01 6.3750000000e+01 1.8800000000e-04 1.4852000000e-05 1.4852000000e-05
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h24_diffXSecTopDiLepPartontopPtTtbarSys
-Path=/REF/CMS_TOP_12_028_Parton/h24_diffXSecTopDiLepPartontopPtTtbarSys
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h24_diffXSecTopDiLepPartontopPtTtbarSys
+Path=/REF/CMS_AN_PseudoTop/h24_diffXSecTopDiLepPartontopPtTtbarSys
 Title=diffXSecTopDiLepPartontopPtTtbarSys
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -155,8 +155,8 @@ Type=Scatter2D
 4.2875000000e+02 4.8750000000e+01 7.1250000000e+01 2.9100000000e-05 3.4338000000e-06 3.4338000000e-06
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h25_diffXSecTopDiLepPartontopY
-Path=/REF/CMS_TOP_12_028_Parton/h25_diffXSecTopDiLepPartontopY
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h25_diffXSecTopDiLepPartontopY
+Path=/REF/CMS_AN_PseudoTop/h25_diffXSecTopDiLepPartontopY
 Title=diffXSecTopDiLepPartontopY
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -170,8 +170,8 @@ Type=Scatter2D
 2.0100000000e+00 4.1000000000e-01 4.9000000000e-01 7.4000000000e-02 4.2180000000e-03 4.2180000000e-03
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h26_diffXSecTopDiLepPartonttbarDelPhi
-Path=/REF/CMS_TOP_12_028_Parton/h26_diffXSecTopDiLepPartonttbarDelPhi
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h26_diffXSecTopDiLepPartonttbarDelPhi
+Path=/REF/CMS_AN_PseudoTop/h26_diffXSecTopDiLepPartonttbarDelPhi
 Title=diffXSecTopDiLepPartonttbarDelPhi
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -181,8 +181,8 @@ Type=Scatter2D
 3.0900000000e+00 5.0000000000e-02 6.0000000000e-02 2.5800000000e+00 2.0640000000e-01 2.0640000000e-01
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h27_diffXSecTopDiLepPartontopPtLead
-Path=/REF/CMS_TOP_12_028_Parton/h27_diffXSecTopDiLepPartontopPtLead
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h27_diffXSecTopDiLepPartontopPtLead
+Path=/REF/CMS_AN_PseudoTop/h27_diffXSecTopDiLepPartontopPtLead
 Title=diffXSecTopDiLepPartontopPtLead
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -193,8 +193,8 @@ Type=Scatter2D
 3.3625000000e+02 4.6250000000e+01 6.3750000000e+01 2.6100000000e-04 1.9836000000e-05 1.9836000000e-05
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h28_diffXSecTopDiLepPartontopPtSubLead
-Path=/REF/CMS_TOP_12_028_Parton/h28_diffXSecTopDiLepPartontopPtSubLead
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h28_diffXSecTopDiLepPartontopPtSubLead
+Path=/REF/CMS_AN_PseudoTop/h28_diffXSecTopDiLepPartontopPtSubLead
 Title=diffXSecTopDiLepPartontopPtSubLead
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -205,8 +205,8 @@ Type=Scatter2D
 3.3875000000e+02 4.8750000000e+01 6.1250000000e+01 1.1400000000e-04 1.2996000000e-05 1.2996000000e-05
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h29_diffXSecTopDiLepPartonttbarPt
-Path=/REF/CMS_TOP_12_028_Parton/h29_diffXSecTopDiLepPartonttbarPt
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h29_diffXSecTopDiLepPartonttbarPt
+Path=/REF/CMS_AN_PseudoTop/h29_diffXSecTopDiLepPartonttbarPt
 Title=diffXSecTopDiLepPartonttbarPt
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -216,8 +216,8 @@ Type=Scatter2D
 2.2350000000e+02 5.3500000000e+01 7.6500000000e+01 3.4700000000e-04 1.7697000000e-05 1.7697000000e-05
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h30_diffXSecTopDiLepPartonttbarY
-Path=/REF/CMS_TOP_12_028_Parton/h30_diffXSecTopDiLepPartonttbarY
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h30_diffXSecTopDiLepPartonttbarY
+Path=/REF/CMS_AN_PseudoTop/h30_diffXSecTopDiLepPartonttbarY
 Title=diffXSecTopDiLepPartonttbarY
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+
@@ -231,8 +231,8 @@ Type=Scatter2D
 1.9300000000e+00 4.3000000000e-01 5.7000000000e-01 4.5900000000e-02 3.3048000000e-03 3.3048000000e-03
 # END YODA_SCATTER2D
 
-# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_028_Parton/h31_diffXSecTopDiLepPartonttbarMass
-Path=/REF/CMS_TOP_12_028_Parton/h31_diffXSecTopDiLepPartonttbarMass
+# BEGIN YODA_SCATTER2D /REF/CMS_AN_PseudoTop/h31_diffXSecTopDiLepPartonttbarMass
+Path=/REF/CMS_AN_PseudoTop/h31_diffXSecTopDiLepPartonttbarMass
 Title=diffXSecTopDiLepPartonttbarMass
 Type=Scatter2D
 # xval   xerr-   xerr+   yval  yerr-   yerr+

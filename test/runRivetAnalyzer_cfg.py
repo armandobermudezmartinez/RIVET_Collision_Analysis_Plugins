@@ -10,11 +10,11 @@ process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring())
 process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
 process.generator = cms.EDProducer("GenParticles2HepMCConverter",
     genParticles = cms.InputTag("genParticles"),
-    genEventInfo = cms.InputTag("generator"),
+    genEventInfo = cms.InputTag("generator", "", "SIM"),
 )
 process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
-process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_TOP_12_028', 'CMS_TOP_12_028_Parton', 'CMS_TOP_12_028_Particle')
+process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_AN_PseudoTop', 'CMS_TOP_12_028')
 process.rivetAnalyzer.OutputFile = "MC.yoda"
 
 process.p = cms.Path(process.generator*process.rivetAnalyzer)

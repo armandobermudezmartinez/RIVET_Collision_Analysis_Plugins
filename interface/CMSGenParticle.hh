@@ -36,17 +36,20 @@ namespace Rivet {
 
     //@}
 
+// partonicFinalState = false
+// exclude Resonances  = true
+// tauAsjets = false
   protected:
     // Apply the projection to the event
     void project(const Event& e) override;
 
     bool isParton(int pdgId) const {
       const int iid = abs(pdgId) % 10000;
-      return (iid > 0 && iid < 6) || iid == 9 || iid == 15 || iid == 21;
+      return (iid > 0 && iid < 6) || iid == 7 || iid == 9 || iid == 21;
     }
     bool isResonance(const int pdgId) const {
       const int iid = abs(pdgId) % 10000;
-      return (iid > 21 && iid <= 42) || iid == 6 || iid == 7 || iid == 8;
+      return (iid > 21 && iid <= 42) || iid == 6 || iid == 8;
     }
     bool isFromResonance(GenParticle* p) const;
 

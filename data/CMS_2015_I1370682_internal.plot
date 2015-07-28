@@ -1,5 +1,5 @@
 # BEGIN PLOT /CMS_2015_I1370682_internal/d01-x01-y01
-Title=SemiLepHadronPhaseSpacelepPt
+Title=SL_lepPt
 XLabel=$p_{T}^{l} [GeV]$
 YLabel=$1\sigma d\sigma/dp_{T}^{l} [GeV^{-1}]$
 LogY=1
@@ -10,7 +10,7 @@ RatioPlotYMax=1.35
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d02-x01-y01
-Title=SemiLepHadronPhaseSpacelepEta
+Title=SL_lepEta
 XLabel=$\eta_{l}$
 YLabel=$1\sigma d\sigma/d\eta_{l}$
 LogY=0
@@ -21,7 +21,7 @@ RatioPlotYMax=1.35
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d03-x01-y01
-Title=SemiLepHadronPhaseSpacebqPt
+Title=SL_bqPt
 XLabel=$p_{T}^{b} [GeV]$
 YLabel=$1\sigma d\sigma/dp_{T}^{b} [GeV^{-1}]$
 LogY=1
@@ -32,7 +32,7 @@ RatioPlotYMax=1.7
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d04-x01-y01
-Title=SemiLepHadronPhaseSpacebqEta
+Title=SL_bqEta
 XLabel=$\eta_{b}$
 YLabel=$1\sigma d\sigma/d\eta_{b}$
 LogY=0
@@ -43,7 +43,7 @@ RatioPlotYMax=1.25
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d05-x01-y01
-Title=SemiLepHadronPhaseSpacebbbarPt
+Title=SL_bbbarPt
 XLabel=$p_{T}^{b\bar{b}} [GeV]$
 YLabel=$1\sigma d\sigma/dp_{T}^{b\bar{b}} [GeV^{-1}]$
 LogY=0
@@ -54,7 +54,7 @@ RatioPlotYMax=1.5
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d06-x01-y01
-Title=SemiLepHadronPhaseSpacebbbarMass
+Title=SL_bbbarMass
 XLabel=$m_{b\bar{b}} [GeV]$
 YLabel=$1\sigma d\sigma/dm_{b\bar{b}} [GeV^{-1}]$
 LogY=0
@@ -65,7 +65,7 @@ RatioPlotYMax=1.5
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d07-x01-y01
-Title=DiLepHadronPhaseSpacelepPt
+Title=DL_lepPt
 XLabel=$p_{T}^{l} [GeV]$
 YLabel=$1\sigma d\sigma/dp_{T}^{l} [GeV^{-1}]$
 LogY=1
@@ -76,7 +76,7 @@ RatioPlotYMax=1.4
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d08-x01-y01
-Title=DiLepHadronPhaseSpacelepEta
+Title=DL_lepEta
 XLabel=$\eta_{l}$
 YLabel=$1\sigma d\sigma/d\eta_{l}$
 LogY=0
@@ -87,7 +87,7 @@ RatioPlotYMax=1.35
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d09-x01-y01
-Title=DiLepHadronPhaseSpacedilepPt
+Title=DL_dilepPt
 XLabel=$p_{T}^{l^+l^-} [GeV]$
 YLabel=$1\sigma d\sigma/dp_{T}^{l^+l^-} [GeV^{-1}]$
 LogY=1
@@ -98,7 +98,7 @@ RatioPlotYMax=1.3
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d10-x01-y01
-Title=DiLepHadronPhaseSpacedilepMass
+Title=DL_dilepMass
 XLabel=$m^{l^+l^-} [GeV]$
 YLabel=$1\sigma d\sigma/dm^{l^+l^-} [GeV^{-1}]$
 LogY=1
@@ -109,7 +109,7 @@ RatioPlotYMax=1.25
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d11-x01-y01
-Title=DiLepHadronPhaseSpacebqPt
+Title=DL_bqPt
 XLabel=$p_{T}^{b} [GeV]$
 YLabel=$1\sigma d\sigma/dp_{T}^{b} [GeV^{-1}]$
 LogY=1
@@ -120,7 +120,7 @@ RatioPlotYMax=1.8
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d12-x01-y01
-Title=DiLepHadronPhaseSpacebqEta
+Title=DL_bqEta
 XLabel=$\eta_{b}$
 YLabel=$1\sigma d\sigma/d\eta_{b}$
 LogY=0
@@ -131,7 +131,7 @@ RatioPlotYMax=1.25
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d13-x01-y01
-Title=DiLepHadronPhaseSpacebbbarPt
+Title=DL_bbbarPt
 XLabel=$p_{T}^{b\bar{b}} [GeV]$
 YLabel=$1\sigma d\sigma/dp_{T}^{b\bar{b}} [GeV^{-1}]$
 LogY=0
@@ -142,7 +142,7 @@ RatioPlotYMax=1.5
 #END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682_internal/d14-x01-y01
-Title=DiLepHadronPhaseSpacebbbarMass
+Title=DL_bbbarMass
 XLabel=$m_{b\bar{b}} [GeV]$
 YLabel=$1/\sigma d\sigma/dm_{b\bar{b}} [GeV^{-1}]$
 LogY=0

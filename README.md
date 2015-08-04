@@ -1,14 +1,22 @@
-== Description ==
+## Description 
 
-This branch contains a plugin developped for the Les Houches ttbar working group. It fullfills the requirements from:
+This branch contains a plugin developped for the Les Houches ttbar working group. 
+
+It fullfills the requirements from:
+
 http://phystev.cnrs.fr/wiki/2015:groups:tools:ttjets
+
 More details can be found here:
+
 https://twiki.cern.ch/twiki/bin/viewauth/CMS/TOPRivetForLesHouches
+
 and the result there:
+
 http://ebouvier.web.cern.ch/ebouvier/TOPRivetForLesHouches/plots/CMS_AN_PseudoTop/index.html
 
 
-== How-to-setup (and run) ==
+
+## How-to-setup (and run) 
 
     scramv1 project -n CMSSW_7_5_0-GitLab CMSSW_7_5_0
     cd CMSSW_7_5_0-GitLab/src/

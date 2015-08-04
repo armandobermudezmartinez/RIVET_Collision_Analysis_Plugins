@@ -22,7 +22,7 @@ namespace Rivet {
     /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
     PseudoTop(double minpt = 0.0*GeV,
               double lepR = 0.1, double lepMinPt = 20, double lepMaxEta = 2.4,
-              double jetR = 0.4, double jetMinPt = 30, double jetMaxEta = 2.4)
+              double jetR = 0.4, double jetMinPt = 30, double jetMaxEta = 4.7)
       : FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV),
         _lepR(lepR), _lepMinPt(lepMinPt), _lepMaxEta(lepMaxEta),
         _jetR(jetR), _jetMinPt(jetMinPt), _jetMaxEta(jetMaxEta)
@@ -30,17 +30,17 @@ namespace Rivet {
       setName("PseudoTop");
     }
 
-    enum TTbarMode { CH_NONE=-1, CH_FULLHADRON = 0, CH_SEMILEPTON, CH_FULLLEPTON };
-    enum DecayMode { CH_HADRON = 0, CH_MUON, CH_ELECTRON, CH_TAU_HADRON, CH_TAU_MUON, CH_TAU_ELECTRON };
+    enum TTbarMode {CH_NONE=-1, CH_FULLHADRON = 0, CH_SEMILEPTON, CH_FULLLEPTON};
+    enum DecayMode {CH_HADRON = 0, CH_MUON, CH_ELECTRON};
 
     TTbarMode mode() const {
-      if ( !_isValid ) return CH_NONE;
-      if ( _mode1 == CH_HADRON && _mode2 == CH_HADRON ) return CH_FULLHADRON;
-      else if ( _mode1 != CH_HADRON && _mode2 != CH_HADRON ) return CH_FULLLEPTON;
+      if (!_isValid) return CH_NONE;
+      if (_mode1 == CH_HADRON && _mode2 == CH_HADRON) return CH_FULLHADRON;
+      else if ( _mode1 != CH_HADRON && _mode2 != CH_HADRON) return CH_FULLLEPTON;
       else return CH_SEMILEPTON;
     }
-    DecayMode mode1() const { return _mode1; }
-    DecayMode mode2() const { return _mode2; }
+    DecayMode mode1() const {return _mode1;}
+    DecayMode mode2() const {return _mode2;}
 
     /// Clone on the heap.
     virtual const Projection* clone() const {
@@ -50,12 +50,15 @@ namespace Rivet {
     //@}
 
   public:
-    Particle t1() const { return _t1; }
-    Particle t2() const { return _t2; }
-    Particle b1() const { return _b1; }
-    Particle b2() const { return _b2; }
-    ParticleVector wDecays1() const { return _wDecays1; }
-    ParticleVector wDecays2() const { return _wDecays2; }
+    Particle t1() const {return _t1;}
+    Particle t2() const {return _t2;}
+    Particle b1() const {return _b1;}
+    Particle b2() const {return _b2;}
+    ParticleVector wDecays1() const {return _wDecays1;}
+    ParticleVector wDecays2() const {return _wDecays2;}
+    Jets jets() const {return _jets;}
+    Jets bjets() const {return _bjets;}
+    Jets ljets() const {return _ljets;}
 
   protected:
     // Apply the projection to the event
@@ -76,9 +79,11 @@ namespace Rivet {
     Particle _t1, _t2;
     Particle _b1, _b2;
     ParticleVector _wDecays1, _wDecays2;
+    Jets _jets, _bjets, _ljets;
 
   };
 
 }
 
 #endif
+

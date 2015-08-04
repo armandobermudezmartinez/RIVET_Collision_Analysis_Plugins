@@ -15,22 +15,19 @@ void PseudoTop::cleanup(std::map<double, std::pair<size_t, size_t> >& v) const
 {
   std::vector<std::map<double, std::pair<size_t, size_t> >::const_iterator> toErase;
   std::set<size_t> usedLeg1, usedLeg2;
-  for ( auto key = v.begin(); key != v.end(); ++key )
-  {
+  for (auto key = v.begin(); key != v.end(); ++key) {
     const size_t leg1 = key->second.first;
     const size_t leg2 = key->second.second;
-    if ( usedLeg1.find(leg1) == usedLeg1.end() and
-         usedLeg2.find(leg2) == usedLeg2.end() )
-    {
-      usedLeg1.insert(leg1);
-      usedLeg2.insert(leg2);
-    }
-    else
-    {
-      toErase.push_back(key);
+    if (usedLeg1.find(leg1) == usedLeg1.end() and
+        usedLeg2.find(leg2) == usedLeg2.end()) {
+        usedLeg1.insert(leg1);
+        usedLeg2.insert(leg2);
+    } else {
+        toErase.push_back(key);
     }
   }
-  for ( auto& key : toErase ) v.erase(key);
+  for (auto& key : toErase)
+    v.erase(key);
 }
 
 void PseudoTop::project(const Event& e) {
@@ -52,51 +49,51 @@ void PseudoTop::project(const Event& e) {
   _theParticles.clear();
   _wDecays1.clear();
   _wDecays2.clear();
+  _jets.clear();
+  _bjets.clear();
+  _ljets.clear();
   _mode1 = _mode2 = CH_HADRON;
 
   // Collect final state particles
   Particles pForLep, pForJet;
   Particles neutrinos; // Prompt neutrinos
   foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
-    const int status = p->status();
-    const int pdgId = p->pdg_id();
-    if ( status == 1 ) {
-      Particle rp(*p);
-      if ( !PID::isHadron(pdgId) && !rp.fromHadron() ) {
-        // Collect particles not from hadron decay
-        if ( rp.isNeutrino() ) {
-          // Prompt neutrinos are kept in separate collection
-          neutrinos.push_back(rp);
+      const int status = p->status();
+      const int pdgId = p->pdg_id();
+      if (status == 1) {
+        Particle rp(*p);
+        if (!PID::isHadron(pdgId) && !rp.fromHadron()) {
+          // Collect particles not from hadron decay
+          if (rp.isNeutrino()) {
+            // Prompt neutrinos are kept in separate collection
+            neutrinos.push_back(rp);
+          } else if (pdgId == 22 || rp.isLepton()) {
+            // Leptons and photons for the dressing
+            pForLep.push_back(rp);
+          }
+        } else if (!rp.isNeutrino()) {
+          // Use all particles from hadron decay
+          pForJet.push_back(rp);
         }
-        else if ( pdgId == 22 || rp.isLepton() ) {
-          // Leptons and photons for the dressing
-          pForLep.push_back(rp);
-        }
-      }
-      else if ( !rp.isNeutrino() ) {
-        // Use all particles from hadron decay
-        pForJet.push_back(rp);
-      }
-    }
-    else if ( PID::isHadron(pdgId) && PID::hasBottom(pdgId) ) {
-      // NOTE: Consider B hadrons with pT > 5GeV - not in CMS proposal
-      //if ( p->momentum().perp() < 5 ) continue; 
+      } else if (PID::isHadron(pdgId) && PID::hasBottom(pdgId)) {
+        // NOTE: Consider B hadrons with pT > 5GeV - not in CMS proposal
+        //if ( p->momentum().perp() < 5 ) continue; 
 
-      // Do unstable particles, to be used in the ghost B clustering
-      // Use last B hadrons only
-      bool isLast = true;
-      foreach ( GenParticle* pp, Rivet::particles(p->end_vertex(), HepMC::children) ) {
-        if ( PID::hasBottom(pp->pdg_id()) ) {
-          isLast = false;
-          break;
+        // Do unstable particles, to be used in the ghost B clustering
+        // Use last B hadrons only
+        bool isLast = true;
+        foreach (GenParticle* pp, Rivet::particles(p->end_vertex(), HepMC::children)) {
+          if (PID::hasBottom(pp->pdg_id())) {
+            isLast = false;
+            break;
+          }
         }
+        if (!isLast) continue;
+
+        // Rescale momentum by 10^-20
+        Particle ghost(pdgId, FourMomentum(p->momentum())*1e-20/p->momentum().rho());
+        pForJet.push_back(ghost);
       }
-      if ( !isLast ) continue;
-      
-      // Rescale momentum by 10^-20
-      Particle ghost(pdgId, FourMomentum(p->momentum())*1e-20/p->momentum().rho());
-      pForJet.push_back(ghost);
-    }
   }
 
   // Start object building from trivial thing - prompt neutrinos
@@ -108,28 +105,28 @@ void PseudoTop::project(const Event& e) {
   Jets leptons;
   std::vector<int> leptonsId;
   std::set<int> dressedIdxs;
-  foreach ( const Jet& lep, fjLep.jetsByPt(_lepMinPt) ) {
-    if ( std::abs(lep.eta()) > _lepMaxEta ) continue;
+  foreach (const Jet& lep, fjLep.jetsByPt(_lepMinPt)) {
+    if (std::abs(lep.eta()) > _lepMaxEta) continue;
 
     double leadingPt = -1;
     int leptonId = 0;
-    foreach ( const Particle& p, lep.particles() ) {
+    foreach (const Particle& p, lep.particles()) {
       dressedIdxs.insert(p.genParticle()->barcode());
-      if ( p.isLepton() && p.momentum().pt() > leadingPt ) {
+      if (p.isLepton() && p.momentum().pt() > leadingPt) {
         leadingPt = p.momentum().pt();
         leptonId = p.pdgId();
       }
     }
-    if ( leptonId == 0 ) continue;
+    if (leptonId == 0) continue;
     leptons.push_back(lep);
     leptonsId.push_back(leptonId);
   }
 
   // Re-use particles not used in lepton dressing
-  foreach ( const Particle& rp, pForLep ) {
+  foreach (const Particle& rp, pForLep) {
     const int barcode = rp.genParticle()->barcode();
     // Skip if the particle is used in dressing
-    if ( dressedIdxs.find(barcode) != dressedIdxs.end() ) continue;
+    if (dressedIdxs.find(barcode) != dressedIdxs.end()) continue;
 
     // Put back to be used in jet clustering
     pForJet.push_back(rp);
@@ -139,33 +136,36 @@ void PseudoTop::project(const Event& e) {
   FastJets fjJet(FastJets::ANTIKT, _jetR);
   //fjJet.useInvisibles(); // NOTE: CMS proposal to remove neutrinos
   fjJet.calc(pForJet);
-  Jets bjets, ljets;
-  foreach ( const Jet& jet, fjJet.jetsByPt(_jetMinPt) ) {
-    if ( std::abs(jet.eta()) > _jetMaxEta ) continue;
+  // Jets _bjets, _ljets; FIME
+  foreach (const Jet& jet, fjJet.jetsByPt(_jetMinPt)) {
+    if (std::abs(jet.eta()) > _jetMaxEta) continue;
+    _jets.push_back(jet);
 
     bool isBJet = false;
-    foreach ( const Particle& rp, jet.particles() ) {
-      if ( PID::hasBottom(rp.pdgId()) ) {
+    foreach (const Particle& rp, jet.particles()) {
+      if (PID::hasBottom(rp.pdgId())) {
         isBJet = true;
         break;
       }
     }
 
-    if ( isBJet ) bjets.push_back(jet);
-    else ljets.push_back(jet);
+    if (!isBJet) { 
+      _ljets.push_back(jet);
+    } else if (std::abs(jet.eta()) < _lepMaxEta) { 
+      _bjets.push_back(jet);
+    }
   }
 
   // Every building blocks are ready. Continue to pseudo-W and pseudo-top combination
 
-  if ( bjets.size() < 2 ) return; // Ignore single top for now
+  if (_bjets.size() < 2) return; // Ignore single top for now
   std::map<double, std::pair<size_t, size_t> > wLepCandIdxs;
   std::map<double, std::pair<size_t, size_t> > wHadCandIdxs;
 
   // Collect leptonic-decaying W's
-  for ( size_t iLep=0, nLep=leptons.size(); iLep<nLep; ++iLep )
-  {
+  for (size_t iLep = 0, nLep = leptons.size(); iLep < nLep; ++iLep) {
     const Jet& lep = leptons.at(iLep);
-    for ( size_t iNu=0, nNu=neutrinos.size(); iNu<nNu; ++iNu ) {
+    for (size_t iNu = 0, nNu = neutrinos.size(); iNu < nNu; ++iNu) {
       const Particle& nu = neutrinos.at(iNu);
       const double m = (lep.momentum()+nu.momentum()).mass();
       const double dm = std::abs(m-_wMass);
@@ -174,12 +174,10 @@ void PseudoTop::project(const Event& e) {
   }
 
   // Continue to hadronic decaying W's
-  for ( size_t i=0, nLjet=ljets.size(); i<nLjet; ++i )
-  {
-    const Jet& ljet1 = ljets[i];
-    for ( size_t j=i+1; j<nLjet; ++j )
-    {
-      const Jet& ljet2 = ljets[j];
+  for (size_t i = 0, nLjet = _ljets.size(); i < nLjet; ++i) {
+    const Jet& ljet1 = _ljets[i];
+    for (size_t j = i+1; j < nLjet; ++j) {
+      const Jet& ljet2 = _ljets[j];
       const double m = (ljet1.momentum()+ljet2.momentum()).mass();
       const double dm = std::abs(m-_wMass);
       wHadCandIdxs[dm] = make_pair(i, j);
@@ -192,34 +190,31 @@ void PseudoTop::project(const Event& e) {
   const size_t nWLepCand = wLepCandIdxs.size();
   const size_t nWHadCand = wHadCandIdxs.size();
 
-  if ( nWLepCand + nWHadCand < 2 ) return; // We skip single top
+  if (nWLepCand + nWHadCand < 2) return; // We skip single top
 
   int w1Q = 1, w2Q = -1;
   int w1dau1Id = 1, w2dau1Id = 1;
   FourMomentum w1dau1LVec, w1dau2LVec;
   FourMomentum w2dau1LVec, w2dau2LVec;
-  if ( nWLepCand == 0 ) // Full hadronic case
-  {
+  if (nWLepCand == 0) { // Full hadronic case
     const auto& idPair1 = wHadCandIdxs.begin()->second;
     const auto& idPair2 = std::next(wHadCandIdxs.begin())->second;
-    const auto& w1dau1 = ljets[idPair1.first];
-    const auto& w1dau2 = ljets[idPair1.second];
-    const auto& w2dau1 = ljets[idPair2.first];
-    const auto& w2dau2 = ljets[idPair2.second];
+    const auto& w1dau1 = _ljets[idPair1.first];
+    const auto& w1dau2 = _ljets[idPair1.second];
+    const auto& w2dau1 = _ljets[idPair2.first];
+    const auto& w2dau2 = _ljets[idPair2.second];
 
     w1dau1LVec = w1dau1.momentum();
     w1dau2LVec = w1dau2.momentum();
     w2dau1LVec = w2dau1.momentum();
     w2dau2LVec = w2dau2.momentum();
-  }
-  else if ( nWLepCand == 1 ) // Semi-leptonic case
-  {
+  } else if (nWLepCand == 1) { // Semi-leptonic case
     const auto& idPair1 = wLepCandIdxs.begin()->second;
     const auto& idPair2 = wHadCandIdxs.begin()->second;
     const auto& w1dau1 = leptons[idPair1.first];
     const auto& w1dau2 = neutrinos[idPair1.second];
-    const auto& w2dau1 = ljets[idPair2.first];
-    const auto& w2dau2 = ljets[idPair2.second];
+    const auto& w2dau1 = _ljets[idPair2.first];
+    const auto& w2dau2 = _ljets[idPair2.second];
 
     w1dau1LVec = w1dau1.momentum();
     w1dau2LVec = w1dau2.momentum();
@@ -229,13 +224,11 @@ void PseudoTop::project(const Event& e) {
     w1Q = w1dau1Id > 0 ? -1 : 1;
     w2Q = -w1Q;
 
-    switch ( w1dau1Id ) {
+    switch (w1dau1Id) {
       case 13: case -13: _mode1 = CH_MUON; break;
       case 11: case -11: _mode1 = CH_ELECTRON; break;
     }
-  }
-  else // Full leptonic case
-  {
+  } else { // Full leptonic case
     const auto& idPair1 = wLepCandIdxs.begin()->second;
     const auto& idPair2 = std::next(wLepCandIdxs.begin())->second;
     const auto& w1dau1 = leptons[idPair1.first];
@@ -252,11 +245,11 @@ void PseudoTop::project(const Event& e) {
     w1Q = w1dau1Id > 0 ? -1 : 1;
     w2Q = w2dau1Id > 0 ? -1 : 1;
 
-    switch ( w1dau1Id ) {
+    switch (w1dau1Id) {
       case 13: case -13: _mode1 = CH_MUON; break;
       case 11: case -11: _mode1 = CH_ELECTRON; break;
     }
-    switch ( w2dau1Id ) {
+    switch (w2dau1Id) {
       case 13: case -13: _mode2 = CH_MUON; break;
       case 11: case -11: _mode2 = CH_ELECTRON; break;
     }
@@ -267,24 +260,24 @@ void PseudoTop::project(const Event& e) {
   // Combine b jets
   double sumDm = 1e9;
   FourMomentum b1LVec, b2LVec;
-  for ( size_t i=0, n=bjets.size(); i<n; ++i ) {
-    const Jet& bjet1 = bjets[i];
+  for (size_t i = 0, n = _bjets.size(); i < n; ++i) {
+    const Jet& bjet1 = _bjets[i];
     const double mtop1 = (w1LVec+bjet1.momentum()).mass();
     const double dmtop1 = std::abs(mtop1-_tMass);
-    for ( size_t j=0; j<n; ++j ) {
-      if ( i == j ) continue;
-      const Jet& bjet2 = bjets[j];
+    for (size_t j=0; j<n; ++j) {
+      if (i == j) continue;
+      const Jet& bjet2 = _bjets[j];
       const double mtop2 = (w2LVec+bjet2.momentum()).mass();
       const double dmtop2 = std::abs(mtop2-_tMass);
 
-      if ( sumDm <= dmtop1+dmtop2 ) continue;
+      if (sumDm <= dmtop1+dmtop2) continue;
 
       sumDm = dmtop1+dmtop2;
       b1LVec = bjet1.momentum();
       b2LVec = bjet2.momentum();
     }
   }
-  if ( sumDm >= 1e9 ) return; // Failed to make top, but this should not happen.
+  if (sumDm >= 1e9) return; // Failed to make top, but this should not happen.
 
   const auto t1LVec = w1LVec + b1LVec;
   const auto t2LVec = w2LVec + b2LVec;
@@ -302,4 +295,5 @@ void PseudoTop::project(const Event& e) {
 
   _isValid = true;
 }
+
 

@@ -215,5 +215,3 @@ private:
 AnalysisBuilder<CMS_2015_I1370682> plugin_CMS_2015_I1370682;
 
 }
-
-

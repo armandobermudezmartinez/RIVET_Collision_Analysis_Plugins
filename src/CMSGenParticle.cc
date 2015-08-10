@@ -31,4 +31,3 @@ void CMSGenParticle::project(const Event& e) {
     _theParticles.push_back(Particle(*p));
   }
 }
-

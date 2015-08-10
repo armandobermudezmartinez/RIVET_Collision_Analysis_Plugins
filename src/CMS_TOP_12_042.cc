@@ -56,7 +56,9 @@ namespace Rivet {
       
       const std::vector<double> binPtw = {0., 27., 52., 78., 105., 134., 166., 200., 237., 300.};
       _h_ptw = bookHisto1D("ptw", binPtw);
-      _h_mw = bookHisto1D("mw", 40, 60, 100);
+      
+      //_h_mw = bookHisto1D("mw", 40, 60, 100);
+
     }
 
 
@@ -111,8 +113,8 @@ namespace Rivet {
     //@{
     
     Histo1DPtr _h_wprod_mult;
-    Histo1DPtr _h_met, _h_ht, _h_st, _h_ptw, _h_mw;
-
+    Histo1DPtr _h_met, _h_ht, _h_st, _h_ptw;
+    //Histo1DPtr _h_mw;
 
     //@}
 
@@ -124,4 +126,3 @@ namespace Rivet {
   DECLARE_RIVET_PLUGIN(CMS_TOP_12_042);
 
 }
-

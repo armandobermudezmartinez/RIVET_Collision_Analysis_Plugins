@@ -240,5 +240,3 @@ private:
 AnalysisBuilder<CMS_LesHouches2015> plugin_CMS_LesHouches2015;
 
 }
-
-

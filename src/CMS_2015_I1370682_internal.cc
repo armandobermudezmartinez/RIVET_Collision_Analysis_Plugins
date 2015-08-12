@@ -8,8 +8,8 @@
 #include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
-#include "GeneratorInterface/RivetTop/interface/CMSGenParticle.hh"
-#include "GeneratorInterface/RivetTop/interface/PartonTop.hh"
+#include "TopMonteCarlo/RivetTop/interface/CMSGenParticle.hh"
+#include "TopMonteCarlo/RivetTop/interface/PartonTop.hh"
 
 namespace Rivet {
 

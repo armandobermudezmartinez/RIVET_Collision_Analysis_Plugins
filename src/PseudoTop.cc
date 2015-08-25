@@ -11,7 +11,7 @@ struct GreaterByPt
   }
 };
 
-void PseudoTopLesHouches::cleanup(std::map<double, std::pair<size_t, size_t> >& v) const
+void PseudoTop::cleanup(std::map<double, std::pair<size_t, size_t> >& v) const
 {
   std::vector<std::map<double, std::pair<size_t, size_t> >::const_iterator> toErase;
   std::set<size_t> usedLeg1, usedLeg2;
@@ -30,7 +30,7 @@ void PseudoTopLesHouches::cleanup(std::map<double, std::pair<size_t, size_t> >& 
     v.erase(key);
 }
 
-void PseudoTopLesHouches::project(const Event& e) {
+void PseudoTop::project(const Event& e) {
   // Leptons : do the lepton clustering anti-kt R=0.1 using stable photons and leptons not from hadron decay
   // Neutrinos : neutrinos not from hadron decay
   // MET : vector sum of all invisible particles in x-y plane 
@@ -295,5 +295,4 @@ void PseudoTopLesHouches::project(const Event& e) {
 
   _isValid = true;
 }
-
 

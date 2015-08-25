@@ -1,7 +1,7 @@
 #!/bin/bash
 source $CMSSW_BASE/src/GeneratorInterface/RivetInterface/test/rivetSetup.sh
 
-RIVETTOP=$CMSSW_BASE/src/GeneratorInterface/RivetTop
+RIVETTOP=$CMSSW_BASE/src/TopMonteCarlo/RivetTop
 for I in `\ls $RIVETTOP/data/*.yoda`; do
     F=`basename $I`
     cd $CMSSW_BASE/src/GeneratorInterface/RivetInterface/data
@@ -11,9 +11,9 @@ for I in `\ls $RIVETTOP/data/*.yoda`; do
     cd -
 done
 
-export RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
-export RIVET_INFO_PATH=$RIVET_INFO_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
-export RIVET_PLOT_PATH=$RIVET_PLOT_PATH:$CMSSW_BASE/src/GeneratorInterface/RivetTop/data
+export RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/TopMonteCarlo/RivetTop/data
+export RIVET_INFO_PATH=$RIVET_INFO_PATH:$CMSSW_BASE/src/TopMonteCarlo/RivetTop/data
+export RIVET_PLOT_PATH=$RIVET_PLOT_PATH:$CMSSW_BASE/src/TopMonteCarlo/RivetTop/data
 
 which yodamerge &> /dev/null || GETYODA=1
 if [ $GETYODA -eq 1 ]; then

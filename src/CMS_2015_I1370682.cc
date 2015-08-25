@@ -8,7 +8,7 @@
 #include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
-#include "GeneratorInterface/RivetTop/interface/PseudoTop.hh"
+#include "TopMonteCarlo/RivetTop/interface/PseudoTop.hh"
 
 namespace Rivet {
 
@@ -215,4 +215,3 @@ private:
 AnalysisBuilder<CMS_2015_I1370682> plugin_CMS_2015_I1370682;
 
 }
-

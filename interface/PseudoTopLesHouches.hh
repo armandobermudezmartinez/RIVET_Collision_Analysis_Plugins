@@ -1,5 +1,5 @@
-#ifndef RIVET_PseudoTop_HH
-#define RIVET_PseudoTop_HH
+#ifndef RIVET_PseudoTopLesHouches_HH
+#define RIVET_PseudoTopLesHouches_HH
 
 #include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Particle.hh"
@@ -13,21 +13,21 @@ namespace Rivet {
   // 
   // Find top quark in the particle level.
   // The definition is based on the agreement at the LHC working group.
-  class PseudoTop : public FinalState {
+  class PseudoTopLesHouches : public FinalState {
   public:
     /// @name Standard constructors and destructors.
     //@{
 
     /// The default constructor. May specify the minimum and maximum
     /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
-    PseudoTop(double minpt = 0.0*GeV,
+    PseudoTopLesHouches(double minpt = 0.0*GeV,
               double lepR = 0.1, double lepMinPt = 20, double lepMaxEta = 2.4,
               double jetR = 0.4, double jetMinPt = 30, double jetMaxEta = 4.7)
       : FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV),
         _lepR(lepR), _lepMinPt(lepMinPt), _lepMaxEta(lepMaxEta),
         _jetR(jetR), _jetMinPt(jetMinPt), _jetMaxEta(jetMaxEta)
     {
-      setName("PseudoTop");
+      setName("PseudoTopLesHouches");
     }
 
     enum TTbarMode {CH_NONE=-1, CH_FULLHADRON = 0, CH_SEMILEPTON, CH_FULLLEPTON};
@@ -44,7 +44,7 @@ namespace Rivet {
 
     /// Clone on the heap.
     virtual const Projection* clone() const {
-      return new PseudoTop(*this);
+      return new PseudoTopLesHouches(*this);
     }
 
     //@}

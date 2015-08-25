@@ -124,4 +124,3 @@ namespace Rivet {
   DECLARE_RIVET_PLUGIN(CMS_TOP_12_042);
 
 }
-

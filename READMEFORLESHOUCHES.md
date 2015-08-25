@@ -1,6 +1,8 @@
+# The Les Houches plugin
+
 ## Description 
 
-This branch contains a plugin developped for the Les Houches ttbar working group. 
+This plugin has been developped for the Les Houches ttbar working group. 
 
 It fullfills the requirements from:
 
@@ -27,9 +29,7 @@ http://ebouvier.web.cern.ch/ebouvier/TOPRivetForLesHouches/plots/CMS_AN_PseudoTo
     wget -P Configuration/Generator/python/ http://test-efeafs.web.cern.ch/test-efeafs/Hadronizer_pythia8_cff.py 
     cd GeneratorInterface/
     git clone ssh://git@gitlab.cern.ch:7999/CMS-TOP-Rivet/RivetTop
-    cd RivetTop/
-    git checkout -b LesHouches2015 origin/LesHouches2015
-    cd ../../
+    cd ..
     scram b -j6
     cd GeneratorInterface/RivetTop/test/
     cmsRun runRivietWithPythia8.py

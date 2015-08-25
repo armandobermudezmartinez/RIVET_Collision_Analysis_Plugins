@@ -8,7 +8,7 @@
 #include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
-#include "GeneratorInterface/RivetTop/interface/PseudoTop.hh"
+#include "GeneratorInterface/RivetTop/interface/PseudoTopLesHouches.hh"
 
 namespace Rivet {
 
@@ -18,7 +18,7 @@ public:
   }
 
   void init() {
-    addProjection(PseudoTop(), "ttbar");
+    addProjection(PseudoTopLesHouches(), "ttbar");
 
     // Booking of histograms
     _h_njets  = bookHisto1D("jet_mult", 11, -0.5, 10.5);
@@ -73,8 +73,8 @@ public:
     const double weight = event.weight();
 
     // Get the parton level ttbar candidate
-    const PseudoTop& ttbar = applyProjection<PseudoTop>(event, "ttbar");
-    if (ttbar.mode() != PseudoTop::CH_FULLLEPTON) {
+    const PseudoTopLesHouches& ttbar = applyProjection<PseudoTopLesHouches>(event, "ttbar");
+    if (ttbar.mode() != PseudoTopLesHouches::CH_FULLLEPTON) {
       MSG_DEBUG("Event fail channel topology cuts");
       vetoEvent;
     }

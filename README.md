@@ -1,3 +1,34 @@
+# RivetTop
+
+This GitLab repository contains Rivet routines for Top PAG related analyses. Some may not be validated.
+
+## Organisation
+
+The `master` branch contains all the plugins and data. Configuration files are in the `test/` repository, while `.yoda` and `.plot` (and possibly `.info`) files are in the `data/` repository.
+
+## Installation
+
+<pre>
+cmsrel CMSSW_7_5_0
+cd CMSSW_7_5_0/src
+cmsenv
+git-cms-init
+git-cms-addpkg GeneratorInterface/RivetInterface
+git-cms-merge-topic jhgoh:RivetConsumesMigration75
+git-cms-merge-topic jhgoh:RivetRefHistFromEnvVar
+git-cms-merge-topic jhgoh:LHEweight
+mkdir TopMonteCarlo
+cd TopMonteCarlo
+git clone ssh://git@gitlab.cern.ch:7999/CMS-TOP-Rivet/RivetTop
+git clone ssh://git@gitlab.cern.ch:7999/CMS-TOP-Rivet/Configuration
+cd RivetTop/test
+source setupTopRivet.sh
+cd $CMSSW_BASE/src
+scram b -j8
+</pre>
+
+---------------------------------------
+
 # The Les Houches plugin
 
 ## Description 
@@ -36,5 +67,3 @@ http://ebouvier.web.cern.ch/ebouvier/TOPRivetForLesHouches/plots/CMS_AN_PseudoTo
     cmsRun runRivietWithHerwig.py
     rivet-mkhtml -c ../data/CMS_LesHouches2015.plot Pythia8.yoda:'Powheg+Pythia 8' Herwig.yoda:'Powheg+Herwig++'
     firefox plots/index.hmtl &
-
-

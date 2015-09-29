@@ -149,11 +149,8 @@ void PseudoTop::project(const Event& e) {
       }
     }
 
-    if (!isBJet) { 
-      _ljets.push_back(jet);
-    } else if (std::abs(jet.eta()) < _lepMaxEta) { 
-      _bjets.push_back(jet);
-    }
+    if ( isBJet ) _bjets.push_back(jet);
+    else _ljets.push_back(jet);
   }
 
   // Every building blocks are ready. Continue to pseudo-W and pseudo-top combination

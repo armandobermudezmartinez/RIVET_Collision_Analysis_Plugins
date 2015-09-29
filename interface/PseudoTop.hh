@@ -20,8 +20,7 @@ namespace Rivet {
 
     /// The default constructor. May specify the minimum and maximum
     /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
-    PseudoTop(double minpt = 0.0*GeV,
-              double lepR = 0.1, double lepMinPt = 20, double lepMaxEta = 2.4,
+    PseudoTop(double lepR = 0.1, double lepMinPt = 20, double lepMaxEta = 2.4,
               double jetR = 0.4, double jetMinPt = 30, double jetMaxEta = 4.7)
       : FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV),
         _lepR(lepR), _lepMinPt(lepMinPt), _lepMaxEta(lepMaxEta),

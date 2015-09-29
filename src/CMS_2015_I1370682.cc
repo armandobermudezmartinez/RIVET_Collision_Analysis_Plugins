@@ -18,7 +18,7 @@ public:
   }
 
   void init() {
-    addProjection(PseudoTop(), "ttbar");
+    addProjection(PseudoTop(0.1, 20, 2.4, 0.5, 30, 2.4), "ttbar");
 
     // Lepton + Jet channel
     _hSL_topPt         = bookHisto1D("d15-x01-y01"); // 1/sigma dsigma/dpt(top)
@@ -60,8 +60,9 @@ public:
     const FourMomentum t1P4AtCM = LorentzTransform(-ttP4.boostVector()).transform(t1P4);
 
     if ( ttbar.mode() == PseudoTop::CH_SEMILEPTON ) {
-      //const Particle lCand1 = ttbar.wDecays1()[0];
-      //const Particle lCand2 = ttbar.wDecays2()[0];
+      const Particle lCand1 = ttbar.wDecays1()[0]; // w1 dau0 is the lepton in the PseudoTop
+      if ( lCand1.pt() < 30 or std::abs(lCand1.eta()) > 2.4 ) vetoEvent;
+
       _hSL_topPt->fill(t1P4.pT(), weight);
       _hSL_topPt->fill(t2P4.pT(), weight);
       _hSL_topPtTtbarSys->fill(t1P4AtCM.pT(), weight);
@@ -75,6 +76,11 @@ public:
       _hSL_ttbarMass->fill(ttP4.mass(), weight);
     }
     else if ( ttbar.mode() == PseudoTop::CH_FULLLEPTON ) {
+      const Particle lCand1 = ttbar.wDecays1()[0]; // dau0 are the lepton in the PseudoTop
+      const Particle lCand2 = ttbar.wDecays2()[0]; // dau0 are the lepton in the PseudoTop
+      if ( lCand1.pt() < 20 or std::abs(lCand1.eta()) > 2.4 or
+           lCand2.pt() < 20 or std::abs(lCand2.eta()) > 2.4 ) vetoEvent;
+
       _hDL_topPt->fill(t1P4.pT(), weight);
       _hDL_topPt->fill(t2P4.pT(), weight);
       _hDL_topPtTtbarSys->fill(t1P4AtCM.pT(), weight);

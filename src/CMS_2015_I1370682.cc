@@ -61,7 +61,7 @@ public:
 
     if ( ttbar.mode() == PseudoTop::CH_SEMILEPTON ) {
       const Particle lCand1 = ttbar.wDecays1()[0]; // w1 dau0 is the lepton in the PseudoTop
-      if ( lCand1.pt() < 30 or std::abs(lCand1.eta()) > 2.4 ) vetoEvent;
+      if ( lCand1.pt() < 33 or std::abs(lCand1.eta()) > 2.1 ) vetoEvent;
 
       _hSL_topPt->fill(t1P4.pT(), weight);
       _hSL_topPt->fill(t2P4.pT(), weight);

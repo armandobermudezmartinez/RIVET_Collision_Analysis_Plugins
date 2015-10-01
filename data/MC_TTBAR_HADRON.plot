@@ -1,23 +1,12 @@
 # BEGIN PLOT /MC_TTBAR/*
-LogY=0
 LogX=0
-# END PLOT
-
-# BEGIN PLOT /MC_TTBAR_HADRON/weight
 LogY=0
+NormalizeToIntegral=1
+RatioPlotYLabel=MC/default
 # END PLOT
 
 # BEGIN PLOT /MC_TTBAR_HADRON/jet_mult
-LogY=0
 XLabel=Jet multiplicity
-# END PLOT
-
-# BEGIN PLOT /MC_TTBAR_HADRON/.*_mult*
-NormalizeToIntegral=1
-# END PLOT
-
-# BEGIN PLOT /MC_TTBAR_HADRON/.*_pT
-LogY=0
 # END PLOT
 
 # BEGIN PLOT /MC_TTBAR_HADRON/.*_mass
@@ -29,25 +18,21 @@ LogY=0
 # BEGIN PLOT /MC_TTBAR_HADRON/.*_dR
 XLabel=$\Delta R$
 YLabel=$1/\sigma \, \mathrm{d}\sigma/\mathrm{d}\Delta R$
-LogY=0
 # END PLOT
 
 # BEGIN PLOT /MC_TTBAR_HADRON/.*_eta
 XLabel=$\eta$
 YLabel=$1/\sigma \, \mathrm{d}\sigma/\mathrm{d}\eta$
-LogY=0
 # END PLOT
 
 # BEGIN PLOT /MC_TTBAR_HADRON/.*_deta
 XLabel=$\Delta \eta$
 YLabel=$1/\sigma \, \mathrm{d}\sigma/\mathrm{d}\Delta \eta$
-LogY=0
 # END PLOT
 
 # BEGIN PLOT /MC_TTBAR_HADRON/.*_dphi
 XLabel=$\Delta \phi$
 YLabel=$1/\sigma \, \mathrm{d}\sigma/\mathrm{d}\Delta \phi$
-LogY=0
 # END PLOT
 
 # BEGIN PLOT /MC_TTBAR_HADRON/jet.?_[1234]_pT
@@ -76,7 +61,6 @@ Title=Transverse momentum distribution for jet 4
 Title=$H_T$ distribution for all jets
 XLabel=$H_T$ [GeV]
 YLabel=$1/\sigma \, \mathrm{d}\sigma/\mathrm{d}H_T$ [GeV$^{-1}$]
-LogX=1
 # END PLOT
 
 # BEGIN PLOT /MC_TTBAR_HADRON/jetb_1_pT
@@ -103,19 +87,6 @@ LogY=0
 Rebin=1
 # END PLOT
 
-# BEGIN PLOT /MC_TTBAR_HADRON/W_pT
-NormalizeToIntegral=1
-# END PLOT
-
-# BEGIN PLOT /MC_TTBAR_HADRON/*
-NormalizeToIntegral=1
-RatioPlotYLabel=MC/default
-# END PLOT
-
-# BEGIN PLOT /MC_TTBAR_HADRON/W_pT_W_cut
-NormalizeToIntegral=1
-# END PLOT
-
 # BEGIN PLOT /MC_TTBAR_HADRON/t_mass
 Title=Mass distribution for reconstructed top
 XLabel=$m_{jjb}$ [GeV]
@@ -136,12 +107,7 @@ Rebin=1
 Title=Mass distribution for "fitted" top after $m_W$ cut
 XLabel=$m_{Wb}$ [GeV]
 YLabel=$1/\sigma \, \mathrm{d}\sigma/\mathrm{d}m_{Wb}$ [GeV$^{-1}$]
-LogY=0
 Rebin=1
-# END PLOT
-
-# BEGIN PLOT /MC_TTBAR_HADRON/scale
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_13_007/.*

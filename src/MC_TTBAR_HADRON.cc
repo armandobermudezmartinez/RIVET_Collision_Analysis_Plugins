@@ -37,7 +37,7 @@ namespace Rivet {
       addProjection(MissingMomentum(fs), "MissingET");
 
       // Booking of histograms
-      _h_weight = bookHisto1D("weight", 2, -2, 2);
+      _h_weight = bookHisto1D("weight", 200, -2, 2);
       _h_scale  = bookHisto1D("scale", logspace(50, 100.0, 2000.0));
       //
       _h_njets  = bookHisto1D("jet_mult", 11, -0.5, 10.5);
@@ -60,6 +60,7 @@ namespace Rivet {
       _h_ljet_2_pT = bookHisto1D("jetl_2_pT", logspace(50, 20.0, 300.0));
       //
       _h_Rbq       = bookHisto1D("Rbq", 50, 0.0, 5.0);
+      _h_Rbq_W_cut = bookHisto1D("Rbq_W_cut", 50, 0.0, 5.0);
       //
       _h_jet_1_eta  = bookHisto1D( "jet_1_eta", 30, -3., 3.);
       _h_jet_2_eta  = bookHisto1D( "jet_2_eta", 30, -3., 3.);
@@ -106,7 +107,7 @@ namespace Rivet {
 
     void analyze(const Event& event) {
       const double weight = event.weight();
-      _h_weight->fill(weight/fabs(weight));
+      _h_weight->fill(weight);
       _h_scale->fill(event.genEvent()->event_scale(), weight);
 
       // Use the "LFS" projection to require at least one hard charged
@@ -196,6 +197,22 @@ namespace Rivet {
         if (p->momentum().perp() < 5*GeV) continue;
         B_hadrons.push_back(p);
       }
+      
+      // Check energy/momentum conservation
+      double energy = 0.;
+      double px = 0;
+      double py = 0;
+      double pz = 0;
+      for (size_t i = 0; i < allParticles.size(); i++) {
+        GenParticle* p = allParticles[i];
+        if (p->status() == 1) {
+          energy += p->momentum().e();
+          px += p->momentum().px();
+          py += p->momentum().py();
+          pz += p->momentum().pz();
+        }
+      }
+      std::cout << "Total energy/momentum: " << energy << "/" << px << "/" << py << "/" << pz << std::endl;
       
       Jets bjets, bbarjets, bmixjets, ljets;
       foreach (const Jet& jet, jets) {
@@ -308,6 +325,8 @@ namespace Rivet {
         
         _h_t_pT_W_cut->fill(t1.pT(), weight);
         //_h_t_pT_W_cut->fill(t2.pT(), weight);
+        
+        _h_Rbq->fill((bjets[0].pT()+bbarjets[0].pT())/(ljets[0].pT()+ljets[1].pT()), weight);
 
         _h_jetb_1_jetb_2_dR->fill(deltaR(bjets[0].momentum(), bbarjets[0].momentum()),weight);
         _h_jetb_1_jetb_2_deta->fill(fabs(bjets[0].eta()-bbarjets[0].eta()),weight);
@@ -405,7 +424,7 @@ namespace Rivet {
     Histo1DPtr _h_jet_HT;
     Histo1DPtr _h_bjet_1_pT, _h_bjet_2_pT;
     Histo1DPtr _h_ljet_1_pT, _h_ljet_2_pT;
-    Histo1DPtr _h_Rbq;
+    Histo1DPtr _h_Rbq, _h_Rbq_W_cut;
     Histo1DPtr _h_bjet_1_eta, _h_bjet_2_eta;
     Histo1DPtr _h_ljet_1_eta, _h_ljet_2_eta;
     Histo1DPtr _h_bjet_1_mass, _h_bjet_2_mass;

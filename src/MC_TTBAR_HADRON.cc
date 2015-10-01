@@ -199,6 +199,7 @@ namespace Rivet {
       }
       
       // Check energy/momentum conservation
+      /*
       double energy = 0.;
       double px = 0;
       double py = 0;
@@ -213,6 +214,7 @@ namespace Rivet {
         }
       }
       std::cout << "Total energy/momentum: " << energy << "/" << px << "/" << py << "/" << pz << std::endl;
+      */
       
       Jets bjets, bbarjets, bmixjets, ljets;
       foreach (const Jet& jet, jets) {

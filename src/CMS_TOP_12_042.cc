@@ -33,6 +33,9 @@ namespace Rivet {
       vidsW.push_back(make_pair(PID::MUON,     PID::NU_MUBAR));
       vidsW.push_back(make_pair(PID::ANTIMUON, PID::NU_MU));
       
+      vector<pair<PdgId,PdgId> > vidsNuTau;
+      vidsNuTau.push_back(make_pair(PID::NU_TAU, PID::NU_TAUBAR));
+      
       FinalState fs(-MAXRAPIDITY, MAXRAPIDITY, 0*GeV);
       InvMassFinalState invfsW(fs, vidsW, 75.4*GeV, 85.4*GeV);
       addProjection(invfsW, "INVFSW");
@@ -57,18 +60,35 @@ namespace Rivet {
       const std::vector<double> binPtw = {0., 27., 52., 78., 105., 134., 166., 200., 237., 300.};
       _h_ptw = bookHisto1D("ptw", binPtw);
       
-      //_h_mw = bookHisto1D("mw", 40, 60, 100);
+      _h_mwnutau = bookHisto1D("mwnutau", 120, 0, 120);
+      _h_nu_tau_pt = bookHisto1D("nu_tau_pt", 120, 0, 120);
 
     }
 
 
     void analyze(const Event& event) {
+
+      double EPSILON = 0.1;
+
       const double weight = event.weight();
       
       const InvMassFinalState& invMassFinalStateW = applyProjection<InvMassFinalState>(event, "INVFSW");
       const ParticleVector&  WDecayProducts =  invMassFinalStateW.particles();
       _h_wprod_mult->fill(WDecayProducts.size(), weight);
       if (WDecayProducts.size() != 2) vetoEvent; // semi-leptonic ttbar only
+      
+      // veto taus
+      vector<HepMC::GenParticle*> allParticles = particles(event.genEvent());
+      for (size_t i = 0; i < allParticles.size(); i++) {
+        GenParticle* p = allParticles[i];
+        if (p->status() == 1 && abs(p->pdg_id()) == PID::NU_TAU) {
+          _h_nu_tau_pt->fill(p->momentum().perp(), weight);
+          if (p->momentum().perp() > 10.) vetoEvent;
+        }
+      }
+      
+      // TODO: Plot m(nutau, nutaubar), find suitable cut for suppressing W>tau+nutau. Use TauFinder?
+      //_h_mwnutau->fill(w.mass()/GeV, weight);
       
       int idxLep = 1;
       if ((fabs(WDecayProducts[1].pdgId()) == PID::NU_MU) || (fabs(WDecayProducts[1].pdgId()) == PID::NU_E)) {
@@ -77,7 +97,7 @@ namespace Rivet {
       
       // MET
       const MissingMomentum& met = applyProjection<MissingMomentum>(event, "MET");
-      _h_met->fill(met.visibleMomentum().pT()/GeV, weight);
+      _h_met->fill(min(met.visibleMomentum().pT(), 300.-EPSILON)/GeV, weight);
       
       // HT and ST
       const FastJets& jetpro = applyProjection<FastJets>(event, "Jets");
@@ -90,13 +110,12 @@ namespace Rivet {
         }
       }
       double st = ht + WDecayProducts[idxLep].pT() + met.visibleMomentum().pT();
-      _h_ht->fill(ht/GeV, weight);
-      _h_st->fill(st/GeV, weight);
+      _h_ht->fill(min(ht, 1000.-EPSILON)/GeV, weight);
+      _h_st->fill(min(st, 1200.-EPSILON)/GeV, weight);
       
       // ptW
       FourMomentum w = WDecayProducts[idxLep].momentum() - met.visibleMomentum();
-      _h_ptw->fill(w.pT()/GeV, weight);
-      //_h_mw->fill(w.mass()/GeV, weight);
+      _h_ptw->fill(min(w.pT(), 300.-EPSILON)/GeV, weight);
     }
 
 
@@ -114,7 +133,7 @@ namespace Rivet {
     
     Histo1DPtr _h_wprod_mult;
     Histo1DPtr _h_met, _h_ht, _h_st, _h_ptw;
-    //Histo1DPtr _h_mw;
+    Histo1DPtr _h_mwnutau, _h_nu_tau_pt;
 
     //@}
 

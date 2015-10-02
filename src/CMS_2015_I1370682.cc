@@ -14,7 +14,8 @@ namespace Rivet {
 
 class CMS_2015_I1370682 : public Analysis {
 public:
-  CMS_2015_I1370682() : Analysis("CMS_2015_I1370682") {
+  CMS_2015_I1370682() : Analysis("CMS_2015_I1370682"),
+    _applyCorrection(true) {
   }
 
   void init() {
@@ -138,30 +139,32 @@ public:
   };
 
   void finalize() {
-    // Correction functions for TOP-12-028 paper, (parton bin height)/(pseudotop bin height)
-    const double ch15[] = {1.161660, 1.136480, 1.020996, 0.895649, 0.772136, 0.685911, 0.559711, 0.566430};
-    const double ch17[] = {2.101211, 1.099831, 0.937698, 0.883005, 0.868135, 0.882153, 0.878180, 0.941096, 1.095958, 2.056497};
-    const double ch21[] = {1.602612, 0.913407, 0.816876, 0.849766, 0.889415, 0.857082};
-    const double ch22[] = {2.461665, 1.147150, 0.908031, 0.848166, 0.814687, 0.803214, 0.824948, 0.947269, 1.122359, 2.428979};
-    const double ch23[] = {1.498358, 1.362128, 1.024490, 0.819021, 0.646227, 0.475925, 0.372441};
+    if ( _applyCorrection ) {
+      // Correction functions for TOP-12-028 paper, (parton bin height)/(pseudotop bin height)
+      const double ch15[] = {1.161660, 1.136480, 1.020996, 0.895649, 0.772136, 0.685911, 0.559711, 0.566430};
+      const double ch17[] = {2.101211, 1.099831, 0.937698, 0.883005, 0.868135, 0.882153, 0.878180, 0.941096, 1.095958, 2.056497};
+      const double ch21[] = {1.602612, 0.913407, 0.816876, 0.849766, 0.889415, 0.857082};
+      const double ch22[] = {2.461665, 1.147150, 0.908031, 0.848166, 0.814687, 0.803214, 0.824948, 0.947269, 1.122359, 2.428979};
+      const double ch23[] = {1.498358, 1.362128, 1.024490, 0.819021, 0.646227, 0.475925, 0.372441};
 
-    const double ch24[] = {0.933825, 1.069645, 1.051336, 0.919932, 0.774565};
-    const double ch26[] = {1.682022, 1.002849, 0.925246, 0.924734, 0.880097, 0.901330, 1.042041, 1.733911};
-    const double ch30[] = {1.129278, 0.908123, 0.933110, 0.963850};
-    const double ch31[] = {2.401265, 1.140515, 0.937143, 0.889803, 0.833903, 0.946386, 1.179555, 2.445021};
-    const double ch32[] = {0.803342, 1.136017, 1.206834, 1.037619, 1.081579, 0.741247};
+      const double ch24[] = {0.933825, 1.069645, 1.051336, 0.919932, 0.774565};
+      const double ch26[] = {1.682022, 1.002849, 0.925246, 0.924734, 0.880097, 0.901330, 1.042041, 1.733911};
+      const double ch30[] = {1.129278, 0.908123, 0.933110, 0.963850};
+      const double ch31[] = {2.401265, 1.140515, 0.937143, 0.889803, 0.833903, 0.946386, 1.179555, 2.445021};
+      const double ch32[] = {0.803342, 1.136017, 1.206834, 1.037619, 1.081579, 0.741247};
 
-    applyCorrection(_hSL_topPt, ch15);
-    applyCorrection(_hSL_topY, ch17);
-    applyCorrection(_hSL_ttbarPt, ch21);
-    applyCorrection(_hSL_ttbarY, ch22);
-    applyCorrection(_hSL_ttbarMass, ch23);
+      applyCorrection(_hSL_topPt, ch15);
+      applyCorrection(_hSL_topY, ch17);
+      applyCorrection(_hSL_ttbarPt, ch21);
+      applyCorrection(_hSL_ttbarY, ch22);
+      applyCorrection(_hSL_ttbarMass, ch23);
 
-    applyCorrection(_hDL_topPt, ch24);
-    applyCorrection(_hDL_topY, ch26);
-    applyCorrection(_hDL_ttbarPt, ch30);
-    applyCorrection(_hDL_ttbarY, ch31);
-    applyCorrection(_hDL_ttbarMass, ch32);
+      applyCorrection(_hDL_topPt, ch24);
+      applyCorrection(_hDL_topY, ch26);
+      applyCorrection(_hDL_ttbarPt, ch30);
+      applyCorrection(_hDL_ttbarY, ch31);
+      applyCorrection(_hDL_ttbarMass, ch32);
+    }
 
     normalize(_hSL_topPt        );
     normalize(_hSL_topPtTtbarSys);
@@ -195,6 +198,8 @@ public:
   };
 
 private:
+  const bool _applyCorrection;
+
   Histo1DPtr _hSL_topPt        ;
   Histo1DPtr _hSL_topPtTtbarSys;
   Histo1DPtr _hSL_topY         ;

@@ -141,26 +141,41 @@ public:
   void finalize() {
     if ( _applyCorrection ) {
       // Correction functions for TOP-12-028 paper, (parton bin height)/(pseudotop bin height)
-      const double ch15[] = {1.161660, 1.136480, 1.020996, 0.895649, 0.772136, 0.685911, 0.559711, 0.566430};
-      const double ch17[] = {2.101211, 1.099831, 0.937698, 0.883005, 0.868135, 0.882153, 0.878180, 0.941096, 1.095958, 2.056497};
-      const double ch21[] = {1.602612, 0.913407, 0.816876, 0.849766, 0.889415, 0.857082};
-      const double ch22[] = {2.461665, 1.147150, 0.908031, 0.848166, 0.814687, 0.803214, 0.824948, 0.947269, 1.122359, 2.428979};
-      const double ch23[] = {1.498358, 1.362128, 1.024490, 0.819021, 0.646227, 0.475925, 0.372441};
-
-      const double ch24[] = {0.933825, 1.069645, 1.051336, 0.919932, 0.774565};
-      const double ch26[] = {1.682022, 1.002849, 0.925246, 0.924734, 0.880097, 0.901330, 1.042041, 1.733911};
-      const double ch30[] = {1.129278, 0.908123, 0.933110, 0.963850};
-      const double ch31[] = {2.401265, 1.140515, 0.937143, 0.889803, 0.833903, 0.946386, 1.179555, 2.445021};
-      const double ch32[] = {0.803342, 1.136017, 1.206834, 1.037619, 1.081579, 0.741247};
+      const double ch15[] = { 1.332751, 1.202828, 1.016043, 0.825949, 0.678531, 0.578008, 0.534732, 0.535978, };
+      const double ch16[] = { 1.331849, 1.204749, 0.993864, 0.785609, 0.637532, 0.546045, 0.518751, 0.533375, };
+      const double ch17[] = { 2.436009, 1.107317, 0.932163, 0.876795, 0.857605, 0.858273, 0.876685, 0.927404, 1.103424, 2.434089, };
+      const double ch18[] = { 1.072753, 0.987128, 0.946092, 1.026064, };
+      const double ch19[] = { 1.505408, 1.279948, 1.076546, 0.869024, 0.703783, 0.588815, 0.533738, 0.530076, };
+      const double ch20[] = { 1.266092, 1.142511, 0.950296, 0.765820, 0.635268, 0.555882, 0.537098, 0.551669, };
+      const double ch21[] = { 1.474220, 0.919568, 0.867454, 0.877010, 0.869179, 0.830976, };
+      const double ch22[] = { 2.907781, 1.169675, 0.920911, 0.825742, 0.785750, 0.783991, 0.823403, 0.918792, 1.165880, 2.898277, };
+      const double ch23[] = { 1.739471, 1.372242, 0.986298, 0.736899, 0.566952, 0.432300, 0.301161, };
+      const double ch24[] = { 0.997789, 1.044846, 1.024955, 0.899288, 0.769006, };
+      const double ch25[] = { 0.981824, 1.049661, 1.032651, 0.897714, 0.766686, 0.659779, };
+      const double ch26[] = { 1.758026, 1.017009, 0.914441, 0.898547, 0.897409, 0.916156, 1.012132, 1.767733, };
+      const double ch27[] = { 0.971406, 0.958558, 0.976420, 1.090009, };
+      const double ch28[] = { 1.020914, 1.044463, 1.031316, 0.909401, 0.776720, };
+      const double ch29[] = { 0.978018, 1.045177, 1.015406, 0.880289, 0.751794, };
+      const double ch30[] = { 1.144800, 0.893456, 0.943555, 0.982827, };
+      const double ch31[] = { 2.551711, 1.160696, 0.926956, 0.867168, 0.865276, 0.924450, 1.162228, 2.546409, };
+      const double ch32[] = { 0.882339, 1.120747, 1.092742, 1.032253, 0.971692, 0.918227, };
 
       applyCorrection(_hSL_topPt, ch15);
+      applyCorrection(_hSL_topPtTtbarSys, ch16);
       applyCorrection(_hSL_topY, ch17);
+      applyCorrection(_hSL_ttbarDelPhi, ch18);
+      applyCorrection(_hSL_topPtLead, ch19);
+      applyCorrection(_hSL_topPtSubLead, ch20);
       applyCorrection(_hSL_ttbarPt, ch21);
       applyCorrection(_hSL_ttbarY, ch22);
       applyCorrection(_hSL_ttbarMass, ch23);
 
       applyCorrection(_hDL_topPt, ch24);
+      applyCorrection(_hDL_topPtTtbarSys, ch25);
       applyCorrection(_hDL_topY, ch26);
+      applyCorrection(_hDL_ttbarDelPhi, ch27);
+      applyCorrection(_hDL_topPtLead, ch28);
+      applyCorrection(_hDL_topPtSubLead, ch29);
       applyCorrection(_hDL_ttbarPt, ch30);
       applyCorrection(_hDL_ttbarY, ch31);
       applyCorrection(_hDL_ttbarMass, ch32);

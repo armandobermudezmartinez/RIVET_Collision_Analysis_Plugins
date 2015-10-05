@@ -4,29 +4,46 @@
 
 using namespace Rivet;
 
-bool CMSGenParticle::isFromResonance(GenParticle* p) const {
-  const int aid = std::abs(p->pdg_id());
-  if ( isResonance(aid) ) return true;
-
-  if ( p->production_vertex() == 0 ) return false;
-  foreach ( GenParticle* pp,  Rivet::particles(p->production_vertex(), HepMC::parents) ) {
-    if ( _vetoIds.find(aid) != _vetoIds.end() ) continue;
-    if ( isFromResonance(pp) ) return true;
-  }
-
-  return false;
-}
-
 void CMSGenParticle::project(const Event& e) {
   _theParticles.clear();
 
-  foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
-    const int status = p->status();
-    if ( status != 1 ) continue;
+  // Collect particles from resonance
+  const std::vector<GenParticle*> allParticles = Rivet::particles(e.genEvent());
+  std::vector<GenParticle*> pFromReso;
+  pFromReso.reserve(allParticles.size());
+  foreach (GenParticle* p, allParticles) {
+    if ( p->status() == 1 or p->status() == 4 ) continue;
+    if ( !isResonance(std::abs(p->pdg_id())) ) continue;
+    if ( !p->production_vertex() or !p->end_vertex() ) continue; // For sately
+
+    // Skip if this resonance is decay product of other resonance
+    bool isDecayFromResonance = false;
+    foreach (GenParticle* gp, Rivet::particles(p->production_vertex(), HepMC::parents) ) {
+      if ( isResonance(std::abs(gp->pdg_id())) ) {
+        isDecayFromResonance = true;
+        break;
+      }
+    }
+    if ( isDecayFromResonance ) continue;
+
+    // Collect all stable particles from this resonance particle
+    foreach (GenParticle* sp, Rivet::particles(p->end_vertex(), HepMC::descendants)) {
+      if ( sp->status() != 1 ) continue;
+      pFromReso.push_back(sp);
+    }
+  }
+  std::sort(pFromReso.begin(), pFromReso.end());
+
+  // Collect stable particles vetoing uninteresting ones
+  foreach (GenParticle* p, allParticles) {
+    if ( p->status() != 1 ) continue;
 
     const int aid = std::abs(p->pdg_id());
-    if ( _vetoIds.find(aid) != _vetoIds.end() ) continue;
-    if ( _vetoIdsFromResonances.find(aid) != _vetoIdsFromResonances.end() && isFromResonance(p) ) continue;
+    // Skip exotic particles
+    if ( std::binary_search(_vetoIds.begin(), _vetoIds.end(), aid) ) continue;
+    // Skip muons and neutrinos from resonance
+    if ( std::binary_search(_vetoIdsFromResonances.begin(), _vetoIdsFromResonances.end(), aid) &&
+         std::binary_search(pFromReso.begin(), pFromReso.end(), p) ) continue;
 
     _theParticles.push_back(Particle(*p));
   }

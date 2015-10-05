@@ -150,7 +150,8 @@ public:
 
     // Find leptons
     Particles lCands;
-    if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON ) {
+    if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON and
+         !(ttbarState.mode1() >= 3 and ttbarState.mode2() >= 3) ) {
       lCands.push_back(Particle());
       foreach (const Particle& p, ttbarState.wDecays1()) {
         const int absId = std::abs(p.pdgId());
@@ -163,7 +164,8 @@ public:
       // Apply the particle level phase space cut
       if ( lCands[0].pT() <= 33 or std::abs(lCands[0].eta()) >= 2.1 ) vetoEvent;
     }
-    else if ( ttbarState.mode() == PartonTop::CH_FULLLEPTON ) {
+    else if ( ttbarState.mode() == PartonTop::CH_FULLLEPTON and
+              ttbarState.mode1() < 3 and ttbarState.mode2() < 3 ) {
       lCands.push_back(Particle());
       foreach (const Particle& p, ttbarState.wDecays1()) {
         const int absId = std::abs(p.pdgId());

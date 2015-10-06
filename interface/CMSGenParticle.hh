@@ -63,7 +63,7 @@ namespace Rivet {
       return pos != _vetoIdsFromResonances.end() && *pos == absId;
     }
 
-    int fromResonance(std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const;
+    int fromResonance(const std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const;
 
   protected:
     std::vector<unsigned int> _vetoIds;

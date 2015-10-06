@@ -23,11 +23,6 @@ public:
     PartonTop ttbarState;
     addProjection(ttbarState, "ttbar");
 
-    //FinalState fs(-5.0, 5.0, 0*GeV);
-    //VetoedFinalState fsForJets(fs);
-    //fsForJets.addDecayProductsVeto(+24);
-    //fsForJets.addDecayProductsVeto(-24);
-
     CMSGenParticle fsForJets;
     FastJets fj(fsForJets, FastJets::ANTIKT, 0.5);
     fj.useInvisibles();

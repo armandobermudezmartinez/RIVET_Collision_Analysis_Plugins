@@ -29,7 +29,7 @@ void CMSGenParticle::project(const Event& e) {
   }
 }
 
-int CMSGenParticle::fromResonance(std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const {
+int CMSGenParticle::fromResonance(const std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const {
   const int id = p->pdg_id();
   const unsigned int aid = std::abs(id);
 

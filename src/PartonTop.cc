@@ -72,3 +72,11 @@ void PartonTop::project(const Event& e) {
   if ( isTau1 ) _mode1 = static_cast<DecayMode>(_mode1+3);
   if ( isTau2 ) _mode2 = static_cast<DecayMode>(_mode2+3);
 }
+
+Particle PartonTop::findLepton(const ParticleVector& v) const {
+  foreach (const Particle& p, v) {
+    const int aid = std::abs(p.pdgId());
+    if ( aid == 11 or aid == 13 ) return p;
+  }
+  return Particle();
+}

@@ -143,30 +143,21 @@ public:
     Particles lCands;
     if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON and
          !(ttbarState.mode1() >= 3 and ttbarState.mode2() >= 3) ) {
-      lCands.push_back(Particle());
-      foreach (const Particle& p, ttbarState.wDecays1()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[0] = p; break; }
-      }
-      foreach (const Particle& p, ttbarState.wDecays2()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[0] = p; break; }
-      }
+      const Particle l1 = ttbarState.lepton1();
+      const Particle l2 = ttbarState.lepton2();
+      if      ( l1.pdgId() ) lCands.push_back(l1);
+      else if ( l2.pdgId() ) lCands.push_back(l2);
+      else vetoEvent;
+
       // Apply the particle level phase space cut
       if ( lCands[0].pT() <= 33 or std::abs(lCands[0].eta()) >= 2.1 ) vetoEvent;
     }
     else if ( ttbarState.mode() == PartonTop::CH_FULLLEPTON and
               ttbarState.mode1() < 3 and ttbarState.mode2() < 3 ) {
-      lCands.push_back(Particle());
-      foreach (const Particle& p, ttbarState.wDecays1()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[0] = p; break; }
-      }
-      lCands.push_back(Particle());
-      foreach (const Particle& p, ttbarState.wDecays2()) {
-        const int absId = std::abs(p.pdgId());
-        if ( absId == 11 or absId == 13 ) { lCands[1] = p; break; }
-      }
+      lCands.push_back(ttbarState.lepton1());
+      lCands.push_back(ttbarState.lepton2());
+      if ( !lCands[0].pdgId() or !lCands[1].pdgId() ) vetoEvent;
+
       if ( lCands[0].pT() < lCands[1].pT() ) std::swap(lCands[0], lCands[1]);
       const double l1Pt = lCands[0].pT(), l1Abseta = std::abs(lCands[0].eta());
       const double l2Pt = lCands[1].pT(), l2Abseta = std::abs(lCands[1].eta());

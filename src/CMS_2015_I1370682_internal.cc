@@ -3,9 +3,6 @@
 #include "Rivet/Particle.fhh"
 #include "Rivet/Math/LorentzTrans.hh"
 #include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/IdentifiedFinalState.hh"
-#include "Rivet/Projections/VetoedFinalState.hh"
-#include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
 #include "TopMonteCarlo/RivetTop/interface/CMSGenParticle.hh"
@@ -76,7 +73,8 @@ public:
       foreach (const GenParticle* ancestor, Rivet::particles(v, HepMC::ancestors)) {
         if ( ancestor->status() != 2 ) continue;
         const PdgId pid = ancestor->pdg_id();
-        if ( !PID::isHadron(pid) or !PID::hasBottom(pid) ) continue;
+        //if ( !PID::isHadron(pid) or !PID::hasBottom(pid) ) continue;
+        if ( !PID::hasBottom(pid) ) continue;
 
         GenVertex* av = ancestor->production_vertex();
         if ( !av ) continue;
@@ -89,9 +87,7 @@ public:
           }
         }
 
-        if ( !isDuplicated ) {
-          bAncestors.insert(ancestor->barcode());
-        }
+        if ( !isDuplicated ) bAncestors.insert(ancestor->barcode());
       }
     }
   }
@@ -177,6 +173,7 @@ public:
 
       // Apply the particle level phase space cut
       if ( l1Pt <= 20 or l1Abseta >= 2.4 or l2Pt <= 20 or l2Abseta >= 2.4 ) vetoEvent;
+      if ( (lCands[0].momentum()+lCands[1].momentum()).mass() < 20 ) vetoEvent;
     }
 
     // Build genJets
@@ -184,10 +181,15 @@ public:
     Jets jets;
     foreach ( const Jet& jet, jetsIn ) {
       if ( std::abs(jet.eta()) > 2.4 ) continue;
+      bool isOverlapped = false;
       foreach ( const Particle& lCand, lCands ) {
-        if ( deltaR(lCand.momentum(), jet.momentum()) < 0.3 ) continue;
-        jets.push_back(jet);
+        if ( deltaR(lCand.momentum(), jet.momentum()) < 0.3 ) {
+          isOverlapped = true;
+          break;
+        }
       }
+      if ( isOverlapped ) continue;
+      jets.push_back(jet);
     }
     if ( ttbarState.mode() != PartonTop::CH_SEMILEPTON and jets.size() < 4 ) vetoEvent;
     else if ( ttbarState.mode() != PartonTop::CH_FULLLEPTON and jets.size() < 2 ) vetoEvent;
@@ -246,8 +248,6 @@ public:
       const FourMomentum& l1P4 = lCands[0].momentum();
       const FourMomentum& l2P4 = lCands[1].momentum();
       const FourMomentum dilP4 = l1P4+l2P4;
-      const double dilMass = dilP4.mass();
-      if ( dilMass < 20 ) vetoEvent;
       const double l1Pt = l1P4.pT(), l1Eta = l1P4.eta();
       const double l2Pt = l2P4.pT(), l2Eta = l2P4.eta();
 

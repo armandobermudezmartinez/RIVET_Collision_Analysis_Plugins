@@ -54,10 +54,20 @@ namespace Rivet {
       const int iid = abs(pdgId) % 10000;
       return (iid > 21 && iid <= 42) || iid == 6 || iid == 8;
     }
+    bool isIgnored(const unsigned int absId) const {
+      auto pos = std::lower_bound(_vetoIds.begin(), _vetoIds.end(), absId);
+      return pos != _vetoIds.end() && *pos == absId;
+    }
+    bool isExcludedFromResonance(const unsigned int absId) const {
+      auto pos = std::lower_bound(_vetoIdsFromResonances.begin(), _vetoIdsFromResonances.end(), absId);
+      return pos != _vetoIdsFromResonances.end() && *pos == absId;
+    }
+
+    int fromResonance(std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const;
 
   protected:
-    std::vector<int> _vetoIds;
-    std::vector<int> _vetoIdsFromResonances;
+    std::vector<unsigned int> _vetoIds;
+    std::vector<unsigned int> _vetoIdsFromResonances;
 
   };
 

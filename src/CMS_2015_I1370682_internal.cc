@@ -141,22 +141,20 @@ public:
 
     // Find leptons
     Particles lCands;
-    if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON and
-         !(ttbarState.mode1() >= 3 and ttbarState.mode2() >= 3) ) {
+    if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON ) {
       const Particle l1 = ttbarState.lepton1();
       const Particle l2 = ttbarState.lepton2();
       if      ( l1.pdgId() ) lCands.push_back(l1);
       else if ( l2.pdgId() ) lCands.push_back(l2);
-      else vetoEvent;
+      else vetoEvent; // This never happens if PartonTop runs properly
 
       // Apply the particle level phase space cut
       if ( lCands[0].pT() <= 33 or std::abs(lCands[0].eta()) >= 2.1 ) vetoEvent;
     }
-    else if ( ttbarState.mode() == PartonTop::CH_FULLLEPTON and
-              ttbarState.mode1() < 3 and ttbarState.mode2() < 3 ) {
+    else if ( ttbarState.mode() == PartonTop::CH_FULLLEPTON ) {
       lCands.push_back(ttbarState.lepton1());
       lCands.push_back(ttbarState.lepton2());
-      if ( !lCands[0].pdgId() or !lCands[1].pdgId() ) vetoEvent;
+      if ( !lCands[0].pdgId() or !lCands[1].pdgId() ) vetoEvent; // This never happens if PartonTop runs properly
 
       if ( lCands[0].pT() < lCands[1].pT() ) std::swap(lCands[0], lCands[1]);
       const double l1Pt = lCands[0].pT(), l1Abseta = std::abs(lCands[0].eta());

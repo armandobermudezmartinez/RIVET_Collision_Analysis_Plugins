@@ -71,4 +71,4 @@ http://ebouvier.web.cern.ch/ebouvier/TOPRivetForLesHouches/plots/CMS\_AN\_Pseudo
     cmsRun runRivietWithPythia8.py
     cmsRun runRivietWithHerwig.py
     rivet-mkhtml -c ../data/CMS_LesHouches2015.plot Pythia8.yoda:'Powheg+Pythia 8' Herwig.yoda:'Powheg+Herwig++'
-    firefox plots/index.hmtl &
+    firefox plots/index.html &

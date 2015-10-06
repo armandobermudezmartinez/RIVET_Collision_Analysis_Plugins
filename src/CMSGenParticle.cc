@@ -4,19 +4,6 @@
 
 using namespace Rivet;
 
-bool CMSGenParticle::isFromResonance(GenParticle* p) const {
-  const int aid = std::abs(p->pdg_id());
-  if ( isResonance(aid) ) return true;
-
-  if ( p->production_vertex() == 0 ) return false;
-  foreach ( GenParticle* pp,  Rivet::particles(p->production_vertex(), HepMC::parents) ) {
-    if ( _vetoIds.find(aid) != _vetoIds.end() ) continue;
-    if ( isFromResonance(pp) ) return true;
-  }
-
-  return false;
-}
-
 void CMSGenParticle::project(const Event& e) {
   _theParticles.clear();
 
@@ -42,7 +29,7 @@ void CMSGenParticle::project(const Event& e) {
   }
 }
 
-int CMSGenParticle::fromResonance(std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const {
+int CMSGenParticle::fromResonance(const std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const {
   const int id = p->pdg_id();
   const unsigned int aid = std::abs(id);
 

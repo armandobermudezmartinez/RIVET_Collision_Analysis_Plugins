@@ -27,6 +27,9 @@ namespace Rivet {
         _vetoIdsFromResonances({12, 13, 14, 16})
     {
       setName("CMSGenParticle");
+
+      std::sort(_vetoIds.begin(), _vetoIds.end());
+      std::sort(_vetoIdsFromResonances.begin(), _vetoIdsFromResonances.end());
     }
 
     /// Clone on the heap.
@@ -60,7 +63,7 @@ namespace Rivet {
       return pos != _vetoIdsFromResonances.end() && *pos == absId;
     }
 
-    int fromResonance(std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const;
+    int fromResonance(const std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const;
 
   protected:
     std::vector<unsigned int> _vetoIds;

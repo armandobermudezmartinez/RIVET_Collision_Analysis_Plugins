@@ -24,8 +24,8 @@ namespace Rivet {
     /// The default constructor. May specify the minimum and maximum
     /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
     PartonTop(double mineta = -MAXDOUBLE,
-                    double maxeta =  MAXDOUBLE,
-                    double minpt = 0.0*GeV)
+              double maxeta =  MAXDOUBLE,
+              double minpt = 0.0*GeV)
       : FinalState(mineta, maxeta, minpt)
     {
       setName("PartonTop");
@@ -39,10 +39,12 @@ namespace Rivet {
     //@}
 
   public:
-    TTbarMode mode() const { 
-      if ( _mode1 == CH_HADRON && _mode2 == CH_HADRON ) return CH_FULLHADRON;
-      else if ( _mode1 != CH_HADRON && _mode2 != CH_HADRON ) return CH_FULLLEPTON;
-      else return CH_SEMILEPTON;
+    TTbarMode mode() const {
+      const bool isLepton1 = _mode1%3 != 0;
+      const bool isLepton2 = _mode2%3 != 0;
+      if      (  isLepton1 &&  isLepton2 ) return CH_FULLLEPTON;
+      else if ( !isLepton1 && !isLepton2 ) return CH_FULLHADRON;
+      return CH_SEMILEPTON;
     }
     DecayMode mode1() const { return _mode1; }
     DecayMode mode2() const { return _mode2; }

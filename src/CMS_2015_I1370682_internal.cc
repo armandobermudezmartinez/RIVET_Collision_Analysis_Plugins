@@ -12,7 +12,8 @@ namespace Rivet {
 
 class CMS_2015_I1370682_internal : public Analysis {
 public:
-  CMS_2015_I1370682_internal() : Analysis("CMS_2015_I1370682_internal") {
+  CMS_2015_I1370682_internal() : Analysis("CMS_2015_I1370682_internal"),
+    _doShapeOnly(false) {
   }
 
   void init() {
@@ -31,7 +32,7 @@ public:
     _hSL_bqEta    = bookHisto1D("d04-x01-y01");
     _hSL_bbbarPt  = bookHisto1D("d05-x01-y01");
     _hSL_bbbarMass= bookHisto1D("d06-x01-y01");
-                                                                          
+
     _hDL_lepPt      = bookHisto1D("d07-x01-y01");
     _hDL_lepEta     = bookHisto1D("d08-x01-y01");
     _hDL_dilepPt    = bookHisto1D("d09-x01-y01");
@@ -257,52 +258,94 @@ public:
   };
 
   void finalize() {
-    normalize(_hSL_lepPt    );
-    normalize(_hSL_lepEta   );
-    normalize(_hSL_bqPt     );
-    normalize(_hSL_bqEta    );
-    normalize(_hSL_bbbarPt  );
-    normalize(_hSL_bbbarMass);
-                
-    normalize(_hDL_lepPt      );
-    normalize(_hDL_lepEta     );
-    normalize(_hDL_dilepPt    );
-    normalize(_hDL_dilepMass  );
-    normalize(_hDL_bqPt       );
-    normalize(_hDL_bqEta      );
-    normalize(_hDL_bbbarPt    );
-    normalize(_hDL_bbbarMass  );
+    if ( _doShapeOnly ) {
+      normalize(_hSL_lepPt    );
+      normalize(_hSL_lepEta   );
+      normalize(_hSL_bqPt     );
+      normalize(_hSL_bqEta    );
+      normalize(_hSL_bbbarPt  );
+      normalize(_hSL_bbbarMass);
 
-    normalize(_hSL_topPt        );
-    normalize(_hSL_topPtTtbarSys);
-    normalize(_hSL_topY         );
-    normalize(_hSL_ttbarDelPhi  );
-    normalize(_hSL_topPtLead    );
-    normalize(_hSL_topPtSubLead );
-    normalize(_hSL_ttbarPt      );
-    normalize(_hSL_ttbarY       );
-    normalize(_hSL_ttbarMass    );
+      normalize(_hDL_lepPt      );
+      normalize(_hDL_lepEta     );
+      normalize(_hDL_dilepPt    );
+      normalize(_hDL_dilepMass  );
+      normalize(_hDL_bqPt       );
+      normalize(_hDL_bqEta      );
+      normalize(_hDL_bbbarPt    );
+      normalize(_hDL_bbbarMass  );
 
-    normalize(_hDL_topPt        );
-    normalize(_hDL_topPtTtbarSys);
-    normalize(_hDL_topY         );
-    normalize(_hDL_ttbarDelPhi  );
-    normalize(_hDL_topPtLead    );
-    normalize(_hDL_topPtSubLead );
-    normalize(_hDL_ttbarPt      );
-    normalize(_hDL_ttbarY       );
-    normalize(_hDL_ttbarMass    );
+      normalize(_hSL_topPt        );
+      normalize(_hSL_topPtTtbarSys);
+      normalize(_hSL_topY         );
+      normalize(_hSL_ttbarDelPhi  );
+      normalize(_hSL_topPtLead    );
+      normalize(_hSL_topPtSubLead );
+      normalize(_hSL_ttbarPt      );
+      normalize(_hSL_ttbarY       );
+      normalize(_hSL_ttbarMass    );
+
+      normalize(_hDL_topPt        );
+      normalize(_hDL_topPtTtbarSys);
+      normalize(_hDL_topY         );
+      normalize(_hDL_ttbarDelPhi  );
+      normalize(_hDL_topPtLead    );
+      normalize(_hDL_topPtSubLead );
+      normalize(_hDL_ttbarPt      );
+      normalize(_hDL_ttbarY       );
+      normalize(_hDL_ttbarMass    );
+    }
+    else {
+      const double s = 1./sumOfWeights();
+      scale(_hSL_lepPt    ,s);
+      scale(_hSL_lepEta   ,s);
+      scale(_hSL_bqPt     ,s);
+      scale(_hSL_bqEta    ,s);
+      scale(_hSL_bbbarPt  ,s);
+      scale(_hSL_bbbarMass,s);
+
+      scale(_hDL_lepPt      ,s);
+      scale(_hDL_lepEta     ,s);
+      scale(_hDL_dilepPt    ,s);
+      scale(_hDL_dilepMass  ,s);
+      scale(_hDL_bqPt       ,s);
+      scale(_hDL_bqEta      ,s);
+      scale(_hDL_bbbarPt    ,s);
+      scale(_hDL_bbbarMass  ,s);
+
+      scale(_hSL_topPt        ,s);
+      scale(_hSL_topPtTtbarSys,s);
+      scale(_hSL_topY         ,s);
+      scale(_hSL_ttbarDelPhi  ,s);
+      scale(_hSL_topPtLead    ,s);
+      scale(_hSL_topPtSubLead ,s);
+      scale(_hSL_ttbarPt      ,s);
+      scale(_hSL_ttbarY       ,s);
+      scale(_hSL_ttbarMass    ,s);
+
+      scale(_hDL_topPt        ,s);
+      scale(_hDL_topPtTtbarSys,s);
+      scale(_hDL_topY         ,s);
+      scale(_hDL_ttbarDelPhi  ,s);
+      scale(_hDL_topPtLead    ,s);
+      scale(_hDL_topPtSubLead ,s);
+      scale(_hDL_ttbarPt      ,s);
+      scale(_hDL_ttbarY       ,s);
+      scale(_hDL_ttbarMass    ,s);
+    }
 
   };
 
 private:
+  const bool _doShapeOnly;
+
   Histo1DPtr _hSL_lepPt;
   Histo1DPtr _hSL_lepEta;
   Histo1DPtr _hSL_bqPt;
   Histo1DPtr _hSL_bqEta;
   Histo1DPtr _hSL_bbbarPt;
   Histo1DPtr _hSL_bbbarMass;
-               
+
   Histo1DPtr _hDL_lepPt;
   Histo1DPtr _hDL_lepEta;
   Histo1DPtr _hDL_dilepPt;

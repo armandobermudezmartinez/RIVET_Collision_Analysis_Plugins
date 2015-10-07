@@ -1,11 +1,5 @@
 #include "Rivet/Analysis.hh"
-//#include "Rivet/AnalysisLoader.hh"
-//#include "Rivet/Particle.fhh"
 #include "Rivet/Math/LorentzTrans.hh"
-#include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/IdentifiedFinalState.hh"
-#include "Rivet/Projections/VetoedFinalState.hh"
-#include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
 #include "TopMonteCarlo/RivetTop/interface/PseudoTop.hh"
@@ -15,7 +9,7 @@ namespace Rivet {
 class CMS_2015_I1370682 : public Analysis {
 public:
   CMS_2015_I1370682() : Analysis("CMS_2015_I1370682"),
-    _applyCorrection(true) {
+    _applyCorrection(true), _doShapeOnly(false) {
   }
 
   void init() {
@@ -182,25 +176,49 @@ public:
       applyCorrection(_hDL_ttbarMass, ch32);
     }
 
-    normalize(_hSL_topPt        );
-    normalize(_hSL_topPtTtbarSys);
-    normalize(_hSL_topY         );
-    normalize(_hSL_ttbarDelPhi  );
-    normalize(_hSL_topPtLead    );
-    normalize(_hSL_topPtSubLead );
-    normalize(_hSL_ttbarPt      );
-    normalize(_hSL_ttbarY       );
-    normalize(_hSL_ttbarMass    );
+    if ( _doShapeOnly ) {
+      normalize(_hSL_topPt        );
+      normalize(_hSL_topPtTtbarSys);
+      normalize(_hSL_topY         );
+      normalize(_hSL_ttbarDelPhi  );
+      normalize(_hSL_topPtLead    );
+      normalize(_hSL_topPtSubLead );
+      normalize(_hSL_ttbarPt      );
+      normalize(_hSL_ttbarY       );
+      normalize(_hSL_ttbarMass    );
 
-    normalize(_hDL_topPt        );
-    normalize(_hDL_topPtTtbarSys);
-    normalize(_hDL_topY         );
-    normalize(_hDL_ttbarDelPhi  );
-    normalize(_hDL_topPtLead    );
-    normalize(_hDL_topPtSubLead );
-    normalize(_hDL_ttbarPt      );
-    normalize(_hDL_ttbarY       );
-    normalize(_hDL_ttbarMass    );
+      normalize(_hDL_topPt        );
+      normalize(_hDL_topPtTtbarSys);
+      normalize(_hDL_topY         );
+      normalize(_hDL_ttbarDelPhi  );
+      normalize(_hDL_topPtLead    );
+      normalize(_hDL_topPtSubLead );
+      normalize(_hDL_ttbarPt      );
+      normalize(_hDL_ttbarY       );
+      normalize(_hDL_ttbarMass    );
+    }
+    else {
+      const double s = 1./sumOfWeights();
+      scale(_hSL_topPt        , s);
+      scale(_hSL_topPtTtbarSys, s);
+      scale(_hSL_topY         , s);
+      scale(_hSL_ttbarDelPhi  , s);
+      scale(_hSL_topPtLead    , s);
+      scale(_hSL_topPtSubLead , s);
+      scale(_hSL_ttbarPt      , s);
+      scale(_hSL_ttbarY       , s);
+      scale(_hSL_ttbarMass    , s);
+
+      scale(_hDL_topPt        , s);
+      scale(_hDL_topPtTtbarSys, s);
+      scale(_hDL_topY         , s);
+      scale(_hDL_ttbarDelPhi  , s);
+      scale(_hDL_topPtLead    , s);
+      scale(_hDL_topPtSubLead , s);
+      scale(_hDL_ttbarPt      , s);
+      scale(_hDL_ttbarY       , s);
+      scale(_hDL_ttbarMass    , s);
+    }
 
   };
 
@@ -214,7 +232,7 @@ public:
   };
 
 private:
-  const bool _applyCorrection;
+  const bool _applyCorrection, _doShapeOnly;
 
   Histo1DPtr _hSL_topPt        ;
   Histo1DPtr _hSL_topPtTtbarSys;

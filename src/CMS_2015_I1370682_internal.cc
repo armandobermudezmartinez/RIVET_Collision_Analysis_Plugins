@@ -181,8 +181,8 @@ public:
       if ( isOverlapped ) continue;
       jets.push_back(jet);
     }
-    if ( ttbarState.mode() != PartonTop::CH_SEMILEPTON and jets.size() < 4 ) vetoEvent;
-    else if ( ttbarState.mode() != PartonTop::CH_FULLLEPTON and jets.size() < 2 ) vetoEvent;
+    if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON and jets.size() < 4 ) vetoEvent;
+    else if ( ttbarState.mode() == PartonTop::CH_FULLLEPTON and jets.size() < 2 ) vetoEvent;
 
     // Get Leading two jets
     std::set<int> bAncestors;

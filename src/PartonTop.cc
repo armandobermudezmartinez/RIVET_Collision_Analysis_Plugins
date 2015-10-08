@@ -18,9 +18,10 @@ void PartonTop::project(const Event& e) {
   foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
     const int pdgId = p->pdg_id();
     const int absId = abs(pdgId);
-    if ( PID::isHadron(pdgId) ) continue; // skip hadrons
-    if ( pdgId == 22 ) continue; // skip photons
-    if ( pdgId == 91 or pdgId == 92 ) continue; // Skip cluster, strings
+    if ( absId > 20 ) continue; // We are only interested in quarks and leptons
+    //if ( PID::isHadron(pdgId) ) continue; // skip hadrons
+    //if ( pdgId == 22 ) continue; // skip photons
+    //if ( pdgId == 91 or pdgId == 92 ) continue; // Skip cluster, strings
 
     if ( isZero(p->momentum().perp()) || p->momentum().perp() < ptmin ) continue;
     if ( !inRange(p->momentum().eta(), etamin, etamax) ) continue;

@@ -13,6 +13,7 @@ src = yoda.readYODA(sys.argv[1])
 out = {}
 for k in src.viewkeys():
     out[k] = src[k]
+    if out[k].integral() == 0: continue
     out[k].normalize()
 
 yoda.writeYODA(out, sys.argv[2])

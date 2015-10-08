@@ -76,8 +76,7 @@ Particle PartonTop::findLepton(const ParticleVector& v) const {
   Particle pp = Particle();
   foreach (const Particle& p, v) {
     const int aid = std::abs(p.pdgId());
-    if ( aid != 11 or aid != 13 ) continue;
-    if ( p.pT() > pp.pT() ) pp = p;
+    if ( (aid == 11 or aid == 13) and  p.pT() > pp.pT() ) pp = p;
   }
   return pp;
 }

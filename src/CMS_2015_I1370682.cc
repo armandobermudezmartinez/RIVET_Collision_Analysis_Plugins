@@ -9,7 +9,7 @@ namespace Rivet {
 class CMS_2015_I1370682 : public Analysis {
 public:
   CMS_2015_I1370682() : Analysis("CMS_2015_I1370682"),
-    _applyCorrection(true), _doShapeOnly(false) {
+    _applyCorrection(false), _doShapeOnly(false) {
   }
 
   void init() {

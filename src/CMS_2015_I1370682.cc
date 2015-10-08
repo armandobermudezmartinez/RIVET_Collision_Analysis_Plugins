@@ -42,7 +42,7 @@ public:
   void analyze(const Event& event) {
     const double weight = event.weight();
 
-    // Get the parton level ttbar candidate
+    // Get the ttbar candidate
     const PseudoTop& ttbar = applyProjection<PseudoTop>(event, "ttbar");
     if ( ttbar.mode() == PseudoTop::CH_NONE ) vetoEvent;
 

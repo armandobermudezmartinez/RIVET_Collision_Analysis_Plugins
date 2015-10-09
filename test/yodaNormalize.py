@@ -13,7 +13,16 @@ src = yoda.readYODA(sys.argv[1])
 out = {}
 for k in src.viewkeys():
     out[k] = src[k]
-    if out[k].integral() == 0: continue
-    out[k].normalize()
+    if type(out[k]) == yoda.core.Scatter2D:
+        sumW = 0.
+        for p in out[k].points:
+            width = abs(p.xErrs[0])+abs(p.xErrs[1])
+            area = width*p.y
+            sumW += area
+        for p in out[k].points:
+            p.scaleY(1./sumW)
+    else:
+        if out[k].integral() == 0: continue
+        out[k].normalize()
 
 yoda.writeYODA(out, sys.argv[2])

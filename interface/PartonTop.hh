@@ -21,12 +21,8 @@ namespace Rivet {
     /// @name Standard constructors and destructors.
     //@{
 
-    /// The default constructor. May specify the minimum and maximum
-    /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
-    PartonTop(double mineta = -MAXDOUBLE,
-              double maxeta =  MAXDOUBLE,
-              double minpt = 0.0*GeV)
-      : FinalState(mineta, maxeta, minpt)
+    /// The default constructor.
+    PartonTop() : FinalState(-MAXDOUBLE, MAXDOUBLE, 0.0*GeV)
     {
       setName("PartonTop");
     }

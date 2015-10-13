@@ -9,6 +9,7 @@ void PartonTop::project(const Event& e) {
   _wDecays1.clear();
   _wDecays2.clear();
   _mode1 = _mode2 = CH_HADRON; // Set default decay mode to full-hadronic
+  _t1 = _t2 = _b1 = _b2 = Particle();
 
   const double ptmin = 0;
   const double etamin = -MAXDOUBLE, etamax = MAXDOUBLE;
@@ -51,10 +52,10 @@ void PartonTop::project(const Event& e) {
     // Skip particles from hadronization (and keep tau decay)
     if ( rp.fromDecay() and !rp.hasAncestor(15) and !rp.hasAncestor(-15) ) continue;
 
-    if      ( pdgId ==  6 ) { nTop++; _t1 = Particle(rp); }
-    else if ( pdgId == -6 ) { nTop++; _t2 = Particle(rp); }
-    else if ( pdgId ==  5 ) _b1 = Particle(rp);
-    else if ( pdgId == -5 ) _b2 = Particle(rp);
+    if      ( pdgId ==  6 ) { nTop++; _t1 = rp; }
+    else if ( pdgId == -6 ) { nTop++; _t2 = rp; }
+    else if ( pdgId ==  5 and _b1.pT() > rp.pT() ) _b1 = rp;
+    else if ( pdgId == -5 and _b2.pT() > rp.pT() ) _b2 = rp;
     else if ( absId <= 16 && rp.hasAncestor( 24) ) {
       if ( pdgId == -15 ) isTau1 = true;
       else if ( pdgId == -11 ) _mode1 = CH_ELECTRON;

@@ -54,8 +54,8 @@ void PartonTop::project(const Event& e) {
 
     if      ( pdgId ==  6 ) { nTop++; _t1 = rp; }
     else if ( pdgId == -6 ) { nTop++; _t2 = rp; }
-    else if ( pdgId ==  5 and _b1.pT() > rp.pT() ) _b1 = rp;
-    else if ( pdgId == -5 and _b2.pT() > rp.pT() ) _b2 = rp;
+    else if ( pdgId ==  5 and rp.pT() > _b1.pT() ) _b1 = rp;
+    else if ( pdgId == -5 and rp.pT() > _b2.pT() ) _b2 = rp;
     else if ( absId <= 16 && rp.hasAncestor( 24) ) {
       if ( pdgId == -15 ) isTau1 = true;
       else if ( pdgId == -11 ) _mode1 = CH_ELECTRON;

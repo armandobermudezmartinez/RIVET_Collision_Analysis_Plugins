@@ -34,48 +34,37 @@ public:
     addProjection(fj, "Jets");
     
     // Book histograms
-    // Plots in appendix B table 2, jet multiplicities
     _hVis_nJet30 = bookHisto1D("h02_x01");
     _hVis_nJet60 = bookHisto1D("h02_x02");
     _hVis_nJet100 = bookHisto1D("h02_x03");
 
-    // Plots in appendix B table 3, first additional jet pT and |eta|
     _hVis_addJet1Pt  = bookHisto1D("h03_x01");
     _hVis_addJet1Eta = bookHisto1D("h03_x02");
-    // Plots in appendix B table 4, second additional jet pT and |eta|
     _hVis_addJet2Pt  = bookHisto1D("h04_x01");
     _hVis_addJet2Eta = bookHisto1D("h04_x02");
-    // Plots in appendix B table 5, two leading additional jet pair mass, dR, HT
     _hVis_addJJMass = bookHisto1D("h05_x01");
     _hVis_addJJDR   = bookHisto1D("h05_x02");
     _hVis_addJJHT   = bookHisto1D("h05_x03");
 
-    // Plots in appendix B table 6, first additional jet pT and |eta|
     _hFull_addJet1Pt  = bookHisto1D("h06_x01");
     _hFull_addJet1Eta = bookHisto1D("h06_x02");
-    // Plots in appendix B table 7, second additional jet pT and |eta|
     _hFull_addJet2Pt  = bookHisto1D("h07_x01");
     _hFull_addJet2Eta = bookHisto1D("h07_x02");
-    // Plots in appendix B table 8, two leading additional jet pair mass, dR, HT
     _hFull_addJJMass = bookHisto1D("h08_x01");
     _hFull_addJJDR   = bookHisto1D("h08_x02");
     _hFull_addJJHT   = bookHisto1D("h08_x03");
 
-    // Plots in appendix B table 9, first and second additional b-jet pT and |eta|
     _hVis_addBJet1Pt  = bookHisto1D("h09_x01");
     _hVis_addBJet1Eta = bookHisto1D("h09_x02");
     _hVis_addBJet2Pt  = bookHisto1D("h09_x03");
     _hVis_addBJet2Eta = bookHisto1D("h09_x04");
-    // Plots in appendix B table 10, two leading additional b-jet pair mass, dR
     _hVis_addBBMass = bookHisto1D("h10_x01");
     _hVis_addBBDR   = bookHisto1D("h10_x02");
 
-    // Plots in appendix B table 11, first and second additional b-jet pT and |eta|
     _hFull_addBJet1Pt  = bookHisto1D("h11_x01");
     _hFull_addBJet1Eta = bookHisto1D("h11_x02");
     _hFull_addBJet2Pt  = bookHisto1D("h11_x03");
     _hFull_addBJet2Eta = bookHisto1D("h11_x04");
-    // Plots in appendix B table 12, two leading additional b-jet pair mass, dR
     _hFull_addBBMass = bookHisto1D("h12_x01");
     _hFull_addBBDR   = bookHisto1D("h12_x02");
 
@@ -117,12 +106,11 @@ public:
     const Particle lep2 = getLast(partonTop.lepton2());
     if ( lep1.pT() <= 1e-9 or lep2.pT() <= 1e-9 ) vetoEvent; // Just for sanity check
 
-    const Jets& jets = applyProjection<JetAlg>(event, "Jets").jetsByPt(20*GeV);
+    const Jets& jets = applyProjection<JetAlg>(event, "Jets").jetsByPt(Cuts::pT > 20*GeV && Cuts::abseta < 2.4);
 
     int nJet30 = 0, nJet60 = 0, nJet100 = 0;
     Jets topBJets, addJets, addBJets;
     foreach ( const Jet& jet, jets ) {
-      if ( std::abs(jet.eta()) > 2.4 ) continue;
       if ( deltaR(lep1.momentum(), jet.momentum()) < 0.4 ) continue;
       if ( deltaR(lep2.momentum(), jet.momentum()) < 0.4 ) continue;
 
@@ -139,8 +127,9 @@ public:
           break;
         }
       }
-      if ( isBFromTop and jet.pT() > 30*GeV ) topBJets.push_back(jet);
-      else {
+      if ( isBFromTop ) {
+        if ( jet.pT() > 30*GeV ) topBJets.push_back(jet);
+      } else {
         addJets.push_back(jet);
         if ( isBtagged ) addBJets.push_back(jet);
       }
@@ -215,6 +204,32 @@ public:
     normalize(_hVis_nJet30);
     normalize(_hVis_nJet60);
     normalize(_hVis_nJet100);
+    normalize(_hVis_addJet1Pt);
+    normalize(_hVis_addJet1Eta );
+    normalize(_hVis_addJet2Pt);
+    normalize(_hVis_addJet2Eta);
+    normalize(_hVis_addJJMass);
+    normalize(_hVis_addJJDR);
+    normalize(_hVis_addJJHT);
+    normalize(_hFull_addJet1Pt);
+    normalize(_hFull_addJet1Eta);
+    normalize(_hFull_addJet2Pt);
+    normalize(_hFull_addJet2Eta);
+    normalize(_hFull_addJJMass);
+    normalize(_hFull_addJJDR);
+    normalize(_hFull_addJJHT);
+    normalize(_hVis_addBJet1Pt);
+    normalize(_hVis_addBJet1Eta);
+    normalize(_hVis_addBJet2Pt);
+    normalize(_hVis_addBJet2Eta);
+    normalize(_hVis_addBBMass);
+    normalize(_hVis_addBBDR);
+    normalize(_hFull_addBJet1Pt);
+    normalize(_hFull_addBJet1Eta);
+    normalize(_hFull_addBJet2Pt);
+    normalize(_hFull_addBJet2Eta);
+    normalize(_hFull_addBBMass);
+    normalize(_hFull_addBBDR);
   }
 
   //@}

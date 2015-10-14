@@ -115,9 +115,9 @@ public:
       if ( deltaR(lep2.momentum(), jet.momentum()) < 0.4 ) continue;
 
       const double pt = jet.pT();
-      if ( pt >  30 ) ++nJet30;
-      if ( pt >  60 ) ++nJet60;
-      if ( pt > 100 ) ++nJet100;
+      if ( pt >  30*GeV ) ++nJet30;
+      if ( pt >  60*GeV ) ++nJet60;
+      if ( pt > 100*GeV ) ++nJet100;
 
       bool isBtagged = false, isBFromTop = false;
       foreach(const Particle& p, jet.bTags()) {
@@ -135,8 +135,8 @@ public:
       }
     }
     if ( addJets.size() < 2 ) vetoEvent; // Baseline selection both for full and visible phase space
-    const bool isVisiblePS = lep1.pT() > 20 and std::abs(lep1.eta()) > 2.4 and
-                             lep2.pT() > 20 and std::abs(lep2.eta()) > 2.4 and
+    const bool isVisiblePS = lep1.pT() > 20*GeV and std::abs(lep1.eta()) < 2.4 and
+                             lep2.pT() > 20*GeV and std::abs(lep2.eta()) < 2.4 and
                              topBJets.size() >= 2;
 
     // Common variables

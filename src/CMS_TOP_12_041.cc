@@ -146,36 +146,38 @@ public:
     // Plots with at least two additional jets
     do {
       if ( addJets.size() < 1 ) break;
-      const double ht = std::accumulate(addJets.begin(), addJets.begin()+std::min((size_t)1, addJets.size()),
+      const double ht = std::accumulate(addJets.begin(), addJets.end(),
                                         0., [](double x, const Jet& jj){return x+jj.pT();});
       fillWithOF(_hFull_addJJHT, ht, weight);
+      if ( isVisiblePS ) fillWithOF(_hVis_addJJHT, ht, weight);
 
       const double j1pt = addJets[0].pT(), j1aeta = std::abs(addJets[0].eta());
       fillWithOF(_hFull_addJet1Pt , j1pt  , weight);
       fillWithOF(_hFull_addJet1Eta, j1aeta, weight);
+      if ( isVisiblePS ) {
+        fillWithOF(_hVis_addJet1Pt , j1pt  , weight);
+        fillWithOF(_hVis_addJet1Eta, j1aeta, weight);
+      }
 
       if ( addJets.size() < 2 ) break;
+
       const double j2pt = addJets[1].pT(), j2aeta = std::abs(addJets[1].eta());
       const double jjmass = (addJets[0].momentum()+addJets[1].momentum()).mass();
       const double jjdR = deltaR(addJets[0], addJets[1]);
 
       fillWithOF(_hFull_addJet2Pt , j2pt  , weight);
       fillWithOF(_hFull_addJet2Eta, j2aeta, weight);
+      if ( isVisiblePS ) {
+        fillWithOF(_hVis_addJet2Pt , j2pt  , weight);
+        fillWithOF(_hVis_addJet2Eta, j2aeta, weight);
+      }
 
       fillWithOF(_hFull_addJJMass, jjmass, weight);
       fillWithOF(_hFull_addJJDR, jjdR, weight);
-
-      // Fill plots in visible phase space
-      if ( !isVisiblePS ) break;
-
-      fillWithOF(_hVis_addJet1Pt , j1pt  , weight);
-      fillWithOF(_hVis_addJet1Eta, j1aeta, weight);
-      fillWithOF(_hVis_addJet2Pt , j2pt  , weight);
-      fillWithOF(_hVis_addJet2Eta, j2aeta, weight);
-
-      fillWithOF(_hVis_addJJMass, jjmass, weight);
-      fillWithOF(_hVis_addJJDR, jjdR, weight);
-      fillWithOF(_hVis_addJJHT, j1pt+j2pt, weight);
+      if ( isVisiblePS ) {
+        fillWithOF(_hVis_addJJMass, jjmass, weight);
+        fillWithOF(_hVis_addJJDR, jjdR, weight);
+      }
     } while ( false );
 
     // Same set of plots if there are additional b-jets
@@ -184,6 +186,10 @@ public:
       const double b1pt = addBJets[0].pT(), b1aeta = std::abs(addBJets[0].eta());
       fillWithOF(_hFull_addBJet1Pt , b1pt  , weight);
       fillWithOF(_hFull_addBJet1Eta, b1aeta, weight);
+      if ( isVisiblePS ) {
+        fillWithOF(_hVis_addBJet1Pt , b1pt  , weight);
+        fillWithOF(_hVis_addBJet1Eta, b1aeta, weight);
+      }
 
       if ( addBJets.size() < 2 ) break;
       const double b2pt = addBJets[1].pT(), b2aeta = std::abs(addBJets[1].eta());
@@ -192,20 +198,19 @@ public:
 
       fillWithOF(_hFull_addBJet2Pt , b2pt  , weight);
       fillWithOF(_hFull_addBJet2Eta, b2aeta, weight);
+      if ( isVisiblePS ) {
+        fillWithOF(_hVis_addBJet2Pt , b2pt  , weight);
+        fillWithOF(_hVis_addBJet2Eta, b2aeta, weight);
+      }
 
       fillWithOF(_hFull_addBBMass, bbmass, weight);
       fillWithOF(_hFull_addBBDR, bbdR, weight);
 
       // Fill plots in visible phase space
-      if ( !isVisiblePS ) break;
-
-      fillWithOF(_hVis_addBJet1Pt , b1pt  , weight);
-      fillWithOF(_hVis_addBJet1Eta, b1aeta, weight);
-      fillWithOF(_hVis_addBJet2Pt , b2pt  , weight);
-      fillWithOF(_hVis_addBJet2Eta, b2aeta, weight);
-
-      fillWithOF(_hVis_addBBMass, bbmass, weight);
-      fillWithOF(_hVis_addBBDR, bbdR, weight);
+      if ( isVisiblePS ) {
+        fillWithOF(_hVis_addBBMass, bbmass, weight);
+        fillWithOF(_hVis_addBBDR, bbdR, weight);
+      }
     } while ( false );
 
   }

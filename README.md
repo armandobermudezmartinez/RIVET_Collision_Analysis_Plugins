@@ -44,7 +44,8 @@ Common interfaces to be used in analysis modules are available.
 Some analyses done in CMS are also available.
 
   * TOP-12-028 (CMS\_2015\_I1370682.cc) : Differential cross section measurement, under validation
-  * TOP-12-042 (CMS\_TOP\_12\_042.cc) : Jet multiplicity measurement, under validation
+  * TOP-12-042 (CMS\_TOP\_12\_042.cc) : Differential cross section using event variables, under validation
+  * TOP-12-041 (CMS\_TOP\_12\_041.cc) : Jet multiplicity measurement, under validation
 
 Other modules are also available for the MC studies
 

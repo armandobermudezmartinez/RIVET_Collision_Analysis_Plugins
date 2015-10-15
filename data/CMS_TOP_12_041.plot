@@ -44,13 +44,13 @@ YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}|\eta|$
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041/h05_x01
-XLabel=$\Delta R_{jj}$
-YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}\Delta R_{jj}$
+XLabel=$m_{jj} \, [\mathrm{GeV}]$
+YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}m_{jj} [\mathrm{GeV}^{-1}]$
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041/h05_x02
-XLabel=$m_{jj} \, [\mathrm{GeV}]$
-YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}m_{jj} [\mathrm{GeV}^{-1}]$
+XLabel=$\Delta R_{jj}$
+YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}\Delta R_{jj}$
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041/h05_x03
@@ -79,13 +79,13 @@ YLabel=$1/\sigma^\mathrm{full} \, \mathrm{d}\sigma^\mathrm{full}/\mathrm{d}|\eta
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041/h08_x01
-XLabel=$\Delta R_{jj}$
-YLabel=$1/\sigma^\mathrm{full} \, \mathrm{d}\sigma^\mathrm{full}/\mathrm{d}\Delta R_{jj}$
+XLabel=$m_{jj} \, [\mathrm{GeV}]$
+YLabel=$1/\sigma^\mathrm{full} \, \mathrm{d}\sigma^\mathrm{full}/\mathrm{d}m_{jj} [\mathrm{GeV}^{-1}]$
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041/h08_x02
-XLabel=$m_{jj} \, [\mathrm{GeV}]$
-YLabel=$1/\sigma^\mathrm{full} \, \mathrm{d}\sigma^\mathrm{full}/\mathrm{d}m_{jj} [\mathrm{GeV}^{-1}]$
+XLabel=$\Delta R_{jj}$
+YLabel=$1/\sigma^\mathrm{full} \, \mathrm{d}\sigma^\mathrm{full}/\mathrm{d}\Delta R_{jj}$
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041/h08_x03

@@ -1,0 +1,354 @@
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h02_x01
+Path=/REF/CMS_TOP_12_041_internal/h02_x01
+Title=Jet multiplicity p_{T} \get 30 GeV at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+2 0.5 0.5 0.538  0.019368000  0.019368000
+3 0.5 0.5 0.295  0.011800000  0.011800000
+4 0.5 0.5 0.105  0.009975000  0.009975000
+5 0.5 0.5 0.031  0.008990000  0.008990000
+6 0.5 0.5 0.011  0.001870000  0.001870000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h02_x02
+Path=/REF/CMS_TOP_12_041_internal/h02_x02
+Title=Jet multiplicity p_{T} \get 60 GeV at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0 0.5 0.5  0.117     0.007254000  0.007254000
+1 0.5 0.5  0.367     0.008441000  0.008441000
+2 0.5 0.5  0.393     0.008253000  0.008253000
+3 0.5 0.5  0.0985    0.004235500  0.004235500
+4 0.5 0.5  0.020     0.003600000  0.003600000
+5 0.5 0.5  0.0042    0.000546000  0.000546000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h02_x03
+Path=/REF/CMS_TOP_12_041_internal/h02_x03
+Title=Jet multiplicity p_{T} \get 100 GeV at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0 0.5 0.5  0.559     0.016211000  0.016211000
+1 0.5 0.5  0.292     0.013432000  0.013432000
+2 0.5 0.5  0.125     0.003375000  0.003375000
+3 0.5 0.5  0.020     0.002800000  0.002800000
+4 0.5 0.5  0.0029    0.000493000  0.000493000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h03_x01
+Path=/REF/CMS_TOP_12_041_internal/h03_x01
+Title=Leading additional jet p_{T} at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5  0.0182    0.000527800  0.000527800
+62.5  17.5  17.5  0.00744   0.000305040  0.000305040
+110   30    30    0.00296   0.000156880  0.000156880
+170   30    30    0.000978  0.000072372  0.000072372
+300   100   100   0.00024   0.000033600  0.000033600
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h03_x02
+Path=/REF/CMS_TOP_12_041_internal/h03_x02
+Title=Leading additional jet |\eta| at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.3 0.3 0.3  0.427     0.028182     0.028182
+0.9 0.3 0.3  0.477     0.012879     0.012879
+1.5 0.3 0.3  0.420     0.008820     0.008820
+2.1 0.3 0.3  0.342     0.03249      0.03249
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h04_x01
+Path=/REF/CMS_TOP_12_041_internal/h04_x01
+Title=Subleading additional jet p_{T} at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+27.5  7.5   7.5  0.0368    0.001729600  0.001729600
+42.5  7.5   7.5  0.0132    0.000831600  0.000831600
+65    15    15   0.00530   0.000461100  0.000461100
+140   60    60   0.00071   0.000184600  0.000184600
+300   100   100  0.000027  0.000013770  0.000013770
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h04_x02
+Path=/REF/CMS_TOP_12_041_internal/h04_x02
+Title=Subleading additional jet |\eta| at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.3   0.3   0.3  0.469     0.043148     0.043148
+0.9   0.3   0.3  0.450     0.027000     0.027000
+1.5   0.3   0.3  0.399     0.027132     0.027132
+2.1   0.3   0.3  0.35      0.049000     0.049000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h05_x01
+Path=/REF/CMS_TOP_12_041_internal/h05_x01
+Title=Two leading additional jet mass at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+30    30    30  0.0037    0.00048100   0.00048100
+80    20    20  0.00633   0.00037980   0.00037980
+135   35    35  0.00396   0.00022176   0.00022176
+285   115  115  0.00108   0.00005616   0.00005616
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h05_x02
+Path=/REF/CMS_TOP_12_041_internal/h05_x02
+Title=Two leading additional jet angle \Delta R at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.75  0.25  0.25    0.28      0.053200     0.053200
+1.5   0.5   0.5     0.24      0.024000     0.024000
+2.5   0.5   0.5     0.329     0.026649     0.026649
+3.5   0.5   0.5     0.228     0.018240     0.018240
+4.5   0.5   0.5     0.060     0.012000     0.012000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h05_x03
+Path=/REF/CMS_TOP_12_041_internal/h05_x03
+Title=Two leading additional jet H_T at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5  0.0135    0.000499500   0.000499500
+62.5  17.5  17.5  0.00691   0.000248760   0.000248760
+110   30    30    0.00353   0.000116490   0.000116490
+170   30    30    0.00162   0.000115020   0.000115020
+400   200   200   0.00028   0.000033600   0.000033600
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h06_x01
+Path=/REF/CMS_TOP_12_041_internal/h06_x01
+Title=Leading additional jet p_{T} at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5  0.0185    0.000444000  0.000444000
+62.5  17.5  17.5  0.00766   0.000275760  0.000275760
+110   30    30    0.00288   0.000103680  0.000103680
+170   30    30    0.000926  0.000047226  0.000047226
+300   100   100   0.000207  0.000017595  0.000017595
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h06_x02
+Path=/REF/CMS_TOP_12_041_internal/h06_x02
+Title=Leading additional jet |\eta| at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.3 0.3 0.3    0.437     0.025783     0.025783
+0.9 0.3 0.3    0.472     0.011800     0.011800
+1.5 0.3 0.3    0.419     0.006285     0.006285
+2.1 0.3 0.3    0.338     0.025688     0.025688
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h07_x01
+Path=/REF/CMS_TOP_12_041_internal/h07_x01
+Title=Subleading additional jet p_{T} at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+27.5  7.5   7.5  0.0376    0.00150400  0.00150400
+42.5  7.5   7.5  0.0133    0.00086450  0.00086450
+65    15    15   0.00518   0.00036260  0.00036260
+140   60    60   0.00065   0.00013650  0.00013650
+300   100   100  0.000022  0.00001188  0.00001188
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h07_x02
+Path=/REF/CMS_TOP_12_041_internal/h07_x02
+Title=Subleading additional jet |\eta| at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.3   0.3   0.3  0.469     0.04455500  0.04455500
+0.9   0.3   0.3  0.450     0.02250000  0.02250000
+1.5   0.3   0.3  0.402     0.02532600  0.02532600
+2.1   0.3   0.3  0.35      0.04550000  0.04550000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h08_x01
+Path=/REF/CMS_TOP_12_041_internal/h08_x01
+Title=Two leading additional jet mass at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+30    30    30  0.0045    0.00049500  0.00049500
+80    20    20  0.00647   0.00038820  0.00038820
+135   35    35  0.00398   0.00019502  0.00019502
+285   115  115  0.000104  0.00000416  0.00000416
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h08_x02
+Path=/REF/CMS_TOP_12_041_internal/h08_x02
+Title=Two leading additional jet angle \Delta R at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.75  0.25  0.25  0.26      0.031200   0.031200
+1.5   0.5   0.5   0.245     0.015190   0.015190
+2.5   0.5   0.5   0.335     0.020770   0.020770
+3.5   0.5   0.5   0.227     0.015209   0.015209
+4.5   0.5   0.5   0.058     0.009280   0.009280
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h08_x03
+Path=/REF/CMS_TOP_12_041_internal/h08_x03
+Title=Two leading additional jet H_T at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5  0.0136    0.00038080  0.00038080
+62.5  17.5  17.5  0.00708   0.00017700  0.00017700
+110   30    30    0.00356   0.00012460  0.00012460
+170   30    30    0.00158   0.00008058  0.00008058
+400   200   200   0.000256  0.000015616  0.000015616
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h09_x01
+Path=/REF/CMS_TOP_12_041_internal/h09_x01
+Title=Leading additional b jet p_{T} at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5    0.016    0.00576000  0.00576000
+62.5  17.5  17.5    0.0098   0.00294000  0.00294000
+140   60    60      0.0018   0.00063000  0.00063000
+300   100   100     0.00016  0.00012480  0.00012480
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h09_x02
+Path=/REF/CMS_TOP_12_041_internal/h09_x02
+Title=Leading additional b jet |\eta| at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.3   0.3   0.3  0.5       0.16500000  0.16500000
+0.9   0.3   0.3  0.4       0.12000000  0.12000000
+1.5   0.3   0.3  0.3       0.10800000  0.10800000
+2.1   0.3   0.3  0.4       0.12800000  0.12800000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h09_x03
+Path=/REF/CMS_TOP_12_041_internal/h09_x03
+Title=Subleading additional b jet p_{T} at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5  0.030     0.00600000  0.00600000
+62.5  17.5  17.5  0.0055    0.00308000  0.00308000
+140   60    60    0.00055   0.00072600  0.00072600
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h09_x04
+Path=/REF/CMS_TOP_12_041_internal/h09_x04
+Title=Subleading additional b jet |\eta| at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.30  0.30  0.30  0.8       0.49600000  0.49600000
+0.90  0.30  0.30  0.4       0.19600000  0.19600000
+1.80  0.60  0.60  0.3       0.26100000  0.26100000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h10_x01
+Path=/REF/CMS_TOP_12_041_internal/h10_x01
+Title=Two leading additional b jet mass at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+35  25  25  0.0082    0.00557600  0.00557600
+80  20  20  0.0055    0.00616000  0.00616000
+135 35  35  0.0016    0.00227200  0.00227200
+285 115 115 0.00094   0.00075200  0.00075200
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h10_x02
+Path=/REF/CMS_TOP_12_041_internal/h10_x02
+itle=Two leading additional b jet angle \Delta R at visible phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.75  0.25  0.25  0.1   0.34800000  0.34800000
+1.5   0.5   0.5   0.2   0.14400000  0.14400000
+3.5   1.5   1.5   0.3   0.07200000  0.07200000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h11_x01
+Path=/REF/CMS_TOP_12_041_internal/h11_x01
+Title=Leading additional b jet p_{T} at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5  0.017     0.00578000  0.00578000
+62.5  17.5  17.5  0.0095    0.00256500  0.00256500
+140   60    60    0.0018    0.00059400  0.00059400
+300   100   100   0.00015   0.00010050  0.00010050
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h11_x02
+Path=/REF/CMS_TOP_12_041_internal/h11_x02
+Title=Leading additional b jet |\eta| at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.3 0.3 0.3  0.5       0.13500000  0.13500000
+0.9 0.3 0.3  0.4       0.09600000  0.09600000
+1.5 0.3 0.3  0.4       0.10800000  0.10800000
+2.1 0.3 0.3  0.4       0.11200000  0.11200000
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h11_x03
+Path=/REF/CMS_TOP_12_041_internal/h11_x03
+Title=Subleading additional b jet p_{T} at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+32.5  12.5  12.5  0.030     0.00600000  0.00600000
+62.5  17.5  17.5  0.0053    0.00328600  0.00328600
+140   60    60    0.00049   0.00058800  0.00058800
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h11_x04
+Path=/REF/CMS_TOP_12_041_internal/h11_x04
+Title=Subleading additional b jet |\eta| at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.3 0.3 0.3  0.7      0.35000000  0.35000000 
+0.9 0.3 0.3  0.4      0.17200000  0.17200000 
+1.8 0.6 0.6  0.3      0.21600000  0.21600000 
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h12_x01
+Path=/REF/CMS_TOP_12_041_internal/h12_x01
+Title=Two leading additional b jet mass at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+35  25  25  0.0084   0.00613200  0.00613200 
+80  20  20  0.0058   0.00545200  0.00545200 
+135 35  35  0.0018   0.00210600  0.00210600 
+285 115 115 0.00084  0.00065520  0.00065520 
+# END YODA_SCATTER2D
+
+
+# BEGIN YODA_SCATTER2D /REF/CMS_TOP_12_041_internal/h12_x02
+Path=/REF/CMS_TOP_12_041_internal/h12_x02
+Title=Two leading additional b jet angle \Delta R at full phase space
+Type=Scatter2D
+# xval   xerr-   xerr+   yval  yerr-   yerr+
+0.75  0.25  0.25  0.0041  0.31914400  0.31914400 
+1.5   0.5   0.5   0.20    0.14200000  0.14200000 
+3.5   1.5   1.5   0.27    0.07560000  0.07560000 
+# END YODA_SCATTER2D
+
+

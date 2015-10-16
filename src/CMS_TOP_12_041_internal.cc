@@ -11,10 +11,10 @@
 
 namespace Rivet {
 
-class CMS_TOP_12_041 : public Analysis {
+class CMS_TOP_12_041_internal : public Analysis {
 public:
   /// Minimal constructor
-  CMS_TOP_12_041() : Analysis("CMS_TOP_12_041") {}
+  CMS_TOP_12_041_internal() : Analysis("CMS_TOP_12_041_internal") {}
 
 
   /// @name Analysis methods
@@ -295,7 +295,7 @@ private:
 
 
 // The hook for the plugin system
-DECLARE_RIVET_PLUGIN(CMS_TOP_12_041);
+DECLARE_RIVET_PLUGIN(CMS_TOP_12_041_internal);
 
 }
 

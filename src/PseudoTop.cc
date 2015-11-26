@@ -282,11 +282,13 @@ void PseudoTop::project(const Event& e) {
   // Put all of them into candidate collection
   _t1 = Particle(w1Q*6, t1LVec);
   _b1 = Particle(w1Q*5, b1LVec);
+  _w1 = Particle(w1Q*24, w1LVec);
   _wDecays1.push_back(Particle(w1dau1Id, w1dau1LVec));
   _wDecays1.push_back(Particle(-w1dau1Id+w1Q, w1dau2LVec));
 
   _t2 = Particle(w2Q*6, t2LVec);
   _b2 = Particle(w2Q*5, b2LVec);
+  _w2 = Particle(w2Q*24, w2LVec);
   _wDecays2.push_back(Particle(w2dau1Id, w2dau1LVec));
   _wDecays2.push_back(Particle(-w2dau1Id+w2Q, w2dau2LVec));
 

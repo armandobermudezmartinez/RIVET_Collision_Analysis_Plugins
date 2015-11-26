@@ -53,6 +53,8 @@ namespace Rivet {
     Particle t2() const {return _t2;}
     Particle b1() const {return _b1;}
     Particle b2() const {return _b2;}
+    Particle w1() const {return _w1;}
+    Particle w2() const {return _w2;}
     ParticleVector wDecays1() const {return _wDecays1;}
     ParticleVector wDecays2() const {return _wDecays2;}
     Jets jets() const {return _jets;}
@@ -77,6 +79,7 @@ namespace Rivet {
 
     Particle _t1, _t2;
     Particle _b1, _b2;
+    Particle _w1, _w2;
     ParticleVector _wDecays1, _wDecays2;
     Jets _jets, _bjets, _ljets;
 

@@ -11,23 +11,37 @@ struct GreaterByPt
   }
 };
 
-void PseudoTop::cleanup(std::map<double, std::pair<size_t, size_t> >& v) const
+void PseudoTop::cleanup(std::map<double, std::pair<size_t, size_t> >& v, const bool doCrossCleanup) const
 {
   std::vector<std::map<double, std::pair<size_t, size_t> >::const_iterator> toErase;
   std::set<size_t> usedLeg1, usedLeg2;
-  for (auto key = v.begin(); key != v.end(); ++key) {
-    const size_t leg1 = key->second.first;
-    const size_t leg2 = key->second.second;
-    if (usedLeg1.find(leg1) == usedLeg1.end() and
-        usedLeg2.find(leg2) == usedLeg2.end()) {
+  if ( !doCrossCleanup ) {
+    for (auto key = v.begin(); key != v.end(); ++key) {
+      const size_t leg1 = key->second.first;
+      const size_t leg2 = key->second.second;
+      if (usedLeg1.find(leg1) == usedLeg1.end() and
+          usedLeg2.find(leg2) == usedLeg2.end()) {
         usedLeg1.insert(leg1);
         usedLeg2.insert(leg2);
-    } else {
+      } else {
         toErase.push_back(key);
+      }
     }
   }
-  for (auto& key : toErase)
-    v.erase(key);
+  else {
+    for (auto key = v.begin(); key != v.end(); ++key) {
+      const size_t leg1 = key->second.first;
+      const size_t leg2 = key->second.second;
+      if (usedLeg1.find(leg1) == usedLeg1.end() and
+          usedLeg1.find(leg2) == usedLeg1.end()) {
+        usedLeg1.insert(leg1);
+        usedLeg1.insert(leg2);
+      } else {
+        toErase.push_back(key);
+      }
+    }
+  }
+  for (auto& key : toErase) v.erase(key);
 }
 
 void PseudoTop::project(const Event& e) {
@@ -183,14 +197,14 @@ void PseudoTop::project(const Event& e) {
 
   // Cleanup W candidate, choose pairs with minimum dm if they share decay products
   cleanup(wLepCandIdxs);
-  cleanup(wHadCandIdxs);
+  cleanup(wHadCandIdxs, true);
   const size_t nWLepCand = wLepCandIdxs.size();
   const size_t nWHadCand = wHadCandIdxs.size();
 
   if (nWLepCand + nWHadCand < 2) return; // We skip single top
 
   int w1Q = 1, w2Q = -1;
-  int w1dau1Id = 1, w2dau1Id = 1;
+  int w1dau1Id = 1, w2dau1Id = -1;
   FourMomentum w1dau1LVec, w1dau2LVec;
   FourMomentum w2dau1LVec, w2dau2LVec;
   if (nWLepCand == 0) { // Full hadronic case

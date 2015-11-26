@@ -21,12 +21,8 @@ namespace Rivet {
     /// @name Standard constructors and destructors.
     //@{
 
-    /// The default constructor. May specify the minimum and maximum
-    /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
-    PartonTop(double mineta = -MAXDOUBLE,
-              double maxeta =  MAXDOUBLE,
-              double minpt = 0.0*GeV)
-      : FinalState(mineta, maxeta, minpt)
+    /// The default constructor.
+    PartonTop() : FinalState(-MAXDOUBLE, MAXDOUBLE, 0.0*GeV)
     {
       setName("PartonTop");
     }
@@ -55,10 +51,14 @@ namespace Rivet {
     Particle b2() const { return _b2; }
     ParticleVector wDecays1() const { return _wDecays1; }
     ParticleVector wDecays2() const { return _wDecays2; }
+    Particle lepton1() const { return findLepton(_wDecays1); };
+    Particle lepton2() const { return findLepton(_wDecays2); };
 
   protected:
     // Apply the projection to the event
     void project(const Event& e);
+
+    Particle findLepton(const ParticleVector& v) const;
 
   private:
     DecayMode _mode1, _mode2;

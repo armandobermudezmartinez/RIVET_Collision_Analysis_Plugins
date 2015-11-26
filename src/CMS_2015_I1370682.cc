@@ -1,11 +1,5 @@
 #include "Rivet/Analysis.hh"
-//#include "Rivet/AnalysisLoader.hh"
-//#include "Rivet/Particle.fhh"
 #include "Rivet/Math/LorentzTrans.hh"
-#include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/IdentifiedFinalState.hh"
-#include "Rivet/Projections/VetoedFinalState.hh"
-#include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
 #include "TopMonteCarlo/RivetTop/interface/PseudoTop.hh"
@@ -15,7 +9,7 @@ namespace Rivet {
 class CMS_2015_I1370682 : public Analysis {
 public:
   CMS_2015_I1370682() : Analysis("CMS_2015_I1370682"),
-    _applyCorrection(true) {
+    _applyCorrection(false), _doShapeOnly(false) {
   }
 
   void init() {
@@ -48,7 +42,7 @@ public:
   void analyze(const Event& event) {
     const double weight = event.weight();
 
-    // Get the parton level ttbar candidate
+    // Get the ttbar candidate
     const PseudoTop& ttbar = applyProjection<PseudoTop>(event, "ttbar");
     if ( ttbar.mode() == PseudoTop::CH_NONE ) vetoEvent;
 
@@ -141,25 +135,25 @@ public:
   void finalize() {
     if ( _applyCorrection ) {
       // Correction functions for TOP-12-028 paper, (parton bin height)/(pseudotop bin height)
-      const double ch15[] = { 1.332861, 1.202524, 1.015941, 0.825966, 0.679034, 0.578274, 0.534191, 0.535590, };
-      const double ch16[] = { 1.330970, 1.204910, 0.994211, 0.785767, 0.637293, 0.546148, 0.518764, 0.531851, };
-      const double ch17[] = { 2.439632, 1.107419, 0.932594, 0.877266, 0.857611, 0.858057, 0.876822, 0.927184, 1.101292, 2.431395, };
-      const double ch18[] = { 1.071972, 0.987473, 0.946021, 1.026136, };
-      const double ch19[] = { 1.505596, 1.279310, 1.076561, 0.868829, 0.704581, 0.589095, 0.533348, 0.529244, };
-      const double ch20[] = { 1.266209, 1.142433, 0.950088, 0.766105, 0.635270, 0.556113, 0.536189, 0.552520, };
-      const double ch21[] = { 1.473991, 0.919882, 0.867136, 0.877298, 0.868842, 0.830410, };
-      const double ch22[] = { 2.910018, 1.170504, 0.920888, 0.826197, 0.786376, 0.784372, 0.822743, 0.917418, 1.164525, 2.893186, };
-      const double ch23[] = { 1.739299, 1.371855, 0.985983, 0.737965, 0.567306, 0.431933, 0.300742, };
+      const double ch15[] = { 5.473609, 4.941048, 4.173346, 3.391191, 2.785644, 2.371346, 2.194161, 2.197167, };
+      const double ch16[] = { 5.470905, 4.948201, 4.081982, 3.225532, 2.617519, 2.239217, 2.127878, 2.185918, };
+      const double ch17[] = { 10.003667, 4.546519, 3.828115, 3.601018, 3.522194, 3.524694, 3.600951, 3.808553, 4.531891, 9.995370, };
+      const double ch18[] = { 4.406683, 4.054041, 3.885393, 4.213646, };
+      const double ch19[] = { 6.182537, 5.257703, 4.422280, 3.568402, 2.889408, 2.415878, 2.189974, 2.173210, };
+      const double ch20[] = { 5.199874, 4.693318, 3.902882, 3.143785, 2.607877, 2.280189, 2.204124, 2.260829, };
+      const double ch21[] = { 6.053523, 3.777506, 3.562251, 3.601356, 3.569347, 3.410472, };
+      const double ch22[] = { 11.932351, 4.803773, 3.782709, 3.390775, 3.226806, 3.218982, 3.382678, 3.773653, 4.788191, 11.905338, };
+      const double ch23[] = { 7.145255, 5.637595, 4.049882, 3.025917, 2.326430, 1.773824, 1.235329, };
 
-      const double ch24[] = { 0.999101, 1.045283, 1.024105, 0.897331, 0.768020, };
-      const double ch25[] = { 0.983285, 1.050363, 1.031595, 0.894776, 0.766134, 0.661792, };
-      const double ch26[] = { 1.757030, 1.017485, 0.913990, 0.898459, 0.897156, 0.916592, 1.012075, 1.771837, };
-      const double ch27[] = { 0.971477, 0.958043, 0.976221, 1.090951, };
-      const double ch28[] = { 1.022223, 1.045561, 1.030319, 0.907276, 0.776254, };
-      const double ch29[] = { 0.979248, 1.045432, 1.014236, 0.878637, 0.749696, };
-      const double ch30[] = { 1.146521, 0.892631, 0.942240, 0.983815, };
-      const double ch31[] = { 2.547908, 1.161046, 0.927098, 0.866168, 0.865782, 0.925177, 1.162697, 2.549990, };
-      const double ch32[] = { 0.884560, 1.121415, 1.091602, 1.029943, 0.970465, 0.913087, };
+      const double ch24[] = { 2.268193, 2.372063, 2.323975, 2.034655, 1.736793, };
+      const double ch25[] = { 2.231852, 2.383086, 2.341894, 2.031318, 1.729672, 1.486993, };
+      const double ch26[] = { 3.993526, 2.308249, 2.075136, 2.038297, 2.036302, 2.078270, 2.295817, 4.017713, };
+      const double ch27[] = { 2.205978, 2.175010, 2.215376, 2.473144, };
+      const double ch28[] = { 2.321077, 2.371895, 2.338871, 2.057821, 1.755382, };
+      const double ch29[] = { 2.222707, 2.372591, 2.301688, 1.991162, 1.695343, };
+      const double ch30[] = { 2.599677, 2.026855, 2.138620, 2.229553, };
+      const double ch31[] = { 5.791779, 2.636219, 2.103642, 1.967198, 1.962168, 2.096514, 2.641189, 5.780828, };
+      const double ch32[] = { 2.006685, 2.545525, 2.477745, 2.335747, 2.194226, 2.076500, };
 
       applyCorrection(_hSL_topPt, ch15);
       applyCorrection(_hSL_topPtTtbarSys, ch16);
@@ -182,25 +176,49 @@ public:
       applyCorrection(_hDL_ttbarMass, ch32);
     }
 
-    normalize(_hSL_topPt        );
-    normalize(_hSL_topPtTtbarSys);
-    normalize(_hSL_topY         );
-    normalize(_hSL_ttbarDelPhi  );
-    normalize(_hSL_topPtLead    );
-    normalize(_hSL_topPtSubLead );
-    normalize(_hSL_ttbarPt      );
-    normalize(_hSL_ttbarY       );
-    normalize(_hSL_ttbarMass    );
+    if ( _doShapeOnly ) {
+      normalize(_hSL_topPt        );
+      normalize(_hSL_topPtTtbarSys);
+      normalize(_hSL_topY         );
+      normalize(_hSL_ttbarDelPhi  );
+      normalize(_hSL_topPtLead    );
+      normalize(_hSL_topPtSubLead );
+      normalize(_hSL_ttbarPt      );
+      normalize(_hSL_ttbarY       );
+      normalize(_hSL_ttbarMass    );
 
-    normalize(_hDL_topPt        );
-    normalize(_hDL_topPtTtbarSys);
-    normalize(_hDL_topY         );
-    normalize(_hDL_ttbarDelPhi  );
-    normalize(_hDL_topPtLead    );
-    normalize(_hDL_topPtSubLead );
-    normalize(_hDL_ttbarPt      );
-    normalize(_hDL_ttbarY       );
-    normalize(_hDL_ttbarMass    );
+      normalize(_hDL_topPt        );
+      normalize(_hDL_topPtTtbarSys);
+      normalize(_hDL_topY         );
+      normalize(_hDL_ttbarDelPhi  );
+      normalize(_hDL_topPtLead    );
+      normalize(_hDL_topPtSubLead );
+      normalize(_hDL_ttbarPt      );
+      normalize(_hDL_ttbarY       );
+      normalize(_hDL_ttbarMass    );
+    }
+    else {
+      const double s = 1./sumOfWeights();
+      scale(_hSL_topPt        , s);
+      scale(_hSL_topPtTtbarSys, s);
+      scale(_hSL_topY         , s);
+      scale(_hSL_ttbarDelPhi  , s);
+      scale(_hSL_topPtLead    , s);
+      scale(_hSL_topPtSubLead , s);
+      scale(_hSL_ttbarPt      , s);
+      scale(_hSL_ttbarY       , s);
+      scale(_hSL_ttbarMass    , s);
+
+      scale(_hDL_topPt        , s);
+      scale(_hDL_topPtTtbarSys, s);
+      scale(_hDL_topY         , s);
+      scale(_hDL_ttbarDelPhi  , s);
+      scale(_hDL_topPtLead    , s);
+      scale(_hDL_topPtSubLead , s);
+      scale(_hDL_ttbarPt      , s);
+      scale(_hDL_ttbarY       , s);
+      scale(_hDL_ttbarMass    , s);
+    }
 
   };
 
@@ -214,7 +232,7 @@ public:
   };
 
 private:
-  const bool _applyCorrection;
+  const bool _applyCorrection, _doShapeOnly;
 
   Histo1DPtr _hSL_topPt        ;
   Histo1DPtr _hSL_topPtTtbarSys;

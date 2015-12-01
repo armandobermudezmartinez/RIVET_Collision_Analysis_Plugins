@@ -111,8 +111,8 @@ public:
     int nJet30 = 0, nJet60 = 0, nJet100 = 0;
     Jets topBJets, addJets, addBJets;
     foreach ( const Jet& jet, jets ) {
-      if ( deltaR(lep1.momentum(), jet.momentum()) < 0.4 ) continue;
-      if ( deltaR(lep2.momentum(), jet.momentum()) < 0.4 ) continue;
+      //if ( deltaR(lep1.momentum(), jet.momentum()) < 0.4 ) continue;
+      //if ( deltaR(lep2.momentum(), jet.momentum()) < 0.4 ) continue;
 
       const double pt = jet.pT();
       if ( pt >  30*GeV ) ++nJet30;
@@ -148,15 +148,15 @@ public:
       if ( addJets.size() < 1 ) break;
       const double ht = std::accumulate(addJets.begin(), addJets.end(),
                                         0., [](double x, const Jet& jj){return x+jj.pT();});
-      fillWithOF(_hFull_addJJHT, ht, weight);
-      if ( isVisiblePS ) fillWithOF(_hVis_addJJHT, ht, weight);
+      _hFull_addJJHT->fill(ht, weight);
+      if ( isVisiblePS ) _hVis_addJJHT->fill(ht, weight);
 
       const double j1pt = addJets[0].pT(), j1aeta = std::abs(addJets[0].eta());
-      fillWithOF(_hFull_addJet1Pt , j1pt  , weight);
-      fillWithOF(_hFull_addJet1Eta, j1aeta, weight);
+      _hFull_addJet1Pt ->fill(j1pt  , weight);
+      _hFull_addJet1Eta->fill(j1aeta, weight);
       if ( isVisiblePS ) {
-        fillWithOF(_hVis_addJet1Pt , j1pt  , weight);
-        fillWithOF(_hVis_addJet1Eta, j1aeta, weight);
+        _hVis_addJet1Pt ->fill(j1pt  , weight);
+        _hVis_addJet1Eta->fill(j1aeta, weight);
       }
 
       if ( addJets.size() < 2 ) break;
@@ -165,18 +165,18 @@ public:
       const double jjmass = (addJets[0].momentum()+addJets[1].momentum()).mass();
       const double jjdR = deltaR(addJets[0], addJets[1]);
 
-      fillWithOF(_hFull_addJet2Pt , j2pt  , weight);
-      fillWithOF(_hFull_addJet2Eta, j2aeta, weight);
+      _hFull_addJet2Pt ->fill(j2pt  , weight);
+      _hFull_addJet2Eta->fill(j2aeta, weight);
       if ( isVisiblePS ) {
-        fillWithOF(_hVis_addJet2Pt , j2pt  , weight);
-        fillWithOF(_hVis_addJet2Eta, j2aeta, weight);
+        _hVis_addJet2Pt ->fill(j2pt  , weight);
+        _hVis_addJet2Eta->fill(j2aeta, weight);
       }
 
-      fillWithOF(_hFull_addJJMass, jjmass, weight);
-      fillWithOF(_hFull_addJJDR, jjdR, weight);
+      _hFull_addJJMass->fill(jjmass, weight);
+      _hFull_addJJDR->fill(jjdR, weight);
       if ( isVisiblePS ) {
-        fillWithOF(_hVis_addJJMass, jjmass, weight);
-        fillWithOF(_hVis_addJJDR, jjdR, weight);
+        _hVis_addJJMass->fill(jjmass, weight);
+        _hVis_addJJDR->fill(jjdR, weight);
       }
     } while ( false );
 
@@ -184,11 +184,11 @@ public:
     do {
       if ( addBJets.size() < 1 ) break;
       const double b1pt = addBJets[0].pT(), b1aeta = std::abs(addBJets[0].eta());
-      fillWithOF(_hFull_addBJet1Pt , b1pt  , weight);
-      fillWithOF(_hFull_addBJet1Eta, b1aeta, weight);
+      _hFull_addBJet1Pt ->fill(b1pt  , weight);
+      _hFull_addBJet1Eta->fill(b1aeta, weight);
       if ( isVisiblePS ) {
-        fillWithOF(_hVis_addBJet1Pt , b1pt  , weight);
-        fillWithOF(_hVis_addBJet1Eta, b1aeta, weight);
+        _hVis_addBJet1Pt ->fill(b1pt  , weight);
+        _hVis_addBJet1Eta->fill(b1aeta, weight);
       }
 
       if ( addBJets.size() < 2 ) break;
@@ -196,20 +196,20 @@ public:
       const double bbmass = (addBJets[0].momentum()+addBJets[1].momentum()).mass();
       const double bbdR = deltaR(addBJets[0], addBJets[1]);
 
-      fillWithOF(_hFull_addBJet2Pt , b2pt  , weight);
-      fillWithOF(_hFull_addBJet2Eta, b2aeta, weight);
+      _hFull_addBJet2Pt ->fill(b2pt  , weight);
+      _hFull_addBJet2Eta->fill(b2aeta, weight);
       if ( isVisiblePS ) {
-        fillWithOF(_hVis_addBJet2Pt , b2pt  , weight);
-        fillWithOF(_hVis_addBJet2Eta, b2aeta, weight);
+        _hVis_addBJet2Pt ->fill(b2pt  , weight);
+        _hVis_addBJet2Eta->fill(b2aeta, weight);
       }
 
-      fillWithOF(_hFull_addBBMass, bbmass, weight);
-      fillWithOF(_hFull_addBBDR, bbdR, weight);
+      _hFull_addBBMass->fill(bbmass, weight);
+      _hFull_addBBDR->fill(bbdR, weight);
 
       // Fill plots in visible phase space
       if ( isVisiblePS ) {
-        fillWithOF(_hVis_addBBMass, bbmass, weight);
-        fillWithOF(_hVis_addBBDR, bbdR, weight);
+        _hVis_addBBMass->fill(bbmass, weight);
+        _hVis_addBBDR->fill(bbdR, weight);
       }
     } while ( false );
 

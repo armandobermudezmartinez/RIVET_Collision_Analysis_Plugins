@@ -84,6 +84,8 @@ LogY=0
 # BEGIN PLOT /CMS_TOP_12_041_internal/h07_x01
 XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
 YLabel=$1/\sigma^\mathrm{full} \, \mathrm{d}\sigma^\mathrm{full}/\mathrm{d}p_{T} [\mathrm{GeV}^{-1}]$
+RatioPlotYMin=0.5
+RatioPlotYMax=1.7
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/h07_x02
@@ -114,35 +116,45 @@ YLabel=$1/\sigma^\mathrm{full} \, \mathrm{d}\sigma^\mathrm{full}/\mathrm{d}H_T [
 # BEGIN PLOT /CMS_TOP_12_041_internal/h09_x01
 XLabel=Leading add. b jet $p_T \, [\mathrm{GeV}]$
 YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}p_T [\mathrm{GeV}^{-1}]$
+RatioPlotYMin=0
+RatioPlotYMax=3
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/h09_x02
 XLabel=Leading add. b jet $|\eta|$
 YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}|\eta|$
+RatioPlotYMin=0
+RatioPlotYMax=3
 LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/h09_x03
 XLabel=Subleading add. b jet $p_T \, [\mathrm{GeV}]$
 YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}p_T [\mathrm{GeV}^{-1}]$
+RatioPlotYMin=0
+RatioPlotYMax=4
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/h09_x04
 XLabel=Subleading add. b jet $|\eta|$
 YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}|\eta|$
+RatioPlotYMin=0
+RatioPlotYMax=4
 LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/h10_x01
 XLabel=$m_{bb} \, [\mathrm{GeV}]$
 YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}m_{bb} [\mathrm{GeV}^{-1}]$
+RatioPlotYMin=0
+RatioPlotYMax=4
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/h10_x02
 XLabel=$\Delta R_{bb} \, [\mathrm{GeV}]$
 YLabel=$1/\sigma^{vis} \, \mathrm{d}\sigma^{vis}/\mathrm{d}\Delta R_{bb}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.7
+RatioPlotYMin=0
+RatioPlotYMax=4
 LogY=0
 # END PLOT
 

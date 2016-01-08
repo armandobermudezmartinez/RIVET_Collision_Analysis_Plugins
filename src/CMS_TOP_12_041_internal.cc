@@ -68,6 +68,23 @@ public:
     _hFull_addBBMass = bookHisto1D("h12_x01");
     _hFull_addBBDR   = bookHisto1D("h12_x02");
 
+    _gap_events = 0;
+    _h_gap_addJet1Pt      = bookHisto1D("d63-x01-y01");
+    _h_gap_addJet1Pt_eta0 = bookHisto1D("d64-x01-y01");
+    _h_gap_addJet1Pt_eta1 = bookHisto1D("d65-x01-y01");
+    _h_gap_addJet1Pt_eta2 = bookHisto1D("d66-x01-y01");
+    _h_gap_addJet2Pt      = bookHisto1D("d59-x01-y01");
+    _h_gap_addJet2Pt_eta0 = bookHisto1D("d60-x01-y01");
+    _h_gap_addJet2Pt_eta1 = bookHisto1D("d61-x01-y01");
+    _h_gap_addJet2Pt_eta2 = bookHisto1D("d62-x01-y01");
+    _h_gap_addJetHT       = bookHisto1D("d67-x01-y01");
+    _h_gap_addJetHT_eta0  = bookHisto1D("d68-x01-y01");
+    _h_gap_addJetHT_eta1  = bookHisto1D("d69-x01-y01");
+    _h_gap_addJetHT_eta2  = bookHisto1D("d70-x01-y01");
+    
+    Histo1DPtr _h_gap_addJet1Pt, _h_gap_addJet1Pt_eta0, _h_gap_addJet1Pt_eta1, _h_gap_addJet1Pt_eta2;
+    Histo1DPtr _h_gap_addJet2Pt, _h_gap_addJet2Pt_eta0, _h_gap_addJet2Pt_eta1, _h_gap_addJet2Pt_eta2;
+    Histo1DPtr _h_gap_addJetHT, _h_gap_addJetHT_eta0, _h_gap_addJetHT_eta1, _h_gap_addJetHT_eta2;
   }
 
 
@@ -109,7 +126,7 @@ public:
     const Jets& jets = applyProjection<JetAlg>(event, "Jets").jetsByPt(Cuts::pT > 20*GeV && Cuts::abseta < 2.4);
 
     int nJet30 = 0, nJet60 = 0, nJet100 = 0;
-    Jets topBJets, addJets, addBJets;
+    Jets topBJets, addJets, addBJets, addJets_eta0, addJets_eta1, addJets_eta2;
     foreach ( const Jet& jet, jets ) {
       //if ( deltaR(lep1.momentum(), jet.momentum()) < 0.4 ) continue;
       //if ( deltaR(lep2.momentum(), jet.momentum()) < 0.4 ) continue;
@@ -131,6 +148,9 @@ public:
         if ( jet.pT() > 30*GeV ) topBJets.push_back(jet);
       } else {
         addJets.push_back(jet);
+        if      ( std::abs(jet.eta()) < 0.8 ) addJets_eta0.push_back(jet);
+        else if ( std::abs(jet.eta()) < 1.5 ) addJets_eta1.push_back(jet);
+        else if ( std::abs(jet.eta()) < 2.4 ) addJets_eta2.push_back(jet);
         if ( isBtagged ) addBJets.push_back(jet);
       }
     }
@@ -141,6 +161,12 @@ public:
       fillWithOF(_hVis_nJet30, nJet30, weight);
       fillWithOF(_hVis_nJet60, nJet60, weight);
       fillWithOF(_hVis_nJet100, nJet100, weight);
+      
+      ++_gap_events;
+      fillGapFractions(addJets, _h_gap_addJet1Pt, _h_gap_addJet2Pt, _h_gap_addJetHT, weight);
+      fillGapFractions(addJets_eta0, _h_gap_addJet1Pt_eta0, _h_gap_addJet2Pt_eta0, _h_gap_addJetHT_eta0, weight);
+      fillGapFractions(addJets_eta1, _h_gap_addJet1Pt_eta1, _h_gap_addJet2Pt_eta1, _h_gap_addJetHT_eta1, weight);
+      fillGapFractions(addJets_eta2, _h_gap_addJet1Pt_eta2, _h_gap_addJet2Pt_eta2, _h_gap_addJetHT_eta2, weight);
     }
 
     // Plots with at least two additional jets
@@ -245,6 +271,20 @@ public:
     normalize(_hFull_addBJet2Eta);
     normalize(_hFull_addBBMass);
     normalize(_hFull_addBBDR);
+    
+    const double s = 1./_gap_events;
+    scale(_h_gap_addJet1Pt     , s);
+    scale(_h_gap_addJet1Pt_eta0, s);
+    scale(_h_gap_addJet1Pt_eta1, s);
+    scale(_h_gap_addJet1Pt_eta2, s);
+    scale(_h_gap_addJet2Pt     , s);
+    scale(_h_gap_addJet2Pt_eta0, s);
+    scale(_h_gap_addJet2Pt_eta1, s);
+    scale(_h_gap_addJet2Pt_eta2, s);
+    scale(_h_gap_addJetHT      , s);
+    scale(_h_gap_addJetHT_eta0 , s);
+    scale(_h_gap_addJetHT_eta1 , s);
+    scale(_h_gap_addJetHT_eta2 , s);
   }
 
   //@}
@@ -274,6 +314,42 @@ private:
 
     return false;
   }
+  
+  void fillGapFractions(Jets addJets, Histo1DPtr h_gap_addJet1Pt, Histo1DPtr h_gap_addJet2Pt, Histo1DPtr h_gap_addJetHT, double weight) const {
+    double j1pt   = 0.;      
+    if  ( addJets.size() > 0 ) {
+      j1pt   = addJets[0].pT();
+    }
+    for (unsigned int i = 0; i < h_gap_addJet1Pt->numBins(); ++i) {
+      double binCenter = h_gap_addJet1Pt->bin(i).xMid();
+      double binWidth  = h_gap_addJet1Pt->bin(i).xWidth();
+      if (j1pt < binCenter) {
+        h_gap_addJet1Pt->fillBin(i, binWidth*weight);
+      }
+    }
+    
+    double j2pt   = 0.;
+    if  ( addJets.size() > 1 ) {
+      j2pt   = addJets[1].pT();
+    }
+    for (unsigned int i = 0; i < h_gap_addJet2Pt->numBins(); ++i) {
+      double binCenter = h_gap_addJet2Pt->bin(i).xMid();
+      double binWidth  = h_gap_addJet2Pt->bin(i).xWidth();
+      if (j2pt < binCenter) {
+        h_gap_addJet2Pt->fillBin(i, binWidth*weight);
+      }
+    }
+    
+    double ht = std::accumulate(addJets.begin(), addJets.end(),
+                                0., [](double x, const Jet& jj){return x+jj.pT();});
+    for (unsigned int i = 0; i < h_gap_addJetHT->numBins(); ++i) {
+      double binCenter = h_gap_addJetHT->bin(i).xMid();
+      double binWidth  = h_gap_addJetHT->bin(i).xWidth();
+      if (ht < binCenter) {
+        h_gap_addJetHT->fillBin(i, binWidth*weight);
+      }
+    }
+  }
 
   // @name Histogram data members
   //@{
@@ -287,6 +363,11 @@ private:
   Histo1DPtr _hVis_addBBMass, _hVis_addBBDR;
   Histo1DPtr _hFull_addBJet1Pt, _hFull_addBJet1Eta, _hFull_addBJet2Pt, _hFull_addBJet2Eta;
   Histo1DPtr _hFull_addBBMass, _hFull_addBBDR;
+  
+  int _gap_events;
+  Histo1DPtr _h_gap_addJet1Pt, _h_gap_addJet1Pt_eta0, _h_gap_addJet1Pt_eta1, _h_gap_addJet1Pt_eta2;
+  Histo1DPtr _h_gap_addJet2Pt, _h_gap_addJet2Pt_eta0, _h_gap_addJet2Pt_eta1, _h_gap_addJet2Pt_eta2;
+  Histo1DPtr _h_gap_addJetHT, _h_gap_addJetHT_eta0, _h_gap_addJetHT_eta1, _h_gap_addJetHT_eta2;
 
   //@}
 

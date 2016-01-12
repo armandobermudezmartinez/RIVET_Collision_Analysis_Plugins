@@ -69,22 +69,18 @@ public:
     _hFull_addBBDR   = bookHisto1D("h12_x02");
 
     _gap_events = 0;
-    _h_gap_addJet1Pt      = bookHisto1D("d63-x01-y01");
-    _h_gap_addJet1Pt_eta0 = bookHisto1D("d64-x01-y01");
-    _h_gap_addJet1Pt_eta1 = bookHisto1D("d65-x01-y01");
-    _h_gap_addJet1Pt_eta2 = bookHisto1D("d66-x01-y01");
-    _h_gap_addJet2Pt      = bookHisto1D("d59-x01-y01");
-    _h_gap_addJet2Pt_eta0 = bookHisto1D("d60-x01-y01");
-    _h_gap_addJet2Pt_eta1 = bookHisto1D("d61-x01-y01");
-    _h_gap_addJet2Pt_eta2 = bookHisto1D("d62-x01-y01");
+    _h_gap_addJet1Pt      = bookHisto1D("d59-x01-y01");
+    _h_gap_addJet1Pt_eta0 = bookHisto1D("d60-x01-y01");
+    _h_gap_addJet1Pt_eta1 = bookHisto1D("d61-x01-y01");
+    _h_gap_addJet1Pt_eta2 = bookHisto1D("d62-x01-y01");
+    _h_gap_addJet2Pt      = bookHisto1D("d63-x01-y01");
+    _h_gap_addJet2Pt_eta0 = bookHisto1D("d64-x01-y01");
+    _h_gap_addJet2Pt_eta1 = bookHisto1D("d65-x01-y01");
+    _h_gap_addJet2Pt_eta2 = bookHisto1D("d66-x01-y01");
     _h_gap_addJetHT       = bookHisto1D("d67-x01-y01");
     _h_gap_addJetHT_eta0  = bookHisto1D("d68-x01-y01");
     _h_gap_addJetHT_eta1  = bookHisto1D("d69-x01-y01");
     _h_gap_addJetHT_eta2  = bookHisto1D("d70-x01-y01");
-    
-    Histo1DPtr _h_gap_addJet1Pt, _h_gap_addJet1Pt_eta0, _h_gap_addJet1Pt_eta1, _h_gap_addJet1Pt_eta2;
-    Histo1DPtr _h_gap_addJet2Pt, _h_gap_addJet2Pt_eta0, _h_gap_addJet2Pt_eta1, _h_gap_addJet2Pt_eta2;
-    Histo1DPtr _h_gap_addJetHT, _h_gap_addJetHT_eta0, _h_gap_addJetHT_eta1, _h_gap_addJetHT_eta2;
   }
 
 

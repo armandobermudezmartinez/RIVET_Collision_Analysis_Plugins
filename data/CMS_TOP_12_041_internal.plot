@@ -212,42 +212,42 @@ RatioPlotYMax=1.125
 YMin=0.25
 # END PLOT
 
-# BEGIN PLOT /CMS_TOP_12_041_internal/d63-x01-y01
-XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
-YLabel=Gap fraction
-# END PLOT
-
-# BEGIN PLOT /CMS_TOP_12_041_internal/d64-x01-y01
-XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
-YLabel=Gap fraction ($|\eta| < 0.8$)
-# END PLOT
-
-# BEGIN PLOT /CMS_TOP_12_041_internal/d65-x01-y01
-XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
-YLabel=Gap fraction ($0.8 < |\eta| < 1.5$)
-# END PLOT
-
-# BEGIN PLOT /CMS_TOP_12_041_internal/d66-x01-y01
-XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
-YLabel=Gap fraction ($1.5 < |\eta| < 2.4$)
-# END PLOT
-
 # BEGIN PLOT /CMS_TOP_12_041_internal/d59-x01-y01
-XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
+XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
 YLabel=Gap fraction
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/d60-x01-y01
-XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
+XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
 YLabel=Gap fraction ($|\eta| < 0.8$)
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/d61-x01-y01
-XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
+XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
 YLabel=Gap fraction ($0.8 < |\eta| < 1.5$)
 # END PLOT
 
 # BEGIN PLOT /CMS_TOP_12_041_internal/d62-x01-y01
+XLabel=Leading add. jet $p_{T} \, [\mathrm{GeV}]$
+YLabel=Gap fraction ($1.5 < |\eta| < 2.4$)
+# END PLOT
+
+# BEGIN PLOT /CMS_TOP_12_041_internal/d63-x01-y01
+XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
+YLabel=Gap fraction
+# END PLOT
+
+# BEGIN PLOT /CMS_TOP_12_041_internal/d64-x01-y01
+XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
+YLabel=Gap fraction ($|\eta| < 0.8$)
+# END PLOT
+
+# BEGIN PLOT /CMS_TOP_12_041_internal/d65-x01-y01
+XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
+YLabel=Gap fraction ($0.8 < |\eta| < 1.5$)
+# END PLOT
+
+# BEGIN PLOT /CMS_TOP_12_041_internal/d66-x01-y01
 XLabel=Subleading add. jet $p_{T} \, [\mathrm{GeV}]$
 YLabel=Gap fraction ($1.5 < |\eta| < 2.4$)
 # END PLOT

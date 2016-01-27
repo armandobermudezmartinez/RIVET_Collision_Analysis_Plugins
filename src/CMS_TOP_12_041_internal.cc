@@ -68,7 +68,7 @@ public:
     _hFull_addBBMass = bookHisto1D("h12_x01");
     _hFull_addBBDR   = bookHisto1D("h12_x02");
 
-    _gap_events = 0;
+    _gap_weights = 0;
     _h_gap_addJet1Pt      = bookHisto1D("d59-x01-y01");
     _h_gap_addJet1Pt_eta0 = bookHisto1D("d60-x01-y01");
     _h_gap_addJet1Pt_eta1 = bookHisto1D("d61-x01-y01");
@@ -158,7 +158,7 @@ public:
       fillWithOF(_hVis_nJet60, nJet60, weight);
       fillWithOF(_hVis_nJet100, nJet100, weight);
       
-      ++_gap_events;
+      _gap_weights += weight;
       fillGapFractions(addJets, _h_gap_addJet1Pt, _h_gap_addJet2Pt, _h_gap_addJetHT, weight);
       fillGapFractions(addJets_eta0, _h_gap_addJet1Pt_eta0, _h_gap_addJet2Pt_eta0, _h_gap_addJetHT_eta0, weight);
       fillGapFractions(addJets_eta1, _h_gap_addJet1Pt_eta1, _h_gap_addJet2Pt_eta1, _h_gap_addJetHT_eta1, weight);
@@ -268,7 +268,7 @@ public:
     normalize(_hFull_addBBMass);
     normalize(_hFull_addBBDR);
     
-    const double s = 1./_gap_events;
+    const double s = 1./_gap_weights;
     scale(_h_gap_addJet1Pt     , s);
     scale(_h_gap_addJet1Pt_eta0, s);
     scale(_h_gap_addJet1Pt_eta1, s);
@@ -360,7 +360,7 @@ private:
   Histo1DPtr _hFull_addBJet1Pt, _hFull_addBJet1Eta, _hFull_addBJet2Pt, _hFull_addBJet2Eta;
   Histo1DPtr _hFull_addBBMass, _hFull_addBBDR;
   
-  int _gap_events;
+  double _gap_weights;
   Histo1DPtr _h_gap_addJet1Pt, _h_gap_addJet1Pt_eta0, _h_gap_addJet1Pt_eta1, _h_gap_addJet1Pt_eta2;
   Histo1DPtr _h_gap_addJet2Pt, _h_gap_addJet2Pt_eta0, _h_gap_addJet2Pt_eta1, _h_gap_addJet2Pt_eta2;
   Histo1DPtr _h_gap_addJetHT, _h_gap_addJetHT_eta0, _h_gap_addJetHT_eta1, _h_gap_addJetHT_eta2;

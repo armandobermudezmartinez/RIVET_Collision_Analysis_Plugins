@@ -3,7 +3,6 @@ LogY=1
 LogX=0
 XTwosidedTicks=1
 YTwosidedTicks=1
-NormalizeToIntegral=1
 LegendXPos=0.4
 Title=\Large \textbf{CMS} \hspace{10em} \large $19.7\,\text{fb}^\text{$-$1}$ (8 TeV)
 RatioPlotYMin=0.5

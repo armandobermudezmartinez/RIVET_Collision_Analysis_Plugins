@@ -35,7 +35,8 @@ public:
     fj.useInvisibles();
     addProjection(fj, "Jets");
     
-    _full_weights = 0.;
+    _vis_unit_weights = 0.;
+    _full_unit_weights = 0.;
     // Book histograms
     _hVis_nJet30_abs       = bookHisto1D(1, 1, 1);
     _hVis_nJet30           = bookHisto1D(2, 1, 1);
@@ -118,6 +119,7 @@ public:
 
   void analyze(const Event& event) {
     const double weight = event.weight();
+    if (weight != 0.) _vis_unit_weights += weight/std::abs(weight);
     // The objects used in the PAPER 12-041 is defined as follows (see p.16 for details):
     // 
     //   * Leptons    : from the W boson decays after FSR
@@ -153,7 +155,7 @@ public:
 
     const Jets& jets = applyProjection<JetAlg>(event, "Jets").jetsByPt(Cuts::pT > 20*GeV && Cuts::abseta < 2.4);
     
-    _full_weights += weight;
+    if (weight != 0.) _full_unit_weights += weight/std::abs(weight);
 
     int nJet30 = 0, nJet60 = 0, nJet100 = 0;
     Jets topBJets, addJets, addBJets, addJets_eta0, addJets_eta1, addJets_eta2;
@@ -307,38 +309,44 @@ public:
     //TODO: Why does this not work in CMSSW?
     double ttbarXS = 0.;
     if (!isnan(crossSectionPerEvent())) ttbarXS = crossSection();
-    else ttbarXS = 252.89; // NNLO (arXiv:1303.6254; sqrt(s)=8 TeV, m_t=172.5 GeV)
-                           // see also https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
+    else {
+      std::cout << "No valid cross section given, using NNLO value" << std::endl;
+      ttbarXS = 252.89; // NNLO (arXiv:1303.6254; sqrt(s)=8 TeV, m_t=172.5 GeV)
+                        // see also https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
+    }
     
-    scale(_hVis_nJet30_abs,       ttbarXS / sumOfWeights());
-    scale(_hVis_nJet60_abs,       ttbarXS / sumOfWeights());
-    scale(_hVis_nJet100_abs,      ttbarXS / sumOfWeights());
-    scale(_hVis_addJet1Pt_abs,    ttbarXS / sumOfWeights());
-    scale(_hVis_addJet1Eta_abs,   ttbarXS / sumOfWeights());
-    scale(_hVis_addJet2Pt_abs,    ttbarXS / sumOfWeights());
-    scale(_hVis_addJet2Eta_abs,   ttbarXS / sumOfWeights());
-    scale(_hVis_addJJMass_abs,    ttbarXS / sumOfWeights());
-    scale(_hVis_addJJDR_abs,      ttbarXS / sumOfWeights());
-    scale(_hVis_addJJHT_abs,      ttbarXS / sumOfWeights());
-    scale(_hFull_addJet1Pt_abs,   ttbarXS / _full_weights);
-    scale(_hFull_addJet1Eta_abs,  ttbarXS / _full_weights);
-    scale(_hFull_addJet2Pt_abs,   ttbarXS / _full_weights);
-    scale(_hFull_addJet2Eta_abs,  ttbarXS / _full_weights);
-    scale(_hFull_addJJMass_abs,   ttbarXS / _full_weights);
-    scale(_hFull_addJJDR_abs,     ttbarXS / _full_weights);
-    scale(_hFull_addJJHT_abs,     ttbarXS / _full_weights);
-    scale(_hVis_addBJet1Pt_abs,   ttbarXS / sumOfWeights());
-    scale(_hVis_addBJet1Eta_abs,  ttbarXS / sumOfWeights());
-    scale(_hVis_addBJet2Pt_abs,   ttbarXS / sumOfWeights());
-    scale(_hVis_addBJet2Eta_abs,  ttbarXS / sumOfWeights());
-    scale(_hVis_addBBMass_abs,    ttbarXS / sumOfWeights());
-    scale(_hVis_addBBDR_abs,      ttbarXS / sumOfWeights());
-    scale(_hFull_addBJet1Pt_abs,  ttbarXS / _full_weights);
-    scale(_hFull_addBJet1Eta_abs, ttbarXS / _full_weights);
-    scale(_hFull_addBJet2Pt_abs,  ttbarXS / _full_weights);
-    scale(_hFull_addBJet2Eta_abs, ttbarXS / _full_weights);
-    scale(_hFull_addBBMass_abs,   ttbarXS / _full_weights);
-    scale(_hFull_addBBDR_abs,     ttbarXS / _full_weights);
+    std::cout << "Sum vis unit weights: " << _vis_unit_weights
+              << ",Sum full unit weights: " << _full_unit_weights << std::endl;
+    
+    scale(_hVis_nJet30_abs,       ttbarXS / _vis_unit_weights);
+    scale(_hVis_nJet60_abs,       ttbarXS / _vis_unit_weights);
+    scale(_hVis_nJet100_abs,      ttbarXS / _vis_unit_weights);
+    scale(_hVis_addJet1Pt_abs,    ttbarXS / _vis_unit_weights);
+    scale(_hVis_addJet1Eta_abs,   ttbarXS / _vis_unit_weights);
+    scale(_hVis_addJet2Pt_abs,    ttbarXS / _vis_unit_weights);
+    scale(_hVis_addJet2Eta_abs,   ttbarXS / _vis_unit_weights);
+    scale(_hVis_addJJMass_abs,    ttbarXS / _vis_unit_weights);
+    scale(_hVis_addJJDR_abs,      ttbarXS / _vis_unit_weights);
+    scale(_hVis_addJJHT_abs,      ttbarXS / _vis_unit_weights);
+    scale(_hFull_addJet1Pt_abs,   ttbarXS / _full_unit_weights);
+    scale(_hFull_addJet1Eta_abs,  ttbarXS / _full_unit_weights);
+    scale(_hFull_addJet2Pt_abs,   ttbarXS / _full_unit_weights);
+    scale(_hFull_addJet2Eta_abs,  ttbarXS / _full_unit_weights);
+    scale(_hFull_addJJMass_abs,   ttbarXS / _full_unit_weights);
+    scale(_hFull_addJJDR_abs,     ttbarXS / _full_unit_weights);
+    scale(_hFull_addJJHT_abs,     ttbarXS / _full_unit_weights);
+    scale(_hVis_addBJet1Pt_abs,   ttbarXS / _vis_unit_weights);
+    scale(_hVis_addBJet1Eta_abs,  ttbarXS / _vis_unit_weights);
+    scale(_hVis_addBJet2Pt_abs,   ttbarXS / _vis_unit_weights);
+    scale(_hVis_addBJet2Eta_abs,  ttbarXS / _vis_unit_weights);
+    scale(_hVis_addBBMass_abs,    ttbarXS / _vis_unit_weights);
+    scale(_hVis_addBBDR_abs,      ttbarXS / _vis_unit_weights);
+    scale(_hFull_addBJet1Pt_abs,  ttbarXS / _full_unit_weights);
+    scale(_hFull_addBJet1Eta_abs, ttbarXS / _full_unit_weights);
+    scale(_hFull_addBJet2Pt_abs,  ttbarXS / _full_unit_weights);
+    scale(_hFull_addBJet2Eta_abs, ttbarXS / _full_unit_weights);
+    scale(_hFull_addBBMass_abs,   ttbarXS / _full_unit_weights);
+    scale(_hFull_addBBDR_abs,     ttbarXS / _full_unit_weights);
     
     normalize(_hVis_nJet30);
     normalize(_hVis_nJet60);
@@ -452,7 +460,9 @@ private:
   // @name Histogram data members
   //@{
   
-  double _full_weights;
+  double _vis_unit_weights;
+  double _full_unit_weights;
+  
   Histo1DPtr _hVis_nJet30_abs, _hVis_nJet60_abs, _hVis_nJet100_abs;
   Histo1DPtr _hVis_addJet1Pt_abs, _hVis_addJet1Eta_abs, _hVis_addJet2Pt_abs, _hVis_addJet2Eta_abs;
   Histo1DPtr _hVis_addJJMass_abs, _hVis_addJJDR_abs, _hVis_addJJHT_abs;

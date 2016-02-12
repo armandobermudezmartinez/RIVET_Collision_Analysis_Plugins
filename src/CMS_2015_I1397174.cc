@@ -14,9 +14,7 @@ namespace Rivet {
 class CMS_2015_I1397174 : public Analysis {
 public:
   /// Minimal constructor
-  CMS_2015_I1397174() : Analysis("CMS_2015_I1397174") {
-    setNeedsCrossSection(true);
-  }
+  CMS_2015_I1397174() : Analysis("CMS_2015_I1397174") {}
 
 
   /// @name Analysis methods
@@ -305,18 +303,19 @@ public:
   }
 
   void finalize() {
-    //double ttbarXS = 252.89; // NNLO (8 TeV)
-    //TODO: Why does this not work in CMSSW?
     double ttbarXS = 0.;
-    if (!isnan(crossSectionPerEvent())) ttbarXS = crossSection();
+    if (!isnan(crossSectionPerEvent())) {
+      std::cout << "Using generator cross section: " << crossSection() << " pb" << std::endl;
+      ttbarXS = crossSection();
+    }
     else {
-      std::cout << "No valid cross section given, using NNLO value" << std::endl;
+      std::cout << "No valid cross section given, using NNLO value: 252.89 pb" << std::endl;
       ttbarXS = 252.89; // NNLO (arXiv:1303.6254; sqrt(s)=8 TeV, m_t=172.5 GeV)
                         // see also https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
     }
     
     std::cout << "Sum vis unit weights: " << _vis_unit_weights
-              << ",Sum full unit weights: " << _full_unit_weights << std::endl;
+              << ", sum full unit weights: " << _full_unit_weights << std::endl;
     
     scale(_hVis_nJet30_abs,       ttbarXS / _vis_unit_weights);
     scale(_hVis_nJet60_abs,       ttbarXS / _vis_unit_weights);

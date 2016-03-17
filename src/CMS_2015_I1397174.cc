@@ -9,6 +9,8 @@
 
 namespace Rivet {
 
+namespace { //< only visible in this compilation unit
+
 // @brief Parton level top quark finder
 // 
 // Find top quark in the parton level directly tracking particle history.
@@ -35,7 +37,6 @@ public:
 
   //@}
 
-public:
   TTbarMode mode() const {
     const bool isLepton1 = _mode1%3 != 0;
     const bool isLepton2 = _mode2%3 != 0;
@@ -142,6 +143,8 @@ private:
   Particle _b1, _b2;
   ParticleVector _wDecays1, _wDecays2;
 };
+
+}
 
 class CMS_2015_I1397174 : public Analysis {
 public:

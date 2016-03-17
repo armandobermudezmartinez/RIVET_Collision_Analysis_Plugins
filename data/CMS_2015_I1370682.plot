@@ -1,352 +1,154 @@
-# BEGIN PLOT /CMS_2015_I1370682/d01-x01-y01
-Title=SL_lepPt
-XLabel=$p_{T}^{l} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{l} [GeV^{-1}]$
+# BEGIN PLOT /CMS_2015_I1370682/.*
 LogY=1
-YMin=1e-4
-YMax=1e-1
-RatioPlotYMin=0.8
-RatioPlotYMax=1.35
-#END PLOT
+NormalizeToIntegral=1
+NormalizeToSum=0
+XLabelSep=5.0
+# END PLOT
 
-# BEGIN PLOT /CMS_2015_I1370682/d02-x01-y01
-Title=SL_lepEta
-XLabel=$\eta_{l}$
-YLabel=$1\sigma d\sigma/d\eta_{l}$
-LogY=0
-YMin=0
-YMax=0.525
-RatioPlotYMin=0.8
-RatioPlotYMax=1.35
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d03-x01-y01
-Title=SL_bqPt
-XLabel=$p_{T}^{b} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{b} [GeV^{-1}]$
-LogY=1
-YMin=7e-5
-YMax=5e-2
-RatioPlotYMin=0.7
-RatioPlotYMax=1.7
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d04-x01-y01
-Title=SL_bqEta
-XLabel=$\eta_{b}$
-YLabel=$1\sigma d\sigma/d\eta_{b}$
-LogY=0
-YMin=0
-YMax=5e-1
-RatioPlotYMin=0.8
-RatioPlotYMax=1.25
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d05-x01-y01
-Title=SL_bbbarPt
-XLabel=$p_{T}^{b\bar{b}} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{b\bar{b}} [GeV^{-1}]$
-LogY=0
-YMin=0
-YMax=1.1e-2
-RatioPlotYMin=0.6
-RatioPlotYMax=1.5
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d06-x01-y01
-Title=SL_bbbarMass
-XLabel=$m_{b\bar{b}} [GeV]$
-YLabel=$1\sigma d\sigma/dm_{b\bar{b}} [GeV^{-1}]$
-LogY=0
-YMin=0
-YMax=8e-3
-RatioPlotYMin=0.4
-RatioPlotYMax=1.5
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d07-x01-y01
-Title=DL_lepPt
-XLabel=$p_{T}^{l} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{l} [GeV^{-1}]$
-LogY=1
-YMin=1e-5
-YMax=1e-1
-RatioPlotYMin=0.8
-RatioPlotYMax=1.4
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d08-x01-y01
-Title=DL_lepEta
-XLabel=$\eta_{l}$
-YLabel=$1\sigma d\sigma/d\eta_{l}$
-LogY=0
-YMin=0
-YMax=0.4
-RatioPlotYMin=0.85
-RatioPlotYMax=1.35
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d09-x01-y01
-Title=DL_dilepPt
-XLabel=$p_{T}^{l^+l^-} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{l^+l^-} [GeV^{-1}]$
-LogY=1
-YMin=8e-5
-YMax=5e-2
-RatioPlotYMin=0.85
-RatioPlotYMax=1.3
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d10-x01-y01
-Title=DL_dilepMass
-XLabel=$m^{l^+l^-} [GeV]$
-YLabel=$1\sigma d\sigma/dm^{l^+l^-} [GeV^{-1}]$
-LogY=1
-YMin=1e-4
-YMax=5e-2
-RatioPlotYMin=0.85
-RatioPlotYMax=1.25
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d11-x01-y01
-Title=DL_bqPt
-XLabel=$p_{T}^{b} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{b} [GeV^{-1}]$
-LogY=1
-YMin=1e-5
-YMax=5e-2
-RatioPlotYMin=0.7
-RatioPlotYMax=1.8
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d12-x01-y01
-Title=DL_bqEta
-XLabel=$\eta_{b}$
-YLabel=$1\sigma d\sigma/d\eta_{b}$
-LogY=0
-YMin=0
-YMax=0.4
-RatioPlotYMin=0.8
-RatioPlotYMax=1.25
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d13-x01-y01
-Title=DL_bbbarPt
-XLabel=$p_{T}^{b\bar{b}} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{b\bar{b}} [GeV^{-1}]$
-LogY=0
-YMin=0
-YMax=1e-2
-RatioPlotYMin=0.6
-RatioPlotYMax=1.5
-#END PLOT
-
-# BEGIN PLOT /CMS_2015_I1370682/d14-x01-y01
-Title=DL_bbbarMass
-XLabel=$m_{b\bar{b}} [GeV]$
-YLabel=$1/\sigma d\sigma/dm_{b\bar{b}} [GeV^{-1}]$
-LogY=0
-YMin=0
-YMax=6e-3
-RatioPlotYMin=0.9
-RatioPlotYMax=1.15
-#END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d15-x01-y01
-Title=SL_topPt
-XLabel=$p_{T}^{t} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{t} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1} c}]$
+LegendXPos=0.52
 LogY=0
-YMin=0
-YMax=8e-3
-RatioPlotYMin=0.7
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d16-x01-y01
-Title=SL_topPtTtbarSys
-XLabel=$p_{T}^{t*} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t*} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{t*} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1}c}]$
+LegendXPos=0.5
 LogY=0
-YMin=0
-YMax=9e-3
-RatioPlotYMin=0.7
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d17-x01-y01
-Title=SL_topY
-XLabel=$y_t$
-YLabel=$1\sigma d\sigma/dy_t$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$y_{t}$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}y$
+LegendXPos=0.29
+LegendYPos=0.63
 LogY=0
-YMin=0
-YMax=0.4
-RatioPlotYMin=0.8
-RatioPlotYMax=1.3
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d18-x01-y01
-Title=SL_ttbarDelPhi
-XLabel=$\delta\phi(t,\bar{t}) [rad]$
-YLabel=$1\sigma d\sigma/d\delta\phi(t,\bar{t}) [rad^{-1}]$
-LogY=0
-YMin=0
-YMax=3
-RatioPlotYMin=0.8
-RatioPlotYMax=1.3
-#END PLOT
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$\Delta\phi^{t\bar{t}} [\si{rad}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}$
+LegendXPos=0.05
+LogY=1
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d19-x01-y01
-Title=SL_topPtLead
-XLabel=$p_{T}^{t1} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t1} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{1} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1}c^2}]$
+LegendXPos=0.52
 LogY=0
-YMin=0
-YMax=9e-3
-RatioPlotYMin=0.7
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d20-x01-y01
-Title=SL_topPtSubLead
-XLabel=$p_{T}^{t2} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t2} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{2} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1}c}]$
+LegendXPos=0.48
 LogY=0
-YMin=0
-YMax=9e-3
-RatioPlotYMin=0.7
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d21-x01-y01
-Title=SL_ttbarPt
-XLabel=$p_{T}^{t\bar{t}} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t\bar{t}} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{t\bar{t}} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{t\bar{t}} [\si{\giga\electronvolt^{-1}c}]$
 LogY=0
-YMin=0
-YMax=2e-2
-RatioPlotYMin=0.5
-RatioPlotYMax=1.7
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d22-x01-y01
-Title=SL_ttbarY
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
 XLabel=$y_{t\bar{t}}$
-YLabel=$1\sigma d\sigma/y_{t\bar{t}}$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}y_{t\bar{t}}$
 LogY=0
-YMin=0
-YMax=0.5
-RatioPlotYMin=0.9
-RatioPlotYMax=1.3
-#END PLOT
+LegendXPos=0.3
+LegendYPos=0.63
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d23-x01-y01
-Title=SL_ttbarMass
-XLabel=$m_{t\bar{t}} [GeV]$
-YLabel=$1\sigma d\sigma/dm_{t\bar{t}} [GeV^{-1}]$
-LogY=1
-YMin=1e-6
-YMax=3e-2
-RatioPlotYMin=0.7
-RatioPlotYMax=1.5
-#END PLOT
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu jj$, $\sqrt{s}$= 8 TeV.
+XLabel=$m_{t\bar{t}} [\si{\giga\electronvolt/c^2}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}m_{t\bar{t}}[\si{\giga\electronvolt^{-1}c^2}]$
+LegendXPos=0.52
+LegendYPos=1
+# END PLOT
+
 
 # BEGIN PLOT /CMS_2015_I1370682/d24-x01-y01
-Title=DL_topPt
-XLabel=$p_{T}^{t} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{t} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1} c}]$
+LegendXPos=0.52
 LogY=0
-YMin=0
-YMax=8e-3
-RatioPlotYMin=0.8
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d25-x01-y01
-Title=DL_topPtTtbarSys
-XLabel=$p_{T}^{t*} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t*} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{t*} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1}c}]$
+LegendXPos=0.5
 LogY=0
-YMin=0
-YMax=1e-2
-RatioPlotYMin=0.7
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d26-x01-y01
-Title=DL_topY
-XLabel=$y_t$
-YLabel=$1\sigma d\sigma/dy)t$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$y_{t}$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}y$
+LegendXPos=0.29
+LegendYPos=0.63
 LogY=0
-YMin=0
-YMax=0.4
-RatioPlotYMin=0.8
-RatioPlotYMax=1.3
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d27-x01-y01
-Title=DL_ttbarDelPhi
-XLabel=$\Delta\phi(t,\bar{t}) [rad]$
-YLabel=$1\sigma d\sigma/d\Delta\phi(t,\bar{t}) [rad^{-1}]$
-LogY=0
-YMin=0
-YMax=3
-RatioPlotYMin=0.8
-RatioPlotYMax=1.3
-#END PLOT
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$\Delta\phi^{t\bar{t}} [\si{rad}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}$
+LegendXPos=0.05
+LogY=1
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d28-x01-y01
-Title=DL_topPtLead
-XLabel=$p_{T}^{t1} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t1} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{1} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1}c^2}]$
+LegendXPos=0.52
 LogY=0
-YMin=0
-YMax=1e-2
-RatioPlotYMin=0.7
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d29-x01-y01
-Title=DL_topPtSubLead
-XLabel=$p_{T}^{t2} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{t2}^{l} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{2} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{} [\si{\giga\electronvolt^{-1}c}]$
+LegendXPos=0.48
 LogY=0
-YMin=0
-YMax=1e-2
-RatioPlotYMin=0.7
-RatioPlotYMax=1.6
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d30-x01-y01
-Title=DL_ttbarPt
-XLabel=$p_{T}^{t\bar{t}} [GeV]$
-YLabel=$1\sigma d\sigma/dp_{T}^{t\bar{t}} [GeV^{-1}]$
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$p_\mathrm{T}^{t\bar{t}} [\si{\giga\electronvolt\per c}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}p_\mathrm{T}^{t\bar{t}} [\si{\giga\electronvolt^{-1}c}]$
 LogY=0
-YMin=0
-YMax=2e-2
-RatioPlotYMin=0.5
-RatioPlotYMax=1.8
-#END PLOT
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d31-x01-y01
-Title=DL_ttbarY
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
 XLabel=$y_{t\bar{t}}$
-YLabel=$1\sigma d\sigma/dy_{t\bar{t}}$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}y_{t\bar{t}}$
 LogY=0
-YMin=0
-YMax=0.9
-RatioPlotYMin=0.9
-RatioPlotYMax=1.3
-#END PLOT
+LegendXPos=0.3
+LegendYPos=0.63
+# END PLOT
 
 # BEGIN PLOT /CMS_2015_I1370682/d32-x01-y01
-Title=DL_ttbarMass
-XLabel=$m_{t\bar{t}} [GeV]$
-YLabel=$1\sigma d\sigma/dm_{t\bar{t}} [GeV^{-1}]$
-LogY=1
-YMin=5e-6
-YMax=4e-2
-RatioPlotYMin=0.8
-RatioPlotYMax=2.2
-#END PLOT
-
+Title=CMS, $t\bar{t}$ $\rightarrow$ $bbl\nu l\nu$, $\sqrt{s}$= 8 TeV.
+XLabel=$m_{t\bar{t}} [\si{\giga\electronvolt/c^2}]$
+YLabel=$1/\sigma \mathrm{d}\sigma/\mathrm{d}m_{t\bar{t}}[\si{\giga\electronvolt^{-1}c^2}]$
+LegendXPos=0.52
+LegendYPos=1
+# END PLOT

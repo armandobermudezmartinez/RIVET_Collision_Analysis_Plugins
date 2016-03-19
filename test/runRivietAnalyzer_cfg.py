@@ -16,7 +16,7 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring(
     'CMS_2015_I1370682', 'CMS_2015_I1370682_internal',
-    'CMS_TOP_12_041_internal',
+    'CMS_2015_I1397174',
 )
 process.rivetAnalyzer.OutputFile = "MC.yoda"
 

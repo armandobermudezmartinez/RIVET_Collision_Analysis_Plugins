@@ -25,21 +25,12 @@ double getDeltaR(const FourMomentum& p1, const FourMomentum& p2){
 }
 
 // Determine if lepton comes from hard top decay
-bool PseudoBoostedTop::isFromTop(const GenParticle* p, const Event&e){
+bool PseudoBoostedTop::isFromTop(const GenParticle* p){
   bool fromTop = false;
   const int pdgId = p->pdg_id();
-  const GenVertex* prodVtx = p->production_vertex();
+  GenVertex* prodVtx = p->production_vertex();
   if (prodVtx != NULL) {
-    const int prodVtxId = prodVtx->barcode();
-
-    // Find parent particle
-    foreach (GenParticle* p1, Rivet::particles(e.genEvent())) {
-      const GenVertex* decayVtx = p1->end_vertex();
-      if (decayVtx == NULL) continue;
-      const int decayVtxId = decayVtx->barcode();
-      if (prodVtxId != decayVtxId) continue;
-      
-      // Now we have found parent particle...
+    foreach (const GenParticle* p1, Rivet::particles(prodVtx, HepMC::parents)) {
       const int pdgIdParent = p1->pdg_id();
       if (pdgIdParent == 24) { // parent is a W+ --> leptonic top
 	if (pdgId == -11) _topDecay = CH_ELECTRON;
@@ -58,6 +49,15 @@ bool PseudoBoostedTop::isFromTop(const GenParticle* p, const Event&e){
   return fromTop;  
 }
 
+bool PseudoBoostedTop::fromHardMuon(const GenParticle* p){
+  GenVertex* prodVtx = p->production_vertex();
+  if (prodVtx == NULL) return false;
+  foreach (const GenParticle* ancestor, Rivet::particles(prodVtx, HepMC::ancestors)) {
+    if (std::abs(ancestor->pdg_id()) == 13 && ancestor->status() == 3) return true;
+  }
+  return false;
+}
+
 void PseudoBoostedTop::project(const Event& e) {
   // Lepton : genParticle
   // (b) jets: anti-kt R=0.5 using all final-state particles excluding neutrinos
@@ -71,14 +71,15 @@ void PseudoBoostedTop::project(const Event& e) {
   _isGenBJet = false;
   _isGenTopJet = false;
   _passParticle = false;
-
+    
   _mtt = -1.;
 
   // Get parton-level top / state
-  Particles pGenLep;
   Particles pForJet;
-
+  
   Particle refLep;
+
+  std::set<int> pFromMuon;
   
   foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
     const int status = p->status();
@@ -86,18 +87,39 @@ void PseudoBoostedTop::project(const Event& e) {
 
     Particle rp(*p);
 
-    // Get lepton
-    if (std::abs(pdgId) == 11 || std::abs(pdgId) == 13 || std::abs(pdgId) == 15) {
-      if (isFromTop(p,e)) refLep = rp;
-    }
-
-    // Get parton-level tops
-    if (std::abs(status) > 30) continue; //not from hadronization
+    // Get top quarks
     if (pdgId == 6){
       _top = rp;
     }
     if (pdgId == -6){
       _antitop = rp;
+    }
+
+    // Get electrons
+    if (std::abs(pdgId) == 11){
+      if (isFromTop(p)) {
+	refLep = rp;
+      }      
+    }
+
+    // Get muons
+    if (std::abs(pdgId) == 13){
+      if (isFromTop(p)) {
+	refLep = rp;
+      }      
+    }
+
+    // Get taus
+    if (std::abs(pdgId) == 15){
+      if (isFromTop(p)) {
+	refLep = rp;
+      }      
+    }
+
+    if (status == 1) {
+      if (fromHardMuon(p)) {
+	pFromMuon.insert(p->barcode());
+      }
     }
   }
 
@@ -109,8 +131,9 @@ void PseudoBoostedTop::project(const Event& e) {
   // Get particles for jet clustering
   foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
     const int status = p->status();
+    const int barcode = p->barcode();
     Particle rp(*p);
-    if (status == 1 && !rp.isNeutrino()) { //consider all final state particles except neutrinos
+    if (status == 1 && !rp.isNeutrino() && pFromMuon.find(barcode) == pFromMuon.end()) { //consider all final state particles except neutrinos and decay products of hard muon
       pForJet.push_back(rp);
     } 
   }
@@ -128,7 +151,7 @@ void PseudoBoostedTop::project(const Event& e) {
   ca8Jet.calc(pForTjet);
 
   if (refLep.momentum().pt() > _lepMinPt && std::fabs(refLep.eta()) < _lepMaxEta){
-
+    
     _isParticleLep = true;
     const FourMomentum& refLepP4 = refLep.momentum();
 
@@ -136,7 +159,7 @@ void PseudoBoostedTop::project(const Event& e) {
     Jets genTjets;
     int nGenBjets = 0;
     int nGenTjets = 0;
-  
+
     foreach (const Jet& jet, ak5Jet.jetsByPt(_jetMinPt)) {
       if (std::fabs(jet.eta()) > _jetMaxEta) continue;
       if (getDeltaR(jet.momentum(),refLepP4) > _halfpi) continue;
@@ -144,7 +167,7 @@ void PseudoBoostedTop::project(const Event& e) {
       genBjets.push_back(jet);
       nGenBjets += 1;
     }
-    
+
     foreach (const Jet& jet, ca8Jet.jetsByPt(_jetMinPt)) {
       if (std::fabs(jet.eta()) > _jetMaxEta) continue;
       if (getDeltaR(jet.momentum(), refLepP4) < _halfpi) continue;

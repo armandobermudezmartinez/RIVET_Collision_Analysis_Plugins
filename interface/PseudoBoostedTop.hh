@@ -7,6 +7,9 @@
 #include "Rivet/Event.hh"
 #include "Rivet/Projections/FastJets.hh"
 
+#include <vector>
+#include <string>
+
 namespace Rivet {
 
   // @brief Pseudo boosted top finder
@@ -61,7 +64,8 @@ namespace Rivet {
   protected:
     // Apply the projection to the event
     void project(const Event& e) override;
-    bool isFromTop(const GenParticle* p, const Event&e);
+    bool isFromTop(const GenParticle* p);
+    bool fromHardMuon(const GenParticle* p);
 
   private:
     const double _lepMinPt, _lepMaxEta, _jetMinPt, _jetMaxEta;

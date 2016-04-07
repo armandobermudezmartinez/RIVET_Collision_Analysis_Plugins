@@ -14,8 +14,8 @@ Authors:
  - Elvire Bouvier <e.bouvier@cern.ch>	
  - Benedikt Maier <benedikt.maier@cern.ch>	
 References:
- - Eur.Phys.J. C75 (2015) 542: For the analysis
- - CMS-PAS-TOP-15-011 : For details about the Rivet implementation
+ - Eur.Phys.J. C75 (2015) 542 -- For the analysis
+ - CMS-PAS-TOP-15-011 -- For details about the Rivet implementation
 RunInfo:
   pp QCD interactions at $\sqrt{s} = 8$ TeV. Data collected by CMS during the year 2012.
 Luminosity: 19.7 /fb

@@ -4,7 +4,7 @@ Summary: Measurement of ttbar production with additional jet activity, including
 Experiment: CMS
 Collider: LHC
 InspireID: 1397174
-Status: VALIDATED
+Status: UNVALIDATED
 Authors:
  - Javier Fernandez <Javier.Fernandez@cern.ch>
  - Jungwan John Goh <Junghwan.Goh@cern.ch>	
@@ -16,7 +16,7 @@ Authors:
 References:
  - arXiv:1510.03072
 RunInfo:
-  pp QCD interactions at sqrt(s)=8 TeV. Data collected by CMS during the year 2012.
+  ttbar events at sqrt(s)=8 TeV. Top quarks are expected in the event record to identify additional jets. Gap fractions require high statistics in a single run or custom merging of the yoda files.
 Luminosity: 19.7 /fb
 Beams: [p+, p+]
 Energies: [8000]

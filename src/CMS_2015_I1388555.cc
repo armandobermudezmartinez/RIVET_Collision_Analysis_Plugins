@@ -37,23 +37,33 @@ namespace Rivet {
       _hMu_topPt_particle      = bookHisto1D("d06-x01-y01"); // dsigma/dpt(top)
       _hMu_topY_parton         = bookHisto1D("d07-x01-y01"); // dsigma/dy(top)
       _hMu_topY_particle       = bookHisto1D("d08-x01-y01"); // dsigma/dy(top)
-
-      _hEl_topPt_parton_norm        = bookHisto1D("d09-x01-y01"); // 1/sigma dsigma/dpt(top)
-      _hEl_topPt_particle_norm      = bookHisto1D("d10-x01-y01"); // 1/sigma dsigma/dpt(top)
-      _hEl_topY_parton_norm         = bookHisto1D("d11-x01-y01"); // 1/sigma dsigma/dy(top)
-      _hEl_topY_particle_norm       = bookHisto1D("d12-x01-y01"); // 1/sigma dsigma/dy(top)
       
-      _hMu_topPt_parton_norm        = bookHisto1D("d13-x01-y01"); // 1/sigma dsigma/dpt(top)
-      _hMu_topPt_particle_norm      = bookHisto1D("d14-x01-y01"); // 1/sigma dsigma/dpt(top)
-      _hMu_topY_parton_norm         = bookHisto1D("d15-x01-y01"); // 1/sigma dsigma/dy(top)
-      _hMu_topY_particle_norm       = bookHisto1D("d16-x01-y01"); // 1/sigma dsigma/dy(top)
+      _hComb_topPt_parton        = bookHisto1D("d09-x01-y01"); // dsigma/dpt(top)
+      _hComb_topPt_particle      = bookHisto1D("d10-x01-y01"); // dsigma/dpt(top)
+      _hComb_topY_parton         = bookHisto1D("d11-x01-y01"); // dsigma/dy(top)
+      _hComb_topY_particle       = bookHisto1D("d12-x01-y01"); // dsigma/dy(top)
+
+      _hEl_topPt_parton_norm        = bookHisto1D("d13-x01-y01"); // 1/sigma dsigma/dpt(top)
+      _hEl_topPt_particle_norm      = bookHisto1D("d14-x01-y01"); // 1/sigma dsigma/dpt(top)
+      _hEl_topY_parton_norm         = bookHisto1D("d15-x01-y01"); // 1/sigma dsigma/dy(top)
+      _hEl_topY_particle_norm       = bookHisto1D("d16-x01-y01"); // 1/sigma dsigma/dy(top)
+      
+      _hMu_topPt_parton_norm        = bookHisto1D("d17-x01-y01"); // 1/sigma dsigma/dpt(top)
+      _hMu_topPt_particle_norm      = bookHisto1D("d18-x01-y01"); // 1/sigma dsigma/dpt(top)
+      _hMu_topY_parton_norm         = bookHisto1D("d19-x01-y01"); // 1/sigma dsigma/dy(top)
+      _hMu_topY_particle_norm       = bookHisto1D("d20-x01-y01"); // 1/sigma dsigma/dy(top)
+
+      _hComb_topPt_parton_norm        = bookHisto1D("d21-x01-y01"); // 1/sigma dsigma/dpt(top)
+      _hComb_topPt_particle_norm      = bookHisto1D("d22-x01-y01"); // 1/sigma dsigma/dpt(top)
+      _hComb_topY_parton_norm         = bookHisto1D("d23-x01-y01"); // 1/sigma dsigma/dy(top)
+      _hComb_topY_particle_norm       = bookHisto1D("d24-x01-y01"); // 1/sigma dsigma/dy(top)
 
       //Diagnostic histograms (not compared against data)
       _hMu_cutflow = bookHisto1D("mu_cutflow",6,-0.5,5.5);
       _hEl_cutflow = bookHisto1D("el_cutflow",6,-0.5,5.5);
       _hChannel_truth = bookHisto1D("truth_channel",5,-0.5,4.5);
       _hEventsAnalyzed = bookHisto1D("EventsAnalyzed",1,-0.5,0.5);
-      
+
       nEvents = 0;
       nSemilepTau = 0;
       nAllHadronic = 0;
@@ -77,6 +87,7 @@ namespace Rivet {
     /// Perform the per-event analysis
     void analyze(const Event& event) {
       nEvents += 1;
+      //cout << endl << "Event " << nEvents << endl;
       
       const double weight = event.weight();
 
@@ -99,22 +110,27 @@ namespace Rivet {
       }
       
       if ( ttbar.mode() == PseudoBoostedTop::CH_DILEP || ttbar.mode() == PseudoBoostedTop::CH_ALLHADRON || ttbar.mode() == PseudoBoostedTop::CH_SEMILEP_TAU) vetoEvent;
-      
+
       // Do selection
       const FourMomentum& partonTopP4 = ttbar.partonTop().momentum();
       
       if ( ttbar.mode() == PseudoBoostedTop::CH_SEMILEP_MU ) { //pass loose parton, muon channel
+
 	nMu += 1;
 	_hChannel_truth->fill(3.);
 	_hMu_cutflow->fill(0.);
 	_hMu_topPt_parton->fill(partonTopP4.pT(), weight);
       	_hMu_topPt_parton_norm->fill(partonTopP4.pT(), weight);
+	_hComb_topPt_parton->fill(partonTopP4.pT(), weight);
+      	_hComb_topPt_parton_norm->fill(partonTopP4.pT(), weight);
 
 	if (partonTopP4.pT() >= 400.){
 	  nPassParton_mu += 1;
 	  _hMu_cutflow->fill(1.);
 	  _hMu_topY_parton->fill(partonTopP4.rapidity(), weight);
 	  _hMu_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
+	  _hComb_topY_parton->fill(partonTopP4.rapidity(), weight);
+	  _hComb_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
 	}
 
 	if (ttbar.isParticleLep()) {
@@ -133,28 +149,37 @@ namespace Rivet {
 
 	  _hMu_topPt_particle->fill(particleTopP4.pT(), weight);
 	  _hMu_topPt_particle_norm->fill(particleTopP4.pT(), weight);
+	  _hComb_topPt_particle->fill(particleTopP4.pT(), weight);
+	  _hComb_topPt_particle_norm->fill(particleTopP4.pT(), weight);
 
 	  if (ttbar.passParticle()){
 	    nPassParticle_mu += 1;
 	    _hMu_cutflow->fill(5.);
 	    _hMu_topY_particle->fill(particleTopP4.rapidity(), weight);
 	    _hMu_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
+	    _hComb_topY_particle->fill(particleTopP4.rapidity(), weight);
+	    _hComb_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
 	  }
 	}
       }
       
       else if ( ttbar.mode() == PseudoBoostedTop::CH_SEMILEP_EL ) {
+	
 	nEl += 1;
 	_hChannel_truth->fill(4.);
 	_hEl_cutflow->fill(0.);
 	_hEl_topPt_parton->fill(partonTopP4.pT(), weight);
       	_hEl_topPt_parton_norm->fill(partonTopP4.pT(), weight);
+	_hComb_topPt_parton->fill(partonTopP4.pT(), weight);
+      	_hComb_topPt_parton_norm->fill(partonTopP4.pT(), weight);
 
 	if (partonTopP4.pT() >= 400.){
 	  nPassParton_el += 1;
 	  _hEl_cutflow->fill(1.);
 	  _hEl_topY_parton->fill(partonTopP4.rapidity(), weight);
 	  _hEl_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
+	  _hComb_topY_parton->fill(partonTopP4.rapidity(), weight);
+	  _hComb_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
 	}
 
 	if (ttbar.isParticleLep()) {
@@ -173,12 +198,16 @@ namespace Rivet {
 	  
 	  _hEl_topPt_particle->fill(particleTopP4.pT(), weight);
 	  _hEl_topPt_particle_norm->fill(particleTopP4.pT(), weight);
+	  _hComb_topPt_particle->fill(particleTopP4.pT(), weight);
+	  _hComb_topPt_particle_norm->fill(particleTopP4.pT(), weight);
 
 	  if (ttbar.passParticle()){
 	    nPassParticle_el += 1;
 	    _hEl_cutflow->fill(5.);
 	    _hEl_topY_particle->fill(particleTopP4.rapidity(), weight);
 	    _hEl_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
+	    _hComb_topY_particle->fill(particleTopP4.rapidity(), weight);
+	    _hComb_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
 	  }
 	}
       }
@@ -216,12 +245,16 @@ namespace Rivet {
       double xs_mu_particle = 252.89 * 1000. * nPassParticle_mu / nMu;
       double xs_el_parton = 252.89 * 1000. * nPassParton_el / nEl;
       double xs_el_particle = 252.89 * 1000. * nPassParticle_el / nEl;
+      double xs_comb_parton = 252.89 * 1000. * (nPassParton_el + nPassParton_mu) / (nEl + nMu);
+      double xs_comb_particle = 252.89 * 1000. * (nPassParticle_el + nPassParton_mu) / (nEl + nMu);
       cout << "Inclusive xsec (pt>400), mu channel, parton-level: " << xs_mu_parton << endl;
       cout << "Inclusive xsec (pt>400), mu channel, particle-level: " << xs_mu_particle << endl;
       cout << "Inclusive xsec (pt>400), el channel, parton-level: " << xs_el_parton << endl;
       cout << "Inclusive xsec (pt>400), el channel, particle-level: " << xs_el_particle << endl;
+      cout << "Inclusive xsec (pt>400), comb channel, parton-level: " << xs_comb_parton << endl;
+      cout << "Inclusive xsec (pt>400), comb channel, particle-level: " << xs_comb_particle << endl;
 
-      
+        
       normalize(_hMu_topPt_parton,xs_mu_parton,false);
       normalize(_hMu_topPt_particle,xs_mu_particle,false);
       normalize(_hMu_topY_parton,xs_mu_parton,false);
@@ -230,6 +263,10 @@ namespace Rivet {
       normalize(_hEl_topPt_particle,xs_el_particle,false);
       normalize(_hEl_topY_parton,xs_el_parton,false);
       normalize(_hEl_topY_particle,xs_el_particle,false);
+      normalize(_hComb_topPt_parton,xs_comb_parton,false);
+      normalize(_hComb_topPt_particle,xs_comb_particle,false);
+      normalize(_hComb_topY_parton,xs_comb_parton,false);
+      normalize(_hComb_topY_particle,xs_comb_particle,false);
 
       normalize(_hMu_topPt_parton_norm,1.0,false);
       normalize(_hMu_topPt_particle_norm,1.0,false);
@@ -238,7 +275,11 @@ namespace Rivet {
       normalize(_hEl_topPt_parton_norm,1.0,false);
       normalize(_hEl_topPt_particle_norm,1.0,false);
       normalize(_hEl_topY_parton_norm,1.0,false);
-      normalize(_hEl_topY_particle_norm,1.0,false);     
+      normalize(_hEl_topY_particle_norm,1.0,false); 
+      normalize(_hComb_topPt_parton_norm,1.0,false);
+      normalize(_hComb_topPt_particle_norm,1.0,false);
+      normalize(_hComb_topY_parton_norm,1.0,false);
+      normalize(_hComb_topY_particle_norm,1.0,false);
 
     }
 
@@ -255,6 +296,10 @@ namespace Rivet {
     Histo1DPtr _hEl_topPt_particle;
     Histo1DPtr _hEl_topY_parton;
     Histo1DPtr _hEl_topY_particle;
+    Histo1DPtr _hComb_topPt_parton;
+    Histo1DPtr _hComb_topPt_particle;
+    Histo1DPtr _hComb_topY_parton;
+    Histo1DPtr _hComb_topY_particle;
     Histo1DPtr _hMu_topPt_parton_norm;
     Histo1DPtr _hMu_topPt_particle_norm;
     Histo1DPtr _hMu_topY_parton_norm;
@@ -263,11 +308,15 @@ namespace Rivet {
     Histo1DPtr _hEl_topPt_particle_norm;
     Histo1DPtr _hEl_topY_parton_norm;
     Histo1DPtr _hEl_topY_particle_norm;
+    Histo1DPtr _hComb_topPt_parton_norm;
+    Histo1DPtr _hComb_topPt_particle_norm;
+    Histo1DPtr _hComb_topY_parton_norm;
+    Histo1DPtr _hComb_topY_particle_norm;
     Histo1DPtr _hMu_cutflow;
     Histo1DPtr _hEl_cutflow;
     Histo1DPtr _hChannel_truth;
     Histo1DPtr _hEventsAnalyzed;
-    
+
     int nEvents;
     int nDilep;
     int nSemilepTau;

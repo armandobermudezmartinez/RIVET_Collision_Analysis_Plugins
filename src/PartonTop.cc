@@ -16,7 +16,7 @@ void PartonTop::project(const Event& e) {
 
   int nTop = 0;
   bool isTau1 = false, isTau2 = false;
-  foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
+  foreach (const GenParticle* p, Rivet::particles(e.genEvent())) {
     const int pdgId = p->pdg_id();
     const int absId = abs(pdgId);
     if ( absId > 20 ) continue; // We are only interested in quarks and leptons

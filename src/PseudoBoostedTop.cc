@@ -88,10 +88,10 @@ void PseudoBoostedTop::project(const Event& e) {
     Particle rp(*p);
 
     // Get top quarks
-    if (pdgId == 6){
+    if (pdgId == 6 && (status == 3 || status == 22)){
       _top = rp;
     }
-    if (pdgId == -6){
+    if (pdgId == -6 && (status == 3 || status == 22)){
       _antitop = rp;
     }
 

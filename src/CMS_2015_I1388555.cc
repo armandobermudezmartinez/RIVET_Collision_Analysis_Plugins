@@ -87,7 +87,7 @@ namespace Rivet {
       /// Perform the per-event analysis
       void analyze(const Event& event) {
         nEvents += 1;
-        //cout << endl << "Event " << nEvents << endl;
+        //cout << "Event " << nEvents << endl;
 
         const double weight = event.weight();
 
@@ -254,7 +254,7 @@ namespace Rivet {
         cout << "Inclusive xsec (pt>400), comb channel, parton-level: " << xs_comb_parton << endl;
         cout << "Inclusive xsec (pt>400), comb channel, particle-level: " << xs_comb_particle << endl;
 
-
+	
         normalize(_hMu_topPt_parton,xs_mu_parton,false);
         normalize(_hMu_topPt_particle,xs_mu_particle,false);
         normalize(_hMu_topY_parton,xs_mu_parton,false);
@@ -280,7 +280,7 @@ namespace Rivet {
         normalize(_hComb_topPt_particle_norm,1.0,false);
         normalize(_hComb_topY_parton_norm,1.0,false);
         normalize(_hComb_topY_particle_norm,1.0,false);
-
+	
       }
 
       //@}

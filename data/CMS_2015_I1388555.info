@@ -1,0 +1,61 @@
+Name: CMS_2015_I1388555
+Year: 2015
+Summary: Comparisons of Theory Predictions for the Boosted ttbar Process with Data from pp Collisions at $\sqrt{s}$ = 8 TeV
+Experiment: CMS
+Collider: LHC
+InspireID: 1388555
+Status: UNVALIDATED
+Authors:
+ - Salvatore Rappoccio <rappoccio@gmail.com>
+ - Maral Alyari <maralaly@buffalo.edu>
+ - Julia Thom <thom.julia@gmail.com>
+ - Louise Skinnari <louise.skinnari@cern.ch>
+ - Susan Dittmer <Susan.Dittmer@cern.ch>
+ - Matthew Bellis <mbellis@sienna.edu>
+References:
+ - CMS-PAS-TOP-14-012 -- for the analysis
+RunInfo:
+  pp QCD interactions at $\sqrt{s} = 8$ TeV. Data collected by CMS during the year 2012. Parton-level selection expects a pair of top quarks with status 3 or 22 in event record. Boosted topology restricts phase space, requiring high statistics in a single run or custom merging of the yoda files.
+Luminosity: 19.7 /fb
+Beams: [p+, p+]
+Energies: [8000]
+Description:
+	'Abstract:
+	
+The cross section for pair production of top quarks with high transverse momenta ($p_{\rm T} > 400$~GeV) is measured in 19.7~fb$^{-1}$ of $\mathrm{pp}$ collisions, collected with the CMS detector at $\sqrt{s} = 8$~TeV. The measurement is performed for lepton+jets events, where one top quark decays according to $t \rightarrow Wb \rightarrow \ell \nu b$, with $\ell$ denoting an electron or muon, and the second top quark decays to an hadronic final state and is reconstructed as a single, large-radius jet and identified as a top quark candidate using jet substructure techniques. Integrated cross sections, as well as differential cross sections as a function of the top quark $p_{\rm T}$ and rapidity, are measured both at particle level within a fiducial region resembling the detector-level selections and at parton level. 
+
+RIVET :
+
+This analysis is to be run on ${\rm t\bar{t}}$ Monte Carlo.  It has been validated with Powheg+Pythia6, Powheg+Herwig6, MC@NLO+Herwig6, MadGraph+Pythia6, and Powheg+Pythia8. Since the parton-level object definitions rely on hadronizer status codes, this plugin should only be run on MC which have the same status definitions.
+
+In this analysis, the parton-level phase space is defined using the following object definitions:
+\begin{itemize}
+\item{Lepton} : An electron, muon, or tau (PDG ID = $\pm11$, $\pm13$, or $\pm15$) originating from the decay of a W boson (PDG ID of parent particle is $\pm24$).
+\item{Top quark} : A top quark (PDG ID = $\pm6$) with status 3 or 22.
+\end{itemize}
+
+The parton-level phase space is defined by requiring exactly one lepton, which must be an electron or muon.  For for ${\rm t\bar{t}}$ Monte Carlo, this is equivalent to requiring the event to be semileptonic at parton level.  The lepton charge is used to determine whether it comes from the decay of a top or antitop.  The top of opposite sign (which by construct must have decayed hadronically) is defined as the parton-level top quark. The parton-level top quark is required to have $p_{T} > 400$~GeV.
+
+In this analysis, the particle-level phase space is defined using the following object definitions:
+\begin{itemize}
+\item{Lepton} : An electron or muon (PDG ID = $\pm11$ or $\pm13$) originating from the decay of a W boson (PDG ID of parent particle is $\pm24$). The lepton is required to have $p_{T} > 45$~GeV and $|\eta| < 2.1$.
+\item{B Jet Candidate} : Gen AK5 jets are formed by clustering the final state particles in the event using the anti-$k_{T}$ algorithm with distance parameter $R=0.5$.  Here, 'final state particles' refers to all status 1 particles in the event, excepting neutrinos and particles originating from the decay of the muon defined above.  The gen AK5 jet is required to have $p_{T} > 30$~GeV and $|\eta| < 2.4$. Gen AK5 jets in the same hemisphere as the lepton ($\Delta {\rm R(e/\mu,~jet)} < \pi/2$) are defined as b-jet candidates.
+\item{Top Jet Candidate} : Gen CA8 jets are formed by clustering the final state particles in the event using the Cambridge-Aachen algorithm with distance parameter $R=0.8$. Here, 'final state particles' refers to all status 1 particles in the event, excepting neutrinos and particles originating from the decay of the muon defined above.  The gen CA8 jet is required to have $p_{T} > 30$~GeV and $|\eta| < 2.4$. Gen CA8 jets which have $p_{T} > 400$~GeV, 140 GeV $<$ mass $<$ 250 GeV, and are in the opposite hemisphere from the lepton ($\Delta{\rm R(e/\mu,~jet)} > \pi/2$) are defined as top jet candidates.
+\end{itemize}
+
+The particle-level phase space is defined by requiring $\geq 1$ b jet candidate, $\geq 1$ top jet candidate, and exactly one lepton. This is in addition to the parton-level semileptonic requirement. The highest-$p_{T}$ top jet candidate is defined as the particle-level t jet.'
+
+BibKey: Khachatryan:2016gxp
+BibTex: '@article{Khachatryan:2016gxp,
+      author         = "Khachatryan, Vardan and others",
+      title          = "{Measurement of the integrated and differential t-tbar
+                        production cross sections for high-pt top quarks in pp
+                        collisions at sqrt(s) = 8 TeV}",
+      collaboration  = "CMS",
+      year           = "2016",
+      eprint         = "1605.00116",
+      archivePrefix  = "arXiv",
+      primaryClass   = "hep-ex",
+      reportNumber   = "CMS-TOP-14-012, CERN-EP-2016-078",
+      SLACcitation   = "%%CITATION = ARXIV:1605.00116;%%"
+}'

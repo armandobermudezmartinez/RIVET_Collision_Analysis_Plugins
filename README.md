@@ -17,14 +17,12 @@ Please, be aware that validation is nowadays performed in CMSSW_7_6_X with Rivet
     git-cms-init
     git-cms-addpkg GeneratorInterface/RivetInterface
     git-cms-addpkg Configuration/Generator
-    git-cms-merge-topic jhgoh:RivetConsumesMigration75
-    git-cms-merge-topic jhgoh:RivetRefHistFromEnvVar
-    git-cms-merge-topic jhgoh:LHEweight
+    git-cms-merge-topic jhgoh:RIVET-TOP-80X
 
     mkdir TopMonteCarlo
     cd TopMonteCarlo
-    git clone ssh://git@gitlab.cern.ch:7999/CMS-TOP-Rivet/RivetTop
-    git clone ssh://git@gitlab.cern.ch:7999/CMS-TOP-Rivet/Configuration
+    git clone https://:@gitlab.cern.ch:8443/CMS-TOP-Rivet/RivetTop.git
+    git clone https://:@gitlab.cern.ch:8443/CMS-TOP-Rivet/Configuration.git
 
     cd RivetTop/test
     source setupTopRivet.sh

@@ -184,9 +184,7 @@ namespace { //< only visible in this compilation unit
       
       _vis_unit_weights = 0.;
 
-      // Booking of histograms
-      _h_wprod_mult = bookHisto1D("wprod_mult", 10, 0, 10);
-      
+      // Booking of histograms      
       const std::vector<double> binMet = {0., 27., 52., 87., 130., 172., 300.};
       _h_met = bookHisto1D("met", binMet);
       
@@ -215,7 +213,6 @@ namespace { //< only visible in this compilation unit
       
       const InvMassFinalState& invMassFinalStateW = applyProjection<InvMassFinalState>(event, "INVFSW");
       const ParticleVector&  WDecayProducts =  invMassFinalStateW.particles();
-      _h_wprod_mult->fill(WDecayProducts.size(), weight);
       if (WDecayProducts.size() != 2) vetoEvent; // semi-leptonic ttbar only
 
       if (weight != 0.) _vis_unit_weights += weight/std::abs(weight);
@@ -267,7 +264,6 @@ namespace { //< only visible in this compilation unit
     
     double _vis_unit_weights;
     
-    Histo1DPtr _h_wprod_mult;
     Histo1DPtr _h_met, _h_ht, _h_st, _h_ptw;
 
     //@}

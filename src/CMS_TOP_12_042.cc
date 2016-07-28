@@ -2,6 +2,10 @@
 #include "Rivet/Tools/Logging.hh"
 #include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Projections/FastJets.hh"
+#include "Rivet/Projections/TauFinder.hh"
+#include "Rivet/Projections/DressedLeptons.hh"
+#include "Rivet/Projections/IdentifiedFinalState.hh"
+#include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/VetoedFinalState.hh"
 #include "Rivet/Projections/InvMassFinalState.hh"
 #include "Rivet/Projections/MissingMomentum.hh"
@@ -164,24 +168,37 @@ namespace { //< only visible in this compilation unit
       // Parton level top quarks
       addProjection(PartonTop(), "partonTop");
 
+      // Complete final state
       double MAXRAPIDITY = 1e10;
-      
-      vector<pair<PdgId,PdgId> > vidsW;
-      vidsW.push_back(make_pair(PID::ELECTRON, PID::NU_EBAR));
-      vidsW.push_back(make_pair(PID::POSITRON, PID::NU_E));
-      vidsW.push_back(make_pair(PID::MUON,     PID::NU_MUBAR));
-      vidsW.push_back(make_pair(PID::ANTIMUON, PID::NU_MU));
-      
       FinalState fs(-MAXRAPIDITY, MAXRAPIDITY, 0*GeV);
-      InvMassFinalState invfsW(fs, vidsW, 75.4*GeV, 85.4*GeV);
-      addProjection(invfsW, "INVFSW");
       
-      addProjection(MissingMomentum(), "MET");
+      // Projection for taus
+      TauFinder taus(TauFinder::ANY);
+      addProjection(taus, "Tau");
+      IdentifiedFinalState nu_taus(fs);
+      nu_taus.acceptIdPair(PID::NU_TAU);
+      addProjection(nu_taus, "nu_tau");
+
+      // Projection for electrons and muons
+      IdentifiedFinalState photons(fs);
+      photons.acceptIdPair(PID::PHOTON);
+      IdentifiedFinalState l_id(fs);
+      l_id.acceptIdPair(PID::ELECTRON);
+      l_id.acceptIdPair(PID::MUON);
+      PromptFinalState leptons(l_id);
+      addProjection(leptons, "Leptons");
+      DressedLeptons dressedleptons(photons, leptons, 0.1);
+      addProjection(dressedleptons, "DressedLeptons");
       
+      // Projection for jets
       VetoedFinalState fsForJets(FinalState(-MAXRAPIDITY, MAXRAPIDITY, 0*GeV));
-      fsForJets.addVetoOnThisFinalState(invfsW);
+      fsForJets.addVetoOnThisFinalState(dressedleptons);
       addProjection(FastJets(fsForJets, FastJets::ANTIKT, 0.5), "Jets");
       
+      // Projections for MET
+      addProjection(MissingMomentum(), "MET");
+      
+      // Weight counter
       _vis_unit_weights = 0.;
 
       // Booking of histograms      
@@ -196,6 +213,10 @@ namespace { //< only visible in this compilation unit
       
       const std::vector<double> binPtw = {0., 27., 52., 78., 105., 134., 166., 200., 237., 300.};
       _h_ptw = bookHisto1D("ptw", binPtw);
+      
+      _h_mode0 = bookHisto1D("mode0", 10, 0, 10);
+      _h_mode1 = bookHisto1D("mode1", 10, 0, 10);
+      _h_mode2 = bookHisto1D("mode2", 10, 0, 10);
 
     }
 
@@ -205,22 +226,28 @@ namespace { //< only visible in this compilation unit
       
       const double weight = event.weight();
       
-      const PartonTop& partonTop = applyProjection<PartonTop>(event, "partonTop");
-      // Do the analysis only for the ttbar full leptonic channel, removing tau decays
-      if ( partonTop.mode() != PartonTop::CH_SEMILEPTON ) vetoEvent;
-      if ( partonTop.mode1() >= PartonTop::CH_TAU_HADRON or
-           partonTop.mode2() >= PartonTop::CH_TAU_HADRON ) vetoEvent;
+      // select ttbar -> lepton+jets without taus
+      const DressedLeptons& dressedleptons = applyProjection<DressedLeptons>(event, "DressedLeptons");
+      if (dressedleptons.dressedLeptons().size() != 1) vetoEvent;
       
-      const InvMassFinalState& invMassFinalStateW = applyProjection<InvMassFinalState>(event, "INVFSW");
-      const ParticleVector&  WDecayProducts =  invMassFinalStateW.particles();
-      if (WDecayProducts.size() != 2) vetoEvent; // semi-leptonic ttbar only
-
-      if (weight != 0.) _vis_unit_weights += weight/std::abs(weight);
-      
-      int idxLep = 1;
-      if ((fabs(WDecayProducts[1].pdgId()) == PID::NU_MU) || (fabs(WDecayProducts[1].pdgId()) == PID::NU_E)) {
-        idxLep = 0;
+      const TauFinder& taus = applyProjection<TauFinder>(event, "Tau");
+      const IdentifiedFinalState nu_taus = applyProjection<IdentifiedFinalState>(event, "nu_tau");
+      foreach(const Particle& tau, taus.taus()) {
+        foreach(const Particle& nu, nu_taus.particles()) {
+          if (tau.pid() * nu.pid() < 0) continue;
+          const FourMomentum wCandidate = tau.momentum() + nu.momentum();
+          if (abs(wCandidate.mass() - 80.4) > 5.) vetoEvent;
+        }
       }
+      
+      // plot parton level decay mode (for debugging)
+      const PartonTop& partonTop = applyProjection<PartonTop>(event, "partonTop");
+      _h_mode0->fill(partonTop.mode(), weight);
+      _h_mode1->fill(partonTop.mode1(), weight);
+      _h_mode2->fill(partonTop.mode2(), weight);
+
+      // count weights in visible phase space
+      if (weight != 0.) _vis_unit_weights += weight/std::abs(weight);
       
       // MET
       const MissingMomentum& met = applyProjection<MissingMomentum>(event, "MET");
@@ -232,16 +259,16 @@ namespace { //< only visible in this compilation unit
       
       double ht = 0.0;
       foreach (const Jet& j, jets) {
-        if (deltaR(j.momentum(), WDecayProducts[idxLep].momentum()) > 0.3) {
+        if (deltaR(j.momentum(), dressedleptons.dressedLeptons()[0].momentum()) > 0.3) {
           ht += j.pT();
         }
       }
-      double st = ht + WDecayProducts[idxLep].pT() + met.visibleMomentum().pT();
+      double st = ht + dressedleptons.dressedLeptons()[0].pT() + met.visibleMomentum().pT();
       _h_ht->fill(min(ht, 1000.-EPSILON)/GeV, weight);
       _h_st->fill(min(st, 1200.-EPSILON)/GeV, weight);
       
       // ptW
-      FourMomentum w = WDecayProducts[idxLep].momentum() - met.visibleMomentum();
+      FourMomentum w = dressedleptons.dressedLeptons()[0].momentum() - met.visibleMomentum();
       _h_ptw->fill(min(w.pT(), 300.-EPSILON)/GeV, weight);
     }
 
@@ -265,6 +292,7 @@ namespace { //< only visible in this compilation unit
     double _vis_unit_weights;
     
     Histo1DPtr _h_met, _h_ht, _h_st, _h_ptw;
+    Histo1DPtr _h_mode0, _h_mode1, _h_mode2;
 
     //@}
 

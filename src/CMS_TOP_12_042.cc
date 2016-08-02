@@ -187,12 +187,12 @@ namespace { //< only visible in this compilation unit
       l_id.acceptIdPair(PID::MUON);
       PromptFinalState leptons(l_id);
       addProjection(leptons, "Leptons");
-      DressedLeptons dressedleptons(photons, leptons, 0.1);
+      DressedLeptons dressedleptons(photons, leptons, 0.1, Cuts::open(), true, false);
       addProjection(dressedleptons, "DressedLeptons");
       
       // Projection for jets
       VetoedFinalState fsForJets(FinalState(-MAXRAPIDITY, MAXRAPIDITY, 0*GeV));
-      fsForJets.addVetoOnThisFinalState(dressedleptons);
+      fsForJets.addVetoOnThisFinalState(dressedleptons); // TODO include electrons in clustering
       addProjection(FastJets(fsForJets, FastJets::ANTIKT, 0.5), "Jets");
       
       // Projections for MET

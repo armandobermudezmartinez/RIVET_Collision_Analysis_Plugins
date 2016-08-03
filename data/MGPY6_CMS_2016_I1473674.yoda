@@ -1,5 +1,5 @@
-# BEGIN YODA_SCATTER2D /CMS_TOP_12_042/met
-Path=/CMS_TOP_12_042/met
+# BEGIN YODA_SCATTER2D /CMS_2016_I1473674/d05-x01-y01
+Path=/CMS_2016_I1473674/d05-x01-y01
 Type=Scatter2D
 # xval   xerr-   xerr+   yval   yerr-   yerr+
 13.5    13.5    13.5    0.00650043      1.07914e-05     1.07914e-05
@@ -10,8 +10,8 @@ Type=Scatter2D
 236     64      64      0.000154825     1.01144e-06     1.01144e-06
 # END YODA_SCATTER2D 
 
-# BEGIN YODA_SCATTER2D /CMS_TOP_12_042/ht
-Path=/CMS_TOP_12_042/ht
+# BEGIN YODA_SCATTER2D /CMS_2016_I1473674/d06-x01-y01
+Path=/CMS_2016_I1473674/d06-x01-y01
 Type=Scatter2D
 # xval   xerr-   xerr+   yval   yerr-   yerr+
 152.5   32.5    32.5    0.00210497      4.08561e-06     4.08561e-06
@@ -30,8 +30,8 @@ Type=Scatter2D
 884.5   115.5   115.5   5.98312e-05     5.32299e-07     5.32299e-07
 # END YODA_SCATTER2D 
 
-# BEGIN YODA_SCATTER2D /CMS_TOP_12_042/st
-Path=/CMS_TOP_12_042/st
+# BEGIN YODA_SCATTER2D /CMS_2016_I1473674/d07-x01-y01
+Path=/CMS_2016_I1473674/d07-x01-y01
 Type=Scatter2D
 # xval   xerr-   xerr+   yval   yerr-   yerr+
 211.5   65.5    65.5    0.00111191      2.0649e-06      2.0649e-06
@@ -49,8 +49,8 @@ Type=Scatter2D
 1070    130     130     5.40131e-05     4.72669e-07     4.72669e-07
 # END YODA_SCATTER2D 
 
-# BEGIN YODA_SCATTER2D /CMS_TOP_12_042/ptw
-Path=/CMS_TOP_12_042/ptw
+# BEGIN YODA_SCATTER2D /CMS_2016_I1473674/d08-x01-y01
+Path=/CMS_2016_I1473674/d08-x01-y01
 Type=Scatter2D
 # xval   xerr-   xerr+   yval   yerr-   yerr+
 13.5    13.5    13.5    0.00334932      8.13784e-06     8.13784e-06

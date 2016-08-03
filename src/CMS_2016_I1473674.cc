@@ -151,11 +151,11 @@ namespace { //< only visible in this compilation unit
 
   }
 
-  class CMS_TOP_12_042 : public Analysis {
+  class CMS_2016_I1473674 : public Analysis {
   public:
 
     /// Minimal constructor
-    CMS_TOP_12_042() : Analysis("CMS_TOP_12_042")
+    CMS_2016_I1473674() : Analysis("CMS_2016_I1473674")
     {
     }
 
@@ -209,17 +209,10 @@ namespace { //< only visible in this compilation unit
       _vis_unit_weights = 0.;
 
       // Booking of histograms      
-      const std::vector<double> binMet = {0., 27., 52., 87., 130., 172., 300.};
-      _h_met = bookHisto1D("met", binMet);
-      
-      const std::vector<double> binHt = {120., 185., 215., 247., 283., 323., 365., 409., 458., 512., 570., 629., 691., 769., 1000.};
-      _h_ht = bookHisto1D("ht", binHt);
-      
-      const std::vector<double> binSt = {146., 277., 319., 361., 408., 459., 514., 573., 637., 705., 774., 854., 940., 1200.};
-      _h_st = bookHisto1D("st", binSt);
-      
-      const std::vector<double> binPtw = {0., 27., 52., 78., 105., 134., 166., 200., 237., 300.};
-      _h_ptw = bookHisto1D("ptw", binPtw);
+      _h_met = bookHisto1D(5, 1, 1);
+      _h_ht  = bookHisto1D(6, 1, 1);
+      _h_st  = bookHisto1D(7, 1, 1);
+      _h_wpt = bookHisto1D(8, 1, 1);
       
       _h_mode0 = bookHisto1D("mode0", 10, 0, 10);
       _h_mode1 = bookHisto1D("mode1", 10, 0, 10);
@@ -279,9 +272,9 @@ namespace { //< only visible in this compilation unit
       _h_ht->fill(min(ht, 1000.-EPSILON)/GeV, weight);
       _h_st->fill(min(st, 1200.-EPSILON)/GeV, weight);
       
-      // ptW
+      // WPT
       FourMomentum w = lepton - met.visibleMomentum();
-      _h_ptw->fill(min(w.pT(), 300.-EPSILON)/GeV, weight);
+      _h_wpt->fill(min(w.pT(), 300.-EPSILON)/GeV, weight);
     }
 
 
@@ -290,7 +283,7 @@ namespace { //< only visible in this compilation unit
       scale(_h_met, s);
       scale(_h_ht, s);
       scale(_h_st, s);
-      scale(_h_ptw, s);
+      scale(_h_wpt, s);
     }
 
     //@}
@@ -303,7 +296,7 @@ namespace { //< only visible in this compilation unit
     
     double _vis_unit_weights;
     
-    Histo1DPtr _h_met, _h_ht, _h_st, _h_ptw;
+    Histo1DPtr _h_met, _h_ht, _h_st, _h_wpt;
     Histo1DPtr _h_mode0, _h_mode1, _h_mode2;
 
     //@}
@@ -313,6 +306,6 @@ namespace { //< only visible in this compilation unit
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_TOP_12_042);
+  DECLARE_RIVET_PLUGIN(CMS_2016_I1473674);
 
 }

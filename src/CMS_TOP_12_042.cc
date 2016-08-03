@@ -182,17 +182,24 @@ namespace { //< only visible in this compilation unit
       // Projection for electrons and muons
       IdentifiedFinalState photons(fs);
       photons.acceptIdPair(PID::PHOTON);
-      IdentifiedFinalState l_id(fs);
-      l_id.acceptIdPair(PID::ELECTRON);
-      l_id.acceptIdPair(PID::MUON);
-      PromptFinalState leptons(l_id);
-      addProjection(leptons, "Leptons");
-      DressedLeptons dressedleptons(photons, leptons, 0.1, Cuts::open(), true, false);
-      addProjection(dressedleptons, "DressedLeptons");
+      
+      IdentifiedFinalState el_id(fs);
+      el_id.acceptIdPair(PID::ELECTRON);
+      PromptFinalState electrons(el_id);
+      addProjection(electrons, "Electrons");
+      DressedLeptons dressedelectrons(photons, electrons, 0.1, Cuts::open(), true, false);
+      addProjection(dressedelectrons, "DressedElectrons");
+      
+      IdentifiedFinalState mu_id(fs);
+      mu_id.acceptIdPair(PID::MUON);
+      PromptFinalState muons(mu_id);
+      addProjection(muons, "Muons");
+      DressedLeptons dressedmuons(photons, muons, 0.1, Cuts::open(), true, false);
+      addProjection(dressedmuons, "DressedMuons");
       
       // Projection for jets
       VetoedFinalState fsForJets(FinalState(-MAXRAPIDITY, MAXRAPIDITY, 0*GeV));
-      fsForJets.addVetoOnThisFinalState(dressedleptons); // TODO include electrons in clustering
+      fsForJets.addVetoOnThisFinalState(dressedmuons);
       addProjection(FastJets(fsForJets, FastJets::ANTIKT, 0.5), "Jets");
       
       // Projections for MET
@@ -227,8 +234,13 @@ namespace { //< only visible in this compilation unit
       const double weight = event.weight();
       
       // select ttbar -> lepton+jets without taus
-      const DressedLeptons& dressedleptons = applyProjection<DressedLeptons>(event, "DressedLeptons");
-      if (dressedleptons.dressedLeptons().size() != 1) vetoEvent;
+      const DressedLeptons& dressedelectrons = applyProjection<DressedLeptons>(event, "DressedElectrons");
+      const DressedLeptons& dressedmuons = applyProjection<DressedLeptons>(event, "DressedMuons");
+      if (dressedelectrons.dressedLeptons().size() + dressedmuons.dressedLeptons().size() != 1) vetoEvent;
+      
+      FourMomentum lepton;
+      if (dressedelectrons.dressedLeptons().size() == 1) lepton = dressedelectrons.dressedLeptons()[0].momentum();
+      else lepton = dressedmuons.dressedLeptons()[0].momentum();
       
       const TauFinder& taus = applyProjection<TauFinder>(event, "Tau");
       const IdentifiedFinalState nu_taus = applyProjection<IdentifiedFinalState>(event, "nu_tau");
@@ -259,16 +271,16 @@ namespace { //< only visible in this compilation unit
       
       double ht = 0.0;
       foreach (const Jet& j, jets) {
-        if (deltaR(j.momentum(), dressedleptons.dressedLeptons()[0].momentum()) > 0.3) {
+        if (deltaR(j.momentum(), lepton) > 0.3) {
           ht += j.pT();
         }
       }
-      double st = ht + dressedleptons.dressedLeptons()[0].pT() + met.visibleMomentum().pT();
+      double st = ht + lepton.pT() + met.visibleMomentum().pT();
       _h_ht->fill(min(ht, 1000.-EPSILON)/GeV, weight);
       _h_st->fill(min(st, 1200.-EPSILON)/GeV, weight);
       
       // ptW
-      FourMomentum w = dressedleptons.dressedLeptons()[0].momentum() - met.visibleMomentum();
+      FourMomentum w = lepton - met.visibleMomentum();
       _h_ptw->fill(min(w.pT(), 300.-EPSILON)/GeV, weight);
     }
 

@@ -222,8 +222,6 @@ namespace { //< only visible in this compilation unit
 
 
     void analyze(const Event& event) {
-      double EPSILON = 0.1;
-      
       const double weight = event.weight();
       
       // select ttbar -> lepton+jets without taus
@@ -256,7 +254,7 @@ namespace { //< only visible in this compilation unit
       
       // MET
       const MissingMomentum& met = applyProjection<MissingMomentum>(event, "MET");
-      _h_met->fill(min(met.visibleMomentum().pT(), 300.-EPSILON)/GeV, weight);
+      _h_met->fill(met.visibleMomentum().pT()/GeV, weight);
       
       // HT and ST
       const FastJets& jetpro = applyProjection<FastJets>(event, "Jets");
@@ -269,12 +267,12 @@ namespace { //< only visible in this compilation unit
         }
       }
       double st = ht + lepton.pT() + met.visibleMomentum().pT();
-      _h_ht->fill(min(ht, 1000.-EPSILON)/GeV, weight);
-      _h_st->fill(min(st, 1200.-EPSILON)/GeV, weight);
+      _h_ht->fill(ht/GeV, weight);
+      _h_st->fill(st/GeV, weight);
       
       // WPT
       FourMomentum w = lepton - met.visibleMomentum();
-      _h_wpt->fill(min(w.pT(), 300.-EPSILON)/GeV, weight);
+      _h_wpt->fill(w.pT()/GeV, weight);
     }
 
 

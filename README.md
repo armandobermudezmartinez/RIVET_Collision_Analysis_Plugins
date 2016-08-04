@@ -17,7 +17,7 @@ Please, be aware that validation is nowadays performed in CMSSW_7_6_X with Rivet
     git-cms-init
     git-cms-addpkg GeneratorInterface/RivetInterface
     git-cms-addpkg Configuration/Generator
-    git-cms-merge-topic jhgoh:RIVET-TOP-80X
+    git-cms-merge-topic jhgoh:TOP-RIVET-80X
 
     mkdir TopMonteCarlo
     cd TopMonteCarlo

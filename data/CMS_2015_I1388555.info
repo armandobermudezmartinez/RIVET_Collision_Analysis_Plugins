@@ -29,19 +29,15 @@ RIVET :
 This analysis is to be run on ${\rm t\bar{t}}$ Monte Carlo.  It has been validated with Powheg+Pythia6, Powheg+Herwig6, MC@NLO+Herwig6, MadGraph+Pythia6, and Powheg+Pythia8. Since the parton-level object definitions rely on hadronizer status codes, this plugin should only be run on MC which have the same status definitions.
 
 In this analysis, the parton-level phase space is defined using the following object definitions:
-\begin{itemize}
-\item{Lepton} : An electron, muon, or tau (PDG ID = $\pm11$, $\pm13$, or $\pm15$) originating from the decay of a W boson (PDG ID of parent particle is $\pm24$).
-\item{Top quark} : A top quark (PDG ID = $\pm6$) with status 3 or 22.
-\end{itemize}
+- Lepton : An electron, muon, or tau (PDG ID = $\pm11$, $\pm13$, or $\pm15$) originating from the decay of a W boson (PDG ID of parent particle is $\pm24$).
+- Top quark : A top quark (PDG ID = $\pm6$) with status 3 or 22.
 
 The parton-level phase space is defined by requiring exactly one lepton, which must be an electron or muon.  For for ${\rm t\bar{t}}$ Monte Carlo, this is equivalent to requiring the event to be semileptonic at parton level.  The lepton charge is used to determine whether it comes from the decay of a top or antitop.  The top of opposite sign (which by construct must have decayed hadronically) is defined as the parton-level top quark. The parton-level top quark is required to have $p_{T} > 400$~GeV.
 
 In this analysis, the particle-level phase space is defined using the following object definitions:
-\begin{itemize}
-\item{Lepton} : An electron or muon (PDG ID = $\pm11$ or $\pm13$) originating from the decay of a W boson (PDG ID of parent particle is $\pm24$). The lepton is required to have $p_{T} > 45$~GeV and $|\eta| < 2.1$.
-\item{B Jet Candidate} : Gen AK5 jets are formed by clustering the final state particles in the event using the anti-$k_{T}$ algorithm with distance parameter $R=0.5$.  Here, 'final state particles' refers to all status 1 particles in the event, excepting neutrinos and particles originating from the decay of the muon defined above.  The gen AK5 jet is required to have $p_{T} > 30$~GeV and $|\eta| < 2.4$. Gen AK5 jets in the same hemisphere as the lepton ($\Delta {\rm R(e/\mu,~jet)} < \pi/2$) are defined as b-jet candidates.
-\item{Top Jet Candidate} : Gen CA8 jets are formed by clustering the final state particles in the event using the Cambridge-Aachen algorithm with distance parameter $R=0.8$. Here, 'final state particles' refers to all status 1 particles in the event, excepting neutrinos and particles originating from the decay of the muon defined above.  The gen CA8 jet is required to have $p_{T} > 30$~GeV and $|\eta| < 2.4$. Gen CA8 jets which have $p_{T} > 400$~GeV, 140 GeV $<$ mass $<$ 250 GeV, and are in the opposite hemisphere from the lepton ($\Delta{\rm R(e/\mu,~jet)} > \pi/2$) are defined as top jet candidates.
-\end{itemize}
+- Lepton : An electron or muon (PDG ID = $\pm11$ or $\pm13$) originating from the decay of a W boson (PDG ID of parent particle is $\pm24$). The lepton is required to have $p_{T} > 45$~GeV and $|\eta| < 2.1$.
+- B Jet Candidate : Gen AK5 jets are formed by clustering the final state particles in the event using the anti-$k_{T}$ algorithm with distance parameter $R=0.5$.  Here, 'final state particles' refers to all status 1 particles in the event, excepting neutrinos and particles originating from the decay of the muon defined above.  The gen AK5 jet is required to have $p_{T} > 30$~GeV and $|\eta| < 2.4$. Gen AK5 jets in the same hemisphere as the lepton ($\Delta {\rm R(e/\mu,~jet)} < \pi/2$) are defined as b-jet candidates.
+- Top Jet Candidate : Gen CA8 jets are formed by clustering the final state particles in the event using the Cambridge-Aachen algorithm with distance parameter $R=0.8$. Here, 'final state particles' refers to all status 1 particles in the event, excepting neutrinos and particles originating from the decay of the muon defined above.  The gen CA8 jet is required to have $p_{T} > 30$~GeV and $|\eta| < 2.4$. Gen CA8 jets which have $p_{T} > 400$~GeV, 140 GeV $<$ mass $<$ 250 GeV, and are in the opposite hemisphere from the lepton ($\Delta{\rm R(e/\mu,~jet)} > \pi/2$) are defined as top jet candidates.
 
 The particle-level phase space is defined by requiring $\geq 1$ b jet candidate, $\geq 1$ top jet candidate, and exactly one lepton. This is in addition to the parton-level semileptonic requirement. The highest-$p_{T}$ top jet candidate is defined as the particle-level t jet.'
 

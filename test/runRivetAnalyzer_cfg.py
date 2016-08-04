@@ -302,6 +302,7 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2015_I1388555')
 process.rivetAnalyzer.OutputFile = "test.yoda"
+process.rivetAnalyzer.HepMCCollection   = cms.InputTag("generator:unsmeared")
 
 process.p = cms.Path(process.generator*process.rivetAnalyzer)
 

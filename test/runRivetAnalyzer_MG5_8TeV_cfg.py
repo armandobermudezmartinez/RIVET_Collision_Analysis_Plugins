@@ -16,7 +16,7 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring(
     'CMS_2015_I1370682', 'CMS_2015_I1370682_internal',
-    'CMS_2015_I1397174', 'CMS_2015_I1388555'
+    'CMS_2015_I1397174', 'CMS_2015_I1388555', 'CMS_2016_I1473674'
 )
 process.rivetAnalyzer.OutputFile = "MC.yoda"
 process.rivetAnalyzer.HepMCCollection   = cms.InputTag("generator:unsmeared")

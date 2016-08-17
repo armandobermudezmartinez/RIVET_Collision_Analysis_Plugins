@@ -9,7 +9,7 @@
 #include "Rivet/Jet.hh"
 #include "Rivet/Particle.hh"
 #include "Rivet/Analysis.hh"
- //#include "TopMonteCarlo/RivetTop/interface/CMS_2016_Viesturs.hh"
+//#include "TopMonteCarlo/RivetTop/interface/CMS_2016_Viesturs.hh"
 
 class TCanvas;
 class TH2F;
@@ -43,7 +43,7 @@ class ColourFlowAnalysisTool
   static const TLorentzVector beam_;
   TCanvas * canvas_;
   TH2F    * PtRadProf_;
-public:
+  public:
   unsigned char                work_mode_;
   unsigned char                event_display_mode_;
   unsigned char                PtRadiation_mode_;
@@ -65,13 +65,13 @@ public:
   const Jet         * second_leading_light_jet_ptr_;
   FourMomentum had_t_;
   FourMomentum lept_t_;
-  
+
   map<TString, Histo1DPtr>     * plots_ptr_;
   //map<TString, TH1*>     & plots_ = *plots_ptr_;
   float weight_;
   FourMomentum GetChargedJet(const Jet &) const;
   vector<const Jet *> IdentifyJets() ;
-  
+
   //  void AssignHistograms();
   void Work();
   float PullAngle(const PullVector & pull_vector, const TVector2 & jet_difference) const;

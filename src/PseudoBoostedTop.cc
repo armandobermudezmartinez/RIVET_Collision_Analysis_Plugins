@@ -33,16 +33,16 @@ bool PseudoBoostedTop::isFromTop(const GenParticle* p){
     foreach (const GenParticle* p1, Rivet::particles(prodVtx, HepMC::parents)) {
       const int pdgIdParent = p1->pdg_id();
       if (pdgIdParent == 24) { // parent is a W+ --> leptonic top
-	if (pdgId == -11) _topDecay = CH_ELECTRON;
-	if (pdgId == -13) _topDecay = CH_MUON;
-	if (pdgId == -15) _topDecay = CH_TAU;
-	fromTop = true;
+        if (pdgId == -11) _topDecay = CH_ELECTRON;
+        if (pdgId == -13) _topDecay = CH_MUON;
+        if (pdgId == -15) _topDecay = CH_TAU;
+        fromTop = true;
       }
       else if (pdgIdParent == -24) { // parent is a W- --> leptonic antitop
-	if (pdgId == 11) _antitopDecay = CH_ELECTRON;
-	if (pdgId == 13) _antitopDecay = CH_MUON;
-	if (pdgId == 15) _antitopDecay = CH_TAU;
-	fromTop = true;
+        if (pdgId == 11) _antitopDecay = CH_ELECTRON;
+        if (pdgId == 13) _antitopDecay = CH_MUON;
+        if (pdgId == 15) _antitopDecay = CH_TAU;
+        fromTop = true;
       }
     }
   }
@@ -71,54 +71,54 @@ void PseudoBoostedTop::project(const Event& e) {
   _isGenBJet = false;
   _isGenTopJet = false;
   _passParticle = false;
-    
+
   _mtt = -1.;
 
   // Get parton-level top / state
   Particles pForJet;
-  
+
   Particle refLep;
 
   std::set<int> pFromMuon;
-  
-  foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
+
+  foreach (const GenParticle* p, Rivet::particles(e.genEvent())) {
     const int status = p->status();
     const int pdgId = p->pdg_id();
 
     Particle rp(*p);
 
     // Get top quarks
-    if (pdgId == 6){
+    if (pdgId == 6 && (status == 3 || status == 22)){
       _top = rp;
     }
-    if (pdgId == -6){
+    if (pdgId == -6 && (status == 3 || status == 22)){
       _antitop = rp;
     }
 
     // Get electrons
     if (std::abs(pdgId) == 11){
       if (isFromTop(p)) {
-	refLep = rp;
+        refLep = rp;
       }      
     }
 
     // Get muons
     if (std::abs(pdgId) == 13){
       if (isFromTop(p)) {
-	refLep = rp;
+        refLep = rp;
       }      
     }
 
     // Get taus
     if (std::abs(pdgId) == 15){
       if (isFromTop(p)) {
-	refLep = rp;
+        refLep = rp;
       }      
     }
 
     if (status == 1) {
       if (fromHardMuon(p)) {
-	pFromMuon.insert(p->barcode());
+        pFromMuon.insert(p->barcode());
       }
     }
   }
@@ -129,7 +129,7 @@ void PseudoBoostedTop::project(const Event& e) {
   // Now start with particle-level quantities
 
   // Get particles for jet clustering
-  foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
+  foreach (const GenParticle* p, Rivet::particles(e.genEvent())) {
     const int status = p->status();
     const int barcode = p->barcode();
     Particle rp(*p);
@@ -141,7 +141,7 @@ void PseudoBoostedTop::project(const Event& e) {
   // In case the clustering alters the particle collection, clone it
   Particles pForBjet = pForJet;
   Particles pForTjet = pForJet;
-    
+
   // Then do the AK5 clustering
   FastJets ak5Jet(FastJets::ANTIKT, _bjetR);
   ak5Jet.calc(pForBjet);
@@ -151,7 +151,7 @@ void PseudoBoostedTop::project(const Event& e) {
   ca8Jet.calc(pForTjet);
 
   if (refLep.momentum().pt() > _lepMinPt && std::fabs(refLep.eta()) < _lepMaxEta){
-    
+
     _isParticleLep = true;
     const FourMomentum& refLepP4 = refLep.momentum();
 
@@ -176,7 +176,7 @@ void PseudoBoostedTop::project(const Event& e) {
       genTjets.push_back(jet);
       nGenTjets += 1;
     }
-  
+
     if (genTjets.size() > 1) std::sort(genTjets.begin(), genTjets.end(), GreaterByPtJet());
 
     if (nGenBjets >= 1) _isGenBJet = true;

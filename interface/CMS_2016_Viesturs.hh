@@ -13,7 +13,7 @@ namespace Rivet
     double _full_unit_weights;
     map<TString, Histo1DPtr> _plots_1D_ptr;
     ColourFlowAnalysisTool _cfat;
-  public:
+    public:
     CMS_2016_Viesturs() : Analysis("CMS_2016_Viesturs") {}
     void init() ;
     void analyze(const Event& event) ;

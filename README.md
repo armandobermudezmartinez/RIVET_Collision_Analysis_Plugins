@@ -10,21 +10,19 @@ The `Installation` section gather instructions to get both subpackages.
 The plugins in `CMS-TOP-Rivet/RivetTop` and configuration files in `CMS-TOP-Rivet/Configuration` have been developed in CMSSW_7_5_X with Rivet v2.2.1. 
 Please, be aware that validation is nowadays performed in CMSSW_7_6_X with Rivet v2.3.0 and that can imply major changes.  
 
-    cmsrel CMSSW_7_5_0
-    cd CMSSW_7_5_0/src
+    cmsrel CMSSW_8_0_5_patch1
+    cd CMSSW_8_0_5_patch1/src
     cmsenv
 
     git-cms-init
     git-cms-addpkg GeneratorInterface/RivetInterface
     git-cms-addpkg Configuration/Generator
-    git-cms-merge-topic jhgoh:RivetConsumesMigration75
-    git-cms-merge-topic jhgoh:RivetRefHistFromEnvVar
-    git-cms-merge-topic jhgoh:LHEweight
+    git-cms-merge-topic jhgoh:TOP-RIVET-80X
 
     mkdir TopMonteCarlo
     cd TopMonteCarlo
-    git clone ssh://git@gitlab.cern.ch:7999/CMS-TOP-Rivet/RivetTop
-    git clone ssh://git@gitlab.cern.ch:7999/CMS-TOP-Rivet/Configuration
+    git clone https://:@gitlab.cern.ch:8443/CMS-TOP-Rivet/RivetTop.git
+    git clone https://:@gitlab.cern.ch:8443/CMS-TOP-Rivet/Configuration.git
 
     cd RivetTop/test
     source setupTopRivet.sh

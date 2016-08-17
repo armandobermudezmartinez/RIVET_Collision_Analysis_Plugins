@@ -71,43 +71,43 @@ void PseudoTop::project(const Event& e) {
   // Collect final state particles
   Particles pForLep, pForJet;
   Particles neutrinos; // Prompt neutrinos
-  foreach (GenParticle* p, Rivet::particles(e.genEvent())) {
-      const int status = p->status();
-      const int pdgId = p->pdg_id();
-      if (status == 1) {
-        Particle rp(*p);
-        if (!PID::isHadron(pdgId) && !rp.fromHadron()) {
-          // Collect particles not from hadron decay
-          if (rp.isNeutrino()) {
-            // Prompt neutrinos are kept in separate collection
-            neutrinos.push_back(rp);
-          } else if (pdgId == 22 || rp.isLepton()) {
-            // Leptons and photons for the dressing
-            pForLep.push_back(rp);
-          }
-        } else if (!rp.isNeutrino()) {
-          // Use all particles from hadron decay
-          pForJet.push_back(rp);
+  foreach (const GenParticle* p, Rivet::particles(e.genEvent())) {
+    const int status = p->status();
+    const int pdgId = p->pdg_id();
+    if (status == 1) {
+      Particle rp(*p);
+      if (!PID::isHadron(pdgId) && !rp.fromHadron()) {
+        // Collect particles not from hadron decay
+        if (rp.isNeutrino()) {
+          // Prompt neutrinos are kept in separate collection
+          neutrinos.push_back(rp);
+        } else if (pdgId == 22 || rp.isLepton()) {
+          // Leptons and photons for the dressing
+          pForLep.push_back(rp);
         }
-      } else if (PID::isHadron(pdgId) && PID::hasBottom(pdgId)) {
-        // NOTE: Consider B hadrons with pT > 5GeV - not in CMS proposal
-        //if ( p->momentum().perp() < 5 ) continue; 
-
-        // Do unstable particles, to be used in the ghost B clustering
-        // Use last B hadrons only
-        bool isLast = true;
-        foreach (GenParticle* pp, Rivet::particles(p->end_vertex(), HepMC::children)) {
-          if (PID::hasBottom(pp->pdg_id())) {
-            isLast = false;
-            break;
-          }
-        }
-        if (!isLast) continue;
-
-        // Rescale momentum by 10^-20
-        Particle ghost(pdgId, FourMomentum(p->momentum())*1e-20/p->momentum().rho());
-        pForJet.push_back(ghost);
+      } else if (!rp.isNeutrino()) {
+        // Use all particles from hadron decay
+        pForJet.push_back(rp);
       }
+    } else if (PID::isHadron(pdgId) && PID::hasBottom(pdgId)) {
+      // NOTE: Consider B hadrons with pT > 5GeV - not in CMS proposal
+      //if ( p->momentum().perp() < 5 ) continue; 
+
+      // Do unstable particles, to be used in the ghost B clustering
+      // Use last B hadrons only
+      bool isLast = true;
+      foreach (GenParticle* pp, Rivet::particles(p->end_vertex(), HepMC::children)) {
+        if (PID::hasBottom(pp->pdg_id())) {
+          isLast = false;
+          break;
+        }
+      }
+      if (!isLast) continue;
+
+      // Rescale momentum by 10^-20
+      Particle ghost(pdgId, FourMomentum(p->momentum())*1e-20/p->momentum().rho());
+      pForJet.push_back(ghost);
+    }
   }
 
   // Start object building from trivial thing - prompt neutrinos

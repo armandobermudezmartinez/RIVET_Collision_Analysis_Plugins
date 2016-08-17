@@ -285,7 +285,11 @@ process.source = cms.Source("PoolSource",
                                 #'root://cmsxrootd.fnal.gov//store/mc/Summer12_DR53X/TT_Mtt-1000toInf_CT10_TuneZ2star_8TeV-powheg-tauola/AODSIM/PU_S10_START53_V7A-v1/00000/F6FAA03A-1E09-E211-8407-003048C692D4.root',
                                 #'root://cmsxrootd.fnal.gov//store/mc/Summer12_DR53X/TT_Mtt-1000toInf_CT10_TuneZ2star_8TeV-powheg-tauola/AODSIM/PU_S10_START53_V7A-v1/00000/FC7B7755-E208-E211-A85A-0030487F6A8B.root',
                                 #'root://cmsxrootd.fnal.gov//store/mc/Summer12_DR53X/TT_Mtt-1000toInf_CT10_TuneZ2star_8TeV-powheg-tauola/AODSIM/PU_S10_START53_V7A-v1/00000/FE639534-F108-E211-BA48-0030487F16FB.root',
-                                'root://cmsxrootd.fnal.gov//store/mc/Summer12_DR53X/TT_Mtt-1000toInf_CT10_TuneZ2star_8TeV-powheg-tauola/AODSIM/PU_S10_START53_V7A-v1/00000/FEF84AC4-1B09-E211-816A-0030487F9331.root',                       
+                                #'root://cmsxrootd.fnal.gov//store/mc/Summer12_DR53X/TT_Mtt-1000toInf_CT10_TuneZ2star_8TeV-powheg-tauola/AODSIM/PU_S10_START53_V7A-v1/00000/FEF84AC4-1B09-E211-816A-0030487F9331.root',                       
+        #MC@NLO
+        #'root://cms-xrd-global.cern.ch//store/mc/Summer12_DR53X/TT_8TeV-mcatnlo/AODSIM/PU_S10_START53_V7A-v1/00000/0003569E-FD17-E211-B6D9-003048FFCC0A.root',
+        #Powheg+Pythia8 (8TeV)
+        #'root://cmsxrootd.fnal.gov//store/mc/Summer12DR53X/TT_weights_CT10_TuneCUETP8M1_8TeV-powheg-pythia8/AODSIM/PU_S10_TuneCUETP8M1_START53_V19-v1/00000/002410AF-E7A8-E411-8B46-0025905A6066.root'
                             )
 )
 
@@ -298,6 +302,7 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2015_I1388555')
 process.rivetAnalyzer.OutputFile = "test.yoda"
+process.rivetAnalyzer.HepMCCollection   = cms.InputTag("generator:unsmeared")
 
 process.p = cms.Path(process.generator*process.rivetAnalyzer)
 

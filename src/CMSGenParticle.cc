@@ -7,15 +7,15 @@ using namespace Rivet;
 void CMSGenParticle::project(const Event& e) {
   _theParticles.clear();
 
-  const std::vector<GenParticle*> particles = Rivet::particles(e.genEvent());
-  std::set<GenParticle*> selected, invalid;
+  std::vector<const GenParticle*> particles = Rivet::particles(e.genEvent());
+  std::set<const GenParticle*> selected, invalid;
 
-  foreach (GenParticle* p, particles ) {
+  foreach (const GenParticle* p, particles ) {
     if ( invalid.find(p) != invalid.end() ) continue;
     if ( p->status() == 1 ) selected.insert(p);
   }
 
-  foreach (GenParticle* p, selected ) {
+  foreach (const GenParticle* p, selected ) {
     if ( invalid.find(p) != invalid.end() ) continue;
 
     if ( fromResonance(invalid, particles, p) ) {
@@ -29,7 +29,7 @@ void CMSGenParticle::project(const Event& e) {
   }
 }
 
-int CMSGenParticle::fromResonance(const std::set<GenParticle*>& invalid, const std::vector<GenParticle*>& pv, GenParticle* p) const {
+int CMSGenParticle::fromResonance(std::set<const GenParticle*>& invalid, std::vector<const GenParticle*>& pv, const GenParticle* p) const {
   const int id = p->pdg_id();
   const unsigned int aid = std::abs(id);
 
@@ -40,16 +40,16 @@ int CMSGenParticle::fromResonance(const std::set<GenParticle*>& invalid, const s
   GenVertex* vtx = p->production_vertex();
   if ( !vtx ) return 0;
 
-  const std::vector<GenParticle*> mothers = Rivet::particles(vtx, HepMC::parents);
+  std::vector<GenParticle*> mothers = Rivet::particles(vtx, HepMC::parents);
   if ( mothers.empty() ) return 0;
 
-  foreach (GenParticle* mother, mothers) {
+  foreach (const GenParticle* mother, mothers) {
     const int result = fromResonance(invalid, pv, mother);
     switch ( result ) {
       case 0: break;
       case 1:
-        if ( mother->pdg_id() == id or isResonance(id) ) return 1;
-        if ( !isExcludedFromResonance(aid) ) break;
+              if ( mother->pdg_id() == id or isResonance(id) ) return 1;
+              if ( !isExcludedFromResonance(aid) ) break;
       case 2: return 2;
     }
   }

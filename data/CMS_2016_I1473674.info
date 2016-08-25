@@ -1,6 +1,6 @@
 Name: CMS_2016_I1473674
 Year: 2016
-Summary: Measurement of the differential cross sections for top quark pair production as a function of kinematic event variables at sqrt(s)=8 TeV
+Summary: Measurement of the differential cross sections for top quark pair production as a function of kinematic event variables at sqrt(s) = 8 TeV
 Experiment: CMS
 Collider: LHC
 InspireID: 1473674
@@ -12,8 +12,8 @@ Authors:
 References:
  - arXiv:1607.00837
 RunInfo:
-  ttbar events at sqrt(s)=8 TeV
-Luminosity: 19.7 /fb
+  ttbar events at sqrt(s) = 8 TeV
+Luminosity: 19.7 / fb
 Beams: [p+, p+]
 Energies: [8000]
 Description:

@@ -8,11 +8,11 @@
 
 #include "Rivet/Analysis.hh"
 #include "Rivet/Rivet.hh"
-#include "Rivet/RivetAIDA.hh"
 #include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Projections/UnstableFinalState.hh"
 #include "Rivet/Projections/FastJets.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
+#include "Rivet/ParticleName.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
 #include "Rivet/Tools/Logging.hh"
@@ -85,19 +85,19 @@ private:
 #if DEBUG
   Log& _log = getLog();
 #endif
-  AIDA::IHistogram1D* _eventHisto;
+  Histo1DPtr _eventHisto;
 
-  AIDA::IHistogram1D* _electronHisto;
-  AIDA::IHistogram1D* _muonHisto;
-  AIDA::IHistogram1D* _electronMuonHisto;
+  Histo1DPtr _electronHisto;
+  Histo1DPtr _muonHisto;
+  Histo1DPtr _electronMuonHisto;
   
-  AIDA::IHistogram1D* _normedElectronHisto;
-  AIDA::IHistogram1D* _normedMuonHisto;
-  AIDA::IHistogram1D* _normedElectronMuonHisto;
+  Histo1DPtr _normedElectronHisto;
+  Histo1DPtr _normedMuonHisto;
+  Histo1DPtr _normedElectronMuonHisto;
   
-  AIDA::IHistogram1D* _absXSElectronHisto;
-  AIDA::IHistogram1D* _absXSMuonHisto;
-  AIDA::IHistogram1D* _absXSElectronMuonHisto;
+  Histo1DPtr _absXSElectronHisto;
+  Histo1DPtr _absXSMuonHisto;
+  Histo1DPtr _absXSElectronMuonHisto;
 
 private:
 
@@ -160,19 +160,19 @@ public:
 
     // Initialize histograms
     
-    _eventHisto = bookHistogram1D("eventHisto", 1, 0, 1, "Inclusive Event Counter", "Event Count", "Number of events");
+    _eventHisto = bookHisto1D("eventHisto", 1, 0, 1, "Inclusive Event Counter", "Event Count", "Number of events");
     
-    _electronHisto = bookHistogram1D("electronHisto", 7, 4, 11, "Electron Jet Multiplicity", "Jet Multiplicity", "Number of events");
-    _muonHisto = bookHistogram1D("muonHisto", 7, 4, 11, "Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
-    _electronMuonHisto = bookHistogram1D("electronMuonHisto", 7, 4, 11, "Electron+Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
+    _electronHisto = bookHisto1D("electronHisto", 7, 4, 11, "Electron Jet Multiplicity", "Jet Multiplicity", "Number of events");
+    _muonHisto = bookHisto1D("muonHisto", 7, 4, 11, "Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
+    _electronMuonHisto = bookHisto1D("electronMuonHisto", 7, 4, 11, "Electron+Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
     
-    _normedElectronHisto = bookHistogram1D("normedElectronHisto", 7, 4, 11, "Normalized Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "Normed units");
-    _normedMuonHisto = bookHistogram1D("normedMuonHisto", 7, 4, 11, "Normalized Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "Normed units");
-    _normedElectronMuonHisto = bookHistogram1D("normedElectronMuonHisto", 7, 4, 11, "Normalized Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "Normed units");
+    _normedElectronHisto = bookHisto1D("normedElectronHisto", 7, 4, 11, "Normalized Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "Normed units");
+    _normedMuonHisto = bookHisto1D("normedMuonHisto", 7, 4, 11, "Normalized Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "Normed units");
+    _normedElectronMuonHisto = bookHisto1D("normedElectronMuonHisto", 7, 4, 11, "Normalized Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "Normed units");
     
-    _absXSElectronHisto = bookHistogram1D("absXSElectronHisto", 7, 4, 11, "Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "pb");
-    _absXSMuonHisto = bookHistogram1D("absXSMuonHisto", 7, 4, 11, "Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "pb");
-    _absXSElectronMuonHisto = bookHistogram1D("absXSElectronMuonHisto", 7, 4, 11, "Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "pb");
+    _absXSElectronHisto = bookHisto1D("absXSElectronHisto", 7, 4, 11, "Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "pb");
+    _absXSMuonHisto = bookHisto1D("absXSMuonHisto", 7, 4, 11, "Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "pb");
+    _absXSElectronMuonHisto = bookHisto1D("absXSElectronMuonHisto", 7, 4, 11, "Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "pb");
 
   }
 
@@ -193,7 +193,7 @@ private:
   bool isLepton( Particle const& p )
   {
     int const& absid = abs( p.pdgId() );
-    return absid == ELECTRON || absid == MUON || absid == NU_E || absid == NU_MU;
+    return absid == PID::ELECTRON || absid == PID::MUON || absid == PID::NU_E || absid == PID::NU_MU;
   }
 
   enum ParticleTypeMatch
@@ -226,19 +226,19 @@ private:
     {
       double pT = p.momentum().pT();
       double absEta = abs( p.momentum().eta() );
-      if( isParticleType( p, ELECTRON ) && pT > MIN_PT_GOOD_ELECTRON && absEta < MAX_ETA_GOOD_ELECTRON )
+      if( isParticleType( p, PID::ELECTRON ) && pT > MIN_PT_GOOD_ELECTRON && absEta < MAX_ETA_GOOD_ELECTRON )
       {
         goodElectrons.push_back( p );
       }
-      else if( isParticleType( p, MUON ) && pT > MIN_PT_GOOD_MUON && absEta < MAX_ETA_GOOD_MUON )
+      else if( isParticleType( p, PID::MUON ) && pT > MIN_PT_GOOD_MUON && absEta < MAX_ETA_GOOD_MUON )
       {
         goodMuons.push_back( p );
       }
-      if( isParticleType( p, ELECTRON ) && pT > MIN_PT_LOOSE_ELECTRON && absEta < MAX_ETA_LOOSE_ELECTRON )
+      if( isParticleType( p, PID::ELECTRON ) && pT > MIN_PT_LOOSE_ELECTRON && absEta < MAX_ETA_LOOSE_ELECTRON )
       {
         looseElectrons.push_back( p );
       }
-      else if( isParticleType( p, MUON ) && pT > MIN_PT_LOOSE_MUON && absEta < MAX_ETA_LOOSE_MUON )
+      else if( isParticleType( p, PID::MUON ) && pT > MIN_PT_LOOSE_MUON && absEta < MAX_ETA_LOOSE_MUON )
       {
         looseMuons.push_back( p );
       }
@@ -490,6 +490,7 @@ public:
 	if( (!PID::isHadron(pid)) || (!PID::hasBottom(pid)) || (p.momentum().pT()<5.0*GeV) ) continue;
 
 	// "An unbound, or undecayed status 2 hadron: this is weird, but I guess is allowed..."
+	/*
 	if (!p.hasGenParticle() || !p.genParticle().end_vertex()) {
 		MSG_DEBUG("Heavy hadron " << pid << " with no GenParticle or decay found");
 		fjJetInputs.push_back(fastjet::PseudoJet(p.momentum().px()*scale, p.momentum().py()*scale, p.momentum().pz()*scale, p.momentum().E()*scale));
@@ -497,6 +498,7 @@ public:
 		bHadronIdxs.push_back(i);
 		continue;
 	}
+	*/
 
 	//Alexis: The test whether the particle also decayed into a bottom hadron isn't available in 1.8.2 ... I guess it is not essential
 	/*const vector<GenParticle*> children = particles_out((&p.genParticle()), HepMC::children);

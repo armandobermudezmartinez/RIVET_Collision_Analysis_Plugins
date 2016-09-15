@@ -162,17 +162,17 @@ public:
     
     _eventHisto = bookHisto1D("eventHisto", 1, 0, 1, "Inclusive Event Counter", "Event Count", "Number of events");
     
-    _electronHisto = bookHisto1D("electronHisto", 7, 4, 11, "Electron Jet Multiplicity", "Jet Multiplicity", "Number of events");
-    _muonHisto = bookHisto1D("muonHisto", 7, 4, 11, "Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
-    _electronMuonHisto = bookHisto1D("electronMuonHisto", 7, 4, 11, "Electron+Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
+    _electronHisto = bookHisto1D("electronHisto", 7, 3.5, 10.5, "Electron Jet Multiplicity", "Jet Multiplicity", "Number of events");
+    _muonHisto = bookHisto1D("muonHisto", 7, 3.5, 10.5, "Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
+    _electronMuonHisto = bookHisto1D("electronMuonHisto", 7, 3.5, 10.5, "Electron+Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
     
-    _normedElectronHisto = bookHisto1D("normedElectronHisto", 7, 4, 11, "Normalized Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "Normed units");
-    _normedMuonHisto = bookHisto1D("normedMuonHisto", 7, 4, 11, "Normalized Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "Normed units");
-    _normedElectronMuonHisto = bookHisto1D("normedElectronMuonHisto", 7, 4, 11, "Normalized Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "Normed units");
+    _normedElectronHisto = bookHisto1D("normedElectronHisto", 7, 3.5, 10.5, "Normalized Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "Normed units");
+    _normedMuonHisto = bookHisto1D("normedMuonHisto", 7, 3.5, 10.5, "Normalized Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "Normed units");
+    _normedElectronMuonHisto = bookHisto1D("normedElectronMuonHisto", 7, 3.5, 10.5, "Normalized Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "Normed units");
     
-    _absXSElectronHisto = bookHisto1D("absXSElectronHisto", 7, 4, 11, "Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "pb");
-    _absXSMuonHisto = bookHisto1D("absXSMuonHisto", 7, 4, 11, "Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "pb");
-    _absXSElectronMuonHisto = bookHisto1D("absXSElectronMuonHisto", 7, 4, 11, "Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "pb");
+    _absXSElectronHisto = bookHisto1D("absXSElectronHisto", 7, 3.5, 10.5, "Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "pb");
+    _absXSMuonHisto = bookHisto1D("absXSMuonHisto", 7, 3.5, 10.5, "Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "pb");
+    _absXSElectronMuonHisto = bookHisto1D("absXSElectronMuonHisto", 7, 3.5, 10.5, "Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "pb");
 
   }
 

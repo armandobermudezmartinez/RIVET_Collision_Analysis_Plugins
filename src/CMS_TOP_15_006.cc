@@ -50,11 +50,11 @@ const double JET_MIN_DELTA_R = 0.5;
 const double TTbarXS = 252.89;						//From Top++ at 8 TeV with m_t=172.5 GeV/c^2. It's the official value from TOPLHCWG-> https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
 const double MG5_BanchingRationCorrection = (0.108*9)*(0.676*1.5);	//Correction of the branching ratio (pdg: 0.108) which is wrongly modeled in MadGraph (taking 1/9). See page 147-148 of http://escholarship.org/uc/item/5f78t6s6
 
-class CMS_2014_ttbarPlusXJets : public Analysis
+class CMS_TOP_15_006 : public Analysis
 {
 public:
 
-  CMS_2014_ttbarPlusXJets() : Analysis( "CMS_2014_ttbarPlusXJets" ), _nameLength(18), _nJets(20), _nJets_err(20), _nJetsE(20), _nJetsE_err(20), _nJetsMu(20), _nJetsMu_err(20)
+  CMS_TOP_15_006() : Analysis( "CMS_TOP_15_006" ), _nameLength(18), _nJets(20), _nJets_err(20), _nJetsE(20), _nJetsE_err(20), _nJetsMu(20), _nJetsMu_err(20)
   {
   }
 
@@ -706,6 +706,6 @@ public:
 };
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2014_ttbarPlusXJets);
+  DECLARE_RIVET_PLUGIN(CMS_TOP_15_006);
 
 }

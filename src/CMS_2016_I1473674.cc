@@ -59,9 +59,6 @@ namespace Rivet {
       // Projections for MET
       addProjection(MissingMomentum(), "MET");
 
-      // Weight counter
-      _vis_unit_weights = 0.;
-
       // Booking of histograms
       _hist_met = bookHisto1D(5, 1, 1);
       _hist_ht  = bookHisto1D(6, 1, 1);
@@ -78,8 +75,9 @@ namespace Rivet {
       const DressedLeptons& dressed_electrons = applyProjection<DressedLeptons>(event, "DressedElectrons");
       const DressedLeptons& dressed_muons = applyProjection<DressedLeptons>(event, "DressedMuons");
       if (dressed_electrons.dressedLeptons().size() +
-          dressed_muons.dressedLeptons().size() != 1)
+          dressed_muons.dressedLeptons().size() != 1) {
         vetoEvent;
+      }
 
       FourMomentum lepton;
       if (dressed_electrons.dressedLeptons().size() == 1) {
@@ -102,9 +100,6 @@ namespace Rivet {
         }
       }
 
-      // count weights in visible phase space
-      if (weight != 0.)
-        _vis_unit_weights += weight / std::abs(weight);
 
       // MET
       const MissingMomentum& met = applyProjection<MissingMomentum>(event, "MET");
@@ -132,15 +127,13 @@ namespace Rivet {
 
     // scale by 1 over weight
     void finalize() {
-      const double s = 1. / _vis_unit_weights;
-      scale(_hist_met, s);
-      scale(_hist_ht, s);
-      scale(_hist_st, s);
-      scale(_hist_wpt, s);
+      normalize(_hist_met);
+      normalize(_hist_ht);
+      normalize(_hist_st);
+      normalize(_hist_wpt);
     }
 
   private:
-    double _vis_unit_weights;
     Histo1DPtr _hist_met, _hist_ht, _hist_st, _hist_wpt;
   };
 

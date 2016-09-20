@@ -4,7 +4,7 @@ Summary: Measurement of the differential cross sections for top quark pair produ
 Experiment: CMS
 Collider: LHC
 InspireID: 1473674
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Markus Seidel <markus.seidel@cern.ch>
  - Lukas Kreczko <kreczko@cern.ch>
@@ -12,7 +12,7 @@ Authors:
 References:
  - arXiv:1607.00837
 RunInfo:
-  ttbar events at sqrt(s) = 8 TeV
+  ttbar events at sqrt(s) = 8 TeV (inclusive or lepton+jets decay mode)
 Luminosity: 19.7 / fb
 Beams: [p+, p+]
 Energies: [8000]

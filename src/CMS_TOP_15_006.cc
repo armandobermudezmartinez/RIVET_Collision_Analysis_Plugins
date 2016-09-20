@@ -48,147 +48,43 @@ const double JET_MIN_DELTA_R = 0.5;
 
 //Values up-to-date on the 25th of February 2015. Please check for updates!
 const double TTbarXS = 252.89;						//From Top++ at 8 TeV with m_t=172.5 GeV/c^2. It's the official value from TOPLHCWG-> https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
-const double MG5_BanchingRationCorrection = (0.108*9)*(0.676*1.5);	//Correction of the branching ratio (pdg: 0.108) which is wrongly modeled in MadGraph (taking 1/9). See page 147-148 of http://escholarship.org/uc/item/5f78t6s6
 
 class CMS_TOP_15_006 : public Analysis
 {
 public:
 
-  CMS_TOP_15_006() : Analysis( "CMS_TOP_15_006" ), _nameLength(18), _nJets(20), _nJets_err(20), _nJetsE(20), _nJetsE_err(20), _nJetsMu(20), _nJetsMu_err(20)
+  CMS_TOP_15_006() : Analysis( "CMS_TOP_15_006" )
   {
   }
 
 private:
 
-  enum Cuts
-  {
-    TotalEvents=0,
-    GoodLepton,
-    GoodLepton_Electron,
-    GoodLepton_Muon,
-    LooseLeptonVeto,
-    LooseLeptonVeto_Electron,
-    LooseLeptonVeto_Muon,
-    NJetsGE4,
-    NJetsGE4_Electron,
-    NJetsGE4_Muon,
-    NBJetsGE2,
-    NBJetsGE2_Electron,
-    NBJetsGE2_Muon,
-    Size
-  };
-
-  char** _cutNames;
-
-  size_t* _cuts;
-
-#if DEBUG
-  Log& _log = getLog();
-#endif
-  Histo1DPtr _eventHisto;
-
-  Histo1DPtr _electronHisto;
-  Histo1DPtr _muonHisto;
-  Histo1DPtr _electronMuonHisto;
-  
-  Histo1DPtr _normedElectronHisto;
-  Histo1DPtr _normedMuonHisto;
   Histo1DPtr _normedElectronMuonHisto;
-  
-  Histo1DPtr _absXSElectronHisto;
-  Histo1DPtr _absXSMuonHisto;
   Histo1DPtr _absXSElectronMuonHisto;
-
-private:
-
-  const size_t _nameLength;
-
-  void init_Names()
-  {
-	fjLepDef_ = std::shared_ptr<JetDef>(new JetDef(fastjet::antikt_algorithm, 0.1));
-	fjJetDef_ = std::shared_ptr<JetDef>(new JetDef(fastjet::antikt_algorithm, 0.5));
-	
-    _nonOneWeights=false;
-    _cuts = new size_t[Size];
-
-        _cutNames = new char* [Size];
-
-    for (size_t i = 0; i<Size; i++)
-    {
-            _cutNames[i] = new char[_nameLength];
-    }
-    sprintf(_cutNames[0], "TotalEvents       ");
-    sprintf(_cutNames[1], "GoodLepton        ");
-    sprintf(_cutNames[2], "GoodLepton|e      ");
-    sprintf(_cutNames[3], "GoodLepton|mu     ");
-    sprintf(_cutNames[4], "LooseLeptonVeto   ");
-    sprintf(_cutNames[5], "LooseLeptonVeto|e ");
-    sprintf(_cutNames[6], "LooseLeptonVeto|mu");
-    sprintf(_cutNames[7], "nJets>=4          ");
-    sprintf(_cutNames[8], "nJets>=4|e        ");
-    sprintf(_cutNames[9], "nJets>=4|mu       ");
-    sprintf(_cutNames[10],"nBJets>=2         ");
-    sprintf(_cutNames[11],"nBJets>=2|e       ");
-    sprintf(_cutNames[12],"nBJets>=2|mu      ");
-  }
-
-  void init_Projections()
-  {
-	const FinalState fState;
-	const UnstableFinalState unstableFState;
-	addProjection(FastJets(fState, FastJets::ANTIKT, 0.5), "Jets");
-	addProjection( fState, "stableParticles" );
-	addProjection( unstableFState, "unstableParticles" );
-  }
-
-  void init_Output()
-  {
-    for (size_t i = 0; i<Size; i++)
-    {
-            _cuts[i] = 0;
-    }
-  }
-  
 
 public:
 
   void init()
   {
-    init_Names();
-    init_Projections();
-    init_Output();
+    fjLepDef_ = std::shared_ptr<JetDef>(new JetDef(fastjet::antikt_algorithm, 0.1));
+    fjJetDef_ = std::shared_ptr<JetDef>(new JetDef(fastjet::antikt_algorithm, 0.5));
+
+    const FinalState fState;
+    const UnstableFinalState unstableFState;
+    addProjection( fState, "stableParticles" );
+    addProjection( unstableFState, "unstableParticles" );
 
     // Initialize histograms
-    
-    _eventHisto = bookHisto1D("eventHisto", 1, 0, 1, "Inclusive Event Counter", "Event Count", "Number of events");
-    
-    _electronHisto = bookHisto1D("electronHisto", 7, 3.5, 10.5, "Electron Jet Multiplicity", "Jet Multiplicity", "Number of events");
-    _muonHisto = bookHisto1D("muonHisto", 7, 3.5, 10.5, "Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
-    _electronMuonHisto = bookHisto1D("electronMuonHisto", 7, 3.5, 10.5, "Electron+Muon Jet Multiplicity", "Jet Multiplicity", "Number of events");
-    
-    _normedElectronHisto = bookHisto1D("normedElectronHisto", 7, 3.5, 10.5, "Normalized Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "Normed units");
-    _normedMuonHisto = bookHisto1D("normedMuonHisto", 7, 3.5, 10.5, "Normalized Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "Normed units");
     _normedElectronMuonHisto = bookHisto1D("normedElectronMuonHisto", 7, 3.5, 10.5, "Normalized Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "Normed units");
-    
-    _absXSElectronHisto = bookHisto1D("absXSElectronHisto", 7, 3.5, 10.5, "Differential Cross Section in Electron+Jets Channel", "Jet Multiplicity", "pb");
-    _absXSMuonHisto = bookHisto1D("absXSMuonHisto", 7, 3.5, 10.5, "Differential Cross Section in Muon+Jets Channel", "Jet Multiplicity", "pb");
     _absXSElectronMuonHisto = bookHisto1D("absXSElectronMuonHisto", 7, 3.5, 10.5, "Differential Cross Section in Lepton+Jets Channel", "Jet Multiplicity", "pb");
 
   }
 
 private:
-	
-  std::vector<double> _nJets;
-  std::vector<double> _nJets_err;
-  std::vector<double> _nJetsE;
-  std::vector<double> _nJetsE_err;
-  std::vector<double> _nJetsMu;
-  std::vector<double> _nJetsMu_err;
   
   typedef fastjet::JetDefinition JetDef;
   std::shared_ptr<JetDef> fjLepDef_;
   std::shared_ptr<JetDef> fjJetDef_;
-  bool _nonOneWeights;
 
   bool isLepton( Particle const& p )
   {
@@ -244,26 +140,7 @@ private:
       }
     }
 
-    // Good Lepton Cut
-    bool goodElectron = goodElectrons.size()==1 && goodMuons.size() == 0;
-    bool goodMuon = goodMuons.size()==1 && goodElectrons.size() == 0;
-    bool goodLepton = goodElectron | goodMuon;
-    if (goodLepton)
-    {
-      _cuts[GoodLepton] += wgt;
-    }
-
-    if (goodElectron)
-    {
-      _cuts[GoodLepton_Electron] += wgt;
-    }
-
-    if (goodMuon)
-    {
-      _cuts[GoodLepton_Muon] += wgt;
-    }
-
-    // loose Lepton Veto
+    // Good Lepton Cut and loose Lepton Veto
     isE = goodElectrons.size() == 1 && looseElectrons.size() == 1 && looseMuons.size() == 0;
     isMu = goodMuons.size() == 1 && looseElectrons.size() == 0 && looseMuons.size() == 1;
     bool isSelected = isE ^ isMu;
@@ -275,23 +152,19 @@ private:
 
     if( isE )
     {
-      _cuts[LooseLeptonVeto_Electron] += wgt;
       chosenLepton = goodElectrons[0];
     }
     if( isMu )
     {
-      _cuts[LooseLeptonVeto_Muon] += wgt;
       chosenLepton = goodMuons[0];
     }
     return true;
   }
 
-  bool analyze_CountJets( const Event& event, std::vector<Particle> inputJets, std::vector<bool> bTags, const Particle chosenLepton, const double wgt,  const double sqWgt)
+  bool analyze_CountJets( const Event& event, std::vector<Particle> inputJets, std::vector<bool> bTags, const Particle chosenLepton, const double wgt)
   {
     vector<FourMomentum> jets;
     int nBJets( 0 );
-    int nJetsWrongEta( 0 );
-    int nJetsTooCloseToGoodLepton(0);
     for( unsigned int i=0 ; i<inputJets.size() ; i++ )
     {
       Particle j=inputJets.at(i);
@@ -302,19 +175,17 @@ private:
       const double absEta = abs( j.momentum().eta() );
       if( absEta > JET_MAX_ETA )
       {
-    nJetsWrongEta++;
-    continue;
+        continue;
       }
       if ( deltaR( chosenLepton.momentum(), j.momentum() ) < JET_MIN_DELTA_R )
       {
-    nJetsTooCloseToGoodLepton++;
-    continue;
+        continue;
       }
 
       jets.push_back( j.momentum() );
       if( bTags.at(i) )
       {
-    nBJets++;
+        nBJets++;
       }
     }
 
@@ -325,36 +196,13 @@ private:
       return false;
     }
 
-    _cuts[NJetsGE4] += wgt;
-    if (isE) _cuts[NJetsGE4_Electron]  += wgt;
-    if (isMu) _cuts[NJetsGE4_Muon]  += wgt;
-
     if (nBJets < 2)
     {
       return false;
     }
     
-    _nJets[min(10,nJets)] += wgt;
-    _electronMuonHisto->fill(min(10,nJets), wgt);
     _normedElectronMuonHisto->fill(min(10,nJets), wgt);
     _absXSElectronMuonHisto->fill(min(10,nJets), wgt);
-    _nJets_err[min(10,nJets)] += sqWgt;
-    
-    if (isE) {
-        _nJetsE[min(10,nJets)] += wgt;
-        _electronHisto->fill(min(10,nJets), wgt);
-        _normedElectronHisto->fill(min(10,nJets), wgt);
-	_absXSElectronHisto->fill(min(10,nJets), wgt);
-        _nJetsE_err[min(10,nJets)] += sqWgt;
-    }
-    
-    if (isMu) {
-        _nJetsMu[min(10,nJets)] += wgt;
-        _muonHisto->fill(min(10,nJets), wgt);
-        _normedMuonHisto->fill(min(10,nJets), wgt);
-        _absXSMuonHisto->fill(min(10,nJets), wgt);
-        _nJetsMu_err[min(10,nJets)] += sqWgt;
-    }
 
     return true;
   }
@@ -364,12 +212,6 @@ public:
   void analyze( const Event& event )
   {
     const double wgt = event.weight();
-    const double sqWgt = wgt*wgt;
-    
-    //Event counter, so it is accessible in the aida output
-    _eventHisto->fill(0, wgt);
-    
-    if((!_nonOneWeights) && (wgt!=1)) _nonOneWeights=true;
     
     const FinalState fs = applyProjection<FinalState>( event, "stableParticles" );
     const UnstableFinalState ufs = applyProjection<UnstableFinalState>( event, "unstableParticles" );
@@ -401,7 +243,6 @@ public:
 
 	    //Storing neutrino indexes
 	    if((pID==12) || (pID==14) || (pID==16)){
-	    	//cout<<"Neutrino pT: "<<p.momentum().pT()<<" eta: "<<p.momentum().eta()<<endl;
 	    	neutrinoIdxs.push_back(i);
 	    }
     }
@@ -414,6 +255,8 @@ public:
     std::vector<size_t> lepDauIdxs;
     for ( auto& fjJet : fjLepJets )
     {
+	    if (fjJet.pt() < MIN_PT_LOOSE_ELECTRON || abs(fjJet.eta()) > MAX_ETA_LOOSE_ELECTRON) continue; //TODO: Need feedback from Alexis
+	    
 	    //Get jet constituents from fastJet
 	    Particle lepCand;
 	    if(lepCand.pdgId()!=0) cout<<"Warning, the pdgId of a new particle should be default 0. If not the program is faulty."<<endl;
@@ -442,8 +285,9 @@ public:
 	    Particle part(lepCand.pdgId(),mom);
 	    leptons.push_back(part);
     }
-	
-    //for(unsigned int i=0 ; i<leptons.size() ; i++) cout<<"Lepton pT: "<<leptons.at(i).momentum().pT()<<" eta: "<<leptons.at(i).momentum().eta()<<endl;
+    
+    //std::cout << "-- Alexis --" << std::endl;
+    //for(unsigned int i=0 ; i<leptons.size() ; i++) cout<<"lepton pT: "<<leptons.at(i).momentum().pT()<<" eta: "<<leptons.at(i).momentum().eta()<<" id: "<<leptons.at(i).pdgId()<<endl;
     
     //Jets:
     ////Prepare input particle list.
@@ -453,8 +297,6 @@ public:
     {
     	const Particle p = pVec.at(i);
 	if ( (std::isnan(p.momentum().pT())) || (p.momentum().pT() <= 0) ) continue;
-	
-	//Some quality cuts from John cannot be included
 			
 	//Remove neutrinos
 	bool toSkip=false;
@@ -489,31 +331,9 @@ public:
 	//This is a reproduction of RIVET_2_1_2::HeavyHadrons.cc
 	if( (!PID::isHadron(pid)) || (!PID::hasBottom(pid)) || (p.momentum().pT()<5.0*GeV) ) continue;
 
-	// "An unbound, or undecayed status 2 hadron: this is weird, but I guess is allowed..."
-	/*
-	if (!p.hasGenParticle() || !p.genParticle().end_vertex()) {
-		MSG_DEBUG("Heavy hadron " << pid << " with no GenParticle or decay found");
-		fjJetInputs.push_back(fastjet::PseudoJet(p.momentum().px()*scale, p.momentum().py()*scale, p.momentum().pz()*scale, p.momentum().E()*scale));
-		fjJetInputs.back().set_user_index(i);
-		bHadronIdxs.push_back(i);
-		continue;
-	}
-	*/
-
-	//Alexis: The test whether the particle also decayed into a bottom hadron isn't available in 1.8.2 ... I guess it is not essential
-	/*const vector<GenParticle*> children = particles_out((&p.genParticle()), HepMC::children);
-	bool has_b_child = false;
-	foreach (const GenParticle* p2, children) {
-		if (p2.isHadron() && p2.hasBottom()) {
-			has_b_child = true;
-			break;
-		}
-	}
-	if (!has_b_child) {*/
-		fjJetInputs.push_back(fastjet::PseudoJet(p.momentum().px()*scale, p.momentum().py()*scale, p.momentum().pz()*scale, p.momentum().E()*scale));
-		fjJetInputs.back().set_user_index(i);
-		bHadronIdxs.push_back(i);
-	/*}*/
+	fjJetInputs.push_back(fastjet::PseudoJet(p.momentum().px()*scale, p.momentum().py()*scale, p.momentum().pz()*scale, p.momentum().E()*scale));
+	fjJetInputs.back().set_user_index(i);
+	bHadronIdxs.push_back(i);
     }
 		
     //// Run the jet algorithm
@@ -528,8 +348,6 @@ public:
 	Particle j(0,mom);
 	jets.push_back(j);
 	
-	//cout<<"Jet pT: "<<fjJet.pt()<<" eta: "<<fjJet.eta()<<endl;
-	
 	//Check jet constituents
 	bool hasBHadron = false;
 	foreach( const fastjet::PseudoJet& pJet, fastjet::sorted_by_pt(fjJet.constituents()) )
@@ -542,17 +360,12 @@ public:
 
 	if( hasBHadron ){
 		bTags.push_back(true);
-		//cout<<"-> Tagged!"<<endl;
 	}
 	
 	else bTags.push_back(false);
     }
     
-    //cout<<endl;
-    
     //Start the analysis itself
-    
-    _cuts[TotalEvents] += wgt;
     
     //leptonic cuts
     Particle chosenLepton;
@@ -560,144 +373,26 @@ public:
     {
       vetoEvent;
     }
-    _cuts[LooseLeptonVeto] += wgt;
 
     //jet cuts
-    if (!analyze_CountJets( event, jets, bTags, chosenLepton, wgt, sqWgt ))
+    if (!analyze_CountJets( event, jets, bTags, chosenLepton, wgt ))
     {
       vetoEvent;
     }
-    _cuts[NBJetsGE2] += wgt;
-    if (isE) _cuts[NBJetsGE2_Electron] += wgt;
-    if (isMu) _cuts[NBJetsGE2_Muon] += wgt;
   }
 
-  void finalize_Names()
-  {
-
-    for (size_t i = 0; i<Size; i++)
-    {
-            delete [] _cutNames[i];
-    }
-    delete [] _cutNames;
-    delete [] _cuts;
-
-}
-
-  void finalize_DisplayCuts()
-  {
-
-    int count (-1);
-    int countIndex( 0 );
-    int childCount (0);
-
-#if DEBUG
-    _log << Log::ALWAYS << "[Cut flow with event weights]" << endl;
-    _log << Log::ALWAYS << "--------------------------------------------------------" << endl;
-    _log << Log::ALWAYS << "[#.#] (Cut Descr.|Branch):nEvents ( Parent% /   Total% )" << endl;
-    _log << Log::ALWAYS << "--------------------------------------------------------" << endl;
-#endif
-
-    for( size_t i=0; i<Size; i++ )
-    {
-      double percentage = 100.*_cuts[i]/_cuts[TotalEvents];
-      double ofParentPercentage = 100. * _cuts[i]/_cuts[countIndex];
-      //_log.precision( 3 );
-
-      bool isChild = false;
-      if (std::string(_cutNames[i]).find('|') != std::string::npos)
-      {
-    isChild = true;
-      }
-
-      if (!isChild)
-      {
-    count++;
-    countIndex = i;
-      }
-
-      stringstream ss;
-      ss << "[" << count;
-
-      if (isChild)
-      {
-        ss << "." << childCount;
-      }
-      else
-      {
-        ss << "  ";
-      }
-        ss << "] (" << _cutNames[i] << "): " << setw(6) << _cuts[i] << " (" << setw(7) << ofParentPercentage << "% / " << setw(7) << percentage << "% )" << endl;
-      if (!isChild)
-      {
-    childCount=0;
-      }
-      else
-      {
-    childCount++;
-      }
-      #if DEBUG
-      _log << Log::ALWAYS << ss.str();
-      #endif
-    }
-    #if DEBUG
-    _log << Log::ALWAYS << "--------------------------------------------------------" << endl;
-    #endif
-  }
-
-  void finalize_DisplayJetMultiplicy()
-  {
-//    #if DEBUG
-    cout <<  "[Jet Multiplicy in Merged Channel]" << endl;
-    for (int i=4;i<=10;i++)
-    {
-      cout << "[" << i << "]: " << (long)_nJets[i] << " +- " << (long)sqrt(_nJets_err[i]) << endl;
-    }
-    
-    cout << "[Jet Multiplicy in E+Jets Channel]" << endl;
-    for (int i=4;i<=10;i++)
-    {
-      cout << "[" << i << "]: " << (long)_nJetsE[i] << " +- " << (long)sqrt(_nJetsE_err[i]) << endl;
-    }
-    
-    cout << "[Jet Multiplicy in Mu+Jets Channel]" << endl;
-    for (int i=4;i<=10;i++)
-    {
-      cout << "[" << i << "]: " <<(long)_nJetsMu[i] << " +- " << (long)sqrt(_nJetsMu_err[i]) << endl;
-    }
-//    #endif
-  }
-
-  void finalize_DisplayResults()
-  {
-    #if DEBUG
-    _log << Log::ALWAYS << endl;
-    _log << Log::ALWAYS << "[Displaying Results]" << endl;
-    _log << Log::ALWAYS << endl;
-    
-    #endif
-    finalize_DisplayCuts();
-    finalize_DisplayJetMultiplicy();
-  }
 
   void finalize()
   {
-    #if DEBUG
-    if(_nonOneWeights) _log<< Log::ALWAYS <<  endl<<"Warning! This sample has event weights different from one! Are you taking it into account?"<<endl<<endl;
-    #endif
-    
-    finalize_DisplayResults();
+    const double ttbarXS = !isnan(crossSectionPerEvent()) ? crossSection() : TTbarXS*picobarn;
+    if (isnan(crossSectionPerEvent()))
+      MSG_INFO("No valid cross-section given, using NNLO (arXiv:1303.6254; sqrt(s)=8 TeV, m_t=172.5 GeV): " << ttbarXS/picobarn << " pb");
 
     // Normalize histograms
-    normalize(_normedElectronHisto, 1.);
-    normalize(_normedMuonHisto, 1.);
     normalize(_normedElectronMuonHisto, 1.);
 
-    const double conversionFactor = TTbarXS*MG5_BanchingRationCorrection/_cuts[TotalEvents];
-
-    scale(_absXSElectronHisto, conversionFactor);
-    scale(_absXSMuonHisto, conversionFactor);
-    scale(_absXSElectronMuonHisto, conversionFactor);
+    const double xsPerWeight = ttbarXS/picobarn / sumOfWeights();
+    scale(_absXSElectronMuonHisto, xsPerWeight);
 
   }
 

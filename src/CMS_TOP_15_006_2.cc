@@ -11,6 +11,76 @@
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
 namespace Rivet {
+  namespace { //< only visible in this compilation unit
+
+    /// @brief Special dressed lepton finder
+    ///
+    /// Find dressed leptons by clustering all leptons and photons
+    class SpecialDressedLeptons : public FinalState {
+      public:
+        /// The default constructor. May specify cuts
+        SpecialDressedLeptons(const FinalState& fs, const Cut& cut)
+          : FinalState(cut)
+        {
+          setName("SpecialDressedLeptons");
+          IdentifiedFinalState ifs(fs);
+          ifs.acceptIdPair(PID::PHOTON);
+          ifs.acceptIdPair(PID::ELECTRON);
+          ifs.acceptIdPair(PID::MUON);
+          addProjection(ifs, "IFS");
+          addProjection(FastJets(ifs, FastJets::ANTIKT, 0.1), "LeptonJets");
+        }
+        
+        /// Clone on the heap.
+        virtual const Projection* clone() const {
+          return new SpecialDressedLeptons(*this);
+        }
+        
+        /// Retrieve the dressed leptons
+        const vector<DressedLepton>& dressedLeptons() const { return _clusteredLeptons; }
+        
+      private:
+        /// Container which stores the clustered lepton objects
+        vector<DressedLepton> _clusteredLeptons;
+        
+      public:
+        void project(const Event& e) {
+          _theParticles.clear();
+          _clusteredLeptons.clear();
+          
+          vector<DressedLepton> allClusteredLeptons;
+          
+          const Jets jets = applyProjection<FastJets>(e, "LeptonJets").jetsByPt(5*GeV);
+          foreach (const Jet& jet, jets) {
+            Particle lepCand;
+            for (const Particle& cand : jet.particles()) {
+              const int absPdgId = abs(cand.pdgId());
+		          if (absPdgId == 11 || absPdgId == 13) {
+		            if (cand.pt() > lepCand.pt()) lepCand = cand;
+		          }
+            }
+            //Central lepton must be the major component
+	          if ((lepCand.pt() < jet.pt()/2.) || (lepCand.pdgId() == 0)) continue;
+            
+            DressedLepton lepton = DressedLepton(lepCand);
+            
+            for (const Particle& cand : jet.particles()) {
+              if (cand == lepCand) continue;
+              lepton.addPhoton(cand, true);
+            }
+            allClusteredLeptons.push_back(lepton);
+          }
+          
+          for (const DressedLepton& lepton : allClusteredLeptons) {
+            if (accept(lepton)) {
+              _clusteredLeptons.push_back(lepton);
+              _theParticles.push_back(lepton.constituentLepton());
+              _theParticles += lepton.constituentPhotons();
+            }
+          }
+        }
+    };
+  }
 
   class CMS_TOP_15_006_2 : public Analysis {
   public:
@@ -29,18 +99,10 @@ namespace Rivet {
     void init() {
       // Complete final state
       FinalState fs(-MAXDOUBLE, MAXDOUBLE, 0*GeV);
-
-      // Projection for dressed electrons and muons
-      IdentifiedFinalState photons(fs);
-      photons.acceptIdPair(PID::PHOTON);
       
-      IdentifiedFinalState leptons(fs);
-      leptons.acceptIdPair(PID::ELECTRON);
-      leptons.acceptIdPair(PID::MUON);
-      addProjection(leptons, "Leptons");
       Cut looseLeptonCuts = Cuts::abseta < 2.5 && Cuts::pt > 15*GeV;
       //Cut superLooseLeptonCuts = Cuts::pt > 5*GeV;
-      DressedLeptons dressedleptons(photons, leptons, 0.1, looseLeptonCuts, true, false);
+      SpecialDressedLeptons dressedleptons(fs, looseLeptonCuts);
       addProjection(dressedleptons, "DressedLeptons");
       
       // Projection for jets
@@ -59,7 +121,7 @@ namespace Rivet {
       const double weight = event.weight();
       
       // select ttbar -> lepton+jets
-      const DressedLeptons& dressedleptons = applyProjection<DressedLeptons>(event, "DressedLeptons");
+      const SpecialDressedLeptons& dressedleptons = applyProjection<SpecialDressedLeptons>(event, "DressedLeptons");
       
       //std::cout << "-- Markus --" << std::endl;
       //for(unsigned int i=0 ; i<dressedleptons.dressedLeptons().size() ; i++) cout<<"lepton pT: "<<dressedleptons.dressedLeptons()[i].momentum().pT()<<" eta: "<<dressedleptons.dressedLeptons()[i].momentum().eta()<<" id: "<<dressedleptons.dressedLeptons()[i].pdgId()<<" const lepton pT: "<<dressedleptons.dressedLeptons()[i].constituentLepton().pT()<<endl;

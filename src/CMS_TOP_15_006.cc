@@ -255,7 +255,7 @@ public:
     std::vector<size_t> lepDauIdxs;
     for ( auto& fjJet : fjLepJets )
     {
-	    if (fjJet.pt() < MIN_PT_LOOSE_ELECTRON || abs(fjJet.eta()) > MAX_ETA_LOOSE_ELECTRON) continue; //TODO: Need feedback from Alexis
+	    //if (fjJet.pt() < MIN_PT_LOOSE_ELECTRON || abs(fjJet.eta()) > MAX_ETA_LOOSE_ELECTRON) continue; //TODO: Need feedback from Alexis
 	    
 	    //Get jet constituents from fastJet
 	    Particle lepCand;

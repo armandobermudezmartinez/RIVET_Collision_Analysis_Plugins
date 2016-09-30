@@ -2,10 +2,8 @@
 #include "Rivet/Tools/Logging.hh"
 #include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/ChargedLeptons.hh"
 #include "Rivet/Projections/DressedLeptons.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
-#include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/VetoedFinalState.hh"
 #include "Rivet/ParticleName.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
@@ -100,9 +98,8 @@ namespace Rivet {
       // Complete final state
       FinalState fs(-MAXDOUBLE, MAXDOUBLE, 0*GeV);
       
-      Cut looseLeptonCuts = Cuts::abseta < 2.5 && Cuts::pt > 15*GeV;
-      //Cut superLooseLeptonCuts = Cuts::pt > 5*GeV;
-      SpecialDressedLeptons dressedleptons(fs, looseLeptonCuts);
+      Cut superLooseLeptonCuts = Cuts::pt > 5*GeV;
+      SpecialDressedLeptons dressedleptons(fs, superLooseLeptonCuts);
       addProjection(dressedleptons, "DressedLeptons");
       
       // Projection for jets
@@ -117,14 +114,11 @@ namespace Rivet {
 
 
     void analyze(const Event& event) {
-      ////std::cout << "analyze()" << std::endl;
       const double weight = event.weight();
       
       // select ttbar -> lepton+jets
       const SpecialDressedLeptons& dressedleptons = applyProjection<SpecialDressedLeptons>(event, "DressedLeptons");
       
-      //std::cout << "-- Markus --" << std::endl;
-      //for(unsigned int i=0 ; i<dressedleptons.dressedLeptons().size() ; i++) cout<<"lepton pT: "<<dressedleptons.dressedLeptons()[i].momentum().pT()<<" eta: "<<dressedleptons.dressedLeptons()[i].momentum().eta()<<" id: "<<dressedleptons.dressedLeptons()[i].pdgId()<<" const lepton pT: "<<dressedleptons.dressedLeptons()[i].constituentLepton().pT()<<endl;
       std::vector<FourMomentum> selleptons;
       
       foreach (const DressedLepton& dressedlepton, dressedleptons.dressedLeptons()) {
@@ -165,10 +159,10 @@ namespace Rivet {
       if (isnan(crossSectionPerEvent()))
         MSG_INFO("No valid cross-section given, using NNLO (arXiv:1303.6254; sqrt(s)=8 TeV, m_t=172.5 GeV): " << ttbarXS/picobarn << " pb");
       
-      normalize(_normedElectronMuonHisto);
-      
       const double xsPerWeight = ttbarXS/picobarn / sumOfWeights();
       scale(_absXSElectronMuonHisto, xsPerWeight);
+      
+      normalize(_normedElectronMuonHisto);
     }
 
     //@}

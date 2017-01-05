@@ -5,7 +5,7 @@
 #include "Rivet/Projections/DressedLeptons.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
 #include "Rivet/Projections/VetoedFinalState.hh"
-#include "Rivet/ParticleName.hh"
+#include "Rivet/Tools/ParticleName.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
 namespace Rivet {
@@ -29,11 +29,6 @@ namespace Rivet {
           addProjection(FastJets(ifs, FastJets::ANTIKT, 0.1), "LeptonJets");
         }
         
-        /// Clone on the heap.
-        virtual const Projection* clone() const {
-          return new SpecialDressedLeptons(*this);
-        }
-        
         /// Retrieve the dressed leptons
         const vector<DressedLepton>& dressedLeptons() const { return _clusteredLeptons; }
         
@@ -53,7 +48,7 @@ namespace Rivet {
             Particle lepCand;
             for (const Particle& cand : jet.particles()) {
               const int absPdgId = abs(cand.pdgId());
-              if (absPdgId == 11 || absPdgId == 13) {
+              if (absPdgId == PID::ELECTRON || absPdgId == PID::MUON) {
                 if (cand.pt() > lepCand.pt()) lepCand = cand;
               }
             }
@@ -155,8 +150,8 @@ namespace Rivet {
 
 
     void finalize() {
-      const double ttbarXS = !isnan(crossSectionPerEvent()) ? crossSection() : 252.89*picobarn;
-      if (isnan(crossSectionPerEvent()))
+      const double ttbarXS = !std::isnan(crossSectionPerEvent()) ? crossSection() : 252.89*picobarn;
+      if (std::isnan(crossSectionPerEvent()))
         MSG_INFO("No valid cross-section given, using NNLO (arXiv:1303.6254; sqrt(s)=8 TeV, m_t=172.5 GeV): " << ttbarXS/picobarn << " pb");
       
       const double xsPerWeight = ttbarXS/picobarn / sumOfWeights();

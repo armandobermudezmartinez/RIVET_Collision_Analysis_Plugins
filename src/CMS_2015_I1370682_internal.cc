@@ -110,7 +110,7 @@ namespace Rivet {
         const FourMomentum& t2P4 = ttbarState.t2().momentum();
         const double t1Pt = t1P4.pT(), t2Pt = t2P4.pT();
         const FourMomentum ttbarP4 = t1P4+t2P4;
-        const FourMomentum t1P4AtCM = LorentzTransform(-ttbarP4.boostVector()).transform(t1P4);
+        const FourMomentum t1P4AtCM = LorentzTransform::mkFrameTransformFromBeta(ttbarP4.betaVec()).transform(t1P4);
         const double dPhi = deltaPhi(t1P4.phi(), t2P4.phi());
 
         if ( ttbarState.mode() == PartonTop::CH_SEMILEPTON ) {

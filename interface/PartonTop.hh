@@ -23,13 +23,8 @@ namespace Rivet {
 
       /// The default constructor.
       PartonTop() : FinalState(-MAXDOUBLE, MAXDOUBLE, 0.0*GeV)
-    {
-      setName("PartonTop");
-    }
-
-      /// Clone on the heap.
-      virtual const Projection* clone() const {
-        return new PartonTop(*this);
+      {
+        setName("PartonTop");
       }
 
       //@}

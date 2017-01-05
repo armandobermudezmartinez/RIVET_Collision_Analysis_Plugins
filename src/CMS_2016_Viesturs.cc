@@ -99,7 +99,7 @@ void CMS_2016_Viesturs::analyze(const Event& event)
 void CMS_2016_Viesturs::finalize() 
 {
   double ttbarXS = 0.;
-  if (!isnan(crossSectionPerEvent())) 
+  if (!std::isnan(crossSectionPerEvent())) 
   {
     std::cout << "Using generator cross section: " << crossSection() << " pb" << std::endl;
     ttbarXS = crossSection();

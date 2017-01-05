@@ -32,11 +32,6 @@ namespace Rivet {
         std::sort(_vetoIdsFromResonances.begin(), _vetoIdsFromResonances.end());
       }
 
-      /// Clone on the heap.
-      virtual const Projection* clone() const {
-        return new CMSGenParticle(*this);
-      }
-
       //@}
 
       // partonicFinalState = false

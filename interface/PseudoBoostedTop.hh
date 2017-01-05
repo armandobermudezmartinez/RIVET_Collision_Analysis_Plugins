@@ -40,11 +40,6 @@ namespace Rivet {
       DecayMode topDecay() const { return _topDecay;}
       DecayMode antitopDecay() const {return _antitopDecay;}
 
-      /// Clone on the heap.
-      virtual const Projection* clone() const {
-        return new PseudoBoostedTop(*this);
-      }
-
       //@}
 
   public:

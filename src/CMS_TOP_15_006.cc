@@ -29,6 +29,11 @@ namespace Rivet {
           addProjection(FastJets(ifs, FastJets::ANTIKT, 0.1), "LeptonJets");
         }
         
+        /// Clone on the heap.
+        virtual unique_ptr<Projection> clone() const {
+          return unique_ptr<Projection>(new SpecialDressedLeptons(*this));
+        }
+        
         /// Retrieve the dressed leptons
         const vector<DressedLepton>& dressedLeptons() const { return _clusteredLeptons; }
         

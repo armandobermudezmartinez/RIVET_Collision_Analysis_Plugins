@@ -18,8 +18,7 @@ namespace Rivet {
 
       void init() {
         // Parton level top quarks
-        PartonTop ttbarState;
-        addProjection(ttbarState, "ttbar");
+        declare(PartonTop(), "ttbar");
 
         CMSGenParticle fsForJets;
         FastJets fj(fsForJets, FastJets::ANTIKT, 0.5);

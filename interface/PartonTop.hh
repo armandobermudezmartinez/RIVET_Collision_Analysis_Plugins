@@ -26,6 +26,11 @@ namespace Rivet {
       {
         setName("PartonTop");
       }
+      
+      /// Clone on the heap.
+      virtual unique_ptr<Projection> clone() const {
+        return unique_ptr<Projection>(new PartonTop(*this));
+      }
 
       //@}
 

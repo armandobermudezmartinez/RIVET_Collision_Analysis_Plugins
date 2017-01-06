@@ -39,10 +39,13 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 process.rivetAnalyzer.AnalysisNames = cms.vstring(
     'CMS_2016_I1434354', # diff xs lepton+jets
     'MC_TTBAR_HADRON', # MC analysis for lepton+jets
-    'CMS_LesHouches2015' # MC analysis for dilepton
+    'CMS_LesHouches2015', # MC analysis for dilepton
+    'MC_GENERIC', # MC generic analysis
+    'MC_XS', # MC xs analysis
 )
 process.rivetAnalyzer.OutputFile      = "test.yoda"
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")
+process.rivetAnalyzer.CrossSection    = 831.76 # NNLO (arXiv:1303.6254)
 
 process.p = cms.Path(process.generator*process.rivetAnalyzer)
 

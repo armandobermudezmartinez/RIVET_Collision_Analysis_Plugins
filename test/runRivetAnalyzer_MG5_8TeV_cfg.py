@@ -15,16 +15,22 @@ process.generator = cms.EDProducer("GenParticles2HepMCConverter",
 process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring(
-    'CMS_2015_I1370682', 'CMS_2015_I1370682_internal',
-    'CMS_2015_I1397174', 'CMS_2015_I1388555', 'CMS_2016_I1473674'
+    'CMS_2015_I1370682', # diff xs particle->parton level
+    'CMS_2015_I1370682_internal', # diff xs parton level
+    'CMS_2015_I1397174', # jet multiplicity dilepton
+    'CMS_2015_I1388555', # boosted top
+    'CMS_2016_I1473674', # HT, MET, ST, WPT
+    'CMS_TOP_15_006', # jet multiplicity lepton+jets
+    'MC_TTBAR_HADRON', # MC analysis for lepton+jets
+    'CMS_LesHouches2015' # MC analysis for dilepton
 )
-process.rivetAnalyzer.OutputFile = "MC.yoda"
+process.rivetAnalyzer.OutputFile = "test_MG5.yoda"
 process.rivetAnalyzer.HepMCCollection   = cms.InputTag("generator:unsmeared")
 
 process.p = cms.Path(process.generator*process.rivetAnalyzer)
 
 process.source.fileNames = [
-#'/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FE35E100-7544-E311-8869-7845C4FC36AD.root',
+'/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FE35E100-7544-E311-8869-7845C4FC36AD.root',
 '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FE608E15-7246-E311-8197-00266CF9AB88.root',
 '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FEA8DB51-F343-E311-A964-848F69FD2484.root',
 '/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/00000/FEAD2571-1144-E311-B217-00266CF279F8.root',

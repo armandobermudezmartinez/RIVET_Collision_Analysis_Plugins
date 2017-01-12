@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import sys, getopt
+import os.path
 
 def main(argv):
     inputanalysis = ''
@@ -18,6 +19,9 @@ def main(argv):
             inputanalysis = arg
         elif opt in ("-o", "--oanalysis"):
             outputanalysis = arg
+    if (inputanalysis == '' and outputanalysis == ''):
+        print('test.py -i <inputanalysis> -o <outputanalysis>')
+        sys.exit(2)
     print('Input analysis  = ' + inputanalysis)
     print('Output analysis = ' + outputanalysis)
     
@@ -37,6 +41,7 @@ def main(argv):
     datafiles = ['.info', '.plot', '.yoda']
     
     for d in datafiles:
+        if not os.path.isfile('data/'+inputanalysis+d): continue
         f = open('data/'+inputanalysis+d, 'r')
         w = open('data/'+outputanalysis+d, 'w')
         

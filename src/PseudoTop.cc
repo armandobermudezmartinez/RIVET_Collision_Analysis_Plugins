@@ -114,7 +114,7 @@ void PseudoTop::project(const Event& e) {
   std::sort(neutrinos.begin(), neutrinos.end(), GreaterByPt());
 
   // Proceed to lepton dressing
-  FastJets fjLep(FastJets::ANTIKT, _lepR);
+  FastJets fjLep(FinalState(), FastJets::ANTIKT, _lepR);
   fjLep.calc(pForLep);
   Jets leptons;
   std::vector<int> leptonsId;
@@ -147,7 +147,7 @@ void PseudoTop::project(const Event& e) {
   }
 
   // Then do the jet clustering
-  FastJets fjJet(FastJets::ANTIKT, _jetR);
+  FastJets fjJet(FinalState(), FastJets::ANTIKT, _jetR);
   //fjJet.useInvisibles(); // NOTE: CMS proposal to remove neutrinos
   fjJet.calc(pForJet);
   // Jets _bjets, _ljets; FIME

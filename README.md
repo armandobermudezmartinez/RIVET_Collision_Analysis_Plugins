@@ -7,11 +7,11 @@ The `Installation` section gather instructions to get both subpackages.
 
 ## Installation
 
-The plugins in `CMS-TOP-Rivet/RivetTop` and configuration files in `CMS-TOP-Rivet/Configuration` have been developed in CMSSW_7_5_X with Rivet v2.2.1. 
-Please, be aware that validation is nowadays performed in CMSSW_7_6_X with Rivet v2.3.0 and that can imply major changes.  
+Many of the plugins in `CMS-TOP-Rivet/RivetTop` and configuration files in `CMS-TOP-Rivet/Configuration` have been developed in previous versions of CMSSW and Rivet. 
+Please, be aware that bugs could have been introduced while porting to newer versions.
 
-    cmsrel CMSSW_8_0_5_patch1
-    cd CMSSW_8_0_5_patch1/src
+    cmsrel CMSSW_8_1_0
+    cd CMSSW_8_1_0/src
     cmsenv
 
     git-cms-init

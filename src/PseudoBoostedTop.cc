@@ -143,11 +143,11 @@ void PseudoBoostedTop::project(const Event& e) {
   Particles pForTjet = pForJet;
 
   // Then do the AK5 clustering
-  FastJets ak5Jet(FastJets::ANTIKT, _bjetR);
+  FastJets ak5Jet(FinalState(), FastJets::ANTIKT, _bjetR);
   ak5Jet.calc(pForBjet);
 
   // Then do the CA8 clustering
-  FastJets ca8Jet(FastJets::CAM, _tjetR);
+  FastJets ca8Jet(FinalState(), FastJets::CAM, _tjetR);
   ca8Jet.calc(pForTjet);
 
   if (refLep.momentum().pt() > _lepMinPt && std::fabs(refLep.eta()) < _lepMaxEta){

@@ -46,8 +46,8 @@ namespace Rivet {
       DecayMode antitopDecay() const {return _antitopDecay;}
       
       /// Clone on the heap.
-      virtual const Projection* clone() const {
-        return new PseudoBoostedTop(*this);
+      virtual unique_ptr<Projection> clone() const {
+        return unique_ptr<Projection>(new PseudoBoostedTop(*this));
       }
       
       //@}
@@ -569,11 +569,11 @@ namespace Rivet {
       Particles pForTjet = pForJet;
       
       // Then do the AK5 clustering
-      FastJets ak5Jet(FastJets::ANTIKT, _bjetR);
+      FastJets ak5Jet(FinalState(), FastJets::ANTIKT, _bjetR);
       ak5Jet.calc(pForBjet);
       
       // Then do the CA8 clustering
-      FastJets ca8Jet(FastJets::CAM, _tjetR);
+      FastJets ca8Jet(FinalState(), FastJets::CAM, _tjetR);
       ca8Jet.calc(pForTjet);
       
       if (refLep.momentum().pt() > _lepMinPt && std::fabs(refLep.eta()) < _lepMaxEta){

@@ -3,14 +3,14 @@ import FWCore.ParameterSet.VarParsing as VarParsing
 
 options = VarParsing.VarParsing ('standard')
 options.register('runOnly', '', VarParsing.VarParsing.multiplicity.singleton,VarParsing.VarParsing.varType.string, "Run only specified analysis")
-options.setDefault('output', 'test.yoda')
+options.register('yodafile', 'test.yoda', VarParsing.VarParsing.multiplicity.singleton,VarParsing.VarParsing.varType.string, "Name of yoda output file")
 options.parseArguments()
 print options
 
 process = cms.Process("runRivetAnalysis")
 
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(10000)
+process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000)
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(options.maxEvents))
 process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring())
 
@@ -37,7 +37,7 @@ else:
         'MC_GENERIC', # MC generic analysis
         'MC_XS', # MC xs analysis
     )
-process.rivetAnalyzer.OutputFile      = options.output
+process.rivetAnalyzer.OutputFile      = options.yodafile
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")
 process.rivetAnalyzer.CrossSection    = 252.89 # NNLO (arXiv:1303.6254)
 

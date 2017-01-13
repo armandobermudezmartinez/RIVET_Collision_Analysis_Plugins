@@ -1,4 +1,3 @@
-import os
 import sys
 import FWCore.ParameterSet.Config as cms
 import FWCore.ParameterSet.VarParsing as VarParsing

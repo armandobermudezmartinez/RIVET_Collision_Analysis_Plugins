@@ -1,10 +1,13 @@
+import os
+import sys
 import FWCore.ParameterSet.Config as cms
 import FWCore.ParameterSet.VarParsing as VarParsing
 
 options = VarParsing.VarParsing ('standard')
 options.register('runOnly', '', VarParsing.VarParsing.multiplicity.singleton,VarParsing.VarParsing.varType.string, "Run only specified analysis")
 options.register('yodafile', 'test.yoda', VarParsing.VarParsing.multiplicity.singleton,VarParsing.VarParsing.varType.string, "Name of yoda output file")
-options.parseArguments()
+if(hasattr(sys, "argv")):
+    options.parseArguments()
 print options
 
 process = cms.Process("runRivetAnalysis")

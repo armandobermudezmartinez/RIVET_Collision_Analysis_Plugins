@@ -19,29 +19,6 @@ namespace Rivet {
         declare(PartonicTops(PartonicTops::E_MU, false), "LeptonicPartonTops");
         declare(PartonicTops(PartonicTops::HADRONIC),    "HadronicPartonTops");
 
-        // Find jets not related to the top/W decays
-        VetoedFinalState vfs;
-        vfs.addDecayProductsVeto(PID::WPLUSBOSON);
-        vfs.addDecayProductsVeto(PID::WMINUSBOSON);
-        FastJets fj(vfs, FastJets::ANTIKT, 0.5, JetAlg::ALL_MUONS, JetAlg::ALL_INVISIBLES);
-        declare(fj, "Jets");
-
-        _hSL_lepPt    = bookHisto1D("d01-x01-y01");
-        _hSL_lepEta   = bookHisto1D("d02-x01-y01");
-        _hSL_bqPt     = bookHisto1D("d03-x01-y01");
-        _hSL_bqEta    = bookHisto1D("d04-x01-y01");
-        _hSL_bbbarPt  = bookHisto1D("d05-x01-y01");
-        _hSL_bbbarMass= bookHisto1D("d06-x01-y01");
-
-        _hDL_lepPt      = bookHisto1D("d07-x01-y01");
-        _hDL_lepEta     = bookHisto1D("d08-x01-y01");
-        _hDL_dilepPt    = bookHisto1D("d09-x01-y01");
-        _hDL_dilepMass  = bookHisto1D("d10-x01-y01");
-        _hDL_bqPt       = bookHisto1D("d11-x01-y01");
-        _hDL_bqEta      = bookHisto1D("d12-x01-y01");
-        _hDL_bbbarPt    = bookHisto1D("d13-x01-y01");
-        _hDL_bbbarMass  = bookHisto1D("d14-x01-y01");
-
         _hSL_topPt         = bookHisto1D("d15-x01-y01");
         _hSL_topPtTtbarSys = bookHisto1D("d16-x01-y01");
         _hSL_topY          = bookHisto1D("d17-x01-y01");
@@ -123,116 +100,9 @@ namespace Rivet {
           _hDL_ttbarY->fill(ttbarP4.rapidity(), weight);
           _hDL_ttbarMass->fill(ttbarP4.mass(), weight);
         }
-
-        // Find leptons
-        Particles lCands;
-        const auto isPromptChLepton = [](const Particle& p){return isChargedLepton(p) && !fromDecay(p);};
-        for (const Particle& top : leptonicpartontops) {
-          lCands.push_back(top.allDescendants(lastParticleWith(isPromptChLepton)).front());
-        }
-        if (isSemilepton) {
-          // Apply the particle level phase space cut
-          if ( lCands[0].pT() <= 33 or std::abs(lCands[0].eta()) >= 2.1 ) vetoEvent;
-        }
-        else if (isDilepton) {
-          if ( lCands[0].pT() < lCands[1].pT() ) std::swap(lCands[0], lCands[1]);
-          const double l1Pt = lCands[0].pT(), l1Abseta = std::abs(lCands[0].eta());
-          const double l2Pt = lCands[1].pT(), l2Abseta = std::abs(lCands[1].eta());
-
-          // Apply the particle level phase space cut
-          if ( l1Pt <= 20 or l1Abseta >= 2.4 or l2Pt <= 20 or l2Abseta >= 2.4 ) vetoEvent;
-          if ( (lCands[0].momentum()+lCands[1].momentum()).mass() < 20 ) vetoEvent;
-        }
-
-        // Build genJets
-        const Jets& jetsIn = apply<JetAlg>(event, "Jets").jetsByPt(30*GeV);
-        Jets jets;
-        for (const Jet& jet : jetsIn) {
-          if ( std::abs(jet.eta()) > 2.4 ) continue;
-          bool isOverlapped = false;
-          foreach ( const Particle& lCand, lCands ) {
-            double lepJetMinDR = isSemilepton ? 0.4 : 0.3;
-            if ( deltaR(lCand.momentum(), jet.momentum()) < lepJetMinDR ) {
-              isOverlapped = true;
-              break;
-            }
-          }
-          if ( isOverlapped ) continue;
-          jets.push_back(jet);
-        }
-        if (isSemilepton and jets.size() < 4) vetoEvent;
-        else if (isDilepton and jets.size() < 2) vetoEvent;
-
-        // Require at least 2 b jets
-        std::vector<FourMomentum> bjets;
-        for (const Jet& jet : jets) {
-          if (jet.bTagged()) bjets.push_back(jet.momentum());
-        }
-        if (bjets.size() < 2) vetoEvent;
-
-        const FourMomentum& b1P4 = bjets[0];
-        const FourMomentum& b2P4 = bjets[1];
-        const FourMomentum bbP4 = b1P4+b2P4;
-        const double b1Pt = b1P4.pT(), b1Eta = b1P4.eta();
-        const double b2Pt = b2P4.pT(), b2Eta = b2P4.eta();
-        const double bbPt = bbP4.pT(), bbMass = bbP4.mass();
-
-        // Find leptons, apply channel dependent phase space cuts, fill histograms
-        if (isSemilepton) {
-          // Do the semileptonic channel
-          const FourMomentum& lP4 = lCands[0].momentum();
-          const double lPt = lP4.pT(), lEta = lP4.eta();
-
-          _hSL_lepPt->fill(lPt, weight);
-          _hSL_lepEta->fill(lEta, weight);
-          _hSL_bqPt->fill(b1Pt, weight);
-          _hSL_bqPt->fill(b2Pt, weight);
-          _hSL_bqEta->fill(b1Eta, weight);
-          _hSL_bqEta->fill(b2Eta, weight);
-          _hSL_bbbarPt->fill(bbPt, weight);
-          _hSL_bbbarMass->fill(bbMass, weight);
-        }
-        else if (isDilepton) {
-          // Do the dileptonic channel
-          const FourMomentum& l1P4 = lCands[0].momentum();
-          const FourMomentum& l2P4 = lCands[1].momentum();
-          const FourMomentum dilP4 = l1P4+l2P4;
-          const double l1Pt = l1P4.pT(), l1Eta = l1P4.eta();
-          const double l2Pt = l2P4.pT(), l2Eta = l2P4.eta();
-
-          _hDL_lepPt->fill(l1Pt, weight);
-          _hDL_lepPt->fill(l2Pt, weight);
-          _hDL_lepEta->fill(l1Eta, weight);
-          _hDL_lepEta->fill(l2Eta, weight);
-          _hDL_dilepPt->fill(dilP4.pT(), weight);
-          _hDL_dilepMass->fill(dilP4.mass(), weight);
-
-          _hDL_bqPt->fill(b1Pt, weight);
-          _hDL_bqPt->fill(b2Pt, weight);
-          _hDL_bqEta->fill(b1Eta, weight);
-          _hDL_bqEta->fill(b2Eta, weight);
-          _hDL_bbbarPt->fill(bbPt, weight);
-          _hDL_bbbarMass->fill(bbMass, weight);
-        }
       };
 
       void finalize() {
-        normalize(_hSL_lepPt    );
-        normalize(_hSL_lepEta   );
-        normalize(_hSL_bqPt     );
-        normalize(_hSL_bqEta    );
-        normalize(_hSL_bbbarPt  );
-        normalize(_hSL_bbbarMass);
-
-        normalize(_hDL_lepPt      );
-        normalize(_hDL_lepEta     );
-        normalize(_hDL_dilepPt    );
-        normalize(_hDL_dilepMass  );
-        normalize(_hDL_bqPt       );
-        normalize(_hDL_bqEta      );
-        normalize(_hDL_bbbarPt    );
-        normalize(_hDL_bbbarMass  );
-
         normalize(_hSL_topPt        );
         normalize(_hSL_topPtTtbarSys);
         normalize(_hSL_topY         );
@@ -256,22 +126,6 @@ namespace Rivet {
       };
 
     private:
-      Histo1DPtr _hSL_lepPt;
-      Histo1DPtr _hSL_lepEta;
-      Histo1DPtr _hSL_bqPt;
-      Histo1DPtr _hSL_bqEta;
-      Histo1DPtr _hSL_bbbarPt;
-      Histo1DPtr _hSL_bbbarMass;
-
-      Histo1DPtr _hDL_lepPt;
-      Histo1DPtr _hDL_lepEta;
-      Histo1DPtr _hDL_dilepPt;
-      Histo1DPtr _hDL_dilepMass;
-      Histo1DPtr _hDL_bqPt;
-      Histo1DPtr _hDL_bqEta;
-      Histo1DPtr _hDL_bbbarPt;
-      Histo1DPtr _hDL_bbbarMass;
-
       Histo1DPtr _hSL_topPt        ;
       Histo1DPtr _hSL_topPtTtbarSys;
       Histo1DPtr _hSL_topY         ;

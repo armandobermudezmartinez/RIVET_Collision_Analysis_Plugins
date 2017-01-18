@@ -1,11 +1,7 @@
 #include "Rivet/Analysis.hh"
 #include "Rivet/AnalysisLoader.hh"
-#include "Rivet/Particle.fhh"
 #include "Rivet/Math/LorentzTrans.hh"
-#include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/VetoedFinalState.hh"
 #include "Rivet/Projections/PartonicTops.hh"
-#include "Rivet/Tools/ParticleIdUtils.hh"
 
 
 namespace Rivet {

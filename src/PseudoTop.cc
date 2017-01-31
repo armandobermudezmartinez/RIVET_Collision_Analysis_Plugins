@@ -81,7 +81,7 @@ void PseudoTop::project(const Event& event) {
   
   const Particles neutrinos = apply<IdentifiedFinalState>(event, "Neutrinos").particlesByPt();
   
-  const Vector3 met = -apply<MissingMomentum>(event, "MET").vectorEt();
+  _met = -apply<MissingMomentum>(event, "MET").vectorEt();
 
   // All building blocks are ready. Continue to pseudo-W and pseudo-top combination
 

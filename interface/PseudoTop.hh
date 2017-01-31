@@ -93,6 +93,7 @@ namespace Rivet {
       Jets jets() const {return _jets;}
       Jets bjets() const {return _bjets;}
       Jets ljets() const {return _ljets;}
+      Vector3 met() const {return _met;}
 
     protected:
       // Apply the projection to the event
@@ -115,6 +116,7 @@ namespace Rivet {
       Particle _w1, _w2;
       ParticleVector _wDecays1, _wDecays2;
       Jets _jets, _bjets, _ljets;
+      Vector3 _met;
 
   };
 

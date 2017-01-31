@@ -66,11 +66,13 @@ void PseudoTop::project(const Event& event) {
   _jets.clear();
   _bjets.clear();
   _ljets.clear();
+  _leptons.clear();
+  _neutrinos.clear();
   _mode1 = _mode2 = CH_HADRON;
   
   // Get analysis objects from projections
   
-  const vector<DressedLepton> leptons = apply<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
+  _leptons = apply<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
 
   Cut jet_cut = (Cuts::abseta < _jetMaxEta) and (Cuts::pT > _jetMinPt*GeV);
   _jets = apply<FastJets>(event, "Jets").jetsByPt(jet_cut);
@@ -80,149 +82,180 @@ void PseudoTop::project(const Event& event) {
   }
   
   const Particles neutrinos = apply<IdentifiedFinalState>(event, "Neutrinos").particlesByPt();
+  for (const Particle& nu : neutrinos) {
+    if (not nu.fromHadron()) _neutrinos.push_back(nu);
+  }
   
   _met = -apply<MissingMomentum>(event, "MET").vectorEt();
 
   // All building blocks are ready. Continue to pseudo-W and pseudo-top combination
 
   if (_bjets.size() < 2) return; // Ignore single top for now
-  std::map<double, std::pair<size_t, size_t> > wLepCandIdxs;
-  std::map<double, std::pair<size_t, size_t> > wHadCandIdxs;
 
-  // Collect leptonic-decaying W's
-  for (size_t iLep = 0, nLep = leptons.size(); iLep < nLep; ++iLep) {
-    const DressedLepton& lep = leptons.at(iLep);
-    for (size_t iNu = 0, nNu = neutrinos.size(); iNu < nNu; ++iNu) {
-      const Particle& nu = neutrinos.at(iNu);
-      if (nu.fromHadron())
-        continue;
-      const double m = (lep.momentum()+nu.momentum()).mass();
-      const double dm = std::abs(m-_wMass);
-      wLepCandIdxs[dm] = make_pair(iLep, iNu);
+  if ( _leptons.size() == 2 and _neutrinos.size() >= 2 ) {
+    // Start from dilepton channel
+    const int q1 = _leptons.at(0).charge();
+    const int q2 = _leptons.at(1).charge();
+    if ( q1*q2 > 0 ) return;
+
+    const auto& lepton1 = q1 > 0 ? _leptons.at(0) : _leptons.at(1);
+    const auto& lepton2 = q1 > 0 ? _leptons.at(1) : _leptons.at(0);
+
+    if ( lepton1.pt() < _minLeptonPtDilepton or std::abs(lepton1.eta()) > _maxLeptonEtaDilepton ) return;
+    if ( lepton2.pt() < _minLeptonPtDilepton or std::abs(lepton2.eta()) > _maxLeptonEtaDilepton ) return;
+    if ( (lepton1.momentum()+lepton2.momentum()).mass() < _minDileptonMassDilepton ) return;
+
+    double dm = 1e9;
+    int selNu1 = -1, selNu2 = -1;
+    for ( int i=0; i<2; ++i ) { // Consider leading 2 neutrinos. Neutrino vector is already sorted by pT
+      const double dm1 = std::abs((lepton1.momentum()+_neutrinos.at(i).momentum()).mass()-_wMass);
+      for ( int j=0; j<2; ++j ) {
+        if ( i == j ) continue;
+        const double dm2 = std::abs((lepton2.momentum()+_neutrinos.at(j).momentum()).mass()-_wMass);
+        const double newDm = dm1+dm2;
+
+        if ( newDm < dm ) { dm = newDm; selNu1 = i; selNu2 = j; }
+      }
     }
+    if ( dm >= 1e9 ) return;
+
+    const auto& nu1 = _neutrinos.at(selNu1);
+    const auto& nu2 = _neutrinos.at(selNu2);
+    const auto w1LVec = lepton1.momentum()+nu1.momentum();
+    const auto w2LVec = lepton2.momentum()+nu2.momentum();
+
+    // Contiue to top quarks
+    dm = 1e9; // Reset once again for top combination.
+    int selB1 = -1, selB2 = -1;
+    for ( unsigned int i=0; i<_bjets.size(); ++i ) {
+      const auto& bjet1 = _bjets.at(i);
+      if ( deltaR(bjet1.momentum(), lepton1.momentum()) < 0.4 ) continue;
+      if ( deltaR(bjet1.momentum(), lepton2.momentum()) < 0.4 ) continue;
+
+      const double dm1 = std::abs((w1LVec+bjet1.momentum()).mass()-_tMass);
+      for ( unsigned int j=0; j<_bjets.size(); ++j ) {
+        if ( i == j ) continue;
+        const auto& bjet2 = _bjets.at(j);
+        if ( deltaR(bjet2.momentum(), lepton1.momentum()) < 0.4 ) continue;
+        if ( deltaR(bjet2.momentum(), lepton2.momentum()) < 0.4 ) continue;
+        const double dm2 = std::abs((w2LVec+bjet2.momentum()).mass()-_tMass);
+        const double newDm = dm1+dm2;
+
+        if ( newDm < dm ) { dm = newDm; selB1 = i; selB2 = j; }
+      }
+    }
+    if ( dm >= 1e9 ) return;
+
+    _b1 = Particle(q1*5, _bjets.at(selB1).momentum());
+    _t1 = Particle(q1*6, w1LVec + _b1.momentum());
+    _w1 = Particle(q1*24, w1LVec);
+
+    _b2 = Particle(q2*5, _bjets.at(selB2).momentum());
+    _t2 = Particle(q2*6, w2LVec + _b2.momentum());
+    _w2 = Particle(q2*24, w2LVec);
+
+    _wDecays1.push_back(lepton1);
+    _wDecays1.push_back(_neutrinos.at(selNu1));
+    _wDecays2.push_back(lepton2);
+    _wDecays2.push_back(_neutrinos.at(selNu2));
+
+    _mode1 = std::abs(lepton1.pdgId()) == 13 ? CH_MUON : CH_ELECTRON;
+    _mode2 = std::abs(lepton2.pdgId()) == 13 ? CH_MUON : CH_ELECTRON;
   }
+  else if ( _leptons.size() >= 1 and _neutrinos.size() >= 1 and _ljets.size() >= 2 ) {
+    const auto& lepton = _leptons.at(0);
+    if ( lepton.pt() < _minLeptonPtSemilepton or std::abs(lepton.eta()) > _maxLeptonEtaSemilepton ) return;
 
-  // Continue to hadronic decaying W's
-  for (size_t i = 0, nLjet = _ljets.size(); i < nLjet; ++i) {
-    const Jet& ljet1 = _ljets[i];
-    for (size_t j = i+1; j < nLjet; ++j) {
-      const Jet& ljet2 = _ljets[j];
-      const double m = (ljet1.momentum()+ljet2.momentum()).mass();
-      const double dm = std::abs(m-_wMass);
-      wHadCandIdxs[dm] = make_pair(i, j);
+    // Skip event if there are veto leptons
+    bool hasVetoLepton = false;
+    for ( auto vetoLeptonItr = _leptons.begin()+1; vetoLeptonItr != _leptons.end(); ++vetoLeptonItr ) {
+      if ( vetoLeptonItr->pt() > _minVetoLeptonPtSemilepton and
+          std::abs(vetoLeptonItr->eta()) < _maxVetoLeptonEtaSemilepton ) {
+        hasVetoLepton = true;
+      }
     }
+    if ( hasVetoLepton ) return;
+
+    // Calculate MET
+    double metX = 0, metY = 0;
+    for ( auto neutrino : _neutrinos ) {
+      metX += neutrino.px();
+      metY += neutrino.py();
+    }
+    const double metPt = std::hypot(metX, metY);
+    if ( metPt < _minMETSemiLepton ) return;
+
+    const double mtW = std::sqrt( 2*lepton.pt()*metPt*cos(lepton.phi()-atan2(metX, metY)) );
+    if ( mtW < _minMtWSemiLepton ) return;
+
+    // Solve pz to give wMass_^2 = (lepE+energy)^2 - (lepPx+metX)^2 - (lepPy+metY)^2 - (lepPz+pz)^2
+    // -> (wMass_^2)/2 = lepE*sqrt(metPt^2+pz^2) - lepPx*metX - lepPy*metY - lepPz*pz
+    // -> C := (wMass_^2)/2 + lepPx*metX + lepPy*metY
+    // -> lepE^2*(metPt^2+pz^2) = C^2 + 2*C*lepPz*pz + lepPz^2*pz^2
+    // -> (lepE^2-lepPz^2)*pz^2 - 2*C*lepPz*pz - C^2 + lepE^2*metPt^2 = 0
+    // -> lepPt^2*pz^2 - 2*C*lepPz*pz - C^2 + lepE^2*metPt^2 = 0
+    const double lpz = lepton.pz(), le = lepton.energy(), lpt = lepton.pt();
+    const double cf = (_wMass*_wMass)/2 + lepton.px()*metX + lepton.py()*metY;
+    const double det = cf*cf*lpz*lpz - lpt*lpt*(le*le*metPt*metPt - cf*cf);
+    if ( det < 0 ) return;
+    const double pz = (cf*lpz + (cf < 0 ? -sqrt(det) : sqrt(det)))/lpt/lpt;
+    const FourMomentum nu1P4(std::hypot(metPt, pz), metX, metY, pz);
+    const auto w1LVec = lepton.momentum()+nu1P4;
+
+    // Continue to build leptonic pseudo top
+    double minDR = 1e9;
+    int selB1 = -1;
+    for ( size_t i=0; i<_bjets.size(); ++i ) {
+      const auto bjet = _bjets.at(i);
+      if ( deltaR(bjet.momentum(), lepton.momentum()) < 0.4 ) continue;
+      const double dR = deltaR(bjet.momentum(), w1LVec);
+      if ( dR < minDR ) { selB1 = i; minDR = dR; }
+    }
+    if ( selB1 == -1 ) return;
+
+    // Build hadronic pseudo W, take leading two jets (ljetIdxs are (implicitly) sorted by pT)
+    int selJ1 = -1, selJ2 = -1;
+    for ( size_t i=0; i<_ljets.size(); ++i ) {
+      const auto ljet = _ljets.at(i);
+      if ( deltaR(ljet.momentum(), lepton.momentum()) < 0.4 ) continue;
+      if ( selJ1 < 0 ) selJ1 = i;
+      else if ( selJ2 < 0 ) selJ2 = i;
+      else break;
+    }
+    if ( selJ1 < 0 or selJ2 < 0 ) return;
+    const auto& wJet1 = _ljets.at(selJ1);
+    const auto& wJet2 = _ljets.at(selJ2);
+    const auto w2LVec = wJet1.momentum() + wJet2.momentum();
+
+    // Contiue to top quarks
+    double dm = 1e9;
+    int selB2 = -1;
+    for ( size_t i=0; i<_bjets.size(); ++i ) {
+      if ( int(i) == selB1 ) continue;
+      const auto& bjet = _bjets.at(i);
+      if ( deltaR(bjet.momentum(), lepton.momentum()) < 0.4 ) continue;
+      const double newDm = std::abs((w2LVec+bjet.momentum()).mass()-_tMass);
+      if ( newDm < dm ) { dm = newDm; selB2 = i; }
+    }
+    if ( dm >= 1e9 ) return;
+
+    const int q = lepton.charge();
+
+    _b1 = Particle(q*5, _bjets.at(selB1).momentum());
+    _t1 = Particle(q*6, w1LVec + _b1.momentum());
+    _w1 = Particle(q*24, w1LVec);
+
+    _b2 = Particle(-q*5, _bjets.at(selB2).momentum());
+    _t2 = Particle(-q*6, w2LVec + _b2.momentum());
+    _w2 = Particle(-q*24, w2LVec);
+
+    _wDecays1.push_back(lepton);
+    _wDecays1.push_back(Particle(q*(std::abs(lepton.pdgId())+1), nu1P4));
+    _wDecays2.push_back(Particle(-2*q, wJet1));
+    _wDecays2.push_back(Particle(q, wJet2));
+
+    _mode1 = std::abs(lepton.pdgId()) == 13 ? CH_MUON : CH_ELECTRON;
   }
-
-  // Cleanup W candidate, choose pairs with minimum dm if they share decay products
-  cleanup(wLepCandIdxs);
-  cleanup(wHadCandIdxs, true);
-  const size_t nWLepCand = wLepCandIdxs.size();
-  const size_t nWHadCand = wHadCandIdxs.size();
-
-  if (nWLepCand + nWHadCand < 2) return; // We skip single top
-
-  int w1Q = 1, w2Q = -1;
-  int w1dau1Id = 1, w2dau1Id = -1;
-  FourMomentum w1dau1LVec, w1dau2LVec;
-  FourMomentum w2dau1LVec, w2dau2LVec;
-  if (nWLepCand == 0) { // Full hadronic case
-    const auto& idPair1 = wHadCandIdxs.begin()->second;
-    const auto& idPair2 = std::next(wHadCandIdxs.begin())->second;
-    const auto& w1dau1 = _ljets[idPair1.first];
-    const auto& w1dau2 = _ljets[idPair1.second];
-    const auto& w2dau1 = _ljets[idPair2.first];
-    const auto& w2dau2 = _ljets[idPair2.second];
-
-    w1dau1LVec = w1dau1.momentum();
-    w1dau2LVec = w1dau2.momentum();
-    w2dau1LVec = w2dau1.momentum();
-    w2dau2LVec = w2dau2.momentum();
-  } else if (nWLepCand == 1) { // Semi-leptonic case
-    const auto& idPair1 = wLepCandIdxs.begin()->second;
-    const auto& idPair2 = wHadCandIdxs.begin()->second;
-    const auto& w1dau1 = leptons[idPair1.first];
-    const auto& w1dau2 = neutrinos[idPair1.second];
-    const auto& w2dau1 = _ljets[idPair2.first];
-    const auto& w2dau2 = _ljets[idPair2.second];
-
-    w1dau1LVec = w1dau1.momentum();
-    w1dau2LVec = w1dau2.momentum();
-    w2dau1LVec = w2dau1.momentum();
-    w2dau2LVec = w2dau2.momentum();
-    w1dau1Id = leptons[idPair1.first].pid();
-    w1Q = w1dau1Id > 0 ? -1 : 1;
-    w2Q = -w1Q;
-
-    switch (w1dau1Id) {
-      case 13: case -13: _mode1 = CH_MUON; break;
-      case 11: case -11: _mode1 = CH_ELECTRON; break;
-    }
-  } else { // Full leptonic case
-    const auto& idPair1 = wLepCandIdxs.begin()->second;
-    const auto& idPair2 = std::next(wLepCandIdxs.begin())->second;
-    const auto& w1dau1 = leptons[idPair1.first];
-    const auto& w1dau2 = neutrinos[idPair1.second];
-    const auto& w2dau1 = leptons[idPair2.first];
-    const auto& w2dau2 = neutrinos[idPair2.second];
-
-    w1dau1LVec = w1dau1.momentum();
-    w1dau2LVec = w1dau2.momentum();
-    w2dau1LVec = w2dau1.momentum();
-    w2dau2LVec = w2dau2.momentum();
-    w1dau1Id = leptons[idPair1.first].pid();
-    w2dau1Id = leptons[idPair2.first].pid();
-    w1Q = w1dau1Id > 0 ? -1 : 1;
-    w2Q = w2dau1Id > 0 ? -1 : 1;
-
-    switch (w1dau1Id) {
-      case 13: case -13: _mode1 = CH_MUON; break;
-      case 11: case -11: _mode1 = CH_ELECTRON; break;
-    }
-    switch (w2dau1Id) {
-      case 13: case -13: _mode2 = CH_MUON; break;
-      case 11: case -11: _mode2 = CH_ELECTRON; break;
-    }
-  }
-  const auto w1LVec = w1dau1LVec+w1dau2LVec;
-  const auto w2LVec = w2dau1LVec+w2dau2LVec;
-
-  // Combine b jets
-  double sumDm = 1e9;
-  FourMomentum b1LVec, b2LVec;
-  for (size_t i = 0, n = _bjets.size(); i < n; ++i) {
-    const Jet& bjet1 = _bjets[i];
-    const double mtop1 = (w1LVec+bjet1.momentum()).mass();
-    const double dmtop1 = std::abs(mtop1-_tMass);
-    for (size_t j=0; j<n; ++j) {
-      if (i == j) continue;
-      const Jet& bjet2 = _bjets[j];
-      const double mtop2 = (w2LVec+bjet2.momentum()).mass();
-      const double dmtop2 = std::abs(mtop2-_tMass);
-
-      if (sumDm <= dmtop1+dmtop2) continue;
-
-      sumDm = dmtop1+dmtop2;
-      b1LVec = bjet1.momentum();
-      b2LVec = bjet2.momentum();
-    }
-  }
-  if (sumDm >= 1e9) return; // Failed to make top, but this should not happen.
-
-  const auto t1LVec = w1LVec + b1LVec;
-  const auto t2LVec = w2LVec + b2LVec;
-
-  // Put all of them into candidate collection
-  _t1 = Particle(w1Q*6, t1LVec);
-  _b1 = Particle(w1Q*5, b1LVec);
-  _w1 = Particle(w1Q*24, w1LVec);
-  _wDecays1.push_back(Particle(w1dau1Id, w1dau1LVec));
-  _wDecays1.push_back(Particle(-w1dau1Id+w1Q, w1dau2LVec));
-
-  _t2 = Particle(w2Q*6, t2LVec);
-  _b2 = Particle(w2Q*5, b2LVec);
-  _w2 = Particle(w2Q*24, w2LVec);
-  _wDecays2.push_back(Particle(w2dau1Id, w2dau1LVec));
-  _wDecays2.push_back(Particle(-w2dau1Id+w2Q, w2dau2LVec));
 
   _isValid = true;
 }

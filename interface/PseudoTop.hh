@@ -27,10 +27,23 @@ namespace Rivet {
       /// The default constructor. May specify the minimum and maximum
       /// pseudorapidity \f$ \eta \f$ and the min \f$ p_T \f$ (in GeV).
       PseudoTop(double lepR = 0.1, double lepMinPt = 15, double lepMaxEta = 2.5,
-          double jetR = 0.4, double jetMinPt = 30, double jetMaxEta = 2.4)
-        : FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV),
-        _lepR(lepR), _lepMinPt(lepMinPt), _lepMaxEta(lepMaxEta),
-        _jetR(jetR), _jetMinPt(jetMinPt), _jetMaxEta(jetMaxEta)
+          double jetR = 0.4, double jetMinPt = 30, double jetMaxEta = 2.4,
+          double minLeptonPtDilepton = 20, double maxLeptonEtaDilepton = 2.4, double minDileptonMassDilepton = 0,
+          double minLeptonPtSemilepton = 30, double maxLeptonEtaSemilepton = 2.1,
+          double minVetoLeptonPtSemilepton = 15, double maxVetoLeptonEtaSemilepton = 2.5,
+          double minMETSemiLepton = 0, double minMtWSemiLepton = 0)
+      : FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV),
+      _lepR(lepR), _lepMinPt(lepMinPt), _lepMaxEta(lepMaxEta),
+      _jetR(jetR), _jetMinPt(jetMinPt), _jetMaxEta(jetMaxEta),
+      _minLeptonPtDilepton(minLeptonPtDilepton),
+      _maxLeptonEtaDilepton(maxLeptonEtaDilepton),
+      _minDileptonMassDilepton(minDileptonMassDilepton),
+      _minLeptonPtSemilepton(minLeptonPtSemilepton),
+      _maxLeptonEtaSemilepton(maxLeptonEtaSemilepton),
+      _minVetoLeptonPtSemilepton(minVetoLeptonPtSemilepton),
+      _maxVetoLeptonEtaSemilepton(maxVetoLeptonEtaSemilepton),
+      _minMETSemiLepton(minMETSemiLepton),
+      _minMtWSemiLepton(minMtWSemiLepton)
       {
         setName("PseudoTop");
         
@@ -90,6 +103,8 @@ namespace Rivet {
       Particle w2() const {return _w2;}
       ParticleVector wDecays1() const {return _wDecays1;}
       ParticleVector wDecays2() const {return _wDecays2;}
+      vector<DressedLepton> leptons() const {return _leptons;}
+      ParticleVector neutrinos() const {return _neutrinos;}
       Jets jets() const {return _jets;}
       Jets bjets() const {return _bjets;}
       Jets ljets() const {return _ljets;}
@@ -104,6 +119,12 @@ namespace Rivet {
       const double _lepR, _lepMinPt, _lepMaxEta;
       const double _jetR, _jetMinPt, _jetMaxEta;
 
+      const double _minLeptonPtDilepton, _maxLeptonEtaDilepton;
+      const double _minDileptonMassDilepton;
+      const double _minLeptonPtSemilepton, _maxLeptonEtaSemilepton;
+      const double _minVetoLeptonPtSemilepton, _maxVetoLeptonEtaSemilepton;
+      const double _minMETSemiLepton, _minMtWSemiLepton;
+
       constexpr static double _tMass = 172.5;
       constexpr static double _wMass = 80.4;
 
@@ -115,6 +136,9 @@ namespace Rivet {
       Particle _b1, _b2;
       Particle _w1, _w2;
       ParticleVector _wDecays1, _wDecays2;
+      
+      vector<DressedLepton> _leptons;
+      ParticleVector _neutrinos;
       Jets _jets, _bjets, _ljets;
       Vector3 _met;
 

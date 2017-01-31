@@ -113,7 +113,6 @@ namespace Rivet {
     protected:
       // Apply the projection to the event
       void project(const Event& event) override;
-      void cleanup(std::map<double, std::pair<size_t, size_t> >& v, const bool doCrossCleanup=false) const;
 
     private:
       const double _lepR, _lepMinPt, _lepMaxEta;

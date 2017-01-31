@@ -4,46 +4,6 @@
 
 using namespace Rivet;
 
-struct GreaterByPt
-{
-  bool operator()(const Particle& a, const Particle& b) {
-    return a.pt() > b.pt();
-  }
-};
-
-void PseudoTop::cleanup(std::map<double, std::pair<size_t, size_t> >& v, const bool doCrossCleanup) const
-{
-  std::vector<std::map<double, std::pair<size_t, size_t> >::const_iterator> toErase;
-  std::set<size_t> usedLeg1, usedLeg2;
-  if ( !doCrossCleanup ) {
-    for (auto key = v.begin(); key != v.end(); ++key) {
-      const size_t leg1 = key->second.first;
-      const size_t leg2 = key->second.second;
-      if (usedLeg1.find(leg1) == usedLeg1.end() and
-          usedLeg2.find(leg2) == usedLeg2.end()) {
-        usedLeg1.insert(leg1);
-        usedLeg2.insert(leg2);
-      } else {
-        toErase.push_back(key);
-      }
-    }
-  }
-  else {
-    for (auto key = v.begin(); key != v.end(); ++key) {
-      const size_t leg1 = key->second.first;
-      const size_t leg2 = key->second.second;
-      if (usedLeg1.find(leg1) == usedLeg1.end() and
-          usedLeg1.find(leg2) == usedLeg1.end()) {
-        usedLeg1.insert(leg1);
-        usedLeg1.insert(leg2);
-      } else {
-        toErase.push_back(key);
-      }
-    }
-  }
-  for (auto& key : toErase) v.erase(key);
-}
-
 void PseudoTop::project(const Event& event) {
   // Leptons : do the lepton clustering anti-kt R=0.1 using stable photons and leptons not from hadron decay
   // Neutrinos : neutrinos not from hadron decay

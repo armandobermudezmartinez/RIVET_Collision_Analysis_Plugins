@@ -6,6 +6,12 @@
 #include "Rivet/Particle.fhh"
 #include "Rivet/Event.hh"
 #include "Rivet/Projections/FastJets.hh"
+#include "Rivet/Projections/ChargedLeptons.hh"
+#include "Rivet/Projections/DressedLeptons.hh"
+#include "Rivet/Projections/VetoedFinalState.hh"
+#include "Rivet/Projections/IdentifiedFinalState.hh"
+#include "Rivet/Projections/VisibleFinalState.hh"
+#include "Rivet/Projections/MissingMomentum.hh"
 
 namespace Rivet {
 
@@ -25,9 +31,36 @@ namespace Rivet {
         : FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV),
         _lepR(lepR), _lepMinPt(lepMinPt), _lepMaxEta(lepMaxEta),
         _jetR(jetR), _jetMinPt(jetMinPt), _jetMaxEta(jetMaxEta)
-    {
-      setName("PseudoTop");
-    }
+      {
+        setName("PseudoTop");
+        
+        // Cuts
+        Cut particle_cut = (Cuts::abseta < 6.0) and (Cuts::pT > 0.0*MeV);
+        Cut lepton_cut   = (Cuts::abseta < lepMaxEta) and (Cuts::pT > lepMinPt*GeV);
+        
+        // Generic final state
+        FinalState fs(Cuts::abseta < 5.);
+        
+        // Dressed leptons
+        ChargedLeptons charged_leptons(fs);
+        IdentifiedFinalState photons(fs);
+        photons.acceptIdPair(PID::PHOTON);
+        DressedLeptons dressed_leptons(photons, charged_leptons, lepR, lepton_cut);
+        declare(dressed_leptons, "DressedLeptons");
+        
+        // Jets
+        VetoedFinalState fsForJets(fs);
+        fsForJets.addVetoOnThisFinalState(dressed_leptons);
+        declare(FastJets(fsForJets, FastJets::ANTIKT, jetR), "Jets");
+        
+        // Neutrinos
+        IdentifiedFinalState neutrinos(fs);
+        neutrinos.acceptNeutrinos();
+        declare(neutrinos, "Neutrinos");
+        
+        // MET
+        declare(MissingMomentum(fs), "MET");
+      }
 
       enum TTbarMode {CH_NONE=-1, CH_FULLHADRON = 0, CH_SEMILEPTON, CH_FULLLEPTON};
       enum DecayMode {CH_HADRON = 0, CH_MUON, CH_ELECTRON};
@@ -63,7 +96,7 @@ namespace Rivet {
 
     protected:
       // Apply the projection to the event
-      void project(const Event& e) override;
+      void project(const Event& event) override;
       void cleanup(std::map<double, std::pair<size_t, size_t> >& v, const bool doCrossCleanup=false) const;
 
     private:

@@ -43,7 +43,7 @@ void PseudoTop::project(const Event& event) {
   
   const Particles neutrinos = apply<IdentifiedFinalState>(event, "Neutrinos").particlesByPt();
   for (const Particle& nu : neutrinos) {
-    if (not nu.fromHadron()) _neutrinos.push_back(nu);
+    if (not nu.fromHadron()) _neutrinos.push_back(nu); // Get prompt neutrinos
   }
   
   _met = -apply<MissingMomentum>(event, "MET").vectorEt();
@@ -136,13 +136,9 @@ void PseudoTop::project(const Event& event) {
     }
     if ( hasVetoLepton ) return;
 
-    // Calculate MET
-    double metX = 0, metY = 0;
-    for ( auto neutrino : _neutrinos ) {
-      metX += neutrino.px();
-      metY += neutrino.py();
-    }
-    const double metPt = std::hypot(metX, metY);
+    // MET and neutrino reconstruction
+    double metX = _met.x(), metY = _met.y();
+    const double metPt = _met.perp();
     if ( metPt < _minMETSemiLepton ) return;
 
     const double mtW = std::sqrt( 2*lepton.pt()*metPt*cos(lepton.phi()-atan2(metX, metY)) );

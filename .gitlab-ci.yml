@@ -1,0 +1,26 @@
+image: gitlab-registry.cern.ch/ci-tools/ci-worker:slc6
+
+build:
+  stage: build
+  tags:
+    - docker
+    - cvmfs
+  script:
+    - pwd
+    - ls -l
+    - SCRAM_ARCH=slc6_amd64_gcc530 /cvmfs/cms.cern.ch/common/scramv1 project CMSSW CMSSW_8_1_0
+    - mkdir -p CMSSW_8_1_0/src/TopMonteCarlo/RivetTop
+    - cp BuildFile.xml CMSSW_8_1_0/src/TopMonteCarlo/RivetTop/
+    - cp -r data CMSSW_8_1_0/src/TopMonteCarlo/RivetTop/
+    - cp -r interface CMSSW_8_1_0/src/TopMonteCarlo/RivetTop/
+    - cp -r src CMSSW_8_1_0/src/TopMonteCarlo/RivetTop/
+    - cp -r test CMSSW_8_1_0/src/TopMonteCarlo/RivetTop/
+    - cd CMSSW_8_1_0/src/TopMonteCarlo/RivetTop
+    - eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
+    - /cvmfs/cms.cern.ch/common/scram b -j 8
+    - export RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/TopMonteCarlo/RivetTop/data
+    - export RIVET_INFO_PATH=$RIVET_INFO_PATH:$CMSSW_BASE/src/TopMonteCarlo/RivetTop/data
+    - export RIVET_PLOT_PATH=$RIVET_PLOT_PATH:$CMSSW_BASE/src/TopMonteCarlo/RivetTop/data
+    - cd test
+    - cmsRun runRivetAnalyzer_8TeV_cfg.py maxEvents=1000
+    - cmsRun runRivetAnalyzer_13TeV_cfg.py maxEvents=1000

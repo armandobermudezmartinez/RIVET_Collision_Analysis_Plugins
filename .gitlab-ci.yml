@@ -1,17 +1,10 @@
 image: gitlab-registry.cern.ch/ci-tools/ci-worker:slc6
 
-merge:
-  stage: build
-  script:
-    - git merge origin/master --no-commit --no-ff
-
 build:
   stage: build
   tags:
     - docker
     - cvmfs
-  before_script:
-    - git merge origin/master --no-commit --no-ff
   script:
     - pwd
     - ls -l

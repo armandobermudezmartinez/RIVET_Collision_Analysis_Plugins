@@ -17,7 +17,7 @@ build:
     - cp -r ../../interface TopMonteCarlo/RivetTop/
     - cp -r ../../src TopMonteCarlo/RivetTop/
     - cp -r ../../test TopMonteCarlo/RivetTop/
-    - mkdir GeneratorInterface/RivetInterface
+    - mkdir -p GeneratorInterface/RivetInterface
     - ln -s $CMSSW_BASE/src/TopMonteCarlo/RivetTop/data $CMSSW_BASE/src/GeneratorInterface/RivetInterface/
     - cd TopMonteCarlo/RivetTop
     - /cvmfs/cms.cern.ch/common/scram b -j 8

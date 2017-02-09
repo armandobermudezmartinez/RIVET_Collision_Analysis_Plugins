@@ -1,5 +1,23 @@
-Fork the repository and create a work-in-progress (WIP) merge request at your earliest convenience.
+# Basic workflow
+
+* Fork the repository
+* Add a preliminary version of your plugin
+* Create a work-in-progress (WIP) merge request
+* Receive comments and finalize plugin
+* Add validation plots to the merge request
+* If code and validation is ok, CMS Rivet contacts will send the plugin to the Rivet authors
+
+# Naming convention
+
+* Papers: `CMS_{YYYY}_I{inspire-id}.cc`
+* PAS: `CMS_PAS_TOP_{YY}_{ID}.cc`
+
+If you do not have an inspire-id for your paper yet, please use the PAS naming convention.
+
+If your PAS has an inspire-id, don't use it. Use the PAS naming convention.
+
+# Coding style
 
 Please follow the Rivet coding style documented here:
-  * https://rivet.hepforge.org/trac/wiki/WritingAnAnalysis
-  * https://rivet.hepforge.org/trac/wiki/CodingStyleGuide
+* https://rivet.hepforge.org/trac/wiki/WritingAnAnalysis
+* https://rivet.hepforge.org/trac/wiki/CodingStyleGuide

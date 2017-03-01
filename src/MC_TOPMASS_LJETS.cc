@@ -92,14 +92,17 @@ namespace Rivet {
 
         // Get analysis objects from projections
         
-        // Exactly 1 lepton for lepton+jets channel
+        // Exactly 1 lepton and 1 matching neutrino for lepton+jets channel
         const std::vector<DressedLepton>& leptons = applyProjection<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
         if (leptons.size() != 1)
           vetoEvent;
         _h["stage"]->fill(1, weight);
         const DressedLepton lepton = leptons[0];
 
-        const Particle neutrino = apply<IdentifiedFinalState>(event, "Neutrinos").particlesByPt()[0];
+        const Particles neutrinos = apply<IdentifiedFinalState>(event, "Neutrinos").particlesByPt();
+        if (neutrinos.size() != 1)
+          vetoEvent;
+        const Particle neutrino = neutrinos[0];
         if (not(neutrino.abspid() == lepton.abspid()+1 and neutrino.pid()*lepton.pid()<0))
           vetoEvent;
         _h["stage"]->fill(2, weight);

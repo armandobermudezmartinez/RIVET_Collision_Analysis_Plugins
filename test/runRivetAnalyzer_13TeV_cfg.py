@@ -50,7 +50,8 @@ if options.runOnly:
 else:
     process.rivetAnalyzer.AnalysisNames = cms.vstring(
         'CMS_2016_I1434354', # diff xs lepton+jets
-        'MC_TTBAR_HADRON', # MC analysis for lepton+jets
+        'MC_TTBAR', # MC analysis for lepton+jets
+        'MC_TOPMASS_LJETS', # MC analysis for lepton+jets top mass
         'CMS_LesHouches2015', # MC analysis for dilepton
         'MC_GENERIC', # MC generic analysis
         'MC_XS', # MC xs analysis

@@ -54,7 +54,7 @@ Analysis plugins that rely on parton level information are developed for interna
 Other modules are also available for the MC studies
 
   * Les Houches working group (CMS\_LesHouches2015.cc) : Analysis for the Les Houches ttbar working group using the dilepton channel (see the section below)
-  * MC\_TTBAR\_HADRON.cc : Lepton+jets channel study
+  * MC\_TOPMASS\_LJETS.cc : Lepton+jets channel study with focus on top mass observables
 
 ## Organisation of `CMS-TOP-Rivet/Configuration`
 

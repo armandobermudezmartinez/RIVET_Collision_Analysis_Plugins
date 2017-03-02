@@ -53,7 +53,7 @@ namespace Rivet {
         IdentifiedFinalState neutrinos(fs);
         neutrinos.acceptNeutrinos();
         PromptFinalState prompt_neutrinos(neutrinos);
-        declare(neutrinos, "Neutrinos");
+        declare(prompt_neutrinos, "Neutrinos");
         
         // MET
         declare(MissingMomentum(fs), "MET");
@@ -88,7 +88,8 @@ namespace Rivet {
         const double weight = event.weight();
         _h["weight"]->fill(weight);
         _h["scale"]->fill(event.genEvent()->event_scale(), weight);
-        _h["stage"]->fill(0, weight);
+        int stage = 0;
+        _h["stage"]->fill(stage++, weight);
 
         // Get analysis objects from projections
         
@@ -96,22 +97,27 @@ namespace Rivet {
         const std::vector<DressedLepton>& leptons = applyProjection<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
         if (leptons.size() != 1)
           vetoEvent;
-        _h["stage"]->fill(1, weight);
+        _h["stage"]->fill(stage++, weight);
         const DressedLepton lepton = leptons[0];
 
-        const Particles neutrinos = apply<IdentifiedFinalState>(event, "Neutrinos").particlesByPt();
-        if (neutrinos.size() != 1)
+        const Particles neutrinos = apply<PromptFinalState>(event, "Neutrinos").particlesByPt();
+        Particle neutrino;
+        FourMomentum wlep;
+        for (const Particle& nu : neutrinos) {
+          if (nu.abspid() == lepton.abspid()+1 and nu.pid()*lepton.pid()<0) {
+            wlep = lepton.momentum() + nu.momentum();
+            _h["wlep_mass"]->fill(wlep.mass(), weight);
+          }
+          else
+            continue;
+          if (inRange(wlep.mass(), wmass-5., wmass+5.)) {
+            neutrino = nu;
+            break;
+          }
+        }
+        if (neutrino.pid() == 0)
           vetoEvent;
-        const Particle neutrino = neutrinos[0];
-        if (not(neutrino.abspid() == lepton.abspid()+1 and neutrino.pid()*lepton.pid()<0))
-          vetoEvent;
-        _h["stage"]->fill(2, weight);
-        
-        FourMomentum wlep(lepton.momentum() + neutrino.momentum());
-        _h["wlep_mass"]->fill(wlep.mass(), weight);
-        if (not(inRange(wlep.mass(), wmass-5., wmass+5.)))
-          vetoEvent;
-        _h["stage"]->fill(3, weight);
+        _h["stage"]->fill(stage++, weight);
         
         // Select events with at least 4 jets (2 b-tagged, 2 untagged)
         Cut jet_cut = (Cuts::abseta < 2.4) and (Cuts::pT > 30.*GeV);
@@ -125,7 +131,7 @@ namespace Rivet {
         _h["nljet"]->fill(ljets.size(), weight);
         if (bjets.size() < 2 or ljets.size() < 2)
           vetoEvent;
-        _h["stage"]->fill(4, weight);
+        _h["stage"]->fill(stage++, weight);
         
         // Reconstruct top quarks
         // Constrain W candidate masses to 80.4 GeV
@@ -162,7 +168,7 @@ namespace Rivet {
         _h["delta_mt"] ->fill(delta_mt, weight);
         if (not(inRange(whad.mass(), wmass-10., wmass+10.) and abs(delta_mt)<20.))
           vetoEvent;
-        _h["stage"]->fill(5, weight);
+        _h["stage"]->fill(stage++, weight);
         
         // Fill plots
         _h["wlep_pt"]->fill(wlep.pt(), weight);

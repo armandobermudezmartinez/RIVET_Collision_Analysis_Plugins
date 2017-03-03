@@ -27,7 +27,7 @@ XLabel=light jet multiplicity
 # END PLOT
 
 # BEGIN PLOT /MC_TOPMASS_LJETS/delta_mt
-Title=Mass distribution of hadronic top
+Title=Mass difference of reconstructed tops
 XLabel=$\delta m_{t}$ [GeV]
 YLabel=$1/\sigma \, \mathrm{d}\sigma/\mathrm{d}\delta m_{t}$ [GeV$^{-1}$]
 # END PLOT

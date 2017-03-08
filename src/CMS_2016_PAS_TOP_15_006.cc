@@ -80,11 +80,11 @@ namespace Rivet {
     };
   }
 
-  class CMS_TOP_15_006 : public Analysis {
+  class CMS_2016_PAS_TOP_15_006 : public Analysis {
   public:
 
     /// Minimal constructor
-    CMS_TOP_15_006() : Analysis("CMS_TOP_15_006")
+    CMS_2016_PAS_TOP_15_006() : Analysis("CMS_2016_PAS_TOP_15_006")
     {
     }
   
@@ -182,6 +182,6 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_TOP_15_006);
+  DECLARE_RIVET_PLUGIN(CMS_2016_PAS_TOP_15_006);
 
 }

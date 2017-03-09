@@ -20,9 +20,7 @@ Please, be aware that bugs could have been introduced while porting to newer ver
 
     git clone https://:@gitlab.cern.ch:8443/CMS-TOP-Rivet/RivetTop.git Rivet
 
-    cd Rivet/Top/test
-    source setupTopRivet.sh
-    cd $CMSSW_BASE/src
+    source Rivet/rivetSetup.sh
     scram b -j8
 
-Hint: this repository will be renamed and support for other CMS groups will be added.
+Hint: this repository will be renamed.

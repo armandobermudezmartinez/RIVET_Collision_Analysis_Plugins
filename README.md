@@ -17,7 +17,7 @@ Please follow the [contribution guide](CONTRIBUTING.md) for developing your plug
     git-cms-addpkg Configuration/Generator
     git-cms-merge-topic jhgoh:TOP-RIVET-80X
 
-    git clone https://:@gitlab.cern.ch:8443/cms-gen/Rivet.git
+    git clone https://:@gitlab.cern.ch:8443/${USER}/Rivet.git
 
     source Rivet/rivetSetup.sh
     scram b -j8

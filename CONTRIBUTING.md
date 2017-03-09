@@ -10,11 +10,15 @@
 # Naming convention
 
 * Papers: `CMS_{YYYY}_I{inspire-id}.cc`
-* PAS: `CMS_PAS_TOP_{YY}_{ID}.cc`
+* PAS: `CMS_{YYYY}_PAS_TOP_{YY}_{NNN}.cc`
 
 If you do not have an inspire-id for your paper yet, please use the PAS naming convention.
 
 If your PAS has an inspire-id, don't use it. Use the PAS naming convention.
+
+# Plot style
+
+Add `Title=CMS, xx TeV, process [<extra information>]` to your plots to make the CMS origin easily identifiable if theorists use the plugin.
 
 # Coding style
 

@@ -1,4 +1,4 @@
-#include "TopMonteCarlo/RivetTop/interface/PseudoTop.hh"
+#include "Rivet/Top/interface/PseudoTop.hh"
 //#include "Rivet/Config/RivetCommon.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 

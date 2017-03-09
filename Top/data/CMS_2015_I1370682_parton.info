@@ -4,7 +4,7 @@ Summary: Differential top quark pair production cross-sections in pp collisions 
 Experiment: CMS
 Collider: LHC
 InspireID: 1370682
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Jungwan John Goh <Junghwan.Goh@cern.ch>
  - Markus Seidel <markus.seidel@cern.ch>

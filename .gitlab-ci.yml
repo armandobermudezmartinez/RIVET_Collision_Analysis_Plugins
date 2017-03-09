@@ -9,13 +9,8 @@ build:
     - pwd
     - ls -l
     - SCRAM_ARCH=slc6_amd64_gcc530 /cvmfs/cms.cern.ch/common/scramv1 project CMSSW CMSSW_8_1_0
+    - mkdir -p CMSSW_8_1_0/src/Rivet
+    - cp -r !(CMSSW_8_1_0) CMSSW_8_1_0/src/Rivet/
     - cd CMSSW_8_1_0/src
     - eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
-    - mkdir Rivet
-    - mkdir -p GeneratorInterface/RivetInterface/data
-    - cp -r $CMSSW_BASE/../Top Rivet/
-    - cp $CMSSW_BASE/src/Rivet/Top/data/* $CMSSW_BASE/src/GeneratorInterface/RivetInterface/data/
-    - cd Rivet
     - /cvmfs/cms.cern.ch/common/scram b -j 8
-    - cmsRun Top/test/runRivetAnalyzer_8TeV_cfg.py maxEvents=1000
-    - cmsRun Top/test/runRivetAnalyzer_13TeV_cfg.py maxEvents=1000

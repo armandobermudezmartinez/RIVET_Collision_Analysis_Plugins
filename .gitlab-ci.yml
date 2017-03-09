@@ -8,9 +8,10 @@ build:
   script:
     - pwd
     - ls -l
+    - mkdir Rivet
+    - mv * Rivet/
     - SCRAM_ARCH=slc6_amd64_gcc530 /cvmfs/cms.cern.ch/common/scramv1 project CMSSW CMSSW_8_1_0
-    - mkdir -p CMSSW_8_1_0/src/Rivet
-    - cp -r !(CMSSW_8_1_0) CMSSW_8_1_0/src/Rivet/
+    - mv Rivet CMSSW_8_1_0/src/
     - cd CMSSW_8_1_0/src
     - eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
     - /cvmfs/cms.cern.ch/common/scram b -j 8

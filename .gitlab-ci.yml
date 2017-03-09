@@ -11,16 +11,10 @@ build:
     - SCRAM_ARCH=slc6_amd64_gcc530 /cvmfs/cms.cern.ch/common/scramv1 project CMSSW CMSSW_8_1_0
     - cd CMSSW_8_1_0/src
     - eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
-    - mkdir -p TopMonteCarlo/RivetTop
-    - cp ../../BuildFile.xml TopMonteCarlo/RivetTop/
-    - cp -r ../../data TopMonteCarlo/RivetTop/
-    - cp -r ../../interface TopMonteCarlo/RivetTop/
-    - cp -r ../../src TopMonteCarlo/RivetTop/
-    - cp -r ../../test TopMonteCarlo/RivetTop/
-    - mkdir -p GeneratorInterface/RivetInterface
-    - ln -s $CMSSW_BASE/src/TopMonteCarlo/RivetTop/data $CMSSW_BASE/src/GeneratorInterface/RivetInterface/
-    - cd TopMonteCarlo/RivetTop
+    - mkdir Rivet
+    - mkdir -p GeneratorInterface/RivetInterface/data
+    - cp -r $CMSSW_BASE/../Top Rivet/
+    - cp $CMSSW_BASE/src/Rivet/Top/data/* $CMSSW_BASE/src/GeneratorInterface/RivetInterface/data/
     - /cvmfs/cms.cern.ch/common/scram b -j 8
-    - cd test
-    - cmsRun runRivetAnalyzer_8TeV_cfg.py maxEvents=1000
-    - cmsRun runRivetAnalyzer_13TeV_cfg.py maxEvents=1000
+    - cmsRun Rivet/Top/test/runRivetAnalyzer_8TeV_cfg.py maxEvents=1000
+    - cmsRun Rivet/Top/test/runRivetAnalyzer_13TeV_cfg.py maxEvents=1000

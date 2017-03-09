@@ -10,7 +10,7 @@
 # Naming convention
 
 * Papers: `CMS_{YYYY}_I{inspire-id}.cc`
-* PAS: `CMS_PAS_TOP_{YY}_{ID}.cc`
+* PAS: `CMS_{YYYY}_PAS_TOP_{YY}_{NNN}.cc`
 
 If you do not have an inspire-id for your paper yet, please use the PAS naming convention.
 

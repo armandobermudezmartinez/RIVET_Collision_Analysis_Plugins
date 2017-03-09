@@ -1,4 +1,4 @@
-#include "TopMonteCarlo/RivetTop/interface/CMSGenParticle.hh"
+#include "Rivet/Top/interface/CMSGenParticle.hh"
 //#include "Rivet/Config/RivetCommon.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 

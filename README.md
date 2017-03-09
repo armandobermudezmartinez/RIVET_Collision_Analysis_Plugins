@@ -4,6 +4,8 @@ This GitLab repository contains Rivet routines for CMS analyses and sample confi
 
 Please consult the README files in the subdirectories for information about the plugins contained there.
 
+Please follow the [contribution guide](CONTRIBUTING.md) for developing your plugins.
+
 ## Installation
 
     cmsrel CMSSW_8_1_0

@@ -16,6 +16,10 @@ If you do not have an inspire-id for your paper yet, please use the PAS naming c
 
 If your PAS has an inspire-id, don't use it. Use the PAS naming convention.
 
+# Plot style
+
+Add `Title=CMS, xx TeV, process [<extra information>]` to your plots to make the CMS origin easily identifiable if theorists use the plugin.
+
 # Coding style
 
 Please follow the Rivet coding style documented here:

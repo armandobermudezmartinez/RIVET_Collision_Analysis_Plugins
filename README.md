@@ -6,9 +6,6 @@ Please consult the README files in the subdirectories for information about the 
 
 ## Installation
 
-Many of the plugins in `CMS-TOP-Rivet/RivetTop` and configuration files in `CMS-TOP-Rivet/Configuration` have been developed in previous versions of CMSSW and Rivet. 
-Please, be aware that bugs could have been introduced while porting to newer versions.
-
     cmsrel CMSSW_8_1_0
     cd CMSSW_8_1_0/src
     cmsenv
@@ -18,9 +15,7 @@ Please, be aware that bugs could have been introduced while porting to newer ver
     git-cms-addpkg Configuration/Generator
     git-cms-merge-topic jhgoh:TOP-RIVET-80X
 
-    git clone https://:@gitlab.cern.ch:8443/CMS-TOP-Rivet/RivetTop.git Rivet
+    git clone https://:@gitlab.cern.ch:8443/cms-gen/Rivet.git
 
     source Rivet/rivetSetup.sh
     scram b -j8
-
-Hint: this repository will be renamed.

@@ -9,7 +9,7 @@ build:
     - pwd
     - ls -l
     - mkdir Rivet
-    - mv * Rivet/
+    - find -maxdepth 1 -mindepth 1 -not -name Rivet -exec mv {} Rivet/ \;
     - SCRAM_ARCH=slc6_amd64_gcc530 /cvmfs/cms.cern.ch/common/scramv1 project CMSSW CMSSW_8_1_0
     - mv Rivet CMSSW_8_1_0/src/
     - cd CMSSW_8_1_0/src

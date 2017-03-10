@@ -27,28 +27,28 @@ namespace Rivet {
         const FinalState& fs = applyProjection<FinalState>(event, "FS");
         if (fs.size() < 2) vetoEvent; // need at least two particles to calculate gaps
 
-        double gapcenter = 0.;
-        double LRG = 0.;
-        double rappre = 0.;
+        double gapCenter = 0.;
+        double largestGap = 0.;
+        double previousRapidity = 0.;
         bool first = true;
 
         foreach(const Particle& p, fs.particles(cmpMomByRap)) {
             if (first) { // First particle
                 first = false;
-                rappre = p.rapidity();
+                previousRapidity = p.rapidity();
             } else {
-                double gap = fabs(p.rapidity()-rappre);
-                if (gap > LRG) {
-                   LRG = gap; // largest gap
-                   gapcenter = (p.rapidity()+rappre)/2.; // find the center of the gap to separate the X and Y systems.
+                double gap = fabs(p.rapidity()-previousRapidity);
+                if (gap > largestGap) {
+                   largestGap = gap; // largest gap
+                   gapCenter = (p.rapidity()+previousRapidity)/2.; // find the center of the gap to separate the X and Y systems.
                 }
-                rappre = p.rapidity();
+                previousRapidity = p.rapidity();
             }
         }
 
         FourMomentum mxFourVector, myFourVector;
         foreach(const Particle& p, fs.particles(cmpMomByRap)) {
-            ((p.rapidity() > gapcenter) ? mxFourVector : myFourVector) += p.momentum();
+            ((p.rapidity() > gapCenter) ? mxFourVector : myFourVector) += p.momentum();
         }
         const double xiX = mxFourVector.mass2()/sqr(sqrtS());
         const double xiY = myFourVector.mass2()/sqr(sqrtS());
@@ -60,7 +60,7 @@ namespace Rivet {
         double hadEnergy = 0.;
         foreach(const Particle& p, fs.particles(cmpMomByRap)) {
             if (p.eta()>-6.6 && p.eta()<-5.2){
-                if ( p.abspid() != 12 && p.abspid() != 13 &&  p.abspid() != 14 && p.abspid() != 16 && p.abspid() != 18){
+                if (p.isVisible and p.absPid() != 13){
                     totEnergy += p.energy();
                     if ( p.abspid() == 11 || p.abspid() == 22 || p.abspid() == 111){
                         emEnergy += p.energy();

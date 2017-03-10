@@ -60,7 +60,7 @@ namespace Rivet {
         double hadEnergy = 0.;
         foreach(const Particle& p, fs.particles(cmpMomByRap)) {
             if (p.eta()>-6.6 && p.eta()<-5.2){
-                if (p.isVisible and p.absPid() != 13){
+                if (p.isVisible() && p.abspid() != 13){
                     totEnergy += p.energy();
                     if ( p.abspid() == 11 || p.abspid() == 22 || p.abspid() == 111){
                         emEnergy += p.energy();

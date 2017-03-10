@@ -1,7 +1,7 @@
 #!/bin/bash
 source $CMSSW_BASE/src/GeneratorInterface/RivetInterface/test/rivetSetup.sh
 
-for GROUP in Top FSQ
+for GROUP in Top FSQ SMP Higgs SUSY HeavyIon Exotica BPhysics B2G
 do
   export RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/Rivet/${GROUP}/data
   export RIVET_INFO_PATH=$RIVET_INFO_PATH:$CMSSW_BASE/src/Rivet/${GROUP}/data

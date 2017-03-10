@@ -33,13 +33,10 @@ namespace Rivet {
 
       const double weight = event.weight();
 
-      const Jets& jets = applyProjection<JetAlg>(event, "antikT").jetsByPt();
+      const Jets& jets = applyProjection<JetAlg>(event, "antikT").jetsByPt( Cuts::absrap < 2.5 && Cuts::pT > 100.*GeV );
       
       if ( jets.size() < 2 ) vetoEvent;
-
-      if ( fabs(jets[0].rap()) > 2.5 || jets[0].pT() < 200.*GeV ) vetoEvent;
-      
-      if ( fabs(jets[1].rap()) > 2.5 || jets[1].pT() < 100.*GeV ) vetoEvent;
+      if ( jets[0].pT() < 200.*GeV ) vetoEvent;
       
       double dphi = deltaPhi(jets[0].phi(), jets[1].phi());
       

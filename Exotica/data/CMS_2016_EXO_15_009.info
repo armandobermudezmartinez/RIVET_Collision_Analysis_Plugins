@@ -1,0 +1,20 @@
+Name: CMS_2016_EXO_15_009
+Year: 2016
+Summary: Search for new physics with dijet angular distributions in proton-proton collisions at $sqrt{s} = 13$ TeV
+Experiment: CMS
+Collider: CERN LHC
+InspireID: to be added when published
+Status: NEW
+Authors:
+ - Andreas Hinzmann <hinzmann@cern.ch>
+RunInfo:
+  Hard QCD process with a pT cut of 200 GeV on sub-leading jet is recommended.
+NumEvents: 
+NeedCrossSection: yes
+Beams: [p, p]
+Energies: [13000]
+PtCuts: [200]
+Description:
+  'Dijet angular distributions are measured in proton-proton collisions at sqrt(s)=13 TeV using based on a data set corresponding to an integrated luminosity of 2.6/fb collected by the CMS detector at the CERN LHC. Dijet angular distributions are found to be in agreement with the perturbative QCD predictions that include electroweak corrections.'
+BibKey: to be added when published
+BibTeX: to be added when published

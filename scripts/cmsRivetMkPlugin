@@ -22,7 +22,7 @@ def valYear(year):
     return True
 
 ## Some Env cariables:
-PAGList=['FSQ','SMP']
+PAGList=['FSQ','SMP','GEN','TOP','EXO','HIG','B2G','BPH','HIN','SUS']
 
 ## Handle command line:
 from optparse import OptionParser

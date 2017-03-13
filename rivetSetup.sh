@@ -13,3 +13,6 @@ if [ $GETYODA==1 ]; then
   eval `scram tool info yoda | grep YODA_BASE`
   export PATH=$PATH:$YODA_BASE/bin
 fi
+
+# cmsRivet scripts
+export PATH=$PATH:$CMSSW_BASE/src/Rivet/scripts

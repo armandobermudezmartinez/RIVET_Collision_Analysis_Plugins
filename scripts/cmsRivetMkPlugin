@@ -61,7 +61,7 @@ else:
      print "ERROR: Wrong cadiId: ", opts.cadiId
      print "       Should be <PAG>-YY-XXX"
      exit()
-   if cadi[0] not in PAGList or not cadi[0] == opts.pag:
+   if cadi[0] not in PAGList or ( not cadi[0] == opts.pag and not opts.pag == 'GEN' ):
      print "ERROR: Invalid PAG in cadiId: ", opts.cadiId
      print "       Should be same as --pag: ",opts.pag
      exit()

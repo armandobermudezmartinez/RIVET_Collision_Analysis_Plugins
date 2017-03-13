@@ -28,7 +28,7 @@ PAGList=['FSQ','SMP','GEN','TOP','EXO','HIG','B2G','BPH','HIN','SUS']
 from optparse import OptionParser
 parser = OptionParser(usage=__doc__)
 
-parser.add_option("--pag"     , dest="pag"     , default=None, help="PAG name, should be in this list: ".join([str(x) for x in PAGList]))
+parser.add_option("--pag"     , dest="pag"     , default=None, help="PAG name, should be in this list: "+"".join([str(x)+", " for x in PAGList]))
 parser.add_option("--pubYear" , dest="pubYear" , default=None, help="Publication year, should be XXXX")
 parser.add_option("--cadiId"  , dest="cadiId"  , default=None, help="CADI Id, should be <PAG>-YY-XXX")
 parser.add_option("--spireId" , dest="spireId" , default=None, help="SPIRE Id for your paper, should be XXXXXXX")
@@ -38,7 +38,7 @@ opts, args = parser.parse_args()
 ## Check Input options:
 if opts.pag == None or not opts.pag in PAGList : 
    print "ERROR: Invalid PAG input: ",opts.pag 
-   print "       It should be in this list: ".join([str(x) for x in PAGList])  
+   print "       It should be in this list: ","".join([str(x)+", " for x in PAGList])  
    exit()
 if opts.pubYear == None or not valYear(opts.pubYear) :
    print "ERROR: Invalid publication year: ",opts.pubYear

@@ -12,3 +12,5 @@
 <export>
   <lib name="1"/>
 </export>
+<!-- Do not compile plugins integrated (and working) in official Rivet -->
+<flags SKIP_FILES="CMS_2015_I1397174.cc"/>

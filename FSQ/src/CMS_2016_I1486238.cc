@@ -17,7 +17,7 @@ namespace Rivet {
     
     /// @name Constructors etc.
     //@{
-
+    
     /// Constructor
     CMS_2016_I1486238()
       : Analysis("CMS_2016_I1486238")
@@ -39,7 +39,7 @@ namespace Rivet {
       /// @todo Initialise and register projections here
       
       FinalState fs;
-      FastJets akt(fs, FastJets::ANTIKT, 0.4);
+      FastJets akt(fs, FastJets::ANTIKT, 0.5);
       addProjection(akt, "antikT");
       
       /// @todo Book histograms here, e.g.:
@@ -75,68 +75,68 @@ namespace Rivet {
       Jets ljets;
       
       foreach (const Jet& j, jets) {
-	
-	if(j.momentum().pT()>20) {
-	  
-	  bool btag=false;
-	  
-	  foreach (const GenParticle* p, particles(event.genEvent())) {
-	    
-	    const PdgId pid = p->pdg_id();
-	    
-	    if (abs(pid) == 5) { 
-	      
-	      if (deltaR(j.momentum(), (FourMomentum) p->momentum()) < 0.3) {
-		btag=true;
-	      }
-	    }
-	  }
-	  
-	  if(btag && fabs(j.momentum().eta()) < 2.4) bjets.push_back(j);
-	  else ljets.push_back(j);
-	}
+        
+        if(j.momentum().pT()>20) {
+          
+          bool btag=false;
+          
+          foreach (const GenParticle* p, particles(event.genEvent())) {
+            
+            const PdgId pid = p->pdg_id();
+            
+            if (abs(pid) == 5) { 
+              
+              if (deltaR(j.momentum(), (FourMomentum) p->momentum()) < 0.3) {
+                btag=true;
+              }
+            }
+          }
+          
+          if(btag && fabs(j.momentum().eta()) < 2.4) bjets.push_back(j);
+          else ljets.push_back(j);
+        }
       }
       
       if (bjets.size() >= 2 && ljets.size() >= 2){
-	
-	_h_LeadingBJetpt->fill(bjets[0].pT(),weight);
-	_h_SubleadingBJetpt->fill(bjets[1].pT(),weight);
-	_h_LeadingLightJetpt->fill(ljets[0].pT(),weight);
-	_h_SubleadingLightJetpt->fill(ljets[1].pT(),weight);
-	
-	_h_LeadingBJeteta->fill(bjets[0].eta(),weight);
-	_h_SubleadingBJeteta->fill(bjets[1].eta(),weight);
-	_h_LeadingLightJeteta->fill(ljets[0].eta(),weight);
-	_h_SubleadingLightJeteta->fill(ljets[1].eta(),weight);
-	
-	double lightdphi=deltaPhi(ljets[0].phi(),ljets[1].phi());
-	_h_deltaphiafterlight->fill(lightdphi,weight);
-	
-	const double vecsumlightjets=sqrt(pow(ljets[0].px()+ljets[1].px(),2)+pow(ljets[0].py()+ljets[1].py(),2));
-	
-	const double term2=vecsumlightjets/(sqrt(ljets[0].px()*ljets[0].px()+ljets[0].py()*ljets[0].py())+sqrt(ljets[1].px()*ljets[1].px()+ljets[1].py()*ljets[1].py()));
-	
-	_h_SumPLight->fill(term2,weight);
-	
-	const double pxBsyst2=bjets[0].px()+bjets[1].px();
-	const double pyBsyst2=bjets[0].py()+bjets[1].py();
-	const double pxJetssyst2=ljets[0].px()+ljets[1].px();
-	const double pyJetssyst2=ljets[0].py()+ljets[1].py();
-	const double modulusB2=sqrt(pow(pxBsyst2,2)+pow(pyBsyst2,2));
-	const double modulusJets2=sqrt(pow(pxJetssyst2,2)+pow(pyJetssyst2,2));
-	const double cosphiBsyst2=pxBsyst2/modulusB2;
-	const double cosphiJetssyst2=pxJetssyst2/modulusJets2;
-	double phiBsyst2=0;
-	double phiJetssyst2=0;
-	if(pyBsyst2>0) {phiBsyst2=acos(cosphiBsyst2);}
-	if(pyBsyst2<0) {phiBsyst2=-acos(cosphiBsyst2);}
-	if(pyJetssyst2>0) {phiJetssyst2=acos(cosphiJetssyst2);}
-	if(pyJetssyst2<0) {phiJetssyst2=-acos(cosphiJetssyst2);}
-	
-	const double Dphi2=deltaPhi(phiBsyst2,phiJetssyst2);
+        
+        _h_LeadingBJetpt->fill(bjets[0].pT(),weight);
+        _h_SubleadingBJetpt->fill(bjets[1].pT(),weight);
+        _h_LeadingLightJetpt->fill(ljets[0].pT(),weight);
+        _h_SubleadingLightJetpt->fill(ljets[1].pT(),weight);
+        
+        _h_LeadingBJeteta->fill(bjets[0].eta(),weight);
+        _h_SubleadingBJeteta->fill(bjets[1].eta(),weight);
+        _h_LeadingLightJeteta->fill(ljets[0].eta(),weight);
+        _h_SubleadingLightJeteta->fill(ljets[1].eta(),weight);
+        
+        double lightdphi=deltaPhi(ljets[0].phi(),ljets[1].phi());
+        _h_deltaphiafterlight->fill(lightdphi,weight);
+        
+        const double vecsumlightjets=sqrt(pow(ljets[0].px()+ljets[1].px(),2)+pow(ljets[0].py()+ljets[1].py(),2));
+        
+        const double term2=vecsumlightjets/(sqrt(ljets[0].px()*ljets[0].px()+ljets[0].py()*ljets[0].py())+sqrt(ljets[1].px()*ljets[1].px()+ljets[1].py()*ljets[1].py()));
+        
+        _h_SumPLight->fill(term2,weight);
+        
+        const double pxBsyst2=bjets[0].px()+bjets[1].px();
+        const double pyBsyst2=bjets[0].py()+bjets[1].py();
+        const double pxJetssyst2=ljets[0].px()+ljets[1].px();
+        const double pyJetssyst2=ljets[0].py()+ljets[1].py();
+        const double modulusB2=sqrt(pow(pxBsyst2,2)+pow(pyBsyst2,2));
+        const double modulusJets2=sqrt(pow(pxJetssyst2,2)+pow(pyJetssyst2,2));
+        const double cosphiBsyst2=pxBsyst2/modulusB2;
+        const double cosphiJetssyst2=pxJetssyst2/modulusJets2;
+        double phiBsyst2=0;
+        double phiJetssyst2=0;
+        if(pyBsyst2>0) {phiBsyst2=acos(cosphiBsyst2);}
+        if(pyBsyst2<0) {phiBsyst2=-acos(cosphiBsyst2);}
+        if(pyJetssyst2>0) {phiJetssyst2=acos(cosphiJetssyst2);}
+        if(pyJetssyst2<0) {phiJetssyst2=-acos(cosphiJetssyst2);}
+        
+        const double Dphi2=deltaPhi(phiBsyst2,phiJetssyst2);
 
-	_h_Deltaphi_newway->fill(Dphi2,weight);
-	
+        _h_Deltaphi_newway->fill(Dphi2,weight);
+        
       }   
       
       

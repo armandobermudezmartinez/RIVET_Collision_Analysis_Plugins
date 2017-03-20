@@ -21,7 +21,8 @@ def valYear(year):
 
 ## Some Env cariables:
 PAGList=['FSQ','SMP','GEN','TOP','EXO','HIG','B2G','BPH','HIN','SUS']
-wwwDir='/afs/cern.ch/user/x/xjanssen/www/Rivet/'
+wwwDir='/eos/project/c/cmsweb/www/generators/Rivet/ValPlots/'
+indPHP='/eos/project/c/cmsweb/www/generators/Rivet/ValPlots/index.php'
 
 ## Handle command line:
 from optparse import OptionParser
@@ -97,7 +98,7 @@ print ""
 wwwTargetDir=wwwDir+opts.pag+'/'+opts.cadiId
 print wwwTargetDir
 if os.path.isdir(wwwTargetDir):
-  Cmd='ls '+wwwTargetDir
+  Cmd='ls '+wwwTargetDir+'| grep -v index'
   proc=subprocess.Popen(Cmd, stderr = subprocess.PIPE,stdout = subprocess.PIPE, shell = True)
   out, err = proc.communicate()
   ver = max([int(x.replace('v','')) for x in string.split(out) ])+1
@@ -135,3 +136,12 @@ if not os.path.exists(wwwTargetDir):
 Cmd='cp '+wwwSourceDir+'/* '+wwwTargetDir
 proc=subprocess.Popen(Cmd, stderr = subprocess.PIPE,stdout = subprocess.PIPE, shell = True)
 out, err = proc.communicate()
+
+#... Add index.php if needed
+if 'v0' in wwwSourceDir:
+  Cmd='cp '+indPHP+' '+wwwDir+opts.pag+'/'+opts.cadiId
+  proc=subprocess.Popen(Cmd, stderr = subprocess.PIPE,stdout = subprocess.PIPE, shell = True)
+if not os.path.isfile(wwwTargetDir+'/index.html') and not os.path.isfile(wwwTargetDir+'/index.php') :
+  Cmd='cp '+indPHP+' '+wwwTargetDir
+  proc=subprocess.Popen(Cmd, stderr = subprocess.PIPE,stdout = subprocess.PIPE, shell = True)
+

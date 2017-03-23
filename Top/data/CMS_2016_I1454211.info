@@ -1,9 +1,9 @@
-Name: CMS_2015_I1388555
+Name: CMS_2016_I1454211
 Year: 2015
 Summary: Comparisons of Theory Predictions for the Boosted ttbar Process with Data from pp Collisions at $\sqrt{s}$ = 8 TeV
 Experiment: CMS
 Collider: LHC
-InspireID: 1388555
+InspireID: 1454211
 Status: UNVALIDATED
 Authors:
  - Salvatore Rappoccio <rappoccio@gmail.com>
@@ -13,7 +13,8 @@ Authors:
  - Susan Dittmer <Susan.Dittmer@cern.ch>
  - Matthew Bellis <mbellis@sienna.edu>
 References:
- - CMS-PAS-TOP-14-012 -- for the analysis
+ - CMS-PAS-TOP-14-012 (PAS)
+ - CERN-EP-2016-078   (paper)
 RunInfo:
   pp QCD interactions at $\sqrt{s} = 8$ TeV. Data collected by CMS during the year 2012. Boosted topology restricts phase space, requiring high statistics in a single run or custom merging of the yoda files.
 Luminosity: 19.7 /fb

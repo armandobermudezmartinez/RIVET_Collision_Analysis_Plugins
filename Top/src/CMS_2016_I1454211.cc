@@ -14,11 +14,11 @@
 
 namespace Rivet {
   
-  class CMS_2015_I1388555 : public Analysis {
+  class CMS_2016_I1454211 : public Analysis {
   public:
     
     // Minimal constructor
-    CMS_2015_I1388555() : Analysis("CMS_2015_I1388555") {
+    CMS_2016_I1454211() : Analysis("CMS_2016_I1454211") {
     }
     
     // Set up projections and book histograms
@@ -41,14 +41,12 @@ namespace Rivet {
       IdentifiedFinalState el_id(fs);
       el_id.acceptIdPair(PID::ELECTRON);
       PromptFinalState electrons(el_id);
-      addProjection(electrons, "Electrons");
       DressedLeptons dressed_electrons(photons, electrons, 0.1, leptonCuts, true, false);
       addProjection(dressed_electrons, "DressedElectrons");
       
       IdentifiedFinalState mu_id(fs);
       mu_id.acceptIdPair(PID::MUON);
       PromptFinalState muons(mu_id);
-      addProjection(muons, "Muons");
       DressedLeptons dressed_muons(photons, muons, 0.1, leptonCuts, true, false);
       addProjection(dressed_muons, "DressedMuons");
       
@@ -132,116 +130,116 @@ namespace Rivet {
       FourMomentum particleTopP4;
       
       if (partonCh == 1 && dressed_muons.dressedLeptons().size() == 1 && dressed_electrons.dressedLeptons().size() == 0){
-	passParticleLep = true;
-	_hMu_cutflow->fill(3.); //muon at particle level
-	lepton = dressed_muons.dressedLeptons()[0].momentum();
+        passParticleLep = true;
+        _hMu_cutflow->fill(3.); //muon at particle level
+        lepton = dressed_muons.dressedLeptons()[0].momentum();
       }
       if (partonCh == 2 && dressed_muons.dressedLeptons().size() == 0 && dressed_electrons.dressedLeptons().size() == 1){
-	passParticleLep = true;
-	_hEl_cutflow->fill(3.); //electron at particle level
-	lepton = dressed_electrons.dressedLeptons()[0].momentum();
+        passParticleLep = true;
+        _hEl_cutflow->fill(3.); //electron at particle level
+        lepton = dressed_electrons.dressedLeptons()[0].momentum();
       }
       
       if (passParticleLep){
-	
-	// Jet cuts
-	Cut jetCuts = Cuts::pt > 30*GeV && Cuts::abseta < 2.4;
-	Jets genBjets;
-	Jets genTjets;
-	int nGenBjets = 0;
-	int nGenTjets = 0;
-	
-	const FastJets& AK5jets = applyProjection<FastJets>(event, "ak5jets");
-	
-	foreach (const Jet& jet, AK5jets.jetsByPt(jetCuts)) {
-	  if (deltaR(jet.momentum(),lepton) > 3.1415 / 2.0) continue;
-	  if (deltaR(jet.momentum(),lepton) < 0.1) continue;
-	  genBjets.push_back(jet);
-	  nGenBjets += 1;
-	}
-	
-	const FastJets& CA8jets = applyProjection<FastJets>(event, "ca8jets");
-	
-	foreach (const Jet& jet, CA8jets.jetsByPt(jetCuts)) {
-	  if (deltaR(jet.momentum(), lepton) < 3.1415 / 2.0) continue;
-	  if (jet.momentum().mass() < 140.) continue;
-	  if (jet.momentum().mass() > 250.) continue;
-	  genTjets.push_back(jet);
-	  nGenTjets += 1;
-	}
-	
-	if (nGenBjets >=1){
-	  if (partonCh == 1) _hMu_cutflow->fill(4.); // muon at parton level
-	  if (partonCh == 2) _hEl_cutflow->fill(4.); // electron at parton level
-	  
-	  if (nGenTjets >= 1){
-	    passParticleTop = true;
-	    if (partonCh == 1) _hMu_cutflow->fill(5.); // muon at parton level
-	    if (partonCh == 2) _hEl_cutflow->fill(5.); // electron at parton level 
-	    
-	    particleTopP4 = genTjets[0].momentum();
-	  }
-	}
+        
+        // Jet cuts
+        Cut jetCuts = Cuts::pt > 30*GeV && Cuts::abseta < 2.4;
+        Jets genBjets;
+        Jets genTjets;
+        int nGenBjets = 0;
+        int nGenTjets = 0;
+        
+        const FastJets& AK5jets = applyProjection<FastJets>(event, "ak5jets");
+        
+        foreach (const Jet& jet, AK5jets.jetsByPt(jetCuts)) {
+          if (deltaR(jet.momentum(),lepton) > 3.1415 / 2.0) continue;
+          if (deltaR(jet.momentum(),lepton) < 0.1) continue;
+          genBjets.push_back(jet);
+          nGenBjets += 1;
+        }
+        
+        const FastJets& CA8jets = applyProjection<FastJets>(event, "ca8jets");
+        
+        foreach (const Jet& jet, CA8jets.jetsByPt(jetCuts)) {
+          if (deltaR(jet.momentum(), lepton) < 3.1415 / 2.0) continue;
+          if (jet.momentum().mass() < 140.) continue;
+          if (jet.momentum().mass() > 250.) continue;
+          genTjets.push_back(jet);
+          nGenTjets += 1;
+        }
+        
+        if (nGenBjets >=1){
+          if (partonCh == 1) _hMu_cutflow->fill(4.); // muon at parton level
+          if (partonCh == 2) _hEl_cutflow->fill(4.); // electron at parton level
+          
+          if (nGenTjets >= 1){
+            passParticleTop = true;
+            if (partonCh == 1) _hMu_cutflow->fill(5.); // muon at parton level
+            if (partonCh == 2) _hEl_cutflow->fill(5.); // electron at parton level 
+            
+            particleTopP4 = genTjets[0].momentum();
+          }
+        }
       }
       
       if (partonCh == 1){
-	nMu += 1;
-	_hMu_topPt_parton->fill(partonTopP4.pT(), weight);
-	_hMu_topPt_parton_norm->fill(partonTopP4.pT(), weight);
-	_hComb_topPt_parton->fill(partonTopP4.pT(), weight);
-	_hComb_topPt_parton_norm->fill(partonTopP4.pT(), weight);
-	
-	if (partonTopP4.pT() >= 400.){
-	  nPassParton_mu += 1;
-	  _hMu_cutflow->fill(2.);
-	  _hMu_topY_parton->fill(partonTopP4.rapidity(), weight);
-	  _hMu_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
-	  _hComb_topY_parton->fill(partonTopP4.rapidity(), weight);
-	  _hComb_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
-	}
-	
-	if (passParticleTop){
-	  _hMu_topPt_particle->fill(particleTopP4.pT(), weight);
-	  _hMu_topPt_particle_norm->fill(particleTopP4.pT(), weight);
-	  _hComb_topPt_particle->fill(particleTopP4.pT(), weight);
-	  _hComb_topPt_particle_norm->fill(particleTopP4.pT(), weight);
-	  
-	  if (particleTopP4.pT() >= 400.){
-	    nPassParticle_mu += 1;
-	    _hMu_cutflow->fill(6.);
-	    _hMu_topY_particle->fill(particleTopP4.rapidity(), weight);
-	    _hMu_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
-	    _hComb_topY_particle->fill(particleTopP4.rapidity(), weight);
-	    _hComb_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
-	  }
-	}
+        nMu += 1;
+        _hMu_topPt_parton->fill(partonTopP4.pT(), weight);
+        _hMu_topPt_parton_norm->fill(partonTopP4.pT(), weight);
+        _hComb_topPt_parton->fill(partonTopP4.pT(), weight);
+        _hComb_topPt_parton_norm->fill(partonTopP4.pT(), weight);
+        
+        if (partonTopP4.pT() >= 400.){
+          nPassParton_mu += 1;
+          _hMu_cutflow->fill(2.);
+          _hMu_topY_parton->fill(partonTopP4.rapidity(), weight);
+          _hMu_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
+          _hComb_topY_parton->fill(partonTopP4.rapidity(), weight);
+          _hComb_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
+        }
+        
+        if (passParticleTop){
+          _hMu_topPt_particle->fill(particleTopP4.pT(), weight);
+          _hMu_topPt_particle_norm->fill(particleTopP4.pT(), weight);
+          _hComb_topPt_particle->fill(particleTopP4.pT(), weight);
+          _hComb_topPt_particle_norm->fill(particleTopP4.pT(), weight);
+          
+          if (particleTopP4.pT() >= 400.){
+            nPassParticle_mu += 1;
+            _hMu_cutflow->fill(6.);
+            _hMu_topY_particle->fill(particleTopP4.rapidity(), weight);
+            _hMu_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
+            _hComb_topY_particle->fill(particleTopP4.rapidity(), weight);
+            _hComb_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
+          }
+        }
       }
       
       if (partonCh == 2){
-	nEl += 1;
+        nEl += 1;
         _hEl_topPt_parton->fill(partonTopP4.pT(), weight);
         _hEl_topPt_parton_norm->fill(partonTopP4.pT(), weight);
         _hComb_topPt_parton->fill(partonTopP4.pT(), weight);
         _hComb_topPt_parton_norm->fill(partonTopP4.pT(), weight);
-	
-	if (partonTopP4.pT() >= 400.){
-	  nPassParton_el += 1;
-	  _hEl_cutflow->fill(2.);
+        
+        if (partonTopP4.pT() >= 400.){
+          nPassParton_el += 1;
+          _hEl_cutflow->fill(2.);
           _hEl_topY_parton->fill(partonTopP4.rapidity(), weight);
           _hEl_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
           _hComb_topY_parton->fill(partonTopP4.rapidity(), weight);
           _hComb_topY_parton_norm->fill(partonTopP4.rapidity(), weight);
         }
-	
-	if (passParticleTop){
+        
+        if (passParticleTop){
           _hEl_topPt_particle->fill(particleTopP4.pT(), weight);
           _hEl_topPt_particle_norm->fill(particleTopP4.pT(), weight);
           _hComb_topPt_particle->fill(particleTopP4.pT(), weight);
           _hComb_topPt_particle_norm->fill(particleTopP4.pT(), weight);
-	  
+          
           if (particleTopP4.pT() >= 400.){
-	    nPassParticle_el += 1;
-	    _hEl_cutflow->fill(6.);
+            nPassParticle_el += 1;
+            _hEl_cutflow->fill(6.);
             _hEl_topY_particle->fill(particleTopP4.rapidity(), weight);
             _hEl_topY_particle_norm->fill(particleTopP4.rapidity(), weight);
             _hComb_topY_particle->fill(particleTopP4.rapidity(), weight);
@@ -332,8 +330,6 @@ namespace Rivet {
   };
   
   // The hook for the plugin system                                                                                                                                     
-  DECLARE_RIVET_PLUGIN(CMS_2015_I1388555);
+  DECLARE_RIVET_PLUGIN(CMS_2016_I1454211);
 
 }
-
-

@@ -23,6 +23,7 @@ def valYear(year):
 PAGList=['FSQ','SMP','GEN','TOP','EXO','HIG','B2G','BPH','HIN','SUS']
 wwwDir='/eos/project/c/cmsweb/www/generators/Rivet/ValPlots/'
 indPHP='/eos/project/c/cmsweb/www/generators/Rivet/ValPlots/index.php'
+HttpBase='https://cms-rivet.web.cern.ch/cms-rivet/ValPlots/'
 
 ## Handle command line:
 from optparse import OptionParser
@@ -35,6 +36,12 @@ parser.add_option("--spireId" , dest="spireId" , default=None, help="SPIRE Id fo
 parser.add_option("--plotDir" , dest="plotDir" , default=None, help="Input directory with Rivet plots")
 
 opts, args = parser.parse_args()
+
+## Check if at CERN
+if not 'cern' in os.uname()[1]:
+   print "ERROR: You need to execute this script from a CERN lxplud !!!"
+   exit()
+
 
 ## Check Input options:
 if opts.pag == None or not opts.pag in PAGList :
@@ -96,15 +103,18 @@ print ""
 
 # ... Build versionned directory
 wwwTargetDir=wwwDir+opts.pag+'/'+opts.cadiId
+
 print wwwTargetDir
 if os.path.isdir(wwwTargetDir):
-  Cmd='ls '+wwwTargetDir+'| grep -v index'
+  Cmd='ls '+wwwTargetDir+'| grep v '
   proc=subprocess.Popen(Cmd, stderr = subprocess.PIPE,stdout = subprocess.PIPE, shell = True)
   out, err = proc.communicate()
   ver = max([int(x.replace('v','')) for x in string.split(out) ])+1
   wwwTargetDir+='/v'+str(ver)
 else:
+  ver = 0
   wwwTargetDir+='/v0'
+HttpLink=HttpBase+opts.pag+'/'+opts.cadiId+'/v'+str(ver)
 
 # ... Check Input directory content
 wwwSourceDir=opts.plotDir
@@ -130,7 +140,8 @@ if not proc.returncode == 0 :
   wwwSourceDir+='/'+subDir
     
 #... mkDir && Cp all Files 
-print wwwSourceDir+" ---> "+wwwTargetDir
+#print wwwSourceDir+" ---> "+wwwTargetDir
+print wwwSourceDir+" ---> PUBLISHED AT : "+HttpLink
 if not os.path.exists(wwwTargetDir):
     os.makedirs(wwwTargetDir)
 Cmd='cp '+wwwSourceDir+'/* '+wwwTargetDir

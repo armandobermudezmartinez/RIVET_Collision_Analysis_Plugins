@@ -42,21 +42,21 @@ namespace Rivet {
       el_id.acceptIdPair(PID::ELECTRON);
       PromptFinalState electrons(el_id);
       DressedLeptons dressed_electrons(photons, electrons, 0.1, leptonCuts, true, false);
-      addProjection(dressed_electrons, "DressedElectrons");
+      declare(dressed_electrons, "DressedElectrons");
       
       IdentifiedFinalState mu_id(fs);
       mu_id.acceptIdPair(PID::MUON);
       PromptFinalState muons(mu_id);
       DressedLeptons dressed_muons(photons, muons, 0.1, leptonCuts, true, false);
-      addProjection(dressed_muons, "DressedMuons");
+      declare(dressed_muons, "DressedMuons");
       
       // Projection for jets
       VetoedFinalState fs_jets(FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV));
       fs_jets.addVetoOnThisFinalState(dressed_muons);
       fs_jets.addVetoOnThisFinalState(dressed_electrons);
       fs_jets.vetoNeutrinos();
-      addProjection(FastJets(fs_jets, FastJets::ANTIKT, 0.5), "ak5jets");
-      addProjection(FastJets(fs_jets, FastJets::CAM, 0.8), "ca8jets");
+      declare(FastJets(fs_jets, FastJets::ANTIKT, 0.5), "ak5jets");
+      declare(FastJets(fs_jets, FastJets::CAM, 0.8), "ca8jets");
       
       _hEl_topPt_parton          = bookHisto1D("d01-x01-y01"); // dsigma/dpt(top quark), el ch
       _hEl_topPt_particle        = bookHisto1D("d02-x01-y01"); // dsigma/dpt(top jet), el ch
@@ -121,8 +121,8 @@ namespace Rivet {
       const FourMomentum& partonTopP4 = hadronicpartontops.at(0).momentum();
       
       // Do particle-level selection and channel determination
-      const DressedLeptons& dressed_electrons = applyProjection<DressedLeptons>(event, "DressedElectrons");
-      const DressedLeptons& dressed_muons = applyProjection<DressedLeptons>(event, "DressedMuons");
+      const DressedLeptons& dressed_electrons = apply<DressedLeptons>(event, "DressedElectrons");
+      const DressedLeptons& dressed_muons = apply<DressedLeptons>(event, "DressedMuons");
       
       bool passParticleLep = false;
       bool passParticleTop = false;
@@ -149,7 +149,7 @@ namespace Rivet {
         int nGenBjets = 0;
         int nGenTjets = 0;
         
-        const FastJets& AK5jets = applyProjection<FastJets>(event, "ak5jets");
+        const FastJets& AK5jets = apply<FastJets>(event, "ak5jets");
         
         foreach (const Jet& jet, AK5jets.jetsByPt(jetCuts)) {
           if (deltaR(jet.momentum(),lepton) > 3.1415 / 2.0) continue;
@@ -158,7 +158,7 @@ namespace Rivet {
           nGenBjets += 1;
         }
         
-        const FastJets& CA8jets = applyProjection<FastJets>(event, "ca8jets");
+        const FastJets& CA8jets = apply<FastJets>(event, "ca8jets");
         
         foreach (const Jet& jet, CA8jets.jetsByPt(jetCuts)) {
           if (deltaR(jet.momentum(), lepton) < 3.1415 / 2.0) continue;

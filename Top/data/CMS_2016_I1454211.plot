@@ -1,7 +1,6 @@
 # BEGIN PLOT /CMS_2016_I1454211/d*
-Title={\large RIVET \qquad \qquad \qquad \qquad \qquad \qquad \textbf{CMS}  19.7 ${\rm fb^{-1}}$ (8 TeV)}
+Title=CMS, 8 TeV, $t\bar{t}$ boosted lepton+jets
 YLabelSep=6
-RatioPlotYLabel={\large Theory / Data}
 RatioPlotErrorBandColor=cyan!50!blue!40
 RatioPlotYSize=2.6
 PlotSize=10.7,7.2

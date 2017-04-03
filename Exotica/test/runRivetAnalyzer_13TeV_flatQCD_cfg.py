@@ -119,6 +119,6 @@ process = customise(process)
 
 # End of customisation functions
 
-process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2016_EXO_15_009')
+process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2017_I1519995')
 process.rivetAnalyzer.OutputFile = cms.string('EXO15009pythia8.yoda')
 process.rivetAnalyzer.UseExternalWeight = cms.bool(True)

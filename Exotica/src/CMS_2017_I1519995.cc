@@ -6,11 +6,11 @@
 namespace Rivet {
 
 
-  class CMS_2016_EXO_15_009 : public Analysis {
+  class CMS_2017_I1519995 : public Analysis {
   public:
 
-    CMS_2016_EXO_15_009()
-      : Analysis("CMS_2016_EXO_15_009")
+    CMS_2017_I1519995()
+      : Analysis("CMS_2017_I1519995")
     { }
 
 
@@ -57,6 +57,6 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2016_EXO_15_009);
+  DECLARE_RIVET_PLUGIN(CMS_2017_I1519995);
 
 }

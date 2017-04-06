@@ -21,3 +21,4 @@ Please follow the [contribution guide](CONTRIBUTING.md) for developing your plug
 
     source Rivet/rivetSetup.sh
     scram b -j8
+

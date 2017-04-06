@@ -34,7 +34,8 @@ else:
         'CMS_2016_I1454211', # boosted top
         'CMS_2016_I1473674', # HT, MET, ST, WPT
         'CMS_TOP_15_006', # jet multiplicity lepton+jets
-        'MC_TTBAR_HADRON', # MC analysis for lepton+jets
+        'MC_TTBAR', # MC analysis for lepton+jets
+        'MC_TOPMASS_LJETS', # MC analysis for lepton+jets top mass
         'CMS_LesHouches2015', # MC analysis for dilepton
         'MC_GENERIC', # MC generic analysis
         'MC_XS', # MC xs analysis

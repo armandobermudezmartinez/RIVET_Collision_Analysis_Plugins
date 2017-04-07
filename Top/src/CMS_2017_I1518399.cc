@@ -9,7 +9,7 @@
 #include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/FastJets.hh"
 #include "Rivet/Projections/DressedLeptons.hh"
-
+#include "Rivet/Projections/ChargedLeptons.hh"
 
 namespace Rivet {
 
@@ -35,21 +35,13 @@ namespace Rivet {
       IdentifiedFinalState photons(fs);       
       photons.acceptIdPair(PID::PHOTON);             
        
-      IdentifiedFinalState el_id(fs); 
-      el_id.acceptIdPair(PID::ELECTRON);       
-      PromptFinalState electrons(el_id);   
-
-      IdentifiedFinalState mu_id(fs);
-      mu_id.acceptIdPair(PID::MUON);       
-      PromptFinalState muons(mu_id);
+      ChargedLeptons charged_leptons(fs);
+      PromptFinalState prompt_leptons(charged_leptons);
 
       Cut leptonCuts = Cuts::pt > 45*GeV && Cuts::abseta < 2.1;          
    
-      DressedLeptons dressed_electrons(photons, electrons, 0.1, leptonCuts, true, false);       
-      declare(dressed_electrons, "DressedElectrons");             
-      
-      DressedLeptons dressed_muons(photons, muons, 0.1, leptonCuts, true, false);       
-      declare(dressed_muons, "DressedMuons");
+      DressedLeptons dressed_leptons(photons, prompt_leptons, 0.1, leptonCuts, true, false);       
+      declare(dressed_leptons, "DressedLeptons");             
 
       //jets
       VetoedFinalState fs_jets(FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV));     
@@ -101,30 +93,21 @@ namespace Rivet {
       if (leptonicTops.size() != 1 || hadronicTops.size() != 1) vetoEvent;  
 
       //get the leptons
-      const DressedLeptons& dressed_electrons = apply<DressedLeptons>(event, "DressedElectrons");       
-      const DressedLeptons& dressed_muons = apply<DressedLeptons>(event, "DressedMuons");
+      const DressedLeptons& dressed_leptons = apply<DressedLeptons>(event, "DressedLeptons");       
 
       //leading dressed lepton
+      const std::vector<DressedLepton> leptons = dressed_leptons.dressedLeptons();
+      _hist_Nlep->fill(leptons.size(), weight);
+      if ( leptons.size() == 0 ) vetoEvent;
+
       Particle lepton;
-      double max_lepton_pt = 0;
-      for (unsigned int i = 0; i < dressed_muons.dressedLeptons().size(); ++i) {
-	DressedLepton muon = dressed_muons.dressedLeptons()[i];
-	if (muon.pt() > max_lepton_pt) {
-	  max_lepton_pt = muon.pt();
-	  lepton = muon;
+      double max_lepton_pt = 0.;
+      for (unsigned int i = 0; i < leptons.size(); ++i) {
+	if (leptons.at(i).pt() > max_lepton_pt) {
+	  max_lepton_pt = leptons.at(i).pt();
+	  lepton = leptons.at(i);
 	}
       }
-      for (unsigned int i = 0; i < dressed_electrons.dressedLeptons().size(); ++i) {
-	DressedLepton electron = dressed_electrons.dressedLeptons()[i];
-	if (electron.pt() > max_lepton_pt) {
-	  max_lepton_pt = electron.pt();
-	  lepton = electron;
-	}
-      }
-
-      _hist_Nlep->fill(dressed_muons.dressedLeptons().size() + dressed_electrons.dressedLeptons().size(), weight);
-
-      if (dressed_muons.dressedLeptons().size() == 0 && dressed_electrons.dressedLeptons().size() == 0) vetoEvent;
 
       //plot the hadronic top pT
       _hist_pt_top->fill(hadronicTops.at(0).pt(), weight);

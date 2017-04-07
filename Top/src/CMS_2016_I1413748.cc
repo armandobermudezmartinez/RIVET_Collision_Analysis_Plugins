@@ -45,7 +45,6 @@ namespace Rivet {
     }
 
 
-
     /// Perform the per-event analysis
     void analyze(const Event& event) {
 
@@ -80,23 +79,12 @@ namespace Rivet {
 
     }
 
-    //@}
-
-
   private:
-
-
-    /// @name Histograms
-    //@{
     Histo1DPtr _h_dphi, _h_dabseta;
-    //@}
-
 
   };
 
-
   // The hook for the plugin system
   DECLARE_RIVET_PLUGIN(CMS_2016_I1413748);
-
 
 }

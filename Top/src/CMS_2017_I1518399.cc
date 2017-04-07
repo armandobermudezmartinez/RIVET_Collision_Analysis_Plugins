@@ -1,13 +1,15 @@
 // -*- C++ -*-
 #include "Rivet/Analysis.hh"
 #include "Rivet/Particle.hh"
-#include "Rivet/Projections/PartonicTops.hh"
-#include "Rivet/Tools/ParticleIdUtils.hh"
 #include "Rivet/Tools/Cuts.fhh"
+#include "Rivet/Tools/ParticleIdUtils.hh"
+#include "Rivet/Projections/PartonicTops.hh"
 #include "Rivet/Projections/FinalState.hh"
-#include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/ChargedLeptons.hh"
+#include "Rivet/Projections/VetoedFinalState.hh"
 #include "Rivet/Projections/PromptFinalState.hh"
+#include "Rivet/Projections/FastJets.hh"
+#include "Rivet/Projections/DressedLeptons.hh"
+
 
 namespace Rivet {
 
@@ -29,8 +31,30 @@ namespace Rivet {
       FinalState fs(-MAXDOUBLE, MAXDOUBLE, 0*GeV);
       addProjection(fs, "FS");
 
-      // Jets collection 
-      addProjection(FastJets(fs, FastJets::CAM, 1.2), "JetsCA12");
+      //dressed leptons
+      IdentifiedFinalState photons(fs);       
+      photons.acceptIdPair(PID::PHOTON);             
+       
+      IdentifiedFinalState el_id(fs); 
+      el_id.acceptIdPair(PID::ELECTRON);       
+      PromptFinalState electrons(el_id);   
+
+      IdentifiedFinalState mu_id(fs);
+      mu_id.acceptIdPair(PID::MUON);       
+      PromptFinalState muons(mu_id);
+
+      Cut leptonCuts = Cuts::pt > 45*GeV && Cuts::abseta < 2.1;          
+   
+      DressedLeptons dressed_electrons(photons, electrons, 0.1, leptonCuts, true, false);       
+      declare(dressed_electrons, "DressedElectrons");             
+      
+      DressedLeptons dressed_muons(photons, muons, 0.1, leptonCuts, true, false);       
+      declare(dressed_muons, "DressedMuons");
+
+      //jets
+      VetoedFinalState fs_jets(FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV));     
+      fs_jets.vetoNeutrinos();
+      declare(FastJets(fs_jets, FastJets::CAM, 1.2), "JetsCA12");
 
       //partonic top for decay channel defintion
       declare(PartonicTops(PartonicTops::E_MU, false), "LeptonicTops");       
@@ -76,40 +100,48 @@ namespace Rivet {
       const Particles hadronicTops = apply<PartonicTops>(event, "HadronicTops").particlesByPt();  
       if (leptonicTops.size() != 1 || hadronicTops.size() != 1) vetoEvent;  
 
-      //get the lepton
-      const Particle lepTop = leptonicTops.at(0);
-      const auto isLeptonfromW = [](const Particle& p){return (isChargedLepton(p) && !fromDecay(p));};
-      Particles lepton_cadidates = lepTop.allDescendants(firstParticleWith(isLeptonfromW), false);
+      //get the leptons
+      const DressedLeptons& dressed_electrons = apply<DressedLeptons>(event, "DressedElectrons");       
+      const DressedLeptons& dressed_muons = apply<DressedLeptons>(event, "DressedMuons");
 
-      // In some cases there is no lepton from the W decay but only leptons from a decay of a radiated gamma. 
-      // These events contain fully hadronic ttbar decays and need to be rejected
-      Particles leptons;
-      for (unsigned int i = 0; i < lepton_cadidates.size(); ++i) {
-	Particle lepton_candidate = lepton_cadidates.at(i);
-	if ( hasParentWith(lepton_candidate, Cuts::abspid == 22)) continue;
-	leptons.push_back(lepton_candidate);
+      //leading dressed lepton
+      Particle lepton;
+      double max_lepton_pt = 0;
+      for (unsigned int i = 0; i < dressed_muons.dressedLeptons().size(); ++i) {
+	DressedLepton muon = dressed_muons.dressedLeptons()[i];
+	if (muon.pt() > max_lepton_pt) {
+	  max_lepton_pt = muon.pt();
+	  lepton = muon;
+	}
       }
-      _hist_Nlep->fill(leptons.size(), weight);
-      if(!leptons.size()) vetoEvent;
+      for (unsigned int i = 0; i < dressed_electrons.dressedLeptons().size(); ++i) {
+	DressedLepton electron = dressed_electrons.dressedLeptons()[i];
+	if (electron.pt() > max_lepton_pt) {
+	  max_lepton_pt = electron.pt();
+	  lepton = electron;
+	}
+      }
 
-      Particle lepton = leptons.back();
+      _hist_Nlep->fill(dressed_muons.dressedLeptons().size() + dressed_electrons.dressedLeptons().size(), weight);
+
+      if (dressed_muons.dressedLeptons().size() == 0 && dressed_electrons.dressedLeptons().size() == 0) vetoEvent;
 
       //plot the hadronic top pT
       _hist_pt_top->fill(hadronicTops.at(0).pt(), weight);
 
-      //lepton cuts
-      if (lepton.pt() < 45 || fabs(lepton.eta()) > 2.1) vetoEvent; 
-
       //get the jets
-      const PseudoJets& psjetsCA12 = applyProjection<FastJets>(event, "JetsCA12").pseudojetsByPt( 50.0*GeV );
+      Cut jetCuts = Cuts::pt > 50*GeV;
+      const Jets& psjetsCA12 = applyProjection<FastJets>(event, "JetsCA12").jetsByPt( jetCuts );
 
       // subtract the lepton four vector from a jet in case of overlap and clean jets
-      PseudoJets cleanedJets;
-      const fastjet::PseudoJet& pseudoLepton = lepton.pseudojet();
+      Jets cleanedJets;
+  
       for (unsigned int i = 0; i < psjetsCA12.size(); ++i) {
-	fastjet::PseudoJet jet = psjetsCA12.at(i);
-	if (jet.delta_R(pseudoLepton) < 1.2 ) {
-	  jet -= pseudoLepton;
+	Jet jet = psjetsCA12.at(i);
+	if (deltaR(jet.momentum(), lepton.momentum()) < 1.2 ) {
+	  const FourMomentum cleanedMom = jet.momentum() - lepton.momentum();
+	  Jet cleanedjet(cleanedMom);
+	  jet = cleanedjet;
 	}
 	if (fabs(jet.eta()) < 2.5) cleanedJets.push_back(jet);
       }
@@ -126,11 +158,11 @@ namespace Rivet {
       if (cleanedJets.size() > 2 && cleanedJets.at(2).pt() > 150) vetoEvent;
 
       // small distance between 2nd jet and lepton
-      if (cleanedJets.at(1).delta_R(pseudoLepton) > 1.2 ) vetoEvent;
+      if (deltaR(cleanedJets.at(1).momentum(), lepton.momentum()) > 1.2 ) vetoEvent;
         
       // m(jet1) > m(jet2 +lepton)
-      const fastjet::PseudoJet& secondJetLepton = cleanedJets.at(1) + pseudoLepton;
-      if (cleanedJets.at(0).m() < secondJetLepton.m()) vetoEvent;
+      FourMomentum secondJetLepton = cleanedJets.at(1).momentum() + lepton.momentum();
+      if (cleanedJets.at(0).mass() < secondJetLepton.mass()) vetoEvent;
    
       //========merged events==================
       //just used as a check (not used for data comparison)
@@ -143,15 +175,14 @@ namespace Rivet {
       _hist_NQuarks->fill(quarks.size(),weight);
 
       for (unsigned int i = 0; (i < 3 && i < quarks.size()); ++i) {
-	const fastjet::PseudoJet& pseudoQuark = quarks.at(i).pseudojet();
-	if (cleanedJets.at(0).delta_R(pseudoQuark) > 1.2) fully_merged = false;
+       	if (deltaR(cleanedJets.at(0).momentum(), quarks.at(i).momentum()) > 1.2) fully_merged = false;
       }
       //=======================================
 
       // fill histograms
-      _hist_mass->fill(cleanedJets.at(0).m(), weight);
-      if (!fully_merged) _hist_mass_not_merged->fill(cleanedJets.at(0).m(), weight);
-      _hist_mass_norm->fill(cleanedJets.at(0).m(), weight);
+      _hist_mass->fill(cleanedJets.at(0).mass(), weight);
+      if (!fully_merged) _hist_mass_not_merged->fill(cleanedJets.at(0).mass(), weight);
+      _hist_mass_norm->fill(cleanedJets.at(0).mass(), weight);
 
       _hist_pt1->fill(cleanedJets.at(0).pt(), weight);
       _hist_pt2->fill(cleanedJets.at(1).pt(), weight);
@@ -163,9 +194,9 @@ namespace Rivet {
       if (cleanedJets.size() > 2) _hist_eta3->fill(cleanedJets.at(2).eta(), weight);
       _hist_etalep->fill(lepton.eta(), weight);
 
-      _hist_dR_jet2_lep->fill(cleanedJets.at(1).delta_R(pseudoLepton), weight);
+      _hist_dR_jet2_lep->fill(deltaR(cleanedJets.at(1).momentum(), lepton.momentum()), weight);
 
-      _hist_m1_m2lep->fill(cleanedJets.at(0).m() / secondJetLepton.m(), weight); 
+      _hist_m1_m2lep->fill(cleanedJets.at(0).mass() / secondJetLepton.mass(), weight); 
     }
 
 
@@ -186,7 +217,7 @@ namespace Rivet {
     // Data members like post-cuts event weight counters go here
 
     struct higherPt {
-      bool operator() (fastjet::PseudoJet j1, fastjet::PseudoJet j2) {return (j1.pt() > j2.pt());}
+      bool operator() (Jet j1, Jet j2) {return (j1.pt() > j2.pt());}
     } higherPt;
 
     Histo1DPtr _hist_mass, _hist_mass_norm, _hist_mass_not_merged;

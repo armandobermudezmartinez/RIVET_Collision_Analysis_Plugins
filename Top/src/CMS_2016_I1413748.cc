@@ -16,9 +16,6 @@ namespace Rivet {
     DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2016_I1413748);
 
 
-    /// @name Analysis methods
-    //@{
-
     /// Book histograms and initialise projections before the run
     void init() {
 
@@ -38,9 +35,6 @@ namespace Rivet {
       DressedLeptons dressedleptons(photons, leptons, 0.1, Cuts::open(), true, false);
       addProjection(dressedleptons, "DressedLeptons");
 
-      // Weight counter
-      _vis_unit_weights = 0.;
-
       // Booking of histograms
       const std::vector<double> bindphi = {0., 5.*M_PI/60., 10.*M_PI/60., 15.*M_PI/60., 20.*M_PI/60., 25.*M_PI/60., 30.*M_PI/60., 35.*M_PI/60., 40.*M_PI/60., 45.*M_PI/60., 50.*M_PI/60., 55.*M_PI/60., M_PI};
       _h_dphi = bookHisto1D("dphi", bindphi);
@@ -49,9 +43,6 @@ namespace Rivet {
       _h_dabseta = bookHisto1D("dabseta", bindabseta);
 
     }
-
-
-
 
 
 
@@ -65,9 +56,6 @@ namespace Rivet {
       // select ttbar -> lepton+jets without taus
       const DressedLeptons& dressedleptons = applyProjection<DressedLeptons>(event, "DressedLeptons");
       if (dressedleptons.dressedLeptons().size() != 2) vetoEvent;
-
-      // count weights
-      if (weight != 0.) _vis_unit_weights += weight/std::abs(weight);
 
       if (sameSign(dressedleptons.dressedLeptons()[0],dressedleptons.dressedLeptons()[1])) {
         cout<<"error in lepton charge assignment"<<endl;
@@ -84,14 +72,11 @@ namespace Rivet {
     }
 
 
-    /// Normalise histograms etc., after the run
+    /// Normalise histograms to unit area
     void finalize() {
 
-      normalize(_h_dphi); // normalize to unity
-      //scale(_h_dphi, crossSection()/picobarn/sumOfWeights()); // norm to cross section
-
-      normalize(_h_dabseta); // normalize to unity
-      //scale(_h_dabseta, crossSection()/picobarn/sumOfWeights()); // norm to cross section
+      normalize(_h_dphi);
+      normalize(_h_dabseta);
 
     }
 
@@ -103,9 +88,7 @@ namespace Rivet {
 
     /// @name Histograms
     //@{
-    double _vis_unit_weights;
     Histo1DPtr _h_dphi, _h_dabseta;
-    //Histo1DPtr _h_mode0, _h_mode1, _h_mode2;
     //@}
 
 

@@ -137,7 +137,8 @@ namespace Rivet {
 
 
       if (sameSign(dressed_electrons.dressedLeptons()[0],dressed_muons.dressedLeptons()[0])) {                                                                                                            
-        cout<<"error in lepton charge assignment"<<endl;    
+        cout<<"error in lepton charge assignment"<<endl;
+	vetoEvent;    
       }    
 
       //FourMomentum lepPlus = dressedleptons.dressedLeptons()[0].charge() > 0 ? dressedleptons.dressedLeptons()[0].momentum() : dressedleptons.dressedLeptons()[1].momentum();

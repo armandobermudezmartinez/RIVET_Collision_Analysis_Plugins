@@ -10,6 +10,7 @@ Authors:
  - Roman Kogler <roman.kogler@cern.ch>
  - Johannes Haller <johannes.haller@cern.ch>
 References:
+ - TOP-15-015
  - arXiv:1703.06330
 RunInfo:
  'ttbar events at $\sqrt{s}=8\;\TeV$. Data was collected by the CMS detector during the year 2012. Boosted topology requires high statistics in a single run or custom merging of the YODA files.'
@@ -29,11 +30,11 @@ Description:
 
   Definition of the particle level phase space:	
   - only ${\rm t\bar{t}}$ decays with one top quark decaying hadronically and one top quark decaying leptonically including an electron or muon from the W decay.
-  - lepton $\pt > 45\;\GeV$ and $|eta| < 2.1$
-  - at least one jet with $\pt > 400\;\GeV$ and $|eta| < 2.5$ 
-  - a second jet with $\pt > 150\;\GeV$ and $|eta| < 2.5$ 
-  - veto on additional jets with $\pt > 150\;\GeV$ and $|eta| < 2.5$ 
-  - distance between the second jet and the lepton in the eta-phi plane $\DeltaR(jet2, lepton)$ smaller 1.2
+  - lepton $\pt > 45\;\GeV$ and $|\eta| < 2.1$
+  - at least one jet with $\pt > 400\;\GeV$ and $|\eta| < 2.5$ 
+  - a second jet with $\pt > 150\;\GeV$ and $|\eta| < 2.5$ 
+  - veto on additional jets with $\pt > 150\;\GeV$ and $|\eta| < 2.5$ 
+  - distance between the second jet and the lepton in the eta-phi plane $\Delta R(jet2, lepton)$ smaller 1.2
   - invariant mass of the leading jet larger than the invariant mass of the combination of the second jet and lepton
 
   The differential and normalised differential cross section was measured as a function of the leading jet mass.'

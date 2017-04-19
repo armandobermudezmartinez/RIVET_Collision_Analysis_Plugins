@@ -1,8 +1,5 @@
 #BEGIN YODA_SCATTER2D /REF/CMS_2017_I1518399/d01-x01-y01
-ErrorBars=1
-LineColor=black
 Path=/REF/CMS_2017_I1518399/d01-x01-y01
-PolyMarker=*
 Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
@@ -15,10 +12,7 @@ Type=Scatter2D
 
 
 #BEGIN YODA_SCATTER2D /REF/CMS_2017_I1518399/d02-x01-y01
-ErrorBars=1
-LineColor=black
 Path=/REF/CMS_2017_I1518399/d02-x01-y01
-PolyMarker=*
 Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+

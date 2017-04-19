@@ -56,28 +56,6 @@ namespace Rivet {
       _hist_mass        = bookHisto1D("d01-x01-y01");
       _hist_mass_norm   = bookHisto1D("d02-x01-y01");
 
-      //histogram for not merged fraction (just in simulation)
-      std::vector<double> binning {140, 170, 200, 240, 290, 350};
-      _hist_mass_not_merged = bookHisto1D("mass_not_merged", binning, "", "Leading jet mass [GeV]", "");
-     
-      //control histograms
-      _hist_pt1         = bookHisto1D("pt1", 100, 0., 1000., "", "Leading jet p_{T} [GeV]", "");
-      _hist_pt2         = bookHisto1D("pt2", 100, 0., 1000., "", "2nd jet p_{T} [GeV]", "");
-      _hist_pt3         = bookHisto1D("pt3", 100, 0., 1000., "", "3rd jet p_{T} [GeV]", "");
-      _hist_ptlep       = bookHisto1D("ptlep", 100, 0., 1000., "", "Lepton p_{T} [GeV]", "");
-
-      _hist_eta1        = bookHisto1D("eta1", 60, -3., 3., "", "Leading jet #eta [GeV]", "");
-      _hist_eta2        = bookHisto1D("eta2", 60, -3., 3., "", "2nd jet #eta [GeV]", "");
-      _hist_eta3        = bookHisto1D("eta3", 60, -3., 3., "", "3rd jet #eta [GeV]", "");
-      _hist_etalep      = bookHisto1D("etalep", 60, -3., 3., "", "Lepton #eta [GeV]", "");
-
-      _hist_dR_jet2_lep = bookHisto1D("dR_jet2_lep", 50, 0., 5., "", "Lepton #eta [GeV]", "");
-
-      _hist_m1_m2lep    = bookHisto1D("m1_m2lep", 20, 0., 2., "", "m_{jet1}/m_{jet2+lepton} [GeV]", "");
-
-      _hist_Nlep        = bookHisto1D("NLep", 10, 0., 10., "", "Number of promt leptons (e,mu)", "");
-      _hist_NQuarks     = bookHisto1D("NQuarks", 10, 0., 10., "", "Number of light Quark candidates", "");
-      _hist_pt_top      = bookHisto1D("pt_top", 20, 0., 1000., "", "hadronic top quark pt", "");
     }
 
 
@@ -97,7 +75,6 @@ namespace Rivet {
 
       //leading dressed lepton
       const std::vector<DressedLepton> leptons = dressed_leptons.dressedLeptons();
-      _hist_Nlep->fill(leptons.size(), weight);
       if ( leptons.size() == 0 ) vetoEvent;
 
       Particle lepton;
@@ -108,9 +85,6 @@ namespace Rivet {
 	  lepton = leptons.at(i);
 	}
       }
-
-      //plot the hadronic top pT
-      _hist_pt_top->fill(hadronicTops.at(0).pt(), weight);
 
       //get the jets
       Cut jetCuts = Cuts::pt > 50*GeV;
@@ -146,40 +120,10 @@ namespace Rivet {
       // m(jet1) > m(jet2 +lepton)
       FourMomentum secondJetLepton = cleanedJets.at(1).momentum() + lepton.momentum();
       if (cleanedJets.at(0).mass() < secondJetLepton.mass()) vetoEvent;
-   
-      //========merged events==================
-      //just used as a check (not used for data comparison)
-      //======================================
-      bool fully_merged = true;
-    
-      const Particle hadTop = hadronicTops.at(0);
-      const auto isQuarkfromTopDecay = [](const Particle& p){return (p.abspid() < 6 && !fromDecay(p) && (hasParentWith(p, Cuts::abspid == 24) || hasParentWith(p, Cuts::abspid == 6)));};
-      Particles quarks = hadTop.allDescendants(firstParticleWith(isQuarkfromTopDecay), false);
-      _hist_NQuarks->fill(quarks.size(),weight);
-
-      for (unsigned int i = 0; (i < 3 && i < quarks.size()); ++i) {
-       	if (deltaR(cleanedJets.at(0).momentum(), quarks.at(i).momentum()) > 1.2) fully_merged = false;
-      }
-      //=======================================
 
       // fill histograms
       _hist_mass->fill(cleanedJets.at(0).mass(), weight);
-      if (!fully_merged) _hist_mass_not_merged->fill(cleanedJets.at(0).mass(), weight);
       _hist_mass_norm->fill(cleanedJets.at(0).mass(), weight);
-
-      _hist_pt1->fill(cleanedJets.at(0).pt(), weight);
-      _hist_pt2->fill(cleanedJets.at(1).pt(), weight);
-      if (cleanedJets.size() > 2) _hist_pt3->fill(cleanedJets.at(2).pt(), weight);
-      _hist_ptlep->fill(lepton.pt(), weight);
-
-      _hist_eta1->fill(cleanedJets.at(0).eta(), weight);
-      _hist_eta2->fill(cleanedJets.at(1).eta(), weight);
-      if (cleanedJets.size() > 2) _hist_eta3->fill(cleanedJets.at(2).eta(), weight);
-      _hist_etalep->fill(lepton.eta(), weight);
-
-      _hist_dR_jet2_lep->fill(deltaR(cleanedJets.at(1).momentum(), lepton.momentum()), weight);
-
-      _hist_m1_m2lep->fill(cleanedJets.at(0).mass() / secondJetLepton.mass(), weight); 
     }
 
 
@@ -203,11 +147,7 @@ namespace Rivet {
       bool operator() (Jet j1, Jet j2) {return (j1.pt() > j2.pt());}
     } higherPt;
 
-    Histo1DPtr _hist_mass, _hist_mass_norm, _hist_mass_not_merged;
-    Histo1DPtr _hist_pt1, _hist_pt2, _hist_pt3, _hist_ptlep, _hist_pt_top;
-    Histo1DPtr _hist_eta1, _hist_eta2, _hist_eta3, _hist_etalep;
-    Histo1DPtr _hist_dR_jet2_lep, _hist_m1_m2lep;
-    Histo1DPtr _hist_Nlep, _hist_NQuarks;
+    Histo1DPtr _hist_mass, _hist_mass_norm;
   };
 
   // The hook for the plugin system

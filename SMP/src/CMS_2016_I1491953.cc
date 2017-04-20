@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
-//**********Bhawandeep**********
-//********WJets@8TeV************
+//********** Bhawandeep & Apichart **********
+//******** WJets@8TeV ************
 
 #include "Rivet/Analysis.hh"
 #include "Rivet/Projections/FinalState.hh"
@@ -25,11 +25,11 @@ namespace Rivet {
   }
 
   /// @brief Add a short analysis description here
-  class CMS_2017_I1491953 : public Analysis {
+  class CMS_2016_I1491953 : public Analysis {
   public:
 
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2017_I1491953);
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2016_I1491953);
 
 
     /// @name Analysis methods
@@ -53,16 +53,20 @@ namespace Rivet {
 		addProjection(fastjets, "Jets");
 
 		//----- define variable binning
-		double bins_addjetPt_Winc1jet[] = {20, 24, 30, 39, 49, 60, 72, 85, 100, 117, 136, 157, 187, 220, 258, 300, 350, 400, 450, 500, 590, 700, 1000};
-		double bins_addjetPt_Winc2jet[] = {20, 24, 30, 39, 49, 60, 72, 85, 100, 117, 136, 157, 187, 220, 258, 300, 350, 400, 450, 500, 590, 800};
-		double bins_addjetPt_Winc3jet[] = {20, 24, 30, 39, 49, 62, 78, 105, 142, 185, 235, 300};
-		double bins_addjetPt_Winc4jet[] = {20, 24, 30, 39, 49, 62, 78, 96, 150};
+		double bins_addjetPt_Winc1jet[] = {30, 39, 49, 60, 72, 85, 100, 117, 136, 157, 187, 220, 258, 300, 350, 400, 450, 500, 590, 700, 1000};
+		double bins_addjetPt_Winc2jet[] = {30, 39, 49, 60, 72, 85, 100, 117, 136, 157, 187, 220, 258, 300, 350, 400, 450, 500, 590, 800};
+		double bins_addjetPt_Winc3jet[] = {30, 39, 49, 62, 78, 105, 142, 185, 235, 300};
+		double bins_addjetPt_Winc4jet[] = {30, 39, 49, 62, 78, 96, 150};
 		
 		double bins_addjetHT_Winc1jet[] = {30, 39, 49, 62, 78, 96, 118, 150, 190, 240, 300, 370, 450, 540, 650, 800, 1000, 1500};
 		double bins_addjetHT_Winc2jet[] = {60, 78, 96, 118, 150, 190, 240, 300, 370, 450, 540, 650, 800, 1200};
 		double bins_addjetHT_Winc3jet[] = {90, 105, 125, 151, 185, 230, 290, 366, 466, 586, 767, 990};
 		double bins_addjetHT_Winc4jet[] = {120, 140, 167, 203, 253, 320, 410, 530, 690, 910};
 		
+		double bins_dijetPt_Winc2jet[] = {20, 24, 30, 39, 49, 60, 72, 85, 100, 117, 136, 157, 187, 220, 258, 300, 350, 400, 450, 500, 590, 800};
+		double bins_dijetPt_Winc3jet[] = {20, 24, 30, 39, 49, 62, 78, 105, 142, 185, 235, 300};
+		double bins_dijetPt_Winc4jet[] = {20, 24, 30, 39, 49, 62, 78, 96, 150};
+
 		double bins_dijetM_Winc2jet[] = {0, 25, 52, 81, 112, 145, 180, 217, 256, 297, 340, 385, 432, 481, 532, 585, 640, 700};
 		double bins_dijetM_Winc3jet[] = {0, 30, 62, 96, 132, 170, 210, 252, 296, 342, 390, 440, 492, 546, 602, 660};
 		double bins_dijetM_Winc4jet[] = {0, 34, 70, 108, 148, 190, 234, 280, 328, 378, 430, 484, 540, 598, 660};
@@ -79,6 +83,10 @@ namespace Rivet {
 		std::vector<double> addjetHT_Winc3jet(bins_addjetHT_Winc3jet,bins_addjetHT_Winc3jet+sizeof(bins_addjetHT_Winc3jet)/sizeof(double));
 		std::vector<double> addjetHT_Winc4jet(bins_addjetHT_Winc4jet,bins_addjetHT_Winc4jet+sizeof(bins_addjetHT_Winc4jet)/sizeof(double));
 		
+		std::vector<double> dijetPt_Winc2jet(bins_dijetPt_Winc2jet,bins_dijetPt_Winc2jet+sizeof(bins_dijetPt_Winc2jet)/sizeof(double));
+		std::vector<double> dijetPt_Winc3jet(bins_dijetPt_Winc3jet,bins_dijetPt_Winc3jet+sizeof(bins_dijetPt_Winc3jet)/sizeof(double));
+		std::vector<double> dijetPt_Winc4jet(bins_dijetPt_Winc4jet,bins_dijetPt_Winc4jet+sizeof(bins_dijetPt_Winc4jet)/sizeof(double));
+		
 		std::vector<double> dijetM_Winc2jet(bins_dijetM_Winc2jet,bins_dijetM_Winc2jet+sizeof(bins_dijetM_Winc2jet)/sizeof(double));
 		std::vector<double> dijetM_Winc3jet(bins_dijetM_Winc3jet,bins_dijetM_Winc3jet+sizeof(bins_dijetM_Winc3jet)/sizeof(double));
 		std::vector<double> dijetM_Winc4jet(bins_dijetM_Winc4jet,bins_dijetM_Winc4jet+sizeof(bins_dijetM_Winc4jet)/sizeof(double));
@@ -92,77 +100,76 @@ namespace Rivet {
       //_h_ZZZZ = bookCounter(3, 1, 1);
 		
 		//-------------
-		_hist_addJetPt1j = bookHisto1D("addjet_Pt1jetcase", addjetPt_Winc1jet);
-		_hist_addJetPt2j = bookHisto1D("addjet_Pt2jetcase", addjetPt_Winc2jet);
-		_hist_addJetPt3j = bookHisto1D("addjet_Pt3jetcase", addjetPt_Winc3jet);
-		_hist_addJetPt4j = bookHisto1D("addjet_Pt4jetcase", addjetPt_Winc4jet);
+		_hist_Mult_exc      = bookHisto1D("d01-x01-y01", 8, -0.5, 7.5);
+		_hist_inc_WJetMult  = bookHisto1D("d02-x01-y01", 8, -0.5, 7.5);
 		
 		//-------------
-		_hist_addHt_1j = bookHisto1D("addJetsHT_inc1jet", addjetHT_Winc1jet);
-		_hist_addHt_2j = bookHisto1D("addJetsHT_inc2jet", addjetHT_Winc2jet);
-		_hist_addHt_3j = bookHisto1D("addJetsHT_inc3jet", addjetHT_Winc3jet);
-		_hist_addHt_4j = bookHisto1D("addJetsHT_inc4jet", addjetHT_Winc4jet);
+		_hist_addJetPt1j = bookHisto1D("d03-x01-y01", addjetPt_Winc1jet);
+		_hist_addJetPt2j = bookHisto1D("d04-x01-y01", addjetPt_Winc2jet);
+		_hist_addJetPt3j = bookHisto1D("d05-x01-y01", addjetPt_Winc3jet);
+		_hist_addJetPt4j = bookHisto1D("d06-x01-y01", addjetPt_Winc4jet);
 		
 		//-------------
-		_hist_inc_WJetMult  = bookHisto1D("njetWJet_incl", 8, -0.5, 7.5);
-		_hist_excl_WJetMult = bookHisto1D("njetWJet_excl", 8, -0.5, 7.5);
-		_hist_Mult_exc      = bookHisto1D("njet_exc_fbin", 8, -0.5, 7.5);
+		_hist_addHt_1j = bookHisto1D("d07-x01-y01", addjetHT_Winc1jet);
+		_hist_addHt_2j = bookHisto1D("d08-x01-y01", addjetHT_Winc2jet);
+		_hist_addHt_3j = bookHisto1D("d09-x01-y01", addjetHT_Winc3jet);
+		_hist_addHt_4j = bookHisto1D("d10-x01-y01", addjetHT_Winc4jet);
 		
 		//-------------
-		_hist_Jeteta1j = bookHisto1D("jet_eta1jetcase", 32, 0, 2.4);
-		_hist_Jeteta2j = bookHisto1D("jet_eta2jetcase", 32, 0, 2.4);
-		_hist_Jeteta3j = bookHisto1D("jet_eta3jetcase", 12, 0, 2.4);
-		_hist_Jeteta4j = bookHisto1D("jet_eta4jetcase", 12, 0, 2.4);
+		_hist_diJetPt_2j = bookHisto1D("d11-x01-y01", dijetPt_Winc2jet);
+		_hist_diJetPt_3j = bookHisto1D("d12-x01-y01", dijetPt_Winc3jet);
+		_hist_diJetPt_4j = bookHisto1D("d13-x01-y01", dijetPt_Winc4jet);
+
+		//-------------
+		_hist_dijetM_2j = bookHisto1D("d14-x01-y01", dijetM_Winc2jet);
+		_hist_dijetM_3j = bookHisto1D("d15-x01-y01", dijetM_Winc3jet);
+		_hist_dijetM_4j = bookHisto1D("d16-x01-y01", dijetM_Winc4jet);
 		
 		//-------------
-		_hist_dyj1j2_2j = bookHisto1D("dyj1j2_inc2jet", 20, 0, 4.8);
-		_hist_dyj1j2_3j = bookHisto1D("dyj1j2_inc3jet", 20, 0, 4.8);
-		_hist_dyj1j2_4j = bookHisto1D("dyj1j2_inc4jet", 16, 0, 4.8);
-		
-		_hist_dyjFjB_2j = bookHisto1D("dyjFjB_inc2jet", 20, 0, 4.8);
-		_hist_dyjFjB_3j = bookHisto1D("dyjFjB_inc3jet", 20, 0, 4.8);
-		_hist_dyjFjB_4j = bookHisto1D("dyjFjB_inc4jet", 16, 0, 4.8);
-		
-		_hist_dyj1j3_3j = bookHisto1D("dyj1j3_inc3jet", 20, 0, 4.8);
-		_hist_dyj2j3_3j = bookHisto1D("dyj2j3_inc3jet", 20, 0, 4.8);
-		
-		_hist_dphij1j2_2j = bookHisto1D("dphij1j2_inc2jet", 20, 0, 3.14159265359);
-		_hist_dphijFjB_2j = bookHisto1D("dphijFjB_inc2jet", 20, 0, 3.14159265359);
-		
-		_hist_dRj1j2_2j = bookHisto1D("dRj1j2_inc2jet", 30, 0, 6.);
-		
-		_hist_dijetM_2j = bookHisto1D("dijetM_inc2jet", dijetM_Winc2jet);
-		_hist_dijetM_3j = bookHisto1D("dijetM_inc3jet", dijetM_Winc3jet);
-		_hist_dijetM_4j = bookHisto1D("dijetM_inc4jet", dijetM_Winc4jet);
-		
-		_hist_diJetPt_2j = bookHisto1D("diJetPt_inc2jet", addjetPt_Winc2jet);
-		_hist_diJetPt_3j = bookHisto1D("diJetPt_inc3jet", addjetPt_Winc3jet);
-		_hist_diJetPt_4j = bookHisto1D("diJetPt_inc4jet", addjetPt_Winc4jet);
+		_hist_Jeteta1j = bookHisto1D("d17-x01-y01", 32, 0, 2.4);
+		_hist_Jeteta2j = bookHisto1D("d18-x01-y01", 32, 0, 2.4);
+		_hist_Jeteta3j = bookHisto1D("d19-x01-y01", 12, 0, 2.4);
+		_hist_Jeteta4j = bookHisto1D("d20-x01-y01", 12, 0, 2.4);
 		
 		//-------------
-		_hist_dphij1mu_1j = bookHisto1D("dphij1mu_inc1jet", 20, 0, 3.14159265359);
-		_hist_dphij2mu_2j = bookHisto1D("dphij2mu_inc2jet", 20, 0, 3.14159265359);
-		_hist_dphij3mu_3j = bookHisto1D("dphij3mu_inc3jet", 16, 0, 3.14159265359);
-		_hist_dphij4mu_4j = bookHisto1D("dphij4mu_inc4jet", 16, 0, 3.14159265359);
+		_hist_dyj1j2_2j = bookHisto1D("d21-x01-y01", 20, 0, 4.8);
+		_hist_dyj1j2_3j = bookHisto1D("d22-x01-y01", 20, 0, 4.8);
+		_hist_dyj1j2_4j = bookHisto1D("d23-x01-y01", 16, 0, 4.8);
+		
+		_hist_dyj1j3_3j = bookHisto1D("d24-x01-y01", 20, 0, 4.8);
+		_hist_dyj2j3_3j = bookHisto1D("d25-x01-y01", 20, 0, 4.8);
+
+		_hist_dyjFjB_2j = bookHisto1D("d26-x01-y01", 20, 0, 4.8);
+		_hist_dyjFjB_3j = bookHisto1D("d27-x01-y01", 20, 0, 4.8);
+		_hist_dyjFjB_4j = bookHisto1D("d28-x01-y01", 16, 0, 4.8);
+		
+		_hist_dphij1j2_2j = bookHisto1D("d29-x01-y01", 20, 0, 3.14159265359);
+		_hist_dphijFjB_2j = bookHisto1D("d30-x01-y01", 20, 0, 3.14159265359);
+		_hist_dRj1j2_2j = bookHisto1D("d31-x01-y01", 30, 0, 6.);
+		
+		//-------------
+		_hist_dphij1mu_1j = bookHisto1D("d32-x01-y01", 20, 0, 3.14159265359);
+		_hist_dphij2mu_2j = bookHisto1D("d33-x01-y01", 20, 0, 3.14159265359);
+		_hist_dphij3mu_3j = bookHisto1D("d34-x01-y01", 16, 0, 3.14159265359);
+		_hist_dphij4mu_4j = bookHisto1D("d35-x01-y01", 16, 0, 3.14159265359);
 
 		//------- MeanNJ ------
-		_hist_MeanNJht_1j     = bookHisto2D("MeanNJht_inc1jet", addjetHT_Winc1jet, njets_meanNj);
-		_hist_MeanNJht_2j     = bookHisto2D("MeanNJht_inc2jet", addjetHT_Winc2jet, njets_meanNj);
-		_hist_MeanNJdyj1j2_2j = bookHisto2D("MeanNJdyj1j2_inc2jet", 20, 0, 4.8, 15, 0.5, 15.5);
-		_hist_MeanNJdyjFjB_2j = bookHisto2D("MeanNJdyjFjB_inc2jet", 20, 0, 4.8, 15, 0.5, 15.5);
+		_hist_MeanNJht_1j     = bookProfile1D("d36-x01-y01", addjetHT_Winc1jet);
+		_hist_MeanNJht_2j     = bookProfile1D("d37-x01-y01", addjetHT_Winc2jet);
+		_hist_MeanNJdyj1j2_2j = bookProfile1D("d38-x01-y01", 20, 0, 4.8);
+		_hist_MeanNJdyjFjB_2j = bookProfile1D("d39-x01-y01", 20, 0, 4.8);
 
     }
 
 	  
 	// define function used for filiing inc Njets histo
 	void Fill(Histo1DPtr& _histJetMult, const double& weight, std::vector<FourMomentum>& finaljet_list){
-		
+
 		  _histJetMult->fill(0, weight);
 		  for (size_t i=0 ; i<finaljet_list.size() ; ++i) {
 			  if (i==7) break;
 			  _histJetMult->fill(i+1, weight);  // inclusive multiplicity
 		  }
-		
 	}
 
 	  
@@ -215,8 +222,6 @@ namespace Rivet {
 			std::sort(jListRap.begin(), jListRap.end(), orderByIncRap);
 			
 			//--- Multiplicity exc plot.
-			_hist_excl_WJetMult->fill(finaljet_list.size(), weight);
-			
 			if(finaljet_list.size()<=7) {
 				_hist_Mult_exc->fill(finaljet_list.size(), weight);
 			}
@@ -301,9 +306,8 @@ namespace Rivet {
 		//double crossec = 619.0113; // W3jets exclusive
 		//double crossec = 255.2378; // W4jets exclusive
 		
-		scale(_hist_inc_WJetMult, crossec/sumOfWeights());
-		scale(_hist_excl_WJetMult, crossec/sumOfWeights());
 		scale(_hist_Mult_exc, crossec/sumOfWeights());
+		scale(_hist_inc_WJetMult, crossec/sumOfWeights());
 		
 		scale(_hist_addJetPt1j, crossec/sumOfWeights());
 		scale(_hist_addJetPt2j, crossec/sumOfWeights());
@@ -351,10 +355,10 @@ namespace Rivet {
 		scale(_hist_dphij4mu_4j, crossec/sumOfWeights());
 		
 		//-------------------------------------
-		scale(_hist_MeanNJht_1j, crossec/sumOfWeights());
-		scale(_hist_MeanNJht_2j, crossec/sumOfWeights());
-		scale(_hist_MeanNJdyj1j2_2j, crossec/sumOfWeights());
-		scale(_hist_MeanNJdyjFjB_2j, crossec/sumOfWeights());
+		//scale(_hist_MeanNJht_1j, crossec/sumOfWeights());
+		//scale(_hist_MeanNJht_2j, crossec/sumOfWeights());
+		//scale(_hist_MeanNJdyj1j2_2j, crossec/sumOfWeights());
+		//scale(_hist_MeanNJdyjFjB_2j, crossec/sumOfWeights());
 
     }
 
@@ -371,7 +375,6 @@ namespace Rivet {
     //CounterPtr _h_ZZZZ;
 	  
 	  Histo1DPtr _hist_inc_WJetMult;
-	  Histo1DPtr _hist_excl_WJetMult;
 	  Histo1DPtr _hist_Mult_exc;
 	  
 	  Histo1DPtr _hist_addJetPt1j;
@@ -419,11 +422,12 @@ namespace Rivet {
 	  Histo1DPtr _hist_dphij3mu_3j;
 	  Histo1DPtr _hist_dphij4mu_4j;
 	  
-	  //-------------------------------------
-	  Histo2DPtr _hist_MeanNJht_1j;
-	  Histo2DPtr _hist_MeanNJht_2j;
-	  Histo2DPtr _hist_MeanNJdyj1j2_2j;
-	  Histo2DPtr _hist_MeanNJdyjFjB_2j;
+	  //-------------------------------------	  
+	  Profile1DPtr _hist_MeanNJht_1j;
+	  Profile1DPtr _hist_MeanNJht_2j;
+	  Profile1DPtr _hist_MeanNJdyj1j2_2j;
+	  Profile1DPtr _hist_MeanNJdyjFjB_2j;
+
 	  
     //@}
 
@@ -432,7 +436,7 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2017_I1491953);
+  DECLARE_RIVET_PLUGIN(CMS_2016_I1491953);
 
 
 }

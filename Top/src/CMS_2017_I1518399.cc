@@ -130,7 +130,7 @@ namespace Rivet {
     /// Normalise histograms etc., after the run
     void finalize() {
 
-      double sf = 252.89 * 1000 / sumOfWeights();
+      double sf = crossSection() * 1000 / sumOfWeights();
 
       scale(_hist_mass, sf);
       normalize(_hist_mass_norm, 1.0, false);

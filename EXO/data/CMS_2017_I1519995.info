@@ -7,6 +7,9 @@ InspireID: 1519995
 Status: VALIDATED
 Authors:
  - Andreas Hinzmann <hinzmann@cern.ch>
+References:
+ - arXiv:1703.09986 
+ - CMS EXO-15-009 
 RunInfo:
   Hard QCD process with a pT cut of 200 GeV on sub-leading jet is recommended.
 NumEvents: 

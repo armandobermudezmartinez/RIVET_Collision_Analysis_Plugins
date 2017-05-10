@@ -15,3 +15,20 @@ build:
     - cd CMSSW_8_1_0/src
     - eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
     - /cvmfs/cms.cern.ch/common/scram b -j 8
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - CMSSW_8_1_0
+
+list-analyses:
+  stage: test
+  tags:
+    - docker
+    - cvmfs
+  script:
+    - cd CMSSW_8_1_0/src
+    - eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
+    - mkdir -p GeneratorInterface/RivetInterface/test/
+    - wget https://raw.githubusercontent.com/cms-sw/cmssw/CMSSW_8_1_X/GeneratorInterface/RivetInterface/test/rivetSetup.sh -P GeneratorInterface/RivetInterface/test/
+    - source Rivet/rivetSetup.sh
+    - rivet --list-analyses

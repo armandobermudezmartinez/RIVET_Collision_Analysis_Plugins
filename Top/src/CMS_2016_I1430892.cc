@@ -9,12 +9,12 @@
 namespace Rivet {
 
 
-  /// Dilepton channel ttbar spin correlations and polarisation analysis
-  class CMS_2016_I1413748 : public Analysis {
+  /// Dilepton channel ttbar charge asymmetry analysis
+  class CMS_2016_I1430892 : public Analysis {
   public:
 
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2016_I1413748);
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2016_I1430892);
 
 
     /// Book histograms and initialise projections
@@ -47,65 +47,34 @@ namespace Rivet {
       // Booking of histograms
 
       //this histogram is independent of the parton-level information
-      _h_dphidressedleptons = bookHisto1D("d01-x01-y01", _bins_dphi);
+      _h_dabsetadressedleptons = bookHisto1D("d01-x01-y01", _bins_dabseta);
 
       //the remaining histos use parton-level information
-      _h_dphi = bookHisto1D("d02-x01-y01", _bins_dphi);
-      _h_cos_opening_angle = bookHisto1D("d05-x01-y01", _bins_cos_opening_angle);
-      _h_c1c2 = bookHisto1D("d08-x01-y01", _bins_c1c2);
-      _h_lep_costheta = bookHisto1D("d11-x01-y01", _bins_lep_costheta);
-      _h_lep_costheta_CPV = bookHisto1D("d14-x01-y01", _bins_lep_costheta_CPV);
+
+      _h_dabseta = bookHisto1D("d05-x01-y01", _bins_dabseta);
+      _h_dabsrapidity = bookHisto1D("d02-x01-y01", _bins_dabsrapidity);
+
 
       //1D slices of 2D histos for easier validation
-      _h_dphi_bin[0][0] = bookHisto1D("dphi_mttbin1", _bins_dphi);
-      _h_dphi_bin[1][0] = bookHisto1D("dphi_ttptbin1", _bins_dphi);
-      _h_dphi_bin[2][0] = bookHisto1D("dphi_ttrapbin1", _bins_dphi);
-      _h_dphi_bin[0][1] = bookHisto1D("dphi_mttbin2", _bins_dphi);
-      _h_dphi_bin[1][1] = bookHisto1D("dphi_ttptbin2", _bins_dphi);
-      _h_dphi_bin[2][1] = bookHisto1D("dphi_ttrapbin2", _bins_dphi);
-      _h_dphi_bin[0][2] = bookHisto1D("dphi_mttbin3", _bins_dphi);
-      _h_dphi_bin[1][2] = bookHisto1D("dphi_ttptbin3", _bins_dphi);
-      _h_dphi_bin[2][2] = bookHisto1D("dphi_ttrapbin3", _bins_dphi);
+      _h_dabseta_bin[0][0] = bookHisto1D("dabseta_mttbin1", _bins_dabseta);
+      _h_dabseta_bin[1][0] = bookHisto1D("dabseta_ttptbin1", _bins_dabseta);
+      _h_dabseta_bin[2][0] = bookHisto1D("dabseta_ttrapbin1", _bins_dabseta);
+      _h_dabseta_bin[0][1] = bookHisto1D("dabseta_mttbin2", _bins_dabseta);
+      _h_dabseta_bin[1][1] = bookHisto1D("dabseta_ttptbin2", _bins_dabseta);
+      _h_dabseta_bin[2][1] = bookHisto1D("dabseta_ttrapbin2", _bins_dabseta);
+      _h_dabseta_bin[0][2] = bookHisto1D("dabseta_mttbin3", _bins_dabseta);
+      _h_dabseta_bin[1][2] = bookHisto1D("dabseta_ttptbin3", _bins_dabseta);
+      _h_dabseta_bin[2][2] = bookHisto1D("dabseta_ttrapbin3", _bins_dabseta);
 
-      _h_cos_opening_angle_bin[0][0] = bookHisto1D("cos_opening_angle_mttbin1", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[1][0] = bookHisto1D("cos_opening_angle_ttptbin1", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[2][0] = bookHisto1D("cos_opening_angle_ttrapbin1", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[0][1] = bookHisto1D("cos_opening_angle_mttbin2", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[1][1] = bookHisto1D("cos_opening_angle_ttptbin2", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[2][1] = bookHisto1D("cos_opening_angle_ttrapbin2", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[0][2] = bookHisto1D("cos_opening_angle_mttbin3", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[1][2] = bookHisto1D("cos_opening_angle_ttptbin3", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[2][2] = bookHisto1D("cos_opening_angle_ttrapbin3", _bins_cos_opening_angle);
-
-      _h_c1c2_bin[0][0] = bookHisto1D("c1c2_mttbin1", _bins_c1c2);
-      _h_c1c2_bin[1][0] = bookHisto1D("c1c2_ttptbin1", _bins_c1c2);
-      _h_c1c2_bin[2][0] = bookHisto1D("c1c2_ttrapbin1", _bins_c1c2);
-      _h_c1c2_bin[0][1] = bookHisto1D("c1c2_mttbin2", _bins_c1c2);
-      _h_c1c2_bin[1][1] = bookHisto1D("c1c2_ttptbin2", _bins_c1c2);
-      _h_c1c2_bin[2][1] = bookHisto1D("c1c2_ttrapbin2", _bins_c1c2);
-      _h_c1c2_bin[0][2] = bookHisto1D("c1c2_mttbin3", _bins_c1c2);
-      _h_c1c2_bin[1][2] = bookHisto1D("c1c2_ttptbin3", _bins_c1c2);
-      _h_c1c2_bin[2][2] = bookHisto1D("c1c2_ttrapbin3", _bins_c1c2);
-
-      _h_lep_costheta_bin[0][0] = bookHisto1D("lep_costheta_mttbin1", _bins_lep_costheta);
-      _h_lep_costheta_bin[1][0] = bookHisto1D("lep_costheta_ttptbin1", _bins_lep_costheta);
-      _h_lep_costheta_bin[2][0] = bookHisto1D("lep_costheta_ttrapbin1", _bins_lep_costheta);
-      _h_lep_costheta_bin[0][1] = bookHisto1D("lep_costheta_mttbin2", _bins_lep_costheta);
-      _h_lep_costheta_bin[1][1] = bookHisto1D("lep_costheta_ttptbin2", _bins_lep_costheta);
-      _h_lep_costheta_bin[2][1] = bookHisto1D("lep_costheta_ttrapbin2", _bins_lep_costheta);
-      _h_lep_costheta_bin[0][2] = bookHisto1D("lep_costheta_mttbin3", _bins_lep_costheta);
-      _h_lep_costheta_bin[1][2] = bookHisto1D("lep_costheta_ttptbin3", _bins_lep_costheta);
-      _h_lep_costheta_bin[2][2] = bookHisto1D("lep_costheta_ttrapbin3", _bins_lep_costheta);
-
-      _h_lep_costheta_CPV_bin[0][0] = bookHisto1D("lep_costheta_CPV_mttbin1", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[1][0] = bookHisto1D("lep_costheta_CPV_ttptbin1", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[2][0] = bookHisto1D("lep_costheta_CPV_ttrapbin1", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[0][1] = bookHisto1D("lep_costheta_CPV_mttbin2", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[1][1] = bookHisto1D("lep_costheta_CPV_ttptbin2", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[2][1] = bookHisto1D("lep_costheta_CPV_ttrapbin2", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[0][2] = bookHisto1D("lep_costheta_CPV_mttbin3", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[1][2] = bookHisto1D("lep_costheta_CPV_ttptbin3", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[2][2] = bookHisto1D("lep_costheta_CPV_ttrapbin3", _bins_lep_costheta_CPV);
+      _h_dabsrapidity_bin[0][0] = bookHisto1D("dabsrapidity_mttbin1", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[1][0] = bookHisto1D("dabsrapidity_ttptbin1", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[2][0] = bookHisto1D("dabsrapidity_ttrapbin1", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[0][1] = bookHisto1D("dabsrapidity_mttbin2", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[1][1] = bookHisto1D("dabsrapidity_ttptbin2", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[2][1] = bookHisto1D("dabsrapidity_ttrapbin2", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[0][2] = bookHisto1D("dabsrapidity_mttbin3", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[1][2] = bookHisto1D("dabsrapidity_ttptbin3", _bins_dabsrapidity);
+      _h_dabsrapidity_bin[2][2] = bookHisto1D("dabsrapidity_ttrapbin3", _bins_dabsrapidity);
 
       //3 secondary variables used for the differential measurements
       _h_tt_mass = bookHisto1D("tt_mass", _bins_tt_mass);
@@ -114,23 +83,14 @@ namespace Rivet {
 
 
       //2D histos
-      _h_dphi_var[0] = bookHisto2D("d20-x01-y01", _bins_dphi, _bins_tt_mass);
-      _h_cos_opening_angle_var[0] = bookHisto2D("d26-x01-y01", _bins_cos_opening_angle, _bins_tt_mass);
-      _h_c1c2_var[0] = bookHisto2D("d32-x01-y01", _bins_c1c2, _bins_tt_mass);
-      _h_lep_costheta_var[0] = bookHisto2D("d38-x01-y01", _bins_lep_costheta, _bins_tt_mass);
-      _h_lep_costheta_CPV_var[0] = bookHisto2D("d44-x01-y01", _bins_lep_costheta_CPV, _bins_tt_mass);
+      _h_dabsrapidity_var[0] = bookHisto2D("d11-x01-y01", _bins_dabsrapidity, _bins_tt_mass);
+      _h_dabseta_var[0] = bookHisto2D("d17-x01-y01", _bins_dabseta, _bins_tt_mass);
 
-      _h_dphi_var[1] = bookHisto2D("d50-x01-y01", _bins_dphi, _bins_tt_pT);
-      _h_cos_opening_angle_var[1] = bookHisto2D("d56-x01-y01", _bins_cos_opening_angle, _bins_tt_pT);
-      _h_c1c2_var[1] = bookHisto2D("d62-x01-y01", _bins_c1c2, _bins_tt_pT);
-      _h_lep_costheta_var[1] = bookHisto2D("d68-x01-y01", _bins_lep_costheta, _bins_tt_pT);
-      _h_lep_costheta_CPV_var[1] = bookHisto2D("d74-x01-y01", _bins_lep_costheta_CPV, _bins_tt_pT);
+      _h_dabsrapidity_var[1] = bookHisto2D("d23-x01-y01", _bins_dabsrapidity, _bins_tt_pT);
+      _h_dabseta_var[1] = bookHisto2D("d29-x01-y01", _bins_dabseta, _bins_tt_pT);
 
-      _h_dphi_var[2] = bookHisto2D("d80-x01-y01", _bins_dphi, _bins_tt_absrapidity);
-      _h_cos_opening_angle_var[2] = bookHisto2D("d86-x01-y01", _bins_cos_opening_angle, _bins_tt_absrapidity);
-      _h_c1c2_var[2] = bookHisto2D("d92-x01-y01", _bins_c1c2, _bins_tt_absrapidity);
-      _h_lep_costheta_var[2] = bookHisto2D("d98-x01-y01", _bins_lep_costheta, _bins_tt_absrapidity);
-      _h_lep_costheta_CPV_var[2] = bookHisto2D("d104-x01-y01", _bins_lep_costheta_CPV, _bins_tt_absrapidity);
+      _h_dabsrapidity_var[2] = bookHisto2D("d35-x01-y01", _bins_dabsrapidity, _bins_tt_absrapidity);
+      _h_dabseta_var[2] = bookHisto2D("d41-x01-y01", _bins_dabseta, _bins_tt_absrapidity);
       
     }
 
@@ -170,9 +130,9 @@ namespace Rivet {
             FourMomentum lepMinus = dressedels[electrontouse].charge() > 0 ? dressedmus[muontouse].momentum() : dressedels[electrontouse].momentum();
 
             //now calculate the variable
-            double dphi_temp = deltaPhi(lepPlus,lepMinus);
+            double dabseta_temp = lepPlus.abseta() - lepMinus.abseta();
 
-            fillWithUFOF( _h_dphidressedleptons, dphi_temp, weight );
+            fillWithUFOF( _h_dabsetadressedleptons, dabseta_temp, weight );
           }
         }
 
@@ -233,7 +193,7 @@ namespace Rivet {
         FourMomentum lepPlus = chargedleptons[0].charge() > 0 ? chargedleptons[0].momentum() : chargedleptons[1].momentum();
         FourMomentum lepMinus = chargedleptons[0].charge() > 0 ? chargedleptons[1].momentum() : chargedleptons[0].momentum();
  
-        double dphi_temp = deltaPhi(lepPlus,lepMinus);
+        double dabseta_temp = lepPlus.abseta() - lepMinus.abseta();
 
         //Get the four-momenta of the positively- and negatively-charged tops
         FourMomentum topPlus_p4 = leptonicpartontops[0].pdgId() > 0 ? leptonicpartontops[0].momentum() : leptonicpartontops[1].momentum();
@@ -245,43 +205,15 @@ namespace Rivet {
         double tt_absrapidity_temp = ttbar_p4.absrapidity();
         double tt_pT_temp = ttbar_p4.pT();
 
-        //Lorentz transformations to calculate the spin observables in the helicity basis
-
-        //transform everything to the ttbar CM frame
-        LorentzTransform ttCM;
-        ttCM.setBetaVec(-ttbar_p4.boostVector());
-
-        topPlus_p4 = ttCM.transform(topPlus_p4);
-        topMinus_p4 = ttCM.transform(topMinus_p4);
-
-        lepPlus = ttCM.transform(lepPlus);
-        lepMinus = ttCM.transform(lepMinus);
-
-        //now boost the leptons to their parent top CM frames
-        LorentzTransform topPlus, topMinus;
-        topPlus.setBetaVec(-topPlus_p4.boostVector());
-        topMinus.setBetaVec(-topMinus_p4.boostVector());
-
-        lepPlus = topPlus.transform(lepPlus);
-        lepMinus = topMinus.transform(lepMinus);
-
-        double lepPlus_costheta_temp = lepPlus.vector3().dot(topPlus_p4.vector3()) / (lepPlus.vector3().mod() * topPlus_p4.vector3().mod());
-        double lepMinus_costheta_temp = lepMinus.vector3().dot(topMinus_p4.vector3()) / (lepMinus.vector3().mod() * topMinus_p4.vector3().mod());
-        double c1c2_temp = lepPlus_costheta_temp * lepMinus_costheta_temp;
-        double cos_opening_angle_temp = lepPlus.vector3().dot(lepMinus.vector3()) / (lepPlus.vector3().mod() * lepMinus.vector3().mod());
+        double dabsrapidity_temp = topPlus_p4.absrapidity() - topMinus_p4.absrapidity();
 
         //fill parton-level histos
         fillWithUFOF( _h_tt_mass, tt_mass_temp, weight );
         fillWithUFOF( _h_tt_absrapidity, tt_absrapidity_temp, weight );
         fillWithUFOF( _h_tt_pT, tt_pT_temp, weight );
 
-        fillWithUFOF( _h_dphi, dphi_temp, weight );
-        fillWithUFOF( _h_cos_opening_angle, cos_opening_angle_temp, weight );
-        fillWithUFOF( _h_c1c2, c1c2_temp, weight );
-        fillWithUFOF( _h_lep_costheta, lepPlus_costheta_temp, weight );
-        fillWithUFOF( _h_lep_costheta, lepMinus_costheta_temp, weight );
-        fillWithUFOF( _h_lep_costheta_CPV, lepPlus_costheta_temp, weight );
-        fillWithUFOF( _h_lep_costheta_CPV, -lepMinus_costheta_temp, weight );
+        fillWithUFOF( _h_dabseta, dabseta_temp, weight );
+        fillWithUFOF( _h_dabsrapidity, dabsrapidity_temp, weight );
 
         //now fill the same variables in each of their 3 bins of ttbar invariant mass, pT, and absolute rapidity
         for (int i_var = 0; i_var < 3; ++i_var) {
@@ -307,22 +239,11 @@ namespace Rivet {
           else if ( var < bins_var[2] ) j_bin = 1;
           else j_bin = 2;
 
-          fillWithUFOF( _h_dphi_bin[i_var][j_bin], dphi_temp, weight );
-          fillWithUFOF( _h_cos_opening_angle_bin[i_var][j_bin], cos_opening_angle_temp, weight );
-          fillWithUFOF( _h_c1c2_bin[i_var][j_bin], c1c2_temp, weight );
-          fillWithUFOF( _h_lep_costheta_bin[i_var][j_bin], lepPlus_costheta_temp, weight );
-          fillWithUFOF( _h_lep_costheta_bin[i_var][j_bin], lepMinus_costheta_temp, weight );
-          fillWithUFOF( _h_lep_costheta_CPV_bin[i_var][j_bin], lepPlus_costheta_temp, weight );
-          fillWithUFOF( _h_lep_costheta_CPV_bin[i_var][j_bin], -lepMinus_costheta_temp, weight );
+          fillWithUFOF( _h_dabseta_bin[i_var][j_bin], dabseta_temp, weight );
+          fillWithUFOF( _h_dabsrapidity_bin[i_var][j_bin], dabsrapidity_temp, weight );
 
-          fillWithUFOF( _h_dphi_var[i_var], dphi_temp, var, weight );
-          fillWithUFOF( _h_cos_opening_angle_var[i_var], cos_opening_angle_temp, var, weight );
-          fillWithUFOF( _h_c1c2_var[i_var], c1c2_temp, var, weight );
-          fillWithUFOF( _h_lep_costheta_var[i_var], lepPlus_costheta_temp, var, weight );
-          fillWithUFOF( _h_lep_costheta_var[i_var], lepMinus_costheta_temp, var, weight );
-          fillWithUFOF( _h_lep_costheta_CPV_var[i_var], lepPlus_costheta_temp, var, weight );
-          fillWithUFOF( _h_lep_costheta_CPV_var[i_var], -lepMinus_costheta_temp, var, weight );
-
+          fillWithUFOF( _h_dabsrapidity_var[i_var], dabsrapidity_temp, var, weight );
+          fillWithUFOF( _h_dabseta_var[i_var], dabseta_temp, var, weight );
         }
 
       }
@@ -333,30 +254,21 @@ namespace Rivet {
     /// Normalise histograms to unit area
     void finalize() {
 
-      normalize(_h_dphidressedleptons);
+      normalize(_h_dabsetadressedleptons);
 
-      normalize(_h_dphi);
-      normalize(_h_cos_opening_angle);
-      normalize(_h_c1c2);
-      normalize(_h_lep_costheta);
-      normalize(_h_lep_costheta_CPV);
+      normalize(_h_dabseta);
+      normalize(_h_dabsrapidity);
 
       normalize(_h_tt_mass);
       normalize(_h_tt_absrapidity);
       normalize(_h_tt_pT);
 
       for (int i_var = 0; i_var < 3; ++i_var) {
-        normalize(_h_dphi_var[i_var]);
-        normalize(_h_cos_opening_angle_var[i_var]);
-        normalize(_h_c1c2_var[i_var]);
-        normalize(_h_lep_costheta_var[i_var]);
-        normalize(_h_lep_costheta_CPV_var[i_var]);
+        normalize(_h_dabsrapidity_var[i_var]);
+        normalize(_h_dabseta_var[i_var]);
         for (int j_bin = 0; j_bin < 3; ++j_bin) {
-          normalize(_h_dphi_bin[i_var][j_bin]);
-          normalize(_h_cos_opening_angle_bin[i_var][j_bin]);
-          normalize(_h_c1c2_bin[i_var][j_bin]);
-          normalize(_h_lep_costheta_bin[i_var][j_bin]);
-          normalize(_h_lep_costheta_CPV_bin[i_var][j_bin]);
+          normalize(_h_dabseta_bin[i_var][j_bin]);
+          normalize(_h_dabsrapidity_bin[i_var][j_bin]);
         }
       }
 
@@ -364,18 +276,15 @@ namespace Rivet {
 
 
   private:
-    Histo1DPtr _h_tt_mass, _h_tt_absrapidity, _h_tt_pT, _h_dphidressedleptons, _h_dphi, _h_lep_costheta, _h_lep_costheta_CPV, _h_c1c2, _h_cos_opening_angle;
-    Histo1DPtr _h_dphi_bin[3][3], _h_lep_costheta_bin[3][3], _h_lep_costheta_CPV_bin[3][3], _h_c1c2_bin[3][3], _h_cos_opening_angle_bin[3][3];
-    Histo2DPtr _h_dphi_var[3], _h_lep_costheta_var[3], _h_lep_costheta_CPV_var[3], _h_c1c2_var[3], _h_cos_opening_angle_var[3];  
+    Histo1DPtr _h_tt_mass, _h_tt_absrapidity, _h_tt_pT, _h_dabsetadressedleptons, _h_dabseta, _h_dabsrapidity;
+    Histo1DPtr _h_dabseta_bin[3][3], _h_dabsrapidity_bin[3][3];
+    Histo2DPtr _h_dabseta_var[3], _h_dabsrapidity_var[3];
 
     const std::vector<double> _bins_tt_mass = {300., 430., 530., 1200.};
     const std::vector<double> _bins_tt_pT = {0., 41., 92., 300.};
     const std::vector<double> _bins_tt_absrapidity = {0., 0.34, 0.75, 1.5};
-    const std::vector<double> _bins_dphi = {0., 5.*M_PI/60., 10.*M_PI/60., 15.*M_PI/60., 20.*M_PI/60., 25.*M_PI/60., 30.*M_PI/60., 35.*M_PI/60., 40.*M_PI/60., 45.*M_PI/60., 50.*M_PI/60., 55.*M_PI/60., M_PI};
-    const std::vector<double> _bins_lep_costheta = {-1., -2./3., -1./3., 0., 1./3., 2./3., 1.};
-    const std::vector<double> _bins_lep_costheta_CPV = {-1., -2./3., -1./3., 0., 1./3., 2./3., 1.};
-    const std::vector<double> _bins_c1c2 = {-1., -0.4, -10./60., 0., 10./60., 0.4, 1.};
-    const std::vector<double> _bins_cos_opening_angle = {-1., -2./3., -1./3., 0., 1./3., 2./3., 1.};
+    const std::vector<double> _bins_dabseta = { -2., -68./60., -48./60., -32./60., -20./60., -8./60., 0., 8./60., 20./60., 32./60., 48./60., 68./60., 2.};
+    const std::vector<double> _bins_dabsrapidity = {-2., -44./60., -20./60., 0., 20./60., 44./60., 2.};
 
     struct ilepsmll {
       double mll;
@@ -501,7 +410,7 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2016_I1413748);
+  DECLARE_RIVET_PLUGIN(CMS_2016_I1430892);
 
 
 }

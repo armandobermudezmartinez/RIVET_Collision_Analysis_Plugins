@@ -131,6 +131,25 @@ namespace Rivet {
       _h_c1c2_var[2] = bookHisto2D("d92-x01-y01", _bins_c1c2, _bins_tt_absrapidity);
       _h_lep_costheta_var[2] = bookHisto2D("d98-x01-y01", _bins_lep_costheta, _bins_tt_absrapidity);
       _h_lep_costheta_CPV_var[2] = bookHisto2D("d104-x01-y01", _bins_lep_costheta_CPV, _bins_tt_absrapidity);
+
+      //profile histos for asymmetries
+      _h_dphi_profile[0] = bookProfile1D("d17-x01-y01", _bins_tt_mass);
+      _h_cos_opening_angle_profile[0] = bookProfile1D("d23-x01-y01", _bins_tt_mass);
+      _h_c1c2_profile[0] = bookProfile1D("d29-x01-y01", _bins_tt_mass);
+      _h_lep_costheta_profile[0] = bookProfile1D("d35-x01-y01", _bins_tt_mass);
+      _h_lep_costheta_CPV_profile[0] = bookProfile1D("d41-x01-y01", _bins_tt_mass);
+
+      _h_dphi_profile[1] = bookProfile1D("d47-x01-y01", _bins_tt_pT);
+      _h_cos_opening_angle_profile[1] = bookProfile1D("d53-x01-y01", _bins_tt_pT);
+      _h_c1c2_profile[1] = bookProfile1D("d59-x01-y01", _bins_tt_pT);
+      _h_lep_costheta_profile[1] = bookProfile1D("d65-x01-y01", _bins_tt_pT);
+      _h_lep_costheta_CPV_profile[1] = bookProfile1D("d71-x01-y01", _bins_tt_pT);
+
+      _h_dphi_profile[2] = bookProfile1D("d77-x01-y01", _bins_tt_absrapidity);
+      _h_cos_opening_angle_profile[2] = bookProfile1D("d83-x01-y01", _bins_tt_absrapidity);
+      _h_c1c2_profile[2] = bookProfile1D("d89-x01-y01", _bins_tt_absrapidity);
+      _h_lep_costheta_profile[2] = bookProfile1D("d95-x01-y01", _bins_tt_absrapidity);
+      _h_lep_costheta_CPV_profile[2] = bookProfile1D("d101-x01-y01", _bins_tt_absrapidity);
       
     }
 
@@ -192,12 +211,8 @@ namespace Rivet {
     
           //get the lepton
           const Particle lepTop = leptonicpartontops[k];
-          //const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && !fromDecay(p));}; //this works for PYTHIA but not MC@NLO+herwig
-          //const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && !fromHadron(p));}; //this works for PYTHIA but not MC@NLO+herwig
-          //const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && p.genParticle()->status() == 3 );}; //this works for MC@NLO+herwig in combination with allDescendants,false
           const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && isPrompt(p, false, false));}; //this works for MC@NLO+herwig in combination with allDescendants,false
           Particles lepton_candidates = lepTop.allDescendants(firstParticleWith(isPromptChargedLepton), false); 
-          //Particles lepton_candidates = lepTop.allDescendants(lastParticleWith(isPromptChargedLepton), false); //not all leptons with gamma parents are identified in this case
           if ( lepton_candidates.size() < 1 ) MSG_WARNING("error, PartonicTops::E_MU top quark had no daughter lepton candidate, skipping event.");
           bool istrueleptonictop = false;
           
@@ -219,8 +234,6 @@ namespace Rivet {
           if ( istrueleptonictop ) ++ntrueleptonictops;
         }
       }
-
-      //if ( ntrueleptonictops != chargedleptons.size() ) MSG_WARNING("error in lepton count");
 
       if ( ntrueleptonictops == 2 ) {
         oppositesign = !( sameSign(chargedleptons[0],chargedleptons[1]) );
@@ -323,6 +336,14 @@ namespace Rivet {
           fillWithUFOF( _h_lep_costheta_CPV_var[i_var], lepPlus_costheta_temp, var, weight );
           fillWithUFOF( _h_lep_costheta_CPV_var[i_var], -lepMinus_costheta_temp, var, weight );
 
+          fillWithUFOF( _h_dphi_profile[i_var], dphi_temp, var, weight, (_h_dphi->xMax() + _h_dphi->xMin())/2. );
+          fillWithUFOF( _h_cos_opening_angle_profile[i_var], cos_opening_angle_temp, var, weight, (_h_cos_opening_angle->xMax() + _h_cos_opening_angle->xMin())/2. );
+          fillWithUFOF( _h_c1c2_profile[i_var], c1c2_temp, var, weight, (_h_c1c2->xMax() + _h_c1c2->xMin())/2. );
+          fillWithUFOF( _h_lep_costheta_profile[i_var], lepPlus_costheta_temp, var, weight, (_h_lep_costheta->xMax() + _h_lep_costheta->xMin())/2. );
+          fillWithUFOF( _h_lep_costheta_profile[i_var], lepMinus_costheta_temp, var, weight, (_h_lep_costheta->xMax() + _h_lep_costheta->xMin())/2. );
+          fillWithUFOF( _h_lep_costheta_CPV_profile[i_var], lepPlus_costheta_temp, var, weight, (_h_lep_costheta_CPV->xMax() + _h_lep_costheta_CPV->xMin())/2. );
+          fillWithUFOF( _h_lep_costheta_CPV_profile[i_var], -lepMinus_costheta_temp, var, weight, (_h_lep_costheta_CPV->xMax() + _h_lep_costheta_CPV->xMin())/2. );
+
         }
 
       }
@@ -366,7 +387,8 @@ namespace Rivet {
   private:
     Histo1DPtr _h_tt_mass, _h_tt_absrapidity, _h_tt_pT, _h_dphidressedleptons, _h_dphi, _h_lep_costheta, _h_lep_costheta_CPV, _h_c1c2, _h_cos_opening_angle;
     Histo1DPtr _h_dphi_bin[3][3], _h_lep_costheta_bin[3][3], _h_lep_costheta_CPV_bin[3][3], _h_c1c2_bin[3][3], _h_cos_opening_angle_bin[3][3];
-    Histo2DPtr _h_dphi_var[3], _h_lep_costheta_var[3], _h_lep_costheta_CPV_var[3], _h_c1c2_var[3], _h_cos_opening_angle_var[3];  
+    Histo2DPtr _h_dphi_var[3], _h_lep_costheta_var[3], _h_lep_costheta_CPV_var[3], _h_c1c2_var[3], _h_cos_opening_angle_var[3];
+    Profile1DPtr _h_dphi_profile[3], _h_lep_costheta_profile[3], _h_lep_costheta_CPV_profile[3], _h_c1c2_profile[3], _h_cos_opening_angle_profile[3];
 
     const std::vector<double> _bins_tt_mass = {300., 430., 530., 1200.};
     const std::vector<double> _bins_tt_pT = {0., 41., 92., 300.};
@@ -391,6 +413,10 @@ namespace Rivet {
 
     void fillWithUFOF(Histo2DPtr h, double x, double y, double w) {
       h->fill(std::max(std::min(x, h->xMax()-1e-9),h->xMin()+1e-9), std::max(std::min(y, h->yMax()-1e-9),h->yMin()+1e-9), w);
+    }
+
+    void fillWithUFOF(Profile1DPtr h, double x, double y, double w, double c) {
+      h->fill(std::max(std::min(y, h->xMax()-1e-9),h->xMin()+1e-9), float(x > c) - float(x < c), w);
     }
 
     int returnPrimaryLepton(const std::vector<DressedLepton> dressedleptons) {
@@ -463,7 +489,7 @@ namespace Rivet {
         sort(vimlls[uniqueset].begin(), vimlls[uniqueset].end(), [](ilepsmll ilepsmll1, ilepsmll ilepsmll2) { return ilepsmll1.mll > ilepsmll2.mll; } );
       }
 
-      //which set has the lowest mass for the last pair to be removed?
+      //Find the set that has the lowest mass for the last pair to be removed.
       int lowestmassuniqueset = -1;
       double lowestmass = 99999;
       for (int uniqueset = 0; uniqueset < nuniquesets; ++uniqueset) {
@@ -478,7 +504,6 @@ namespace Rivet {
       for (unsigned int i = 0; i < vimlls[lowestmassuniqueset].size(); ++i) {
         MSG_DEBUG(vimlls[lowestmassuniqueset][i].mll<<" "<<vimlls[lowestmassuniqueset][i].ilep1<<" "<<vimlls[lowestmassuniqueset][i].ilep2);
       }
-      //MSG_DEBUG(leptonsused[lowestmassuniqueset]);
 
       while ( (std::find(leptonsused[lowestmassuniqueset].begin(), leptonsused[lowestmassuniqueset].end(), leptontouse) != leptonsused[lowestmassuniqueset].end()) ) ++leptontouse;
       MSG_DEBUG("Using lepton "<<leptontouse);

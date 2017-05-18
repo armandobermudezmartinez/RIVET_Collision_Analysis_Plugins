@@ -15,13 +15,13 @@ Legend=1
 #GofReference=RatioPlotReference
 #GofFrame=1
 #NormalizeToIntegral=1
-Title=\Large \textbf{CMS} \hspace{10em} \large $19.5\,\text{fb}^\text{$-$1}$ (8 TeV)
+Title=CMS, 8 TeV, $\mathrm{t\bar{t}}$ dilepton channel, parton-level
 # END PLOT
 
 # BEGIN PLOT /CMS_2016_I1430892/d01-x01-y01
 XLabel=$\Delta\left|\eta_{\ell}\right|$
 YLabel=$\frac{1}{\sigma}\frac{\mathrm{d}\sigma}{\mathrm{d}\Delta\left|\eta_{\ell}\right|}$
-Title=\Large \textbf{CMS} \hspace{0.5em} \large $19.5\,\text{fb}^\text{$-$1}$ (8 TeV), Rivet particle-level $e\mu$-only
+Title=CMS, 8 TeV, $\mathrm{t\bar{t}}$ dilepton, parton-level. Rivet particle-level, $e\mu$ only.
 # END PLOT
 
 # BEGIN PLOT /CMS_2016_I1430892/d02-x01-y01
@@ -33,6 +33,56 @@ YLabel=$\frac{1}{\sigma}\frac{\mathrm{d}\sigma}{\mathrm{d}\Delta\left|y_\mathrm{
 XLabel=$\Delta\left|\eta_{\ell}\right|$
 YLabel=$\frac{1}{\sigma}\frac{\mathrm{d}\sigma}{\mathrm{d}\Delta\left|\eta_{\ell}\right|}$
 # END PLOT
+
+
+# BEGIN PLOT /CMS_2016_I1430892/d08-x01-y01
+XLabel=$M_\mathrm{t\bar{t}}$
+YLabel=$A_{\mathrm{C}}$
+RatioPlotMode=deviation
+RatioPlotYMin=-3
+RatioPlotYMax=3
+# END PLOT
+
+# BEGIN PLOT /CMS_2016_I1430892/d14-x01-y01
+XLabel=$M_\mathrm{t\bar{t}}$
+YLabel=$A^{\mathrm{lep}}_{\mathrm{C}}$
+RatioPlotMode=deviation
+RatioPlotYMin=-3
+RatioPlotYMax=3
+# END PLOT
+
+# BEGIN PLOT /CMS_2016_I1430892/d20-x01-y01
+XLabel=$p_\mathrm{T}^\mathrm{t\bar{t}}$
+YLabel=$A_{\mathrm{C}}$
+RatioPlotMode=deviation
+RatioPlotYMin=-3
+RatioPlotYMax=3
+# END PLOT
+
+# BEGIN PLOT /CMS_2016_I1430892/d26-x01-y01
+XLabel=$p_\mathrm{T}^\mathrm{t\bar{t}}$
+YLabel=$A^{\mathrm{lep}}_{\mathrm{C}}$
+RatioPlotMode=deviation
+RatioPlotYMin=-3
+RatioPlotYMax=3
+# END PLOT
+
+# BEGIN PLOT /CMS_2016_I1430892/d32-x01-y01
+XLabel=$\left|y_\mathrm{t\bar{t}}\right|$
+YLabel=$A_{\mathrm{C}}$
+RatioPlotMode=deviation
+RatioPlotYMin=-3
+RatioPlotYMax=3
+# END PLOT
+
+# BEGIN PLOT /CMS_2016_I1430892/d38-x01-y01
+XLabel=$\left|y_\mathrm{t\bar{t}}\right|$
+YLabel=$A^{\mathrm{lep}}_{\mathrm{C}}$
+RatioPlotMode=deviation
+RatioPlotYMin=-3
+RatioPlotYMax=3
+# END PLOT
+
 
 # BEGIN PLOT /CMS_2016_I1430892/d11-x01-y01
 XLabel=$\Delta\left|y_\mathrm{t}\right|$

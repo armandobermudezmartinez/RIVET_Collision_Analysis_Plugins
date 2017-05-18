@@ -91,6 +91,16 @@ namespace Rivet {
 
       _h_dabsrapidity_var[2] = bookHisto2D("d35-x01-y01", _bins_dabsrapidity, _bins_tt_absrapidity);
       _h_dabseta_var[2] = bookHisto2D("d41-x01-y01", _bins_dabseta, _bins_tt_absrapidity);
+
+      //profile histos for asymmetries
+      _h_dabsrapidity_profile[0] = bookProfile1D("d08-x01-y01", _bins_tt_mass);
+      _h_dabseta_profile[0] = bookProfile1D("d14-x01-y01", _bins_tt_mass);
+
+      _h_dabsrapidity_profile[1] = bookProfile1D("d20-x01-y01", _bins_tt_pT);
+      _h_dabseta_profile[1] = bookProfile1D("d26-x01-y01", _bins_tt_pT);
+
+      _h_dabsrapidity_profile[2] = bookProfile1D("d32-x01-y01", _bins_tt_absrapidity);
+      _h_dabseta_profile[2] = bookProfile1D("d38-x01-y01", _bins_tt_absrapidity);
       
     }
 
@@ -152,12 +162,8 @@ namespace Rivet {
     
           //get the lepton
           const Particle lepTop = leptonicpartontops[k];
-          //const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && !fromDecay(p));}; //this works for PYTHIA but not MC@NLO+herwig
-          //const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && !fromHadron(p));}; //this works for PYTHIA but not MC@NLO+herwig
-          //const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && p.genParticle()->status() == 3 );}; //this works for MC@NLO+herwig in combination with allDescendants,false
           const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && isPrompt(p, false, false));}; //this works for MC@NLO+herwig in combination with allDescendants,false
           Particles lepton_candidates = lepTop.allDescendants(firstParticleWith(isPromptChargedLepton), false); 
-          //Particles lepton_candidates = lepTop.allDescendants(lastParticleWith(isPromptChargedLepton), false); //not all leptons with gamma parents are identified in this case
           if ( lepton_candidates.size() < 1 ) MSG_WARNING("error, PartonicTops::E_MU top quark had no daughter lepton candidate, skipping event.");
           bool istrueleptonictop = false;
           
@@ -179,8 +185,6 @@ namespace Rivet {
           if ( istrueleptonictop ) ++ntrueleptonictops;
         }
       }
-
-      //if ( ntrueleptonictops != chargedleptons.size() ) MSG_WARNING("error in lepton count");
 
       if ( ntrueleptonictops == 2 ) {
         oppositesign = !( sameSign(chargedleptons[0],chargedleptons[1]) );
@@ -244,6 +248,9 @@ namespace Rivet {
 
           fillWithUFOF( _h_dabsrapidity_var[i_var], dabsrapidity_temp, var, weight );
           fillWithUFOF( _h_dabseta_var[i_var], dabseta_temp, var, weight );
+
+          fillWithUFOF( _h_dabsrapidity_profile[i_var], dabsrapidity_temp, var, weight, (_h_dabsrapidity->xMax() + _h_dabsrapidity->xMin())/2. );
+          fillWithUFOF( _h_dabseta_profile[i_var], dabseta_temp, var, weight, (_h_dabseta->xMax() + _h_dabseta->xMin())/2. );
         }
 
       }
@@ -279,6 +286,7 @@ namespace Rivet {
     Histo1DPtr _h_tt_mass, _h_tt_absrapidity, _h_tt_pT, _h_dabsetadressedleptons, _h_dabseta, _h_dabsrapidity;
     Histo1DPtr _h_dabseta_bin[3][3], _h_dabsrapidity_bin[3][3];
     Histo2DPtr _h_dabseta_var[3], _h_dabsrapidity_var[3];
+    Profile1DPtr _h_dabseta_profile[3], _h_dabsrapidity_profile[3];
 
     const std::vector<double> _bins_tt_mass = {300., 430., 530., 1200.};
     const std::vector<double> _bins_tt_pT = {0., 41., 92., 300.};
@@ -300,6 +308,10 @@ namespace Rivet {
 
     void fillWithUFOF(Histo2DPtr h, double x, double y, double w) {
       h->fill(std::max(std::min(x, h->xMax()-1e-9),h->xMin()+1e-9), std::max(std::min(y, h->yMax()-1e-9),h->yMin()+1e-9), w);
+    }
+
+    void fillWithUFOF(Profile1DPtr h, double x, double y, double w, double c) {
+      h->fill(std::max(std::min(y, h->xMax()-1e-9),h->xMin()+1e-9), float(x > c) - float(x < c), w);
     }
 
     int returnPrimaryLepton(const std::vector<DressedLepton> dressedleptons) {
@@ -372,7 +384,7 @@ namespace Rivet {
         sort(vimlls[uniqueset].begin(), vimlls[uniqueset].end(), [](ilepsmll ilepsmll1, ilepsmll ilepsmll2) { return ilepsmll1.mll > ilepsmll2.mll; } );
       }
 
-      //which set has the lowest mass for the last pair to be removed?
+      //Find the set that has the lowest mass for the last pair to be removed.
       int lowestmassuniqueset = -1;
       double lowestmass = 99999;
       for (int uniqueset = 0; uniqueset < nuniquesets; ++uniqueset) {
@@ -387,7 +399,6 @@ namespace Rivet {
       for (unsigned int i = 0; i < vimlls[lowestmassuniqueset].size(); ++i) {
         MSG_DEBUG(vimlls[lowestmassuniqueset][i].mll<<" "<<vimlls[lowestmassuniqueset][i].ilep1<<" "<<vimlls[lowestmassuniqueset][i].ilep2);
       }
-      //MSG_DEBUG(leptonsused[lowestmassuniqueset]);
 
       while ( (std::find(leptonsused[lowestmassuniqueset].begin(), leptonsused[lowestmassuniqueset].end(), leptontouse) != leptonsused[lowestmassuniqueset].end()) ) ++leptontouse;
       MSG_DEBUG("Using lepton "<<leptontouse);

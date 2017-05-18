@@ -54,34 +54,6 @@ namespace Rivet {
       _h_dabseta = bookHisto1D("d05-x01-y01", _bins_dabseta);
       _h_dabsrapidity = bookHisto1D("d02-x01-y01", _bins_dabsrapidity);
 
-
-      //1D slices of 2D histos for easier validation
-      _h_dabseta_bin[0][0] = bookHisto1D("dabseta_mttbin1", _bins_dabseta);
-      _h_dabseta_bin[1][0] = bookHisto1D("dabseta_ttptbin1", _bins_dabseta);
-      _h_dabseta_bin[2][0] = bookHisto1D("dabseta_ttrapbin1", _bins_dabseta);
-      _h_dabseta_bin[0][1] = bookHisto1D("dabseta_mttbin2", _bins_dabseta);
-      _h_dabseta_bin[1][1] = bookHisto1D("dabseta_ttptbin2", _bins_dabseta);
-      _h_dabseta_bin[2][1] = bookHisto1D("dabseta_ttrapbin2", _bins_dabseta);
-      _h_dabseta_bin[0][2] = bookHisto1D("dabseta_mttbin3", _bins_dabseta);
-      _h_dabseta_bin[1][2] = bookHisto1D("dabseta_ttptbin3", _bins_dabseta);
-      _h_dabseta_bin[2][2] = bookHisto1D("dabseta_ttrapbin3", _bins_dabseta);
-
-      _h_dabsrapidity_bin[0][0] = bookHisto1D("dabsrapidity_mttbin1", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[1][0] = bookHisto1D("dabsrapidity_ttptbin1", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[2][0] = bookHisto1D("dabsrapidity_ttrapbin1", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[0][1] = bookHisto1D("dabsrapidity_mttbin2", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[1][1] = bookHisto1D("dabsrapidity_ttptbin2", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[2][1] = bookHisto1D("dabsrapidity_ttrapbin2", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[0][2] = bookHisto1D("dabsrapidity_mttbin3", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[1][2] = bookHisto1D("dabsrapidity_ttptbin3", _bins_dabsrapidity);
-      _h_dabsrapidity_bin[2][2] = bookHisto1D("dabsrapidity_ttrapbin3", _bins_dabsrapidity);
-
-      //3 secondary variables used for the differential measurements
-      _h_tt_mass = bookHisto1D("tt_mass", _bins_tt_mass);
-      _h_tt_absrapidity = bookHisto1D("tt_absrapidity", _bins_tt_absrapidity);
-      _h_tt_pT = bookHisto1D("tt_pT", _bins_tt_pT);
-
-
       //2D histos
       _h_dabsrapidity_var[0] = bookHisto2D("d11-x01-y01", _bins_dabsrapidity, _bins_tt_mass);
       _h_dabseta_var[0] = bookHisto2D("d17-x01-y01", _bins_dabseta, _bins_tt_mass);
@@ -162,7 +134,7 @@ namespace Rivet {
     
           //get the lepton
           const Particle lepTop = leptonicpartontops[k];
-          const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && isPrompt(p, false, false));}; //this works for MC@NLO+herwig in combination with allDescendants,false
+          const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && isPrompt(p, false, false));};
           Particles lepton_candidates = lepTop.allDescendants(firstParticleWith(isPromptChargedLepton), false); 
           if ( lepton_candidates.size() < 1 ) MSG_WARNING("error, PartonicTops::E_MU top quark had no daughter lepton candidate, skipping event.");
           bool istrueleptonictop = false;
@@ -212,10 +184,6 @@ namespace Rivet {
         double dabsrapidity_temp = topPlus_p4.absrapidity() - topMinus_p4.absrapidity();
 
         //fill parton-level histos
-        fillWithUFOF( _h_tt_mass, tt_mass_temp, weight );
-        fillWithUFOF( _h_tt_absrapidity, tt_absrapidity_temp, weight );
-        fillWithUFOF( _h_tt_pT, tt_pT_temp, weight );
-
         fillWithUFOF( _h_dabseta, dabseta_temp, weight );
         fillWithUFOF( _h_dabsrapidity, dabsrapidity_temp, weight );
 
@@ -237,15 +205,6 @@ namespace Rivet {
             bins_var = _bins_tt_absrapidity;
           }
 
-          int j_bin = -1;
-
-          if ( var < bins_var[1] ) j_bin = 0;
-          else if ( var < bins_var[2] ) j_bin = 1;
-          else j_bin = 2;
-
-          fillWithUFOF( _h_dabseta_bin[i_var][j_bin], dabseta_temp, weight );
-          fillWithUFOF( _h_dabsrapidity_bin[i_var][j_bin], dabsrapidity_temp, weight );
-
           fillWithUFOF( _h_dabsrapidity_var[i_var], dabsrapidity_temp, var, weight );
           fillWithUFOF( _h_dabseta_var[i_var], dabseta_temp, var, weight );
 
@@ -266,25 +225,16 @@ namespace Rivet {
       normalize(_h_dabseta);
       normalize(_h_dabsrapidity);
 
-      normalize(_h_tt_mass);
-      normalize(_h_tt_absrapidity);
-      normalize(_h_tt_pT);
-
       for (int i_var = 0; i_var < 3; ++i_var) {
         normalize(_h_dabsrapidity_var[i_var]);
         normalize(_h_dabseta_var[i_var]);
-        for (int j_bin = 0; j_bin < 3; ++j_bin) {
-          normalize(_h_dabseta_bin[i_var][j_bin]);
-          normalize(_h_dabsrapidity_bin[i_var][j_bin]);
-        }
       }
 
     }
 
 
   private:
-    Histo1DPtr _h_tt_mass, _h_tt_absrapidity, _h_tt_pT, _h_dabsetadressedleptons, _h_dabseta, _h_dabsrapidity;
-    Histo1DPtr _h_dabseta_bin[3][3], _h_dabsrapidity_bin[3][3];
+    Histo1DPtr _h_dabsetadressedleptons, _h_dabseta, _h_dabsrapidity;
     Histo2DPtr _h_dabseta_var[3], _h_dabsrapidity_var[3];
     Profile1DPtr _h_dabseta_profile[3], _h_dabsrapidity_profile[3];
 

@@ -56,63 +56,6 @@ namespace Rivet {
       _h_lep_costheta = bookHisto1D("d11-x01-y01", _bins_lep_costheta);
       _h_lep_costheta_CPV = bookHisto1D("d14-x01-y01", _bins_lep_costheta_CPV);
 
-      //1D slices of 2D histos for easier validation
-      _h_dphi_bin[0][0] = bookHisto1D("dphi_mttbin1", _bins_dphi);
-      _h_dphi_bin[1][0] = bookHisto1D("dphi_ttptbin1", _bins_dphi);
-      _h_dphi_bin[2][0] = bookHisto1D("dphi_ttrapbin1", _bins_dphi);
-      _h_dphi_bin[0][1] = bookHisto1D("dphi_mttbin2", _bins_dphi);
-      _h_dphi_bin[1][1] = bookHisto1D("dphi_ttptbin2", _bins_dphi);
-      _h_dphi_bin[2][1] = bookHisto1D("dphi_ttrapbin2", _bins_dphi);
-      _h_dphi_bin[0][2] = bookHisto1D("dphi_mttbin3", _bins_dphi);
-      _h_dphi_bin[1][2] = bookHisto1D("dphi_ttptbin3", _bins_dphi);
-      _h_dphi_bin[2][2] = bookHisto1D("dphi_ttrapbin3", _bins_dphi);
-
-      _h_cos_opening_angle_bin[0][0] = bookHisto1D("cos_opening_angle_mttbin1", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[1][0] = bookHisto1D("cos_opening_angle_ttptbin1", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[2][0] = bookHisto1D("cos_opening_angle_ttrapbin1", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[0][1] = bookHisto1D("cos_opening_angle_mttbin2", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[1][1] = bookHisto1D("cos_opening_angle_ttptbin2", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[2][1] = bookHisto1D("cos_opening_angle_ttrapbin2", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[0][2] = bookHisto1D("cos_opening_angle_mttbin3", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[1][2] = bookHisto1D("cos_opening_angle_ttptbin3", _bins_cos_opening_angle);
-      _h_cos_opening_angle_bin[2][2] = bookHisto1D("cos_opening_angle_ttrapbin3", _bins_cos_opening_angle);
-
-      _h_c1c2_bin[0][0] = bookHisto1D("c1c2_mttbin1", _bins_c1c2);
-      _h_c1c2_bin[1][0] = bookHisto1D("c1c2_ttptbin1", _bins_c1c2);
-      _h_c1c2_bin[2][0] = bookHisto1D("c1c2_ttrapbin1", _bins_c1c2);
-      _h_c1c2_bin[0][1] = bookHisto1D("c1c2_mttbin2", _bins_c1c2);
-      _h_c1c2_bin[1][1] = bookHisto1D("c1c2_ttptbin2", _bins_c1c2);
-      _h_c1c2_bin[2][1] = bookHisto1D("c1c2_ttrapbin2", _bins_c1c2);
-      _h_c1c2_bin[0][2] = bookHisto1D("c1c2_mttbin3", _bins_c1c2);
-      _h_c1c2_bin[1][2] = bookHisto1D("c1c2_ttptbin3", _bins_c1c2);
-      _h_c1c2_bin[2][2] = bookHisto1D("c1c2_ttrapbin3", _bins_c1c2);
-
-      _h_lep_costheta_bin[0][0] = bookHisto1D("lep_costheta_mttbin1", _bins_lep_costheta);
-      _h_lep_costheta_bin[1][0] = bookHisto1D("lep_costheta_ttptbin1", _bins_lep_costheta);
-      _h_lep_costheta_bin[2][0] = bookHisto1D("lep_costheta_ttrapbin1", _bins_lep_costheta);
-      _h_lep_costheta_bin[0][1] = bookHisto1D("lep_costheta_mttbin2", _bins_lep_costheta);
-      _h_lep_costheta_bin[1][1] = bookHisto1D("lep_costheta_ttptbin2", _bins_lep_costheta);
-      _h_lep_costheta_bin[2][1] = bookHisto1D("lep_costheta_ttrapbin2", _bins_lep_costheta);
-      _h_lep_costheta_bin[0][2] = bookHisto1D("lep_costheta_mttbin3", _bins_lep_costheta);
-      _h_lep_costheta_bin[1][2] = bookHisto1D("lep_costheta_ttptbin3", _bins_lep_costheta);
-      _h_lep_costheta_bin[2][2] = bookHisto1D("lep_costheta_ttrapbin3", _bins_lep_costheta);
-
-      _h_lep_costheta_CPV_bin[0][0] = bookHisto1D("lep_costheta_CPV_mttbin1", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[1][0] = bookHisto1D("lep_costheta_CPV_ttptbin1", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[2][0] = bookHisto1D("lep_costheta_CPV_ttrapbin1", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[0][1] = bookHisto1D("lep_costheta_CPV_mttbin2", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[1][1] = bookHisto1D("lep_costheta_CPV_ttptbin2", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[2][1] = bookHisto1D("lep_costheta_CPV_ttrapbin2", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[0][2] = bookHisto1D("lep_costheta_CPV_mttbin3", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[1][2] = bookHisto1D("lep_costheta_CPV_ttptbin3", _bins_lep_costheta_CPV);
-      _h_lep_costheta_CPV_bin[2][2] = bookHisto1D("lep_costheta_CPV_ttrapbin3", _bins_lep_costheta_CPV);
-
-      //3 secondary variables used for the differential measurements
-      _h_tt_mass = bookHisto1D("tt_mass", _bins_tt_mass);
-      _h_tt_absrapidity = bookHisto1D("tt_absrapidity", _bins_tt_absrapidity);
-      _h_tt_pT = bookHisto1D("tt_pT", _bins_tt_pT);
-
-
       //2D histos
       _h_dphi_var[0] = bookHisto2D("d20-x01-y01", _bins_dphi, _bins_tt_mass);
       _h_cos_opening_angle_var[0] = bookHisto2D("d26-x01-y01", _bins_cos_opening_angle, _bins_tt_mass);
@@ -211,7 +154,7 @@ namespace Rivet {
     
           //get the lepton
           const Particle lepTop = leptonicpartontops[k];
-          const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && isPrompt(p, false, false));}; //this works for MC@NLO+herwig in combination with allDescendants,false
+          const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && isPrompt(p, false, false));};
           Particles lepton_candidates = lepTop.allDescendants(firstParticleWith(isPromptChargedLepton), false); 
           if ( lepton_candidates.size() < 1 ) MSG_WARNING("error, PartonicTops::E_MU top quark had no daughter lepton candidate, skipping event.");
           bool istrueleptonictop = false;
@@ -284,10 +227,6 @@ namespace Rivet {
         double cos_opening_angle_temp = lepPlus.vector3().dot(lepMinus.vector3()) / (lepPlus.vector3().mod() * lepMinus.vector3().mod());
 
         //fill parton-level histos
-        fillWithUFOF( _h_tt_mass, tt_mass_temp, weight );
-        fillWithUFOF( _h_tt_absrapidity, tt_absrapidity_temp, weight );
-        fillWithUFOF( _h_tt_pT, tt_pT_temp, weight );
-
         fillWithUFOF( _h_dphi, dphi_temp, weight );
         fillWithUFOF( _h_cos_opening_angle, cos_opening_angle_temp, weight );
         fillWithUFOF( _h_c1c2, c1c2_temp, weight );
@@ -313,20 +252,6 @@ namespace Rivet {
             var = tt_absrapidity_temp;
             bins_var = _bins_tt_absrapidity;
           }
-
-          int j_bin = -1;
-
-          if ( var < bins_var[1] ) j_bin = 0;
-          else if ( var < bins_var[2] ) j_bin = 1;
-          else j_bin = 2;
-
-          fillWithUFOF( _h_dphi_bin[i_var][j_bin], dphi_temp, weight );
-          fillWithUFOF( _h_cos_opening_angle_bin[i_var][j_bin], cos_opening_angle_temp, weight );
-          fillWithUFOF( _h_c1c2_bin[i_var][j_bin], c1c2_temp, weight );
-          fillWithUFOF( _h_lep_costheta_bin[i_var][j_bin], lepPlus_costheta_temp, weight );
-          fillWithUFOF( _h_lep_costheta_bin[i_var][j_bin], lepMinus_costheta_temp, weight );
-          fillWithUFOF( _h_lep_costheta_CPV_bin[i_var][j_bin], lepPlus_costheta_temp, weight );
-          fillWithUFOF( _h_lep_costheta_CPV_bin[i_var][j_bin], -lepMinus_costheta_temp, weight );
 
           fillWithUFOF( _h_dphi_var[i_var], dphi_temp, var, weight );
           fillWithUFOF( _h_cos_opening_angle_var[i_var], cos_opening_angle_temp, var, weight );
@@ -362,31 +287,19 @@ namespace Rivet {
       normalize(_h_lep_costheta);
       normalize(_h_lep_costheta_CPV);
 
-      normalize(_h_tt_mass);
-      normalize(_h_tt_absrapidity);
-      normalize(_h_tt_pT);
-
       for (int i_var = 0; i_var < 3; ++i_var) {
         normalize(_h_dphi_var[i_var]);
         normalize(_h_cos_opening_angle_var[i_var]);
         normalize(_h_c1c2_var[i_var]);
         normalize(_h_lep_costheta_var[i_var]);
         normalize(_h_lep_costheta_CPV_var[i_var]);
-        for (int j_bin = 0; j_bin < 3; ++j_bin) {
-          normalize(_h_dphi_bin[i_var][j_bin]);
-          normalize(_h_cos_opening_angle_bin[i_var][j_bin]);
-          normalize(_h_c1c2_bin[i_var][j_bin]);
-          normalize(_h_lep_costheta_bin[i_var][j_bin]);
-          normalize(_h_lep_costheta_CPV_bin[i_var][j_bin]);
-        }
       }
 
     }
 
 
   private:
-    Histo1DPtr _h_tt_mass, _h_tt_absrapidity, _h_tt_pT, _h_dphidressedleptons, _h_dphi, _h_lep_costheta, _h_lep_costheta_CPV, _h_c1c2, _h_cos_opening_angle;
-    Histo1DPtr _h_dphi_bin[3][3], _h_lep_costheta_bin[3][3], _h_lep_costheta_CPV_bin[3][3], _h_c1c2_bin[3][3], _h_cos_opening_angle_bin[3][3];
+    Histo1DPtr _h_dphidressedleptons, _h_dphi, _h_lep_costheta, _h_lep_costheta_CPV, _h_c1c2, _h_cos_opening_angle;
     Histo2DPtr _h_dphi_var[3], _h_lep_costheta_var[3], _h_lep_costheta_CPV_var[3], _h_c1c2_var[3], _h_cos_opening_angle_var[3];
     Profile1DPtr _h_dphi_profile[3], _h_lep_costheta_profile[3], _h_lep_costheta_CPV_profile[3], _h_c1c2_profile[3], _h_cos_opening_angle_profile[3];
 

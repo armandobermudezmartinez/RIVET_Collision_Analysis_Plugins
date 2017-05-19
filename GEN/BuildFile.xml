@@ -12,3 +12,4 @@
 <export>
   <lib name="1"/>
 </export>
+<!-- Do not compile plugins integrated (and working) in official Rivet -->

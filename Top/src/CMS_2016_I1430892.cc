@@ -46,11 +46,10 @@ namespace Rivet {
 
       // Booking of histograms
 
-      //this histogram is independent of the parton-level information
-      _h_dabsetadressedleptons = bookHisto1D("d01-x01-y01", _bins_dabseta);
+      // This histogram is independent of the parton-level information, and is an addition to the original analysis. It is compared to the same data as the parton-level delta_abseta histogram d05-x01-y01.
+      _h_dabsetadressedleptons = bookHisto1D("d00-x01-y01", _bins_dabseta);
 
-      //the remaining histos use parton-level information
-
+      // The remaining histos use parton-level information
       _h_dabseta = bookHisto1D("d05-x01-y01", _bins_dabseta);
       _h_dabsrapidity = bookHisto1D("d02-x01-y01", _bins_dabsrapidity);
 

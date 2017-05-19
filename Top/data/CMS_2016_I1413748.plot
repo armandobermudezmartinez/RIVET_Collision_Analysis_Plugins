@@ -18,7 +18,7 @@ Legend=1
 Title=CMS, 8 TeV, $\mathrm{t\bar{t}}$ dilepton channel, parton-level
 # END PLOT
 
-# BEGIN PLOT /CMS_2016_I1413748/d01-x01-y01
+# BEGIN PLOT /CMS_2016_I1413748/d00-x01-y01
 XLabel=$\left|\Delta \phi_{\ell^+\ell^-}\right|$
 YLabel=$\frac{1}{\sigma}\frac{\mathrm{d}\sigma}{\mathrm{d}\left|\Delta \phi_{\ell^+\ell^-}\right|}$
 Title=CMS, 8 TeV, $\mathrm{t\bar{t}}$ dilepton, parton-level. Rivet particle-level, $e\mu$ only.

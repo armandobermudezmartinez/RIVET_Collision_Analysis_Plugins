@@ -46,10 +46,10 @@ namespace Rivet {
 
       // Booking of histograms
 
-      //this histogram is independent of the parton-level information
-      _h_dphidressedleptons = bookHisto1D("d01-x01-y01", _bins_dphi);
+      // This histogram is independent of the parton-level information, and is an addition to the original analysis. It is compared to the same data as the parton-level delta_phi histogram d02-x01-y01.
+      _h_dphidressedleptons = bookHisto1D("d00-x01-y01", _bins_dphi);
 
-      //the remaining histos use parton-level information
+      // The remaining histos use parton-level information
       _h_dphi = bookHisto1D("d02-x01-y01", _bins_dphi);
       _h_cos_opening_angle = bookHisto1D("d05-x01-y01", _bins_cos_opening_angle);
       _h_c1c2 = bookHisto1D("d08-x01-y01", _bins_c1c2);

@@ -1,20 +1,11 @@
 # BEGIN PLOT /CMS_2016_I1430892/*
-#RatioPlotYLabel=Theory/Data
 LogY=0
 ShowZero=0
 XTwosidedTicks=1
 YTwosidedTicks=1
-#RatioPlotMode=datamc
 RatioPlotYMin=0.9
 RatioPlotYMax=1.1
 Legend=1
-#LegendXPos=0.4
-#LegendYPos=0.5
-#GofLegend=1
-#GofType=chi2
-#GofReference=RatioPlotReference
-#GofFrame=1
-#NormalizeToIntegral=1
 Title=CMS, 8 TeV, $\mathrm{t\bar{t}}$ dilepton channel, parton-level
 # END PLOT
 

@@ -273,19 +273,31 @@ namespace Rivet {
         return -1;
       }
 
+      if ( ndressedlep > 7 ) {
+        MSG_WARNING("warning, found "<<ndressedlep<<" leptons. returnPrimaryLepton is not optimised and may run very slowly with a large number of leptons.");
+      }
+
       int leptontouse = 0; //variable that will be updated with the ordinal number of the primary lepton
 
-      int nuniquesets = 1; //counter of unique sets of lepton pairs. For 2M+1 dressed leptons, there will be nuniquesets = M!(M+1)! unique sets of pairs. Probability of M>3 negligible (i.e. >3 extra lepton pairs from radiation), so create arrays of size 3!*4! = 144.
-      vector<int> leptonsused[144]; //keep track of lepton numbers used forming each unique set of pairs
-      Vofilepsmll vimlls[144]; //vector of information about each pair for each unique set of lepton pairs
-      //clear the vector for the first unique set of lepton pairs. The others will be cleared later if they are used.
-      vimlls[0].clear();
-      leptonsused[0].clear();
+      int totalleptonpairsfilled = 0; //counter of total number of lepton pairs filled for debugging purposes.
 
-      if ( ndressedlep > 7 ) {
-        MSG_WARNING("error, found "<<ndressedlep<<" leptons. returnPrimaryLepton is only configured to use up to 7 leptons. Returning -1.");
-        return -1;
+      const int nleppairs = (ndressedlep-1)/2;
+
+      const int nuniquesetsexpected =  std::tgamma( 1 + nleppairs ) * std::tgamma( 2 + nleppairs ); //For 2M+1 dressed leptons, there will be nuniquesets = M!(M+1)! possible unique sets of pairs. Among these there will be M! duplication through pair permutations, but this will be taken care of later.
+      vector<int> leptonsused[nuniquesetsexpected]; //keep track of lepton numbers used forming each unique set of pairs
+      Vofilepsmll vimlls[nuniquesetsexpected]; //vector of information about each pair for each unique set of lepton pairs
+      //clear the vectors for all the unique sets of lepton pairs. 
+      for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
+        vimlls[uniqueset].clear();
+        leptonsused[uniqueset].clear();
       }
+
+      int expected_multiplicity[nleppairs]; //number of unique sets that will be identical up to the first (nleppairs+1) pairs
+      for (int k = 0; k < nleppairs; ++k) {
+        expected_multiplicity[k] = std::tgamma( nleppairs - k ) * std::tgamma( nleppairs + 1 - k ); 
+      }
+
+      int nuniquesets_nodups = 0; //counter of unique sets of pairs excluding those that are identical apart from pair permutations, for debugging purposes.
 
       for (int i = 0; i < ndressedlep; ++i) {
         for (int j = i+1; j < ndressedlep; ++j) {
@@ -295,54 +307,68 @@ namespace Rivet {
             double mll = (dressedleptons[i].momentum() + dressedleptons[j].momentum()).mass();
             ilepsmll imll = { mll, dressedleptons[i].charge() > 0 ? i : j, dressedleptons[i].charge() > 0 ? j : i };
 
-            //fill unique sets of lepton pairs
-            bool leptonsfilled = false;
-            for (int uniqueset = 0; uniqueset < nuniquesets; ++uniqueset) {
-              //fill leptons into this set if neither have already been filled
-              if ( !(std::find(leptonsused[uniqueset].begin(), leptonsused[uniqueset].end(), i) != leptonsused[uniqueset].end()) && !(std::find(leptonsused[uniqueset].begin(), leptonsused[uniqueset].end(), j) != leptonsused[uniqueset].end()) ) {
-                leptonsused[uniqueset].push_back(i);
-                leptonsused[uniqueset].push_back(j);
-                vimlls[uniqueset].push_back(imll);
-                leptonsfilled = true;
-              }
+            int temp_multiplicity[nleppairs];
+            for (int k = 0; k < nleppairs; ++k) {
+              temp_multiplicity[k] = 0; 
             }
-            //if the leptons can't be filled in an existing set create a new one
-            if ( !leptonsfilled ) {
-              leptonsused[nuniquesets].clear();
-              leptonsused[nuniquesets].push_back(i);
-              leptonsused[nuniquesets].push_back(j);
-              vimlls[nuniquesets].clear();
-              vimlls[nuniquesets].push_back(imll);
-              leptonsfilled = true;  
-              ++nuniquesets;
-            } 
+
+            vector<int> leptonsused_previous[nuniquesetsexpected];
+            for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
+              leptonsused_previous[uniqueset].clear();
+              leptonsused_previous[uniqueset] = leptonsused[uniqueset];
+            }
+
+            //Fill unique sets of lepton pairs. Because we are looping over increasing i,j, some of the later sets of pairs will be incomplete (e.g. only the first pair filled). These are dupicates anyway and will be ignored later: the set of strictly increasing sets should cover all possibilities with no duplication.
+            for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
+              //fill leptons into this set if neither have already been filled
+              if ( std::find(leptonsused[uniqueset].begin(), leptonsused[uniqueset].end(), i) == leptonsused[uniqueset].end() && std::find(leptonsused[uniqueset].begin(), leptonsused[uniqueset].end(), j) == leptonsused[uniqueset].end() ) {
+
+                int npairsused = leptonsused[uniqueset].size()/2;
+
+                if( uniqueset == 0 || ( uniqueset > 0 && leptonsused[uniqueset] != leptonsused_previous[uniqueset - 1] ) ) temp_multiplicity[npairsused] = 0;
+
+                if( temp_multiplicity[ npairsused ] < expected_multiplicity[ npairsused ] ) {
+                  leptonsused[uniqueset].push_back(i);
+                  leptonsused[uniqueset].push_back(j);
+                  vimlls[uniqueset].push_back(imll);
+                  ++temp_multiplicity[ npairsused ];
+                  ++totalleptonpairsfilled;
+                }
+
+              }
+
+            } //loop over unique sets
 
           }
 
-        }
-      }
+        } //loop over j
+      } //loop over i
+
       if ( vimlls[0].size() == 0 ) {
         MSG_WARNING("error, returnPrimaryLepton found all the same-flavour leptons have the same charge. Returning -1.");
         return -1;
       }
 
-      MSG_DEBUG("nuniquesets count check: "<<nuniquesets<<" ndressedlep: "<<ndressedlep);
-
-
-      for (int uniqueset = 0; uniqueset < nuniquesets; ++uniqueset) {
-        sort(vimlls[uniqueset].begin(), vimlls[uniqueset].end(), [](ilepsmll ilepsmll1, ilepsmll ilepsmll2) { return ilepsmll1.mll > ilepsmll2.mll; } );
+      //sort each set of pairs (by ascending m_ll)
+      for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
+        sort(vimlls[uniqueset].begin(), vimlls[uniqueset].end(), [](ilepsmll ilepsmll1, ilepsmll ilepsmll2) { return ilepsmll1.mll < ilepsmll2.mll; } );
       }
 
       //Find the set that has the lowest mass for the last pair to be removed.
       int lowestmassuniqueset = -1;
       double lowestmass = 99999;
-      for (int uniqueset = 0; uniqueset < nuniquesets; ++uniqueset) {
-        if ( vimlls[uniqueset][0].mll < lowestmass ) {
-          lowestmass = vimlls[uniqueset][0].mll;
-          lowestmassuniqueset = uniqueset;
+      for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
+        //only consider complete sets (the others are duplicates anyway)
+        if ( int(vimlls[uniqueset].size()) == nleppairs ) {
+          ++nuniquesets_nodups;
+          if ( vimlls[uniqueset][nleppairs-1].mll < lowestmass ) {
+            lowestmass = vimlls[uniqueset][nleppairs-1].mll;
+            lowestmassuniqueset = uniqueset;
+          }
         }
       }
 
+      MSG_DEBUG("ndressedlep: "<<ndressedlep<<" nuniquesets_nodups observed: "<<nuniquesets_nodups<<" nuniquesets_nodups expected: "<<nuniquesetsexpected/std::tgamma( 1 + nleppairs )<<" nuniquesets total: "<<nuniquesetsexpected<<" totalleptonpairsfilled: "<<totalleptonpairsfilled);
 
       MSG_DEBUG("lowest mass unique set is "<<lowestmassuniqueset<<" :");
       for (unsigned int i = 0; i < vimlls[lowestmassuniqueset].size(); ++i) {

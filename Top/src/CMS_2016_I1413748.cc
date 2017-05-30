@@ -307,14 +307,6 @@ namespace Rivet {
     const std::vector<double> _bins_c1c2 = {-1., -0.4, -10./60., 0., 10./60., 0.4, 1.};
     const std::vector<double> _bins_cos_opening_angle = {-1., -2./3., -1./3., 0., 1./3., 2./3., 1.};
 
-    struct ilepsmll {
-      double mll;
-      int ilep1;
-      int ilep2;
-    };
-
-    typedef vector< ilepsmll > Vofilepsmll;
-
     void fillWithUFOF(Histo1DPtr h, double x, double w) {
       h->fill(std::max(std::min(x, h->xMax()-1e-9),h->xMin()+1e-9), w);
     }

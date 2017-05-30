@@ -238,14 +238,6 @@ namespace Rivet {
     const std::vector<double> _bins_dabseta = { -2., -68./60., -48./60., -32./60., -20./60., -8./60., 0., 8./60., 20./60., 32./60., 48./60., 68./60., 2.};
     const std::vector<double> _bins_dabsrapidity = {-2., -44./60., -20./60., 0., 20./60., 44./60., 2.};
 
-    struct ilepsmll {
-      double mll;
-      int ilep1;
-      int ilep2;
-    };
-
-    typedef vector< ilepsmll > Vofilepsmll;
-
     void fillWithUFOF(Histo1DPtr h, double x, double w) {
       h->fill(std::max(std::min(x, h->xMax()-1e-9),h->xMin()+1e-9), w);
     }

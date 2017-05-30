@@ -91,30 +91,25 @@ namespace Rivet {
       int ndressedel = dressedels.size();
       int ndressedmu = dressedmus.size();
 
-      // For the particle-level histos, require an odd number of electrons and an odd number of muons, to select ttbar->emu channel. This means we can easily identify additional dilepton pairs from the shower (which will be same-flavour with invariant mass m_ll~0 GeV ), which distort the distributions relative to those used in the analysis where the leptons are prompt leptons from top decay only.
-      if ( ndressedel % 2 == 1 && ndressedmu % 2 == 1  ) {
+      // For the particle-level histogram, require exactly one electron and exactly one muon, to select the ttbar->emu channel. Note this means ttbar->emu events with additional PromptFinalState dilepton pairs from the shower are vetoed - for PYTHIA8, this affects ~0.5% of events, so the effect is well below the level of sensitivity of the measured distribution.
+      if ( ndressedel == 1 && ndressedmu == 1 ) {
 
         int electrontouse = 0;
         int muontouse = 0;
 
-        if ( ndressedel > 1 ) electrontouse = returnPrimaryLepton(dressedels);
-        if ( ndressedmu > 1 ) muontouse = returnPrimaryLepton(dressedmus);
-  
-        if ( electrontouse != -1 && muontouse != -1 ) {
-          //fill particle-level histos for opposite-charge leptons only
-          if ( sameSign(dressedels[electrontouse],dressedmus[muontouse]) ) {
-            MSG_WARNING("error, e and mu have same charge, skipping event");
-          }
-          else {
-            //Get the four-momenta of the positively- and negatively-charged leptons
-            FourMomentum lepPlus = dressedels[electrontouse].charge() > 0 ? dressedels[electrontouse].momentum() : dressedmus[muontouse].momentum();
-            FourMomentum lepMinus = dressedels[electrontouse].charge() > 0 ? dressedmus[muontouse].momentum() : dressedels[electrontouse].momentum();
+        //fill particle-level histos for opposite-charge leptons only
+        if ( sameSign(dressedels[electrontouse],dressedmus[muontouse]) ) {
+          MSG_WARNING("error, e and mu have same charge, skipping event");
+        }
+        else {
+          //Get the four-momenta of the positively- and negatively-charged leptons
+          FourMomentum lepPlus = dressedels[electrontouse].charge() > 0 ? dressedels[electrontouse].momentum() : dressedmus[muontouse].momentum();
+          FourMomentum lepMinus = dressedels[electrontouse].charge() > 0 ? dressedmus[muontouse].momentum() : dressedels[electrontouse].momentum();
 
-            //now calculate the variable
-            double dabseta_temp = lepPlus.abseta() - lepMinus.abseta();
+          //now calculate the variable
+          double dabseta_temp = lepPlus.abseta() - lepMinus.abseta();
 
-            fillWithUFOF( _h_dabsetadressedleptons, dabseta_temp, weight );
-          }
+          fillWithUFOF( _h_dabsetadressedleptons, dabseta_temp, weight );
         }
 
       }
@@ -262,134 +257,6 @@ namespace Rivet {
     void fillWithUFOF(Profile1DPtr h, double x, double y, double w, double c) {
       h->fill(std::max(std::min(y, h->xMax()-1e-9),h->xMin()+1e-9), float(x > c) - float(x < c), w);
     }
-
-    int returnPrimaryLepton(const std::vector<DressedLepton> dressedleptons) {
-      //when there are additional lepton pair(s) from the shower, remove the combination of same-flavour opposite-charge lepton pair(s) that has the smallest maximum invariant mass m_ll
-
-      int ndressedlep = dressedleptons.size();
-
-      if ( ndressedlep < 3 || ndressedlep % 2 == 0 ) {
-        MSG_WARNING("error, returnPrimaryLepton only works with an odd number of 3 or more leptons, returning -1.");
-        return -1;
-      }
-
-      if ( ndressedlep > 7 ) {
-        MSG_WARNING("warning, found "<<ndressedlep<<" leptons. returnPrimaryLepton is not optimised and may run very slowly with a large number of leptons.");
-      }
-
-      int leptontouse = 0; //variable that will be updated with the ordinal number of the primary lepton
-
-      int totalleptonpairsfilled = 0; //counter of total number of lepton pairs filled for debugging purposes.
-
-      const int nleppairs = (ndressedlep-1)/2;
-
-      const int nuniquesetsexpected =  std::tgamma( 1 + nleppairs ) * std::tgamma( 2 + nleppairs ); //For 2M+1 dressed leptons, there will be nuniquesets = M!(M+1)! possible unique sets of pairs. Among these there will be M! duplication through pair permutations, but this will be taken care of later.
-      vector<int> leptonsused[nuniquesetsexpected]; //keep track of lepton numbers used forming each unique set of pairs
-      Vofilepsmll vimlls[nuniquesetsexpected]; //vector of information about each pair for each unique set of lepton pairs
-      //clear the vectors for all the unique sets of lepton pairs. 
-      for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
-        vimlls[uniqueset].clear();
-        leptonsused[uniqueset].clear();
-      }
-
-      int expected_multiplicity[nleppairs]; //number of unique sets that will be identical up to the first (nleppairs+1) pairs
-      for (int k = 0; k < nleppairs; ++k) {
-        expected_multiplicity[k] = std::tgamma( nleppairs - k ) * std::tgamma( nleppairs + 1 - k ); 
-      }
-
-      int nuniquesets_nodups = 0; //counter of unique sets of pairs excluding those that are identical apart from pair permutations, for debugging purposes.
-
-      for (int i = 0; i < ndressedlep; ++i) {
-        for (int j = i+1; j < ndressedlep; ++j) {
-
-          if ( !sameSign(dressedleptons[i],dressedleptons[j]) ) {
-
-            double mll = (dressedleptons[i].momentum() + dressedleptons[j].momentum()).mass();
-            ilepsmll imll = { mll, dressedleptons[i].charge() > 0 ? i : j, dressedleptons[i].charge() > 0 ? j : i };
-
-            int temp_multiplicity[nleppairs];
-            for (int k = 0; k < nleppairs; ++k) {
-              temp_multiplicity[k] = 0; 
-            }
-
-            vector<int> leptonsused_previous[nuniquesetsexpected];
-            for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
-              leptonsused_previous[uniqueset].clear();
-              leptonsused_previous[uniqueset] = leptonsused[uniqueset];
-            }
-
-            //Fill unique sets of lepton pairs. Because we are looping over increasing i,j, some of the later sets of pairs will be incomplete (e.g. only the first pair filled). These are dupicates anyway and will be ignored later: the set of strictly increasing sets should cover all possibilities with no duplication.
-            for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
-              //fill leptons into this set if neither have already been filled
-              if ( std::find(leptonsused[uniqueset].begin(), leptonsused[uniqueset].end(), i) == leptonsused[uniqueset].end() && std::find(leptonsused[uniqueset].begin(), leptonsused[uniqueset].end(), j) == leptonsused[uniqueset].end() ) {
-
-                int npairsused = leptonsused[uniqueset].size()/2;
-
-                if( uniqueset == 0 || ( uniqueset > 0 && leptonsused[uniqueset] != leptonsused_previous[uniqueset - 1] ) ) temp_multiplicity[npairsused] = 0;
-
-                if( temp_multiplicity[ npairsused ] < expected_multiplicity[ npairsused ] ) {
-                  leptonsused[uniqueset].push_back(i);
-                  leptonsused[uniqueset].push_back(j);
-                  vimlls[uniqueset].push_back(imll);
-                  ++temp_multiplicity[ npairsused ];
-                  ++totalleptonpairsfilled;
-                }
-
-              }
-
-            } //loop over unique sets
-
-          }
-
-        } //loop over j
-      } //loop over i
-
-      if ( vimlls[0].size() == 0 ) {
-        MSG_WARNING("error, returnPrimaryLepton found all the same-flavour leptons have the same charge. Returning -1.");
-        return -1;
-      }
-
-      //sort each set of pairs (by ascending m_ll)
-      for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
-        sort(vimlls[uniqueset].begin(), vimlls[uniqueset].end(), [](ilepsmll ilepsmll1, ilepsmll ilepsmll2) { return ilepsmll1.mll < ilepsmll2.mll; } );
-      }
-
-      //Find the set that has the lowest mass for the last pair to be removed.
-      int lowestmassuniqueset = -1;
-      double lowestmass = 99999;
-      for (int uniqueset = 0; uniqueset < nuniquesetsexpected; ++uniqueset) {
-        //only consider complete sets (the others are duplicates anyway)
-        if ( int(vimlls[uniqueset].size()) == nleppairs ) {
-          ++nuniquesets_nodups;
-          if ( vimlls[uniqueset][nleppairs-1].mll < lowestmass ) {
-            lowestmass = vimlls[uniqueset][nleppairs-1].mll;
-            lowestmassuniqueset = uniqueset;
-          }
-        }
-      }
-
-      MSG_DEBUG("ndressedlep: "<<ndressedlep<<" nuniquesets_nodups observed: "<<nuniquesets_nodups<<" nuniquesets_nodups expected: "<<nuniquesetsexpected/std::tgamma( 1 + nleppairs )<<" nuniquesets total: "<<nuniquesetsexpected<<" totalleptonpairsfilled: "<<totalleptonpairsfilled);
-
-      MSG_DEBUG("lowest mass unique set is "<<lowestmassuniqueset<<" :");
-      for (unsigned int i = 0; i < vimlls[lowestmassuniqueset].size(); ++i) {
-        MSG_DEBUG(vimlls[lowestmassuniqueset][i].mll<<" "<<vimlls[lowestmassuniqueset][i].ilep1<<" "<<vimlls[lowestmassuniqueset][i].ilep2);
-      }
-
-      while ( (std::find(leptonsused[lowestmassuniqueset].begin(), leptonsused[lowestmassuniqueset].end(), leptontouse) != leptonsused[lowestmassuniqueset].end()) ) ++leptontouse;
-      MSG_DEBUG("Using lepton "<<leptontouse);
-
-      if ( leptontouse >= ndressedlep ) {
-        MSG_WARNING("error, returnPrimaryLepton couldn't find an unpaired lepton, returning -1.");
-        return -1;
-      }
-
-      return leptontouse;
-
-    }
-
-
-
-
 
 
   };

@@ -7,11 +7,11 @@ InspireID: 1430892
 Status: VALIDATED
 Authors:
  - Jacob Linacre <jacob.linacre@cern.ch>
-#References:
-# - Phys. Lett. B 760 (2016) 365
-# - DOI:10.1016/j.physletb.2016.07.006
-# - arXiv:1603.06221
-# - https://hepdata.net/record/ins1430892
+References:
+ - Phys. Lett. B 760 (2016) 365
+ - DOI:10.1016/j.physletb.2016.07.006
+ - arXiv:1603.06221
+ - https://hepdata.net/record/ins1430892
 RunInfo: 'Dilepton ttbar events at $\sqrt{s}=8\;\TeV$, where the leptons are prompt elecrons or muons (not from tau). No other cuts. All but one of the variables require top quarks in the event record.'
 NeedCrossSection: no
 Luminosity: 19.5/fb
@@ -50,6 +50,3 @@ BibTeX: '@article{Khachatryan:2016ysn,
       reportNumber   = "CMS-TOP-15-009, CERN-EP-2016-059",
       SLACcitation   = "%%CITATION = ARXIV:1603.06221;%%"
 }'
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
-

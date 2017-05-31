@@ -1,10 +1,10 @@
 Name: CMS_2017_I1518399
-Year: <Insert year of publication>
+Year: 2017
 Summary: Measurement of the differential ttbar production cross section as a function of the leading jet mass for boosted top quarks at 8 TeV
 Experiment: CMS
 Collider: LHC
 SpiresID: 1518399
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Torben Dreyer <torben.dreyer@desy.de>
  - Roman Kogler <roman.kogler@cern.ch>
@@ -12,6 +12,7 @@ Authors:
 References:
  - TOP-15-015
  - arXiv:1703.06330
+ - Submitted to Eur. Phys. J. C.
 RunInfo:
  'ttbar events at $\sqrt{s}=8\;\TeV$. Data was collected by the CMS detector during the year 2012. Boosted topology requires high statistics in a single run or custom merging of the YODA files.'
 Luminosity: 19.7 /fb
@@ -52,7 +53,3 @@ BibTeX: '@article{Sirunyan:2017yar,
       reportNumber   = "CMS-TOP-15-015, CERN-EP-2017-018",
       SLACcitation   = "%%CITATION = ARXIV:1703.06330;%%"
 }'
-
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
-

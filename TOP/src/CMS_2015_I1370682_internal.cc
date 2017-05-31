@@ -5,8 +5,8 @@
 #include "Rivet/Projections/FastJets.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
-#include "Rivet/Top/interface/CMSGenParticle.hh"
-#include "Rivet/Top/interface/PartonTop.hh"
+#include "Rivet/TOP/interface/CMSGenParticle.hh"
+#include "Rivet/TOP/interface/PartonTop.hh"
 
 namespace Rivet {
 

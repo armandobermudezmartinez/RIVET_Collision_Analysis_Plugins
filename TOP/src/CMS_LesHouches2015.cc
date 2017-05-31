@@ -8,7 +8,7 @@
 #include "Rivet/Projections/MergedFinalState.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 
-#include "Rivet/Top/interface/PseudoTop.hh"
+#include "Rivet/TOP/interface/PseudoTop.hh"
 
 namespace Rivet {
 

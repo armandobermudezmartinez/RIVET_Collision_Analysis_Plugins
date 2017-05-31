@@ -1,4 +1,4 @@
-#include "Rivet/Top/interface/PartonTop.hh"
+#include "Rivet/TOP/interface/PartonTop.hh"
 //#include "Rivet/Config/RivetCommon.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 

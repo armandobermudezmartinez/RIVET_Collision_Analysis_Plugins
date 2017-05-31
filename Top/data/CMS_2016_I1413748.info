@@ -4,7 +4,7 @@ Summary: Measurements of ttbar spin correlations and top quark polarization usin
 Experiment: CMS
 Collider: LHC
 InspireID: 1413748
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Jacob Linacre <jacob.linacre@cern.ch>
 #References:

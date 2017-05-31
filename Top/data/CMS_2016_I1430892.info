@@ -4,7 +4,7 @@ Summary: Measurements of ttbar charge asymmetry using dilepton final states in p
 Experiment: CMS
 Collider: LHC
 InspireID: 1430892
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Jacob Linacre <jacob.linacre@cern.ch>
 #References:

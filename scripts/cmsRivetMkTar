@@ -127,6 +127,7 @@ print TmpDir
 wwwDir='/eos/project/c/cmsweb/www/generators/Rivet/ValPlots/'
 
 plotsDir=wwwDir+opts.pag+'/'+opts.cadiId
+print plotsDir
 if os.path.isdir(plotsDir) :
   Cmd='ls '+plotsDir+'| grep v'
   proc=subprocess.Popen(Cmd, stderr = subprocess.PIPE,stdout = subprocess.PIPE, shell = True)

@@ -1,4 +1,4 @@
-#include "Rivet/Top/interface/PseudoBoostedTop.hh"
+#include "Rivet/TOP/interface/PseudoBoostedTop.hh"
 //#include "Rivet/Config/RivetCommon.hh"
 #include "Rivet/Tools/ParticleIdUtils.hh"
 

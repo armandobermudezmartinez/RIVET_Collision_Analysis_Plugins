@@ -4,14 +4,14 @@ Summary: Measurements of ttbar spin correlations and top quark polarization usin
 Experiment: CMS
 Collider: LHC
 InspireID: 1413748
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Jacob Linacre <jacob.linacre@cern.ch>
-#References:
-# - Phys. Rev. D 93, 052007 (2016)
-# - DOI:10.1103/PhysRevD.93.052007
-# - arXiv:1601.01107
-# - https://hepdata.net/record/ins1413748
+References:
+ - Phys. Rev. D 93, 052007 (2016)
+ - DOI:10.1103/PhysRevD.93.052007
+ - arXiv:1601.01107
+ - https://hepdata.net/record/ins1413748
 RunInfo: 'Dilepton ttbar events at $\sqrt{s}=8\;\TeV$, where the leptons are prompt elecrons or muons (not from tau). No other cuts. All but one of the variables require top quarks in the event record.'
 NeedCrossSection: no
 Luminosity: 19.5/fb
@@ -51,6 +51,3 @@ BibTeX: '@article{Khachatryan:2016xws,
       reportNumber   = "CMS-TOP-14-023, CERN-PH-EP-2015-333",
       SLACcitation   = "%%CITATION = ARXIV:1601.01107;%%"
 }'
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
-

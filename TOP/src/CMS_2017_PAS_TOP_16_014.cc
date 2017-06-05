@@ -25,26 +25,6 @@ namespace Rivet {
       // Complete final state
       FinalState fs( (Cuts::abseta < 5) and (Cuts::pT > 0.0*MeV) );
 
-      // // Projection for electrons and muons
-      // IdentifiedFinalState photons(fs);
-      // photons.acceptIdPair(PID::PHOTON);
-
-      // IdentifiedFinalState el_id(fs);
-      // el_id.acceptIdPair(PID::ELECTRON);
-      // PromptFinalState electrons(el_id);
-      // addProjection(electrons, "Electrons");
-      // Cut electronLooseCuts = Cuts::pt > 15*GeV && Cuts::abseta < 2.4;
-      // DressedLeptons dressed_electrons(photons, electrons, 0.1, electronLooseCuts, true, false);
-      // addProjection(dressed_electrons, "DressedElectrons");
-
-      // IdentifiedFinalState mu_id(fs);
-      // mu_id.acceptIdPair(PID::MUON);
-      // PromptFinalState muons(mu_id);
-      // addProjection(muons, "Muons");
-      // Cut muonLooseCuts = Cuts::pt > 15*GeV && Cuts::abseta < 2.4;
-      // DressedLeptons dressed_muons(photons, muons, 0.1, Cuts::open(), true, false);
-      // addProjection(dressed_muons, "DressedMuons");
-
       // Dressed leptons
       ChargedLeptons charged_leptons(fs);
       IdentifiedFinalState photons(fs);
@@ -87,12 +67,16 @@ namespace Rivet {
       _hist_abs_lpt = bookHisto1D(13, 1, 1);
       _hist_abs_labseta = bookHisto1D(14, 1, 1);
 
+      _nEvents = 0;
+      _nEventsInPhaseSpace = 0;
     }
 
 
     // per event analysis
     void analyze(const Event& event) {
       const double weight = event.weight();
+
+      ++_nEvents;
 
       // select ttbar -> lepton+jets at particle level
       const DressedLeptons& dressed_leptons = applyProjection<DressedLeptons>(event, "DressedLeptons");
@@ -124,6 +108,8 @@ namespace Rivet {
 
       if ( cleanedJets.size() < 4 ) vetoEvent;
       if ( nBJets < 2 ) vetoEvent;
+
+      ++_nEventsInPhaseSpace;
 
       // MET
       const MissingMomentum& met = applyProjection<MissingMomentum>(event, "MET");
@@ -171,19 +157,25 @@ namespace Rivet {
       normalize(_hist_norm_lpt);
       normalize(_hist_norm_labseta);
 
-      scale(_hist_abs_met, crossSection() / sumOfWeights() );
-      scale(_hist_abs_ht, crossSection() / sumOfWeights() );
-      scale(_hist_abs_st, crossSection() / sumOfWeights() );
-      scale(_hist_abs_wpt, crossSection() / sumOfWeights() );
-      scale(_hist_abs_njets, crossSection() / sumOfWeights() );
-      scale(_hist_abs_lpt, crossSection() / sumOfWeights() );
-      scale(_hist_abs_labseta, crossSection() / sumOfWeights() );
+      std::cout << "_nEvents : " << _nEvents << std::endl;
+      std::cout << "_nEventsInPhaseSpace : " << _nEventsInPhaseSpace << std::endl;
+      std::cout << "RATIO : " << float( _nEventsInPhaseSpace ) / float( _nEvents )  << std::endl;
+      normalize(_hist_abs_met, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
+      normalize(_hist_abs_ht, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
+      normalize(_hist_abs_st, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
+      normalize(_hist_abs_wpt, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
+      normalize(_hist_abs_njets, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
+      normalize(_hist_abs_lpt, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
+      normalize(_hist_abs_labseta, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
 
     }
 
   private:
     Histo1DPtr _hist_norm_met, _hist_norm_ht, _hist_norm_st, _hist_norm_wpt, _hist_norm_njets, _hist_norm_lpt, _hist_norm_labseta;
     Histo1DPtr _hist_abs_met, _hist_abs_ht, _hist_abs_st, _hist_abs_wpt, _hist_abs_njets, _hist_abs_lpt, _hist_abs_labseta;
+
+    int _nEvents;
+    int _nEventsInPhaseSpace;
   };
 
   // The hook for the plugin system

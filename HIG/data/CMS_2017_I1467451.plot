@@ -4,7 +4,7 @@ LogX=0
 XTwosidedTicks=1
 YTwosidedTicks=1
 LegendXPos=0.4
-Title=\Large \textbf{CMS} \hspace{10em} \large $19.4\,\text{fb}^\text{$-$1}$ (8 TeV)
+Title=\Large \textbf{CMS}\hspace{5em} $\text{gg}\rightarrow\text{H}\rightarrow\text{WW}$\hspace{5em} \large $19.4\,\text{fb}^\text{$-$1}$ (8 TeV)
 
 # BEGIN PLOT /CMS_2017_I1467451/d01-x01-y01
 XLabel=$p_\text{T}^\text{H}\;[\text{GeV}]$

@@ -11,9 +11,8 @@ References:
 - 'JHEP 1703 (2017) 032, 2017'
 - 'DOI:10.1007/JHEP03(2017)032'
 - 'arXiv:1606.01522'
-#RunInfo: <Describe event types, cuts, and other general generator config tips.>
-#NumEvents: 1000000
-#NeedCrossSection: no
+- 'CMS-HIG-15-010'
+RunInfo: gg->H->WW->lvlv
 Beams: [p+, p+]
 Energies: [8000]
 Description:

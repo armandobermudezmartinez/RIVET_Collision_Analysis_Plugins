@@ -1,12 +1,11 @@
 // -*- C++ -*-
 #include "Rivet/Analysis.hh"
 #include "Rivet/Projections/FinalState.hh"
-#include "Rivet/Tools/BinnedHistogram.hh"
-#include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Projection.hh"
 #include "Rivet/Particle.hh"
 #include "Rivet/Event.hh"
 #include "Rivet/Projections/ChargedLeptons.hh"
+#include "Rivet/Projections/DressedLeptons.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
 #include "Rivet/Projections/MissingMomentum.hh"
 #include "Rivet/Projections/FastJets.hh"
@@ -26,17 +25,29 @@ namespace Rivet {
     /// Book histograms and initialise projections before the run
     void init() {
 
+      double lepConeSize = 0.1;
+      double lepMaxEta = 2.5;
+
+      Cut lepton_cut   = (Cuts::abseta < lepMaxEta);
+
       // Initialise and register projections
       FinalState fs(-2.5,2.5,0.0*GeV);
       FinalState fsm(-5,5,0.0*GeV);
       addProjection(fs, "FS");
       addProjection(fsm, "FSM");
 
-      IdentifiedFinalState e(fs,11);
-      e.acceptId(-11);
-      e.acceptId(13);
-      e.acceptId(-13);
-      addProjection(e,"E");
+//      IdentifiedFinalState e(fs,11);
+//      e.acceptId(-11);
+//      e.acceptId(13);
+//      e.acceptId(-13);
+//      addProjection(e,"E");
+
+      ChargedLeptons charged_leptons(fs);
+      IdentifiedFinalState photons(fs);       
+      photons.acceptIdPair(PID::PHOTON);
+
+      DressedLeptons dressed_leptons = DressedLeptons(photons, charged_leptons, lepConeSize, lepton_cut, /*cluster*/ true, /*useDecayPhotons*/ true);
+      addProjection(dressed_leptons, "DressedLeptons");
 
       MissingMomentum Met(fsm);
       addProjection(Met, "MET");
@@ -47,6 +58,7 @@ namespace Rivet {
 
       // Book histograms
       histoPtH=bookHisto1D(1,1,1);
+      histoXsec=bookHisto1D(2,1,1);
 
     }
 
@@ -55,7 +67,8 @@ namespace Rivet {
     void analyze(const Event& event) {
       const double weight = event.weight();
 
-      Particles e = applyProjection<IdentifiedFinalState>(event, "E").particlesByPt(10.0*GeV);
+//      Particles e = applyProjection<IdentifiedFinalState>(event, "E").particlesByPt(10.0*GeV);
+      Particles e = applyProjection<DressedLeptons>(event, "DressedLeptons").particlesByPt(10.0*GeV);
 
       if(e.size()<2) vetoEvent;
       if(e[0].momentum().pT()<20*GeV || e[1].momentum().pT()<10*GeV) vetoEvent;
@@ -89,21 +102,23 @@ namespace Rivet {
         }
       }
 
-      histoPtH->fill(PtH.pT(),weight);
+      histoPtH->fill(min(PtH.pT(),199.),weight);
+      histoXsec->fill(8000.,weight);
     }
 
 
     /// Normalise histograms etc., after the run
     void finalize() {
 
-      histoPtH->normalize(crossSection());
-
+      scale(histoPtH,crossSection()/sumOfWeights());
+      scale(histoXsec,(histoXsec->xMax()-histoXsec->xMin())*crossSection()/sumOfWeights());
     }
 
 
   private:
 
     Histo1DPtr histoPtH;
+    Histo1DPtr histoXsec;   
 
   };
 

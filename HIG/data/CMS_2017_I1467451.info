@@ -12,12 +12,12 @@ References:
 - 'DOI:10.1007/JHEP03(2017)032'
 - 'arXiv:1606.01522'
 - 'CMS-HIG-15-010'
-RunInfo: gg->H->WW->lvlv
+RunInfo: H->WW->lvlv, both ggH and XH (VBF anf VH) productions modes are included
 Beams: [p+, p+]
 Energies: [8000]
 Description:
 The fiducial region is defined at particle level (using Born level leptons) as: 
- - emununu 
+ - emununu, leptons are required not to originate from leptonic tau decays 
  - leading lepton pT > 20 GeV 
  - subleading lepton pT > 10 GeV 
  - psudorapidity of electrons and muons |eta| < 2.5 

@@ -32,3 +32,15 @@ list-analyses:
     - wget https://raw.githubusercontent.com/cms-sw/cmssw/CMSSW_8_1_X/GeneratorInterface/RivetInterface/test/rivetSetup.sh -P GeneratorInterface/RivetInterface/test/
     - source Rivet/rivetSetup.sh
     - rivet --list-analyses
+
+check-tabs:
+  stage: test
+  tags:
+    - docker
+    - cvmfs
+  script:
+    - pwd
+    - ls -l
+    - cd CMSSW_8_1_0/src/Rivet
+    - ls -l
+    - ! grep -rnP "\t" | grep "\.cc"

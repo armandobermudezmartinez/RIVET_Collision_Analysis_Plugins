@@ -43,4 +43,4 @@ check-tabs:
     - ls -l
     - cd CMSSW_8_1_0/src/Rivet
     - ls -l
-    - ! grep -rnP "\t" | grep "\.cc"
+    - echo '! grep -rnP "\t" * | grep "\.cc"' | bash

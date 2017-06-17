@@ -9,9 +9,6 @@
 #include "Rivet/Projections/IdentifiedFinalState.hh"
 #include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/MissingMomentum.hh"
-#include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Tools/RivetFastJet.hh"
-#include "Rivet/Projections/JetAlg.hh"
 
 namespace Rivet {
 
@@ -55,10 +52,6 @@ namespace Rivet {
       MissingMomentum Met(fsm);
       addProjection(Met, "MET");
 
-      FastJets jets(fsm, FastJets::ANTIKT, 0.5);
-      addProjection(jets, "JETS");
-
-
       // Book histograms
       histoPtH=bookHisto1D(1,1,1);
       histoXsec=bookHisto1D(2,1,1);
@@ -70,42 +63,31 @@ namespace Rivet {
     void analyze(const Event& event) {
       const double weight = event.weight();
 
-//      Particles e = applyProjection<IdentifiedFinalState>(event, "E").particlesByPt(10.0*GeV);
-      Particles e = applyProjection<DressedLeptons>(event, "DressedLeptons").particlesByPt(10.0*GeV);
+      Particles leptons = applyProjection<DressedLeptons>(event, "DressedLeptons").particlesByPt(10.0*GeV);
 
-      if(e.size()<2) vetoEvent;
-      if(e[0].momentum().pT()<20*GeV || e[1].momentum().pT()<10*GeV) vetoEvent;
-      if(e[0].charge()==e[1].charge()) vetoEvent;
-      if(abs(e[0].pdgId())==abs(e[1].pdgId())) vetoEvent;
+      if(leptons.size()<2) vetoEvent;
+      if(leptons[0].momentum().pT()<20*GeV || leptons[1].momentum().pT()<10*GeV) vetoEvent;
+      if(leptons[0].charge()==leptons[1].charge()) vetoEvent;
+      if(abs(leptons[0].pdgId())==abs(leptons[1].pdgId())) vetoEvent;
 
-      FourMomentum LL=(e[0].momentum()+e[1].momentum());
+      FourMomentum LL=(leptons[0].momentum()+leptons[1].momentum());
 
       if(LL.mass()<12*GeV) vetoEvent;
       if(LL.pT()<30*GeV) vetoEvent;
 
       FourMomentum EtMiss = applyProjection<MissingMomentum>(event,"MET").missingMomentum();
-      FourMomentum PtH = LL+EtMiss;
+      FourMomentum P4H = LL+EtMiss;
 
-      double phiLL = LL.phi(); 
-      double phiEtMiss = EtMiss.phi();
-      double phi;
-      if (phiLL<phiEtMiss) phi = phiEtMiss-phiLL;
-      else phi = phiLL-phiEtMiss;
+//      double phiLL = LL.phi(); 
+//      double phiEtMiss = EtMiss.phi();
+      double dphi = deltaPhi(LL,EtMiss);
+//      if (phiLL<phiEtMiss) phi = phiEtMiss-phiLL;
+//      else phi = phiLL-phiEtMiss;
 
-      double mT = sqrt(2*LL.pT()*EtMiss.pT()*(1-cos(phi)));
+      double mT = sqrt(2*LL.pT()*EtMiss.pT()*(1-cos(dphi)));
       if (mT<50*GeV) vetoEvent;
 
-      const FastJets& jetfs = applyProjection<FastJets>(event, "JETS");
-      const Jets& jets = jetfs.jetsByPt(30.*GeV);
-      std::vector<Jet> realJets;
-
-      for (size_t i=0; i<jets.size(); ++i) {
-        if (deltaR(e[0], jets[i])>0.5 && deltaR(e[1], jets[i])>0.5) {
-          realJets.push_back(jets[i]);
-        }
-      }
-
-      histoPtH->fill(min(PtH.pT(),199.),weight);
+      histoPtH->fill(min(P4H.pT(),199.),weight);
       histoXsec->fill(8000.,weight);
     }
 
@@ -115,6 +97,7 @@ namespace Rivet {
 
       scale(histoPtH,crossSection()/sumOfWeights());
       scale(histoXsec,(histoXsec->xMax()-histoXsec->xMin())*crossSection()/sumOfWeights());
+
     }
 
 

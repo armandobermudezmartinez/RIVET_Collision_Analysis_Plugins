@@ -7,6 +7,7 @@
 #include "Rivet/Projections/ChargedLeptons.hh"
 #include "Rivet/Projections/DressedLeptons.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
+#include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/MissingMomentum.hh"
 #include "Rivet/Projections/FastJets.hh"
 #include "Rivet/Tools/RivetFastJet.hh"
@@ -36,17 +37,19 @@ namespace Rivet {
       addProjection(fs, "FS");
       addProjection(fsm, "FSM");
 
-//      IdentifiedFinalState e(fs,11);
-//      e.acceptId(-11);
-//      e.acceptId(13);
-//      e.acceptId(-13);
-//      addProjection(e,"E");
-
       ChargedLeptons charged_leptons(fs);
-      IdentifiedFinalState photons(fs);       
+      IdentifiedFinalState photons(fs);
       photons.acceptIdPair(PID::PHOTON);
 
-      DressedLeptons dressed_leptons = DressedLeptons(photons, charged_leptons, lepConeSize, lepton_cut, /*cluster*/ true, /*useDecayPhotons*/ true);
+      PromptFinalState prompt_leptons(charged_leptons);
+      prompt_leptons.acceptMuonDecays(true);
+      prompt_leptons.acceptTauDecays(false);
+
+      PromptFinalState prompt_photons(photons);
+      prompt_photons.acceptMuonDecays(true);
+      prompt_photons.acceptTauDecays(false);
+
+      DressedLeptons dressed_leptons = DressedLeptons(prompt_photons, prompt_leptons, lepConeSize, lepton_cut, /*cluster*/ true, /*useDecayPhotons*/ true);
       addProjection(dressed_leptons, "DressedLeptons");
 
       MissingMomentum Met(fsm);

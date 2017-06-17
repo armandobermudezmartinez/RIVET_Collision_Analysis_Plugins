@@ -110,8 +110,8 @@ namespace Rivet {
              pdg == 3222 || // Sigma+
              pdg == 3312 || // Xi-
              pdg == 3334 )  // Omega-
-	        continue;
-	      nch_noStrange++;
+            continue;
+        nch_noStrange++;
       }
       nch[k_AllCharged] = cfs.size();
       nch[k_NoStrange ] = nch_noStrange;
@@ -121,13 +121,13 @@ namespace Rivet {
 
       // Fill event weight info
       _sumW[k_AllCharged][iRegion] += weight;
-      if (nch[k_NoStrange ] >= nchCut[iRegion])	{
+      if (nch[k_NoStrange ] >= nchCut[iRegion]) {
         _sumW[k_NoStrange][iRegion] += weight;
       }
 
       // Fill nch
       _hist_nch[k_AllCharged][iRegion]->fill(nch[k_AllCharged], weight);
-      if (nch[k_NoStrange ] >= nchCut[iRegion])	{
+      if (nch[k_NoStrange ] >= nchCut[iRegion]) {
         _hist_nch [k_NoStrange][iRegion]->fill(nch[k_NoStrange ], weight);
       }
 
@@ -146,7 +146,7 @@ namespace Rivet {
                pdg == 3222 || // Sigma+
                pdg == 3312 || // Xi-
                pdg == 3334 )  // Omega-
-	          continue;
+              continue;
           // Here we don't have strange particles anymore
           _hist_pt   [k_NoStrange][iRegion]->fill(pt , weight/pt);
           _hist_eta  [k_NoStrange][iRegion]->fill(eta, weight);

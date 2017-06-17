@@ -38,7 +38,7 @@ namespace Rivet {
       //addProjection(ChargedFinalState(Cuts::abseta < 2.5 && Cuts::pT > 500*MeV), "CFS500");
 
       for (int iR=0; iR < kNregions; ++iR) {
-	
+        
         // Nch profiles vs. pT_lead 
         _hist_nch[iR] = bookProfile1D(1, 1 + iR, 1); 
 
@@ -52,7 +52,7 @@ namespace Rivet {
         if (iR != kTransDiff)  _hist_dn_dpt[iR] = bookProfile1D(4, 1 + iR, 1);
         //only measured for trans max/min
         if ( (iR == kTransMax) || (iR == kTransMin) )  _hist_dn_dpt2[iR] = bookProfile1D(5, 1 + iR, 1); 
-	
+        
       } //end loop over regions
       
       for (int iC=0; iC < kNptleadCuts; ++iC) {
@@ -88,20 +88,20 @@ namespace Rivet {
 
       //fill pt lead histograms first
       if (particles.size()) {
-	PdgId pdg = particles[0].abspid();
+        PdgId pdg = particles[0].abspid();
         if ( pdg == 3112 || // Sigma-
              pdg == 3222 || // Sigma+
              pdg == 3312 || // Xi-
              pdg == 3334 ){  // Omega-
-	  for (int iC = 0; iC < kNptleadCuts; ++iC) {
-	    if ( (iC == 0) || (iC == 1) )  {
-	      if (particles[0].perp()/GeV >= ptCut[iC]) {
-		_sumw[iC] += weight;
-		_hist_ptLead[iC]->fill( particles[0].perp()/GeV, weight);
-	      }
-	    }
-	  }
-	}
+          for (int iC = 0; iC < kNptleadCuts; ++iC) {
+            if ( (iC == 0) || (iC == 1) )  {
+              if (particles[0].perp()/GeV >= ptCut[iC]) {
+                _sumw[iC] += weight;
+                _hist_ptLead[iC]->fill( particles[0].perp()/GeV, weight);
+              }
+            }
+          }
+        }
       }
 
       // Require at least one track in the event with pT >= 1 GeV
@@ -130,28 +130,28 @@ namespace Rivet {
 
       foreach (const Particle& p, particles) {
 
-	PdgId pdg = particles[0].abspid();
+        PdgId pdg = particles[0].abspid();
         if ( pdg == 3112 || // Sigma-
              pdg == 3222 || // Sigma+
              pdg == 3312 || // Xi-
              pdg == 3334 )  // Omega-
-	  continue;
+          continue;
 
         const double pT   = p.pT();
         const double dPhi = deltaPhi(philead, p.phi());  //inrange (0,pi)
         const int    ir   = region_index(dPhi); //gives just toward/away/trans
-	
+        
         //toward/away/trans region: just count 
         num  [ir] += 1;
         ptSum[ir] += pT;
-	
+        
         //determine which transverse side
         if (ir == kTrans) {
           const size_t iside = (mapAngleMPiToPi(p.phi() - philead) > 0) ? 0 : 1;
           tmpnch  [iside] += 1;
           tmpptsum[iside] += p.pT();
         }
-	
+        
         // Fill temp histos to bin Nch and pT in dPhi
         if (p.genParticle() != p_lead.genParticle()) { // We don't want to fill all those zeros from the leading track...
           hist_num_dphi.fill(dPhi * 180. / Rivet::pi, 1);
@@ -175,7 +175,7 @@ namespace Rivet {
       avgpt[kTransMax ] = (tmpnch[sumptMaxRegID] > 0) ? tmpptsum[sumptMaxRegID] / tmpnch[sumptMaxRegID] : 0.;
       avgpt[kTransMin ] = (tmpnch[sumptMinRegID] > 0) ? tmpptsum[sumptMinRegID] / tmpnch[sumptMinRegID] : 0.;
       avgpt[kTransDiff] = ((tmpnch[sumptMaxRegID] > 0) && (tmpnch[sumptMinRegID] > 0)) ? avgpt[kTransMax ] - avgpt[kTransMin ] : 0.;
-	
+        
       // Now fill underlying event histograms
 
       // The densities are calculated by dividing the UE properties by dEta*dPhi
@@ -185,10 +185,10 @@ namespace Rivet {
                                            2*2.5 *   PI/3.0, 2*2.5 *   PI/3.0, 2*2.5 *   PI/3.0 };
       
       for (int iR=0; iR < kNregions; ++iR) {
-	
+        
         _hist_nch  [iR]->fill(pTlead/GeV, num[iR]   /dEtadPhi[iR]     , weight);
         _hist_ptsum[iR]->fill(pTlead/GeV, ptSum[iR] /GeV/dEtadPhi[iR] , weight);
-	
+        
         // <pT> profiles vs. pT_lead
         switch (iR) {
           //first 3 are the same!!!
@@ -198,7 +198,7 @@ namespace Rivet {
             if (num[iR] > 0) {
               _hist_ptavg[iR]->fill(pTlead/GeV, avgpt[iR] /GeV, weight); 
             }
-	          break;
+                  break;
           case kTransMax  : 
             if (tmpnch[sumptMaxRegID] > 0) {
               _hist_ptavg[iR]->fill(pTlead/GeV, avgpt[iR] /GeV, weight); 
@@ -214,8 +214,8 @@ namespace Rivet {
           default : //should not get here!!!
             MSG_INFO("unknown region in <pT> profiles vs.pt lead switch!!! : " <<  iR);
         } //end switch over regions
-	
-	
+        
+        
         // <pT> profiles vs. Nch
         switch (iR) {
           //first 3 are the same!!!
@@ -243,7 +243,7 @@ namespace Rivet {
           default : //should not get here!!!
             MSG_INFO("unknown region in <pT> profiles vs. nch switch!!! : " <<  iR);
         } //end switch over regions
-	
+        
       } //end loop over regions
       
       
@@ -253,7 +253,7 @@ namespace Rivet {
       const double dEtadPhi2 = (2*2.5 * 2) * Rivet::pi / 180.;
       
       for (unsigned i = 0; i < hist_num_dphi.numBins() ; ++i) {  
-	
+        
         // First Nch
         double mean = hist_num_dphi.bin(i).xMid() ;
         double value = 0.;
@@ -264,7 +264,7 @@ namespace Rivet {
         for (int iC=0; iC < kNptleadCuts; ++iC) {
           if (pTlead/GeV >= ptCut[iC]) _hist_N_vs_dPhi[iC] ->fill(mean, value, weight);
         }
-	
+        
         // Then pT
         mean = hist_pt_dphi.bin(i).xMid() ;
         value = 0.;

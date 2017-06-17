@@ -21,15 +21,15 @@ namespace Rivet {
         addProjection(FinalState(3.152, 5.205, 0.0*GeV), "HFP");
 
         //_h_xsec = bookHisto1D("xsec",3,0.,3.);
-	_h_xsec = bookHisto1D(1, 1, 1); // TODO: Use this auto-booking system when the data points in yoda 
+        _h_xsec = bookHisto1D(1, 1, 1); // TODO: Use this auto-booking system when the data points in yoda 
 
     }
 
     void analyze(const Event& event) {
 
-		const double weight = event.weight();
+        const double weight = event.weight();
 
-		const FinalState& fs = applyProjection<FinalState>(event, "FS");	
+        const FinalState& fs = applyProjection<FinalState>(event, "FS");
         // Calculate gap sizes and midpoints
         const ParticleVector particlesByRapidity = fs.particlesByPt();
         const size_t num_particles = particlesByRapidity.size();
@@ -67,31 +67,31 @@ namespace Rivet {
         double xiy = (My * My) / (sqrtS()/GeV * sqrtS()/GeV);
         double xi_sd = std::max(xix, xiy);
 
-		//sigmainel // Total inelastic cross section. Eq.8 in the paper. This is 71.26 +-... mb.
-		_h_xsec->fill(0.5, weight);
-		//sigmaHF // Eg. 6 in the paper. 65.77 +- ... mb. 
-		if (xi_sd > _xi_sd_cut) {  // This means either xix or xiy greater than 1e-6. "if (xix > _xi_hf_cut || xiy > _xi_hf_cut) {"
-			_h_xsec->fill(1.5, weight);
-		}
-		//sigmaHFCASTOR // Eq. 7 in the paper. 66.85 +- ... mb.  p.s. X(Y) system is the minus(plus) side. CASTOR is only at minus side. Therefore, X is limited by the CASTOR acceptance (1e-7) and Y is limited by HF acceptance (1e-6). 
-		if (xix > _xi_castor_cut || xiy > _xi_hf_cut) { 
-			_h_xsec->fill(2.5, weight);
-		}
+        //sigmainel // Total inelastic cross section. Eq.8 in the paper. This is 71.26 +-... mb.
+        _h_xsec->fill(0.5, weight);
+        //sigmaHF // Eg. 6 in the paper. 65.77 +- ... mb. 
+        if (xi_sd > _xi_sd_cut) {  // This means either xix or xiy greater than 1e-6. "if (xix > _xi_hf_cut || xiy > _xi_hf_cut) {"
+            _h_xsec->fill(1.5, weight);
+        }
+        //sigmaHFCASTOR // Eq. 7 in the paper. 66.85 +- ... mb.  p.s. X(Y) system is the minus(plus) side. CASTOR is only at minus side. Therefore, X is limited by the CASTOR acceptance (1e-7) and Y is limited by HF acceptance (1e-6). 
+        if (xix > _xi_castor_cut || xiy > _xi_hf_cut) { 
+            _h_xsec->fill(2.5, weight);
+        }
 
-	} // end of events loop
-		
+    } // end of events loop
+        
     void finalize() {
 
         scale(_h_xsec, crossSection()/millibarn/sumOfWeights());
 
-	}
+    }
 
   private:
 
-	Histo1DPtr _h_xsec;
+    Histo1DPtr _h_xsec;
     double _xi_sd_cut;
-	double _xi_hf_cut;
-	double _xi_castor_cut;
+    double _xi_hf_cut;
+    double _xi_castor_cut;
 
   };
 

@@ -108,7 +108,7 @@ namespace Rivet
             if((abs(itpar->pdgId()) == 11 || abs(itpar->pdgId()) == 13) && itpar->pt()/itdl->pt() > 0.5)
             {
               _dressLeps.push_back(*itdl);
-            }	
+            }
           }
         }
 
@@ -127,19 +127,19 @@ namespace Rivet
           if(genpar->status() != 1) continue;
 
           //remove selected neutrinos
-          bool isneutrino = false;	
+          bool isneutrino = false;
           for(Particles::const_iterator itnu = _neutrinos.begin() ; itnu != _neutrinos.end(); ++itnu)
           {
             if(itnu->genParticle() == genpar)
             {
               isneutrino = true;
-              break;		
-            }	
+              break;
+            }
           }
           if(isneutrino) continue;
 
           //remove dressed lepton constituents
-          bool islepton = false;	
+          bool islepton = false;
           for(Jets::const_iterator itdl = _dressLeps.begin() ; itdl != _dressLeps.end() ; ++itdl)
           {
             Particles jetconst = itdl->particles();
@@ -147,9 +147,9 @@ namespace Rivet
             {
               if(itpar->genParticle() == genpar)
               {
-                islepton = true;			
+                islepton = true;
                 break;
-              }	
+              }
             }
           }
           if(islepton) continue;
@@ -169,7 +169,7 @@ namespace Rivet
             {
               _bJets.push_back(&(*itjet));
               break;
-            }	
+            }
           }
         }
 
@@ -216,7 +216,7 @@ namespace Rivet
           }
         }
 
-        _hist_thadpt->fill(_th.pt(), weight);	
+        _hist_thadpt->fill(_th.pt(), weight);
         _hist_thady->fill(abs(_th.rapidity()) , weight);
         _hist_tleppt->fill(_tl.pt() , weight);
         _hist_tlepy->fill(abs(_tl.rapidity()) , weight);

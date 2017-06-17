@@ -80,10 +80,10 @@ namespace Rivet {
       Particle lepton;
       double max_lepton_pt = 0.;
       for (unsigned int i = 0; i < leptons.size(); ++i) {
-	if (leptons.at(i).pt() > max_lepton_pt) {
-	  max_lepton_pt = leptons.at(i).pt();
-	  lepton = leptons.at(i);
-	}
+        if (leptons.at(i).pt() > max_lepton_pt) {
+          max_lepton_pt = leptons.at(i).pt();
+          lepton = leptons.at(i);
+        }
       }
 
       //get the jets
@@ -94,13 +94,13 @@ namespace Rivet {
       Jets cleanedJets;
   
       for (unsigned int i = 0; i < psjetsCA12.size(); ++i) {
-	Jet jet = psjetsCA12.at(i);
-	if (deltaR(jet.momentum(), lepton.momentum()) < 1.2 ) {
-	  const FourMomentum cleanedMom = jet.momentum() - lepton.momentum();
-	  Jet cleanedjet(cleanedMom);
-	  jet = cleanedjet;
-	}
-	if (fabs(jet.eta()) < 2.5) cleanedJets.push_back(jet);
+        Jet jet = psjetsCA12.at(i);
+        if (deltaR(jet.momentum(), lepton.momentum()) < 1.2 ) {
+          const FourMomentum cleanedMom = jet.momentum() - lepton.momentum();
+          Jet cleanedjet(cleanedMom);
+          jet = cleanedjet;
+        }
+        if (fabs(jet.eta()) < 2.5) cleanedJets.push_back(jet);
       }
 
       //sort the cleaned jets

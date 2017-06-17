@@ -78,11 +78,7 @@ namespace Rivet {
       FourMomentum EtMiss = applyProjection<MissingMomentum>(event,"MET").missingMomentum();
       FourMomentum P4H = LL+EtMiss;
 
-//      double phiLL = LL.phi(); 
-//      double phiEtMiss = EtMiss.phi();
       double dphi = deltaPhi(LL,EtMiss);
-//      if (phiLL<phiEtMiss) phi = phiEtMiss-phiLL;
-//      else phi = phiLL-phiEtMiss;
 
       double mT = sqrt(2*LL.pT()*EtMiss.pT()*(1-cos(dphi)));
       if (mT<50*GeV) vetoEvent;

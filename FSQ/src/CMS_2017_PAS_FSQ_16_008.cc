@@ -30,10 +30,8 @@ namespace Rivet {
       ZFinder zfinder(FinalState(), cut, PID::MUON, 81*GeV, 101*GeV, 0.2, ZFinder::NOCLUSTER);
       addProjection(zfinder, "ZFinder");
 
-      ChargedFinalState cfs(-2, 2, 500*MeV);
-      VetoedFinalState nonmuons(cfs);
-      nonmuons.addVetoPairId(PID::MUON);
-      addProjection(nonmuons, "nonmuons");
+      ChargedFinalState cfs(zfinder.remainingFinalState());
+      addProjection(cfs, "cfs");
 
       _h_Nchg_towards_pTmumu                 = bookProfile1D(1, 1, 1);
       _h_Nchg_transverse_pTmumu              = bookProfile1D(2, 1, 1);
@@ -56,7 +54,7 @@ namespace Rivet {
       double Zphi = zfinder.bosons()[0].phi();
       //double Zmass = zfinder.bosons()[0].mass()/GeV;
 
-      Particles particles = applyProjection<VetoedFinalState>(event, "nonmuons").particles();
+     Particles particles = applyProjection<ChargedFinalState>(event, "cfs").particlesByPt(Cuts::pT > 0.5*GeV && Cuts::abseta <2.0);
 
       int nTowards = 0;
       int nTransverse = 0;

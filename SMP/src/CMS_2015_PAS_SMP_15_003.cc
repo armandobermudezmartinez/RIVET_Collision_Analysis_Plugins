@@ -42,7 +42,7 @@ namespace Rivet {
       if (jets.size() < 2 ||
           std::abs(jets[0].momentum().eta()) >= 1.5 ||
           std::abs(jets[1].momentum().eta()) >= 1.5 ||
-          leadingpt < 100.0 || subleadingpt < 100.0) {
+          leadingpt < 400.0 || subleadingpt < 100.0) {
         vetoEvent;
       }
 
@@ -114,17 +114,15 @@ namespace Rivet {
       t_jetchargeT1k6 = (denominator[7] > 0) ? numerator[7] / denominator[7] : 0;
       t_jetchargeT1k3 = (denominator[8] > 0) ? numerator[8] / denominator[8] : 0;
 
-      if (leadingpt > 400) {
-        _h_Charge[0]->fill(t_jetcharge1, weight);
-        _h_Charge[1]->fill(t_jetcharge1k6, weight);
-        _h_Charge[2]->fill(t_jetcharge1k3, weight);
-        _h_Charge[3]->fill(t_jetchargeL1, weight);
-        _h_Charge[4]->fill(t_jetchargeL1k6, weight);
-        _h_Charge[5]->fill(t_jetchargeL1k3, weight);
-        _h_Charge[6]->fill(t_jetchargeT1, weight);
-        _h_Charge[7]->fill(t_jetchargeT1k6, weight);
-        _h_Charge[8]->fill(t_jetchargeT1k3, weight);
-      }
+      _h_Charge[0]->fill(t_jetcharge1, weight);
+      _h_Charge[1]->fill(t_jetcharge1k6, weight);
+      _h_Charge[2]->fill(t_jetcharge1k3, weight);
+      _h_Charge[3]->fill(t_jetchargeL1, weight);
+      _h_Charge[4]->fill(t_jetchargeL1k6, weight);
+      _h_Charge[5]->fill(t_jetchargeL1k3, weight);
+      _h_Charge[6]->fill(t_jetchargeT1, weight);
+      _h_Charge[7]->fill(t_jetchargeT1k6, weight);
+      _h_Charge[8]->fill(t_jetchargeT1k3, weight);
 
       if (leadingpt > 400 && leadingpt < 700) {
         _h_Charge[9]->fill(t_jetcharge1k6, weight);

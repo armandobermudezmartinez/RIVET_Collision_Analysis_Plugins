@@ -125,6 +125,6 @@ from Configuration.GenProduction.rivet_customize import customise
 process = customise(process)
 
 # End of customisation functions
-process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2015_PAS_SMP_15_003')
+process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2017_I1605749')
 process.rivetAnalyzer.OutputFile = cms.string('Pythia6.yoda')
 process.rivetAnalyzer.UseExternalWeight = cms.bool(True)

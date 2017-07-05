@@ -36,12 +36,12 @@ namespace Rivet {
 
       if (jets.size() < 2) vetoEvent;
 
-      double leadingpt = jets[0].momentum().pT()/GeV;
-      double subleadingpt = jets[1].momentum().pT()/GeV;
+      double leadingpt = jets[0].pt()/GeV;
+      double subleadingpt = jets[1].pt()/GeV;
 
       if (jets.size() < 2 ||
-          std::abs(jets[0].momentum().eta()) >= 1.5 ||
-          std::abs(jets[1].momentum().eta()) >= 1.5 ||
+          jets[0].abseta() >= 1.5 ||
+          jets[1].abseta() >= 1.5 ||
           leadingpt < 400.0 || subleadingpt < 100.0) {
         vetoEvent;
       }
@@ -51,13 +51,9 @@ namespace Rivet {
       vector<Particle> constituents1 = jets[0].constituents();
       std::vector<double> numerator(9, 0), denominator(9, 0);
 
-      double t_jetcharge1(-99), t_jetcharge1k6(-99), t_jetcharge1k3(-99);
-      double t_jetchargeL1(-99), t_jetchargeL1k6(-99), t_jetchargeL1k3(-99);
-      double t_jetchargeT1(-99), t_jetchargeT1k6(-99), t_jetchargeT1k3(-99);
-
-      double jetmag = std::sqrt((jets[0].momentum().px() * jets[0].momentum().px()) +
-                                (jets[0].momentum().py() * jets[0].momentum().py()) +
-                                (jets[0].momentum().pz() * jets[0].momentum().pz()));
+      double t_jetcharge1, t_jetcharge1k6, t_jetcharge1k3;
+      double t_jetchargeL1, t_jetchargeL1k6, t_jetchargeL1k3;
+      double t_jetchargeT1, t_jetchargeT1k6, t_jetchargeT1k3;
 
       denominator[0] = leadingpt;
       denominator[1] = std::pow(leadingpt, 0.6);
@@ -70,15 +66,8 @@ namespace Rivet {
             if (constituents1[j].pt() > 1*GeV) {
               double charge = constituents1[j].charge();
               double mom = constituents1[j].pt();
-              double mag2 = (constituents1[j].mom().px() * constituents1[j].mom().px()) +
-                (constituents1[j].mom().py() * constituents1[j].mom().py()) +
-                (constituents1[j].mom().pz() * constituents1[j].mom().pz());
-
-              double dotproduct = (constituents1[j].mom().px() * (jets[0].momentum().px()) / jetmag) +
-                (constituents1[j].mom().py() * (jets[0].momentum().py()) / jetmag) +
-                (constituents1[j].mom().pz() * (jets[0].momentum().pz()) / jetmag);
-
-              double crossproduct = std::sqrt(mag2 - dotproduct * dotproduct);
+              double dotproduct = constituents1[j].p3().dot(jets[0].p3()) / jets[0].p();
+              double crossproduct = constituents1[j].p3().cross(jets[0].p3()).mod() / jets[0].p();
 
               numerator[0] += (mom * charge);
               numerator[1] += ((std::pow(mom, 0.6)) * charge);

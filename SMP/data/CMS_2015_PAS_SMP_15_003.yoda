@@ -1,6 +1,5 @@
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d01-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d01-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -8.000000e-01	2.000000e-01	2.000000e-01	1.080706e-02	8.350214e-04	8.350214e-04
@@ -27,7 +26,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d02-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d02-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -1.225000e+00	2.750000e-01	2.750000e-01	3.341098e-04	4.308445e-05	4.308445e-05
@@ -54,7 +52,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d03-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d03-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -2.280000e+00	2.400000e-01	2.400000e-01	3.088608e-04	7.786299e-05	7.786299e-05
@@ -91,7 +88,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d04-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d04-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -8.000000e-01	2.000000e-01	2.000000e-01	1.826391e-03	1.189448e-04	1.189448e-04
@@ -118,7 +114,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d05-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d05-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -7.500000e-01	5.000000e-02	5.000000e-02	1.662368e-04	8.133791e-05	8.133791e-05
@@ -143,7 +138,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d06-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d06-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -6.500000e-01	5.000000e-02	5.000000e-02	5.005127e-05	5.326493e-05	5.326493e-05
@@ -164,7 +158,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d07-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d07-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -8.000000e-01	2.000000e-01	2.000000e-01	5.326450e-05	1.849403e-05	1.849403e-05
@@ -191,7 +184,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d08-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d08-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -6.500000e-01	5.000000e-02	5.000000e-02	2.709442e-05	4.923066e-05	4.923066e-05
@@ -214,7 +206,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d09-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d09-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -6.500000e-01	5.000000e-02	5.000000e-02	9.861904e-06	7.793240e-06	7.793240e-06
@@ -235,7 +226,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d10-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d10-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -1.225000e+00	2.750000e-01	2.750000e-01	3.421058e-04	4.710536e-05	4.710536e-05
@@ -262,7 +252,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d11-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d11-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -1.225000e+00	2.750000e-01	2.750000e-01	2.365162e-04	3.687614e-05	3.687614e-05
@@ -289,7 +278,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d12-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d12-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -1.225000e+00	2.750000e-01	2.750000e-01	1.258736e-04	3.513714e-05	3.513714e-05
@@ -316,7 +304,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d13-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d13-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -7.500000e-01	5.000000e-02	5.000000e-02	1.709090e-04	8.521629e-05	8.521629e-05
@@ -341,7 +328,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d14-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d14-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -7.500000e-01	5.000000e-02	5.000000e-02	1.381187e-04	9.170318e-05	9.170318e-05
@@ -366,7 +352,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d15-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d15-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -7.500000e-01	5.000000e-02	5.000000e-02	4.598294e-05	8.127324e-05	8.127324e-05
@@ -391,7 +376,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d16-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d16-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -6.500000e-01	5.000000e-02	5.000000e-02	2.490450e-05	5.562164e-05	5.562164e-05
@@ -414,7 +398,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d17-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d17-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -6.500000e-01	5.000000e-02	5.000000e-02	7.223722e-05	1.934433e-04	1.934433e-04
@@ -437,7 +420,6 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_2015_PAS_SMP_15_003/d18-x01-y01
 Path=/REF/CMS_2015_PAS_SMP_15_003/d18-x01-y01
-Title=
 Type=Scatter2D
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+
 -5.500000e-01	5.000000e-02	5.000000e-02	7.040043e-05	2.490852e-04	2.490852e-04

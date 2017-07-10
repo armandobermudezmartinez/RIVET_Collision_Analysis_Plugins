@@ -90,24 +90,33 @@ namespace Rivet {
       const double leptonPt = lepton.pT();
       const double leptonAbsEta = std::abs( lepton.eta() );
 
-      if ( leptonPt < 26 or leptonAbsEta > 2.4 ) vetoEvent;
-
+      if ( leptonPt <= 26 or leptonAbsEta >= 2.4 ) vetoEvent;
 
       // Jet selection
       const FastJets& jetpro = applyProjection<FastJets>(event, "Jets");
-      const Jets jets = jetpro.jets(Cuts::abseta < 2.4 && Cuts::pT > 30*GeV);
+      const Jets jets = jetpro.jets(Cuts::abseta < 2.4 && Cuts::pT > 20*GeV);
       Jets cleanedJets;
-      unsigned int nBJets = 0;
+      unsigned int nJetsAbove30GeV = 0;
+      unsigned int nJetsAbove20GeV = 0;
+      unsigned int nBJetsAbove30GeV = 0;
+      unsigned int nBJetsAbove20GeV = 0;
       foreach (const Jet& j, jets) {
+
         // if (deltaR(j.momentum(), lepton) > 0.4) {
         // std::cout << "Jet pt, eta : " << j.pT() << " " << j.eta() << std::endl;
-          cleanedJets.push_back( j );
-          if ( j.bTagged() ) ++nBJets;
-        // }
+        cleanedJets.push_back( j );
+
+        ++nJetsAbove20GeV;
+        if ( j.pT() > 30 ) ++nJetsAbove30GeV;
+
+        if ( j.bTagged() ) {
+          ++nBJetsAbove20GeV;
+          if ( j.pT() > 30 ) ++nBJetsAbove30GeV;
+        }
       }
 
-      if ( cleanedJets.size() < 4 ) vetoEvent;
-      if ( nBJets < 2 ) vetoEvent;
+      if ( nJetsAbove30GeV < 3 || nJetsAbove20GeV < 4 ) vetoEvent;
+      if ( nBJetsAbove30GeV < 1 || nBJetsAbove20GeV < 2 ) vetoEvent;
 
       ++_nEventsInPhaseSpace;
 

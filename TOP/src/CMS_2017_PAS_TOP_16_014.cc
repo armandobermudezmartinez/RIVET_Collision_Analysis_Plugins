@@ -67,16 +67,12 @@ namespace Rivet {
       _hist_abs_lpt = bookHisto1D(13, 1, 1);
       _hist_abs_labseta = bookHisto1D(14, 1, 1);
 
-      _nEvents = 0;
-      _nEventsInPhaseSpace = 0;
     }
 
 
     // per event analysis
     void analyze(const Event& event) {
       const double weight = event.weight();
-
-      ++_nEvents;
 
       // select ttbar -> lepton+jets at particle level
       const DressedLeptons& dressed_leptons = applyProjection<DressedLeptons>(event, "DressedLeptons");
@@ -117,8 +113,6 @@ namespace Rivet {
 
       if ( nJetsAbove30GeV < 3 || nJetsAbove20GeV < 4 ) vetoEvent;
       if ( nBJetsAbove30GeV < 1 || nBJetsAbove20GeV < 2 ) vetoEvent;
-
-      ++_nEventsInPhaseSpace;
 
       // MET
       const MissingMomentum& met = applyProjection<MissingMomentum>(event, "MET");
@@ -166,16 +160,13 @@ namespace Rivet {
       normalize(_hist_norm_lpt);
       normalize(_hist_norm_labseta);
 
-      std::cout << "_nEvents : " << _nEvents << std::endl;
-      std::cout << "_nEventsInPhaseSpace : " << _nEventsInPhaseSpace << std::endl;
-      std::cout << "RATIO : " << float( _nEventsInPhaseSpace ) / float( _nEvents )  << std::endl;
-      normalize(_hist_abs_met, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
-      normalize(_hist_abs_ht, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
-      normalize(_hist_abs_st, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
-      normalize(_hist_abs_wpt, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
-      normalize(_hist_abs_njets, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
-      normalize(_hist_abs_lpt, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
-      normalize(_hist_abs_labseta, crossSection() * float( _nEventsInPhaseSpace ) / float( _nEvents ) );
+      scale(_hist_abs_met, crossSection()/picobarn / sumOfWeights());
+      scale(_hist_abs_ht, crossSection()/picobarn / sumOfWeights());
+      scale(_hist_abs_st, crossSection()/picobarn / sumOfWeights());
+      scale(_hist_abs_wpt, crossSection()/picobarn / sumOfWeights());
+      scale(_hist_abs_njets, crossSection()/picobarn / sumOfWeights());
+      scale(_hist_abs_lpt, crossSection()/picobarn / sumOfWeights());
+      scale(_hist_abs_labseta, crossSection()/picobarn / sumOfWeights());
 
     }
 
@@ -183,8 +174,6 @@ namespace Rivet {
     Histo1DPtr _hist_norm_met, _hist_norm_ht, _hist_norm_st, _hist_norm_wpt, _hist_norm_njets, _hist_norm_lpt, _hist_norm_labseta;
     Histo1DPtr _hist_abs_met, _hist_abs_ht, _hist_abs_st, _hist_abs_wpt, _hist_abs_njets, _hist_abs_lpt, _hist_abs_labseta;
 
-    int _nEvents;
-    int _nEventsInPhaseSpace;
   };
 
   // The hook for the plugin system

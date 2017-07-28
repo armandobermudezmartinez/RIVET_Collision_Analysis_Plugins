@@ -18,46 +18,34 @@ namespace Rivet {
   // as the ParticleLevelProducer added to GeneratorInterface/RivetInterface.
   // See CMSSW pull requests #18402 (80X) and #18404 (master).
   class ParticleLevelProducerTemplate : public Analysis {
-  private:
-    bool _usePromptFinalStates;
-    bool _excludePromptLeptonsFromJetClustering;
-    bool _excludeNeutrinosFromJetClustering;
-    
-    double _particleMinPt, _particleMaxEta;
-    double _lepConeSize, _lepMinPt, _lepMaxEta;
-    double _jetConeSize, _jetMinPt, _jetMaxEta;
-    double _fatJetConeSize, _fatJetMinPt, _fatJetMaxEta;
-    
-    std::vector<DressedLepton> _leptons;
-    ParticleVector _photons, _neutrinos;
-    Jets _jets, _fatjets;
-    Vector3 _met;
 
   public:
-    ParticleLevelProducerTemplate() : Analysis("ParticleLevelProducerTemplate"),
-    _usePromptFinalStates(true),
-    _excludePromptLeptonsFromJetClustering(true),
-    _excludeNeutrinosFromJetClustering(true),
-
-    _particleMinPt  (0.),
-    _particleMaxEta (5.),
-    
-    _lepConeSize (0.1),
-    _lepMinPt    (15.),
-    _lepMaxEta   (2.5),
-    
-    _jetConeSize (0.4),
-    _jetMinPt    (30.),
-    _jetMaxEta   (2.4),
-    
-    _fatJetConeSize (0.8),
-    _fatJetMinPt    (200.),
-    _fatJetMaxEta   (2.4)
+    ParticleLevelProducerTemplate() : Analysis("ParticleLevelProducerTemplate")
     {
     }
 
     // Initialize Rivet projections
     void init() {
+      // TODO: Please shorten the code below to match your analysis settings
+      //       * replace the config variables by their actual values
+      //       * remove unused parts of if-else statements
+      //       * remove unused projections
+      //       * remove unused includes on top of this file
+      
+      bool _usePromptFinalStates = true;
+      bool _excludePromptLeptonsFromJetClustering = true;
+      bool _excludeNeutrinosFromJetClustering = true;
+      
+      double _particleMinPt = 0.;
+      double _particleMaxEta = 5.;
+      
+      double _lepConeSize = 0.1;
+      double _lepMinPt = 15.;
+      double _lepMaxEta = 2.5;
+      
+      double _jetConeSize = 0.8;
+      double _fatJetConeSize = 0.8;
+      
       // Cuts
       Cut particle_cut = (Cuts::abseta < _particleMaxEta) and (Cuts::pT > _particleMinPt*GeV);
       Cut lepton_cut   = (Cuts::abseta < _lepMaxEta)      and (Cuts::pT > _lepMinPt*GeV);
@@ -125,32 +113,74 @@ namespace Rivet {
       
       // MET
       addProjection(MissingMomentum(fs), "MET");
+      
+      // Booking of histograms
+      _h["n_lep"]  = bookHisto1D("nlep",    10, -0.5,   9.5);
+      _h["lep_pt"] = bookHisto1D("lep_pt", 100,  0.0, 200.0);
+      _h["n_jet"]  = bookHisto1D("njet",    10, -0.5,   9.5);
+      _h["jet_pt"] = bookHisto1D("jet_pt", 100,  0.0, 500.0);
+      _h["n_bjet"] = bookHisto1D("nbjet",   10, -0.5,   9.5);
     };
 
     // Apply Rivet projections
     void analyze(const Event& event) {
-      _jets.clear();
-      _fatjets.clear();
-      _leptons.clear();
-      _photons.clear();
-      _neutrinos.clear();
+      // TODO: Please shorten the code below to match your analysis settings
+      //       * replace the config variables by their actual values
+      //       * remove unused projections
       
-      // Get analysis objects from projections
-      Cut jet_cut    = (Cuts::abseta < _jetMaxEta)    and (Cuts::pT > _jetMinPt*GeV);
+      double _jetMinPt = 30.;
+      double _jetMaxEta = 2.4;
+      
+      double _fatJetMinPt = 200.;
+      double _fatJetMaxEta = 2.4;
+      
+      // Actual analyze code begins here
+      const double weight = event.weight();
+      
+      // Leptons
+      const std::vector<DressedLepton>& leptons = applyProjection<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
+      _h["n_lep"]->fill(leptons.size(), weight);
+      for (const DressedLepton& lepton : leptons) {
+        _h["lep_pt"]->fill(lepton.pt(), weight);
+      }
+      
+      // Jets
+      Cut jet_cut = (Cuts::abseta < _jetMaxEta) and (Cuts::pT > _jetMinPt*GeV);
+      const Jets jets = applyProjection<FastJets>(event, "Jets").jetsByPt(jet_cut);
+      _h["n_jet"]->fill(jets.size(), weight);
+      Jets bjets;
+      for (const Jet& jet : jets) {
+        _h["jet_pt"]->fill(jet.pt(), weight);
+        if (jet.bTagged()) bjets.push_back(jet);
+      }
+      _h["n_bjet"]->fill(bjets.size(), weight);
+      
       Cut fatjet_cut = (Cuts::abseta < _fatJetMaxEta) and (Cuts::pT > _fatJetMinPt*GeV);
+      const Jets fatjets   = applyProjection<FastJets>(event, "FatJets").jetsByPt(fatjet_cut);
       
-      _leptons   = applyProjection<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
-      for (const Particle& lepton : _leptons) std::cout << "lepton pt = " << lepton.pt() << std::endl;
-      _jets      = applyProjection<FastJets>(event, "Jets").jetsByPt(jet_cut);
-      for (const Jet& jet : _jets) std::cout << "jet pt = " << jet.pt() << std::endl;
-      _fatjets   = applyProjection<FastJets>(event, "FatJets").jetsByPt(fatjet_cut);
-      _photons   = applyProjection<FinalState>(event, "Photons").particlesByPt();
-      _neutrinos = applyProjection<FinalState>(event, "Neutrinos").particlesByPt();
-      _met       = -applyProjection<MissingMomentum>(event, "MET").vectorEt();
+      // Other objects
+      const Particles photons   = applyProjection<FinalState>(event, "Photons").particlesByPt();
+      const Particles neutrinos = applyProjection<FinalState>(event, "Neutrinos").particlesByPt();
+      const FourMomentum met    = applyProjection<MissingMomentum>(event, "MET").missingMomentum();
     };
 
-    // Do nothing here
-    void finalize() {};
+    // Finalize histograms here
+    void finalize() {
+      // Just normalize
+      // normalize({_h["n_lep"], _h["lep_pt"], _h["n_jet"], _h["jet_pt"], _h["n_bjet"]});
+      
+      // Scale according to cross section
+      scale({_h["n_lep"], _h["lep_pt"], _h["n_jet"], _h["jet_pt"], _h["n_bjet"]}, crossSection()/femtobarn / sumOfWeights());
+    };
+
+    private:
+
+      // @name Histogram data members
+      //@{
+
+      map<string, Histo1DPtr> _h;
+
+      //@}
 
   };
 

@@ -170,7 +170,7 @@ namespace Rivet {
       // normalize({_h["n_lep"], _h["lep_pt"], _h["n_jet"], _h["jet_pt"], _h["n_bjet"]});
       
       // Scale according to cross section
-      scale({_h["n_lep"], _h["lep_pt"], _h["n_jet"], _h["jet_pt"], _h["n_bjet"]}, crossSection()/femtobarn / sumOfWeights());
+      scale({_h["n_lep"], _h["lep_pt"], _h["n_jet"], _h["jet_pt"], _h["n_bjet"]}, crossSection()/picobarn / sumOfWeights());
     };
 
     private:

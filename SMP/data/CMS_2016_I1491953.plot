@@ -1,14 +1,4 @@
 # BEGIN PLOT /CMS_2016_I1491953/d01-x01-y01
-#Title=[Uncomment and insert title for histogram d01-x01-y01 here]
-#XLabel=[Uncomment and insert x-axis label for histogram d01-x01-y01 here]
-#YLabel=[Uncomment and insert y-axis label for histogram d01-x01-y01 here]
-# + any additional plot settings you might like, see make-plots documentation
-# END PLOT
-
-# ... add more histograms as you need them ...
-
-
-# BEGIN PLOT /CMS_2016_I1491953/d01-x01-y01
 Title=CMS, sqrt(s) = 8 TeV, W+jets
 XLabel=EXCLUSIVE JET MULTIPLICITY
 YLabel=$\sigma(W\rightarrow \mu \nu + N \text{ jets})$ [PB]

@@ -1,10 +1,10 @@
 Name: CMS_2016_I1491953
 Year: 2016
-Summary: <CMS W+jets differential cross section measurements>
+Summary: Measurements of differential cross sections for associated production of a W boson and jets in proton-proton collisions at sqrt(s) = 8 TeV
 Experiment: CMS
 Collider: LHC
 InspireID: 1491953
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Emanuela.Barberis@cern.ch
  - b.bhawandeep@cern.ch
@@ -14,12 +14,9 @@ Authors:
 References:
  - Phys.Rev. D95 (2017) 052002
  - doi:10.1103/PhysRevD.95.052002
- - arXiv:hep-ex/1610.04222
+ - arXiv:1610.04222
 RunInfo:
-  8 TeV $pp$ collisions. Events are required to have exactly one muon with
-  $p_T > 25$ GeV and $|\eta| < 2.1$, and $M_T(\mu,\nu) > 50$ GeV. Jets are required to have
-  $p_T > 30$ GeV and $|\eta| < 2.4$. Jets are only considered if they are separated from the muon by
-  $\Delta R > 0.5$. Muons are dressed with photons in a cone of 0.1 around the muon.
+  8 TeV $pp \to W+jets$.
 Beams: [p+, p+]
 Energies: [8000]
 NumEvents: 76000000
@@ -43,6 +40,3 @@ BibTeX: '@article{Khachatryan:2016fue,
       reportNumber   = "CMS-SMP-14-023, CERN-EP-2016-231, CERN-PH-EP-2016-231",
       SLACcitation   = "%%CITATION = ARXIV:1610.04222;%%"
 }'
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
-

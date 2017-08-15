@@ -1,8 +1,3 @@
-// -*- C++ -*-
-
-//********** Bhawandeep & Apichart **********
-//******** WJets@8TeV ************
-
 #include "Rivet/Analysis.hh"
 #include "Rivet/Projections/FinalState.hh"
 
@@ -42,7 +37,7 @@ namespace Rivet {
       FinalState fs;
       WFinder wfinder_mu(fs, Cuts::abseta < 2.4 && Cuts::pT > 0*GeV, PID::MUON, 0*GeV, 1000000*GeV, 0*GeV, 0.1, WFinder::CLUSTERNODECAY, WFinder::TRACK, WFinder::TRANSMASS);
       addProjection(wfinder_mu, "WFinder_mu");
-		
+
       // Define veto FS
       VetoedFinalState vfs;
       vfs.addVetoOnThisFinalState(wfinder_mu);
@@ -51,12 +46,6 @@ namespace Rivet {
 
       FastJets fastjets(vfs, FastJets::ANTIKT, 0.5);
       addProjection(fastjets, "Jets");
-
-		
-      // Book histograms
-      //_h_XXXX = bookProfile1D(1, 1, 1);
-      //_h_YYYY = bookHisto1D(2, 1, 1);
-      //_h_ZZZZ = bookCounter(3, 1, 1);
 
       //-------------
       _hist_Mult_exc      = bookHisto1D("d01-x01-y01");
@@ -67,7 +56,7 @@ namespace Rivet {
       _hist_addJetPt2j = bookHisto1D("d04-x01-y01");
       _hist_addJetPt3j = bookHisto1D("d05-x01-y01");
       _hist_addJetPt4j = bookHisto1D("d06-x01-y01");
-		
+
       //-------------
       _hist_addHt_1j = bookHisto1D("d07-x01-y01");
       _hist_addHt_2j = bookHisto1D("d08-x01-y01");
@@ -123,12 +112,12 @@ namespace Rivet {
     // define function used for filiing inc Njets histo
     void Fill(Histo1DPtr& _histJetMult, const double& weight, std::vector<FourMomentum>& finaljet_list) {
 
-		  _histJetMult->fill(0, weight);
-		  for (size_t i=0 ; i<finaljet_list.size() ; ++i) {
-			  if (i==7) break;
-			  _histJetMult->fill(i+1, weight);  // inclusive multiplicity
-		  }
-	}
+    _histJetMult->fill(0, weight);
+      for (size_t i=0 ; i<finaljet_list.size() ; ++i) {
+        if (i==7) break;
+        _histJetMult->fill(i+1, weight);  // inclusive multiplicity
+      }
+    }
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
@@ -137,7 +126,7 @@ namespace Rivet {
 
       const double weight = event.weight();
       const WFinder& wfinder_mu = applyProjection<WFinder>(event, "WFinder_mu");
-		
+
       if (wfinder_mu.bosons().size() != 1) {
         vetoEvent;
       }
@@ -173,7 +162,7 @@ namespace Rivet {
             }
           }
         } // end looping over jets
-			
+
         //--- new jet_list sorted by increasing rapidity
         vector<FourMomentum> jListRap = finaljet_list;
         std::sort(jListRap.begin(), jListRap.end(), orderByIncRap);
@@ -254,19 +243,9 @@ namespace Rivet {
     /// Normalise histograms etc., after the run
     void finalize() {
 
-      //normalize(_h_YYYY); // normalize to unity
-      //scale(_h_ZZZZ, crossSection()/picobarn/sumOfWeights()); // norm to cross section
-
-      //double crossec = 36703*picobarn;    // inclusive nnlo xsec calculated by FEWZ
-      //double crossec = 6440.58;  // W1jets exclusive
-      //double crossec = 2087.225; // W2jets exclusive
-      //double crossec = 619.0113; // W3jets exclusive
-      //double crossec = 255.2378; // W4jets exclusive
-
       const double crossec = !std::isnan(crossSectionPerEvent()) ? crossSection() : 36703*picobarn;
       if (std::isnan(crossSectionPerEvent())){
         MSG_INFO("No valid cross-section given, using NNLO xsec calculated by FEWZ " << crossec/picobarn << " pb");
-        //std::cout << "No valid cross-section given, using NNLO xsec calculated by FEWZ " << crossec/picobarn << " pb" << crossSection() << " " << crossSectionPerEvent() << std::endl;
       }
 
       scale(_hist_Mult_exc, crossec/picobarn/sumOfWeights());
@@ -317,12 +296,6 @@ namespace Rivet {
       scale(_hist_dphij3mu_3j, crossec/picobarn/sumOfWeights());
       scale(_hist_dphij4mu_4j, crossec/picobarn/sumOfWeights());
 
-      //-------------------------------------
-      //scale(_hist_MeanNJht_1j, crossec/picobarn/sumOfWeights());
-      //scale(_hist_MeanNJht_2j, crossec/picobarn/sumOfWeights());
-      //scale(_hist_MeanNJdyj1j2_2j, crossec/picobarn/sumOfWeights());
-      //scale(_hist_MeanNJdyjFjB_2j, crossec/picobarn/sumOfWeights());
-
     }
 
     //@}
@@ -331,9 +304,6 @@ namespace Rivet {
 
     /// @name Histograms
     //@{
-    //Profile1DPtr _h_XXXX;
-    //Histo1DPtr _h_YYYY;
-    //CounterPtr _h_ZZZZ;
 
     Histo1DPtr _hist_inc_WJetMult;
     Histo1DPtr _hist_Mult_exc;

@@ -6,8 +6,10 @@ LogX=0
 LogY=1
 LegendXPos=0.4
 LegendYPos=0.8
-RatioPlotYMin=0
-RatioPlotYMax=2
+#LegendXPos=0.1
+#LegendYPos=0.3
+RatioPlotYMin=0.7
+RatioPlotYMax=1.3
 # END PLOT
 
 
@@ -19,8 +21,10 @@ LogX=0
 LogY=1
 LegendXPos=0.4
 LegendYPos=0.8
-RatioPlotYMin=0
-RatioPlotYMax=2
+#LegendXPos=0.1
+#LegendYPos=0.3
+RatioPlotYMin=0.7
+RatioPlotYMax=1.3
 # END PLOT
 
 
@@ -32,6 +36,8 @@ LogX=0
 LogY=1
 LegendXPos=0.4
 LegendYPos=0.8
-RatioPlotYMin=0
-RatioPlotYMax=2
+#LegendXPos=0.1
+#LegendYPos=0.3
+RatioPlotYMin=0.4
+RatioPlotYMax=1.6
 # END PLOT

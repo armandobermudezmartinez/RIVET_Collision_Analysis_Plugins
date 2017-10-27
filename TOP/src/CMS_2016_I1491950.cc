@@ -195,7 +195,7 @@ namespace Rivet
           }
         }
 
-        FastJets _fjDressLep(FastJets::ANTIKT, 0.1);
+        FastJets _fjDressLep(FinalState(), FastJets::ANTIKT, 0.1);
         _fjDressLep.calc(_muelphs);
         const Jets dressLeps = _fjDressLep.jets(Cuts::abseta < _lepetamax && Cuts::pT > _lepptmin*GeV);
         for(Jets::const_iterator itdl = dressLeps.begin() ; itdl != dressLeps.end() ; ++itdl)
@@ -255,7 +255,7 @@ namespace Rivet
           _jetparticles.push_back(Particle(pdgid, FourMomentum(genpar->momentum())));
         }
 
-        FastJets _fjJets(FastJets::ANTIKT, 0.4);
+        FastJets _fjJets(FinalState(), FastJets::ANTIKT, 0.4);
         _fjJets.calc(_jetparticles);
         const Jets allJets = _fjJets.jets(Cuts::abseta < _jetetamax && Cuts::pT > _jetptmin*GeV);
         for(Jets::const_iterator itjet = allJets.begin() ; itjet != allJets.end() ; ++itjet)

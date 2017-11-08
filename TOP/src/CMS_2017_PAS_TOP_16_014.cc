@@ -74,13 +74,13 @@ namespace Rivet {
     void analyze(const Event& event) {
       const double weight = event.weight();
 
-      // select ttbar -> lepton+jets at particle level
+      // Lepton veto selection
       const DressedLeptons& dressed_leptons = applyProjection<DressedLeptons>(event, "DressedLeptons");
       if ( dressed_leptons.dressedLeptons().size() != 1 ) {
         vetoEvent;
       }
 
-      // Lepton selection
+      // Signal lepton selection
       FourMomentum lepton = dressed_leptons.dressedLeptons()[0];
 
       const double leptonPt = lepton.pT();
@@ -97,11 +97,7 @@ namespace Rivet {
       unsigned int nBJetsAbove30GeV = 0;
       unsigned int nBJetsAbove20GeV = 0;
       foreach (const Jet& j, jets) {
-
-        // if (deltaR(j.momentum(), lepton) > 0.4) {
-        // std::cout << "Jet pt, eta : " << j.pT() << " " << j.eta() << std::endl;
         cleanedJets.push_back( j );
-
         ++nJetsAbove20GeV;
         if ( j.pT() > 30 ) ++nJetsAbove30GeV;
 

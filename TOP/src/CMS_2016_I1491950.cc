@@ -1,112 +1,120 @@
 // -*- C++ -*-
 #include "Rivet/Analysis.hh"
-#include "Rivet/Particle.hh"
+#include "Rivet/Tools/Logging.hh"
 #include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Projections/FastJets.hh"
-
-#include "HepMC/GenParticle.h"
-
-#include <vector>
+#include "Rivet/Projections/DressedLeptons.hh"
+#include "Rivet/Projections/PromptFinalState.hh"
+#include "Rivet/Projections/IdentifiedFinalState.hh"
+#include "Rivet/Projections/VetoedFinalState.hh"
+#include "Rivet/Tools/ParticleName.hh"
+#include "Rivet/Tools/ParticleIdUtils.hh"
 
 namespace Rivet
 {
+  namespace { //< only visible in this compilation unit
 
+    /// @brief Special dressed lepton finder
+    ///
+    /// Find dressed leptons by clustering all leptons and photons
+    class SpecialDressedLeptons : public FinalState {
+      public:
+        /// The default constructor. May specify cuts
+        SpecialDressedLeptons(const FinalState& fs, const Cut& cut)
+          : FinalState(cut)
+        {
+          setName("SpecialDressedLeptons");
+          IdentifiedFinalState ifs(fs);
+          ifs.acceptIdPair(PID::PHOTON);
+          ifs.acceptIdPair(PID::ELECTRON);
+          ifs.acceptIdPair(PID::MUON);
+          addProjection(ifs, "IFS");
+          addProjection(FastJets(ifs, FastJets::ANTIKT, 0.1), "LeptonJets");
+        }
+        
+        /// Clone on the heap.
+        virtual unique_ptr<Projection> clone() const {
+          return unique_ptr<Projection>(new SpecialDressedLeptons(*this));
+        }
+        
+        /// Retrieve the dressed leptons
+        const vector<DressedLepton>& dressedLeptons() const { return _clusteredLeptons; }
+        
+      private:
+        /// Container which stores the clustered lepton objects
+        vector<DressedLepton> _clusteredLeptons;
+        
+      public:
+        void project(const Event& e) {
+          _theParticles.clear();
+          _clusteredLeptons.clear();
+          
+          vector<DressedLepton> allClusteredLeptons;
+          
+          const Jets jets = applyProjection<FastJets>(e, "LeptonJets").jetsByPt(5.*GeV);
+          foreach (const Jet& jet, jets) {
+            Particle lepCand;
+            for (const Particle& cand : jet.particles()) {
+              const int absPdgId = abs(cand.pdgId());
+              if (absPdgId == PID::ELECTRON || absPdgId == PID::MUON) {
+                if (cand.pt() > lepCand.pt()) lepCand = cand;
+              }
+            }
+            //Central lepton must be the major component
+            if ((lepCand.pt() < jet.pt()/2.) || (lepCand.pdgId() == 0)) continue;
+            
+            DressedLepton lepton = DressedLepton(lepCand);
+            
+            for (const Particle& cand : jet.particles()) {
+              if (cand == lepCand) continue;
+              lepton.addPhoton(cand, true);
+            }
+            allClusteredLeptons.push_back(lepton);
+          }
+          
+          for (const DressedLepton& lepton : allClusteredLeptons) {
+            if (accept(lepton)) {
+              _clusteredLeptons.push_back(lepton);
+              _theParticles.push_back(lepton.constituentLepton());
+              _theParticles += lepton.constituentPhotons();
+            }
+          }
+        }
+    };
+  }
 
  class CMS_2016_I1491950 : public Analysis
  {
-  private:
-   Particles _muelphs;
-   Particles _neutrinos;
-   Particles _jetparticles;
-   Jets _dressLeps;
-   vector<const Jet*> _bJets;
-   const Jet*_bl;
-   const Jet* _bh;
-   const Jet* _wja;
-   const Jet* _wjb;
-   FourMomentum _tl;
-   FourMomentum _th;
-   FourMomentum _wl;
-   FourMomentum _wh;
-   FourMomentum _nusum;
-
-   Histo1DPtr _hist_thadpt;
-   Histo1DPtr _hist_thady;
-   Histo1DPtr _hist_tleppt;
-   Histo1DPtr _hist_tlepy;
-   Histo1DPtr _hist_ttpt;
-   Histo1DPtr _hist_tty;
-   Histo1DPtr _hist_ttm;
-   Histo1DPtr _hist_njet;
-   Histo1DPtr _hist_njets_thadpt_1;
-   Histo1DPtr _hist_njets_thadpt_2;
-   Histo1DPtr _hist_njets_thadpt_3;
-   Histo1DPtr _hist_njets_thadpt_4;
-   Histo1DPtr _hist_njets_ttpt_1;
-   Histo1DPtr _hist_njets_ttpt_2;
-   Histo1DPtr _hist_njets_ttpt_3;
-   Histo1DPtr _hist_njets_ttpt_4;
-   Histo1DPtr _hist_thady_thadpt_1;
-   Histo1DPtr _hist_thady_thadpt_2;
-   Histo1DPtr _hist_thady_thadpt_3;
-   Histo1DPtr _hist_thady_thadpt_4;
-   Histo1DPtr _hist_ttm_tty_1;
-   Histo1DPtr _hist_ttm_tty_2;
-   Histo1DPtr _hist_ttm_tty_3;
-   Histo1DPtr _hist_ttm_tty_4;
-   Histo1DPtr _hist_ttpt_ttm_1;
-   Histo1DPtr _hist_ttpt_ttm_2;
-   Histo1DPtr _hist_ttpt_ttm_3;
-   Histo1DPtr _hist_ttpt_ttm_4;
-
-   Histo1DPtr _histnorm_thadpt;
-   Histo1DPtr _histnorm_thady;
-   Histo1DPtr _histnorm_tleppt;
-   Histo1DPtr _histnorm_tlepy;
-   Histo1DPtr _histnorm_ttpt;
-   Histo1DPtr _histnorm_tty;
-   Histo1DPtr _histnorm_ttm;
-   Histo1DPtr _histnorm_njet;
-   Histo1DPtr _histnorm_njets_thadpt_1;
-   Histo1DPtr _histnorm_njets_thadpt_2;
-   Histo1DPtr _histnorm_njets_thadpt_3;
-   Histo1DPtr _histnorm_njets_thadpt_4;
-   Histo1DPtr _histnorm_njets_ttpt_1;
-   Histo1DPtr _histnorm_njets_ttpt_2;
-   Histo1DPtr _histnorm_njets_ttpt_3;
-   Histo1DPtr _histnorm_njets_ttpt_4;
-   Histo1DPtr _histnorm_thady_thadpt_1;
-   Histo1DPtr _histnorm_thady_thadpt_2;
-   Histo1DPtr _histnorm_thady_thadpt_3;
-   Histo1DPtr _histnorm_thady_thadpt_4;
-   Histo1DPtr _histnorm_ttm_tty_1;
-   Histo1DPtr _histnorm_ttm_tty_2;
-   Histo1DPtr _histnorm_ttm_tty_3;
-   Histo1DPtr _histnorm_ttm_tty_4;
-   Histo1DPtr _histnorm_ttpt_ttm_1;
-   Histo1DPtr _histnorm_ttpt_ttm_2;
-   Histo1DPtr _histnorm_ttpt_ttm_3;
-   Histo1DPtr _histnorm_ttpt_ttm_4;
-
-  public:
-
-   double _jetetamax;
-   double _jetptmin;
-   double _lepetamax;
-   double _lepptmin;
-
-
+   public:
    /// Constructor
    CMS_2016_I1491950()
-    : Analysis("CMS_2016_I1491950"), _jetetamax(2.5), _jetptmin(25.), _lepetamax(2.5), _lepptmin(30.)
+    : Analysis("CMS_2016_I1491950")
    {    }
 
    /// Book histograms and initialise projections before the run
    void init()
    {
-    const FinalState fs(Cuts::pT > 0. && Cuts::abseta < 6.);
-    addProjection(fs, "FS");
-
+    FinalState fs(Cuts::pT > 0. && Cuts::abseta < 6.);
+    PromptFinalState prompt_fs(fs);
+    prompt_fs.acceptMuonDecays(true);
+    prompt_fs.acceptTauDecays(true);
+    
+    // Projection for dressed electrons and muons
+    Cut leptonCuts = Cuts::abseta < 2.5 and Cuts::pt > 30.*GeV;
+    SpecialDressedLeptons dressedleptons(prompt_fs, leptonCuts);
+    addProjection(dressedleptons, "DressedLeptons");
+    
+    // Neutrinos
+    IdentifiedFinalState neutrinos(prompt_fs);
+    neutrinos.acceptNeutrinos();
+    addProjection(neutrinos, "Neutrinos");
+    
+    // Projection for jets
+    VetoedFinalState fsForJets(fs);
+    fsForJets.addVetoOnThisFinalState(dressedleptons);
+    fsForJets.addVetoOnThisFinalState(neutrinos);
+    addProjection(FastJets(fsForJets, FastJets::ANTIKT, 0.4, JetAlg::DECAY_MUONS, JetAlg::DECAY_INVISIBLES), "Jets");
+    
     //book hists
     _hist_thadpt = bookHisto1D("d01-x02-y01");
     _hist_thady = bookHisto1D("d03-x02-y01");
@@ -173,145 +181,65 @@ namespace Rivet
    void analyze(const Event& event)
    {
     const double weight = event.weight();
-    _muelphs.clear();
-    _neutrinos.clear();
-    _dressLeps.clear();
-    _bJets.clear();
-    _jetparticles.clear();
-
-    const ParticleVector& FSpars = applyProjection<FinalState>(event, "FS").particles();
-    for(ParticleVector::const_iterator itpar = FSpars.begin() ; itpar != FSpars.end() ; ++itpar)
-    {
-     const Particle& par = *itpar;
-     if(isFromHadron(par.genParticle())) continue;
-     int pdgid = abs(par.pdgId());
-     if(pdgid == 12 || pdgid == 14 || pdgid == 16)
-     {
-      _neutrinos.push_back(par);
-     }
-     else if(pdgid == 11 || pdgid == 13 || pdgid == 22)
-     {
-      _muelphs.push_back(par);
-     }
-    }
-
-    FastJets _fjDressLep(FinalState(), FastJets::ANTIKT, 0.1);
-    _fjDressLep.calc(_muelphs);
-    const Jets dressLeps = _fjDressLep.jets(Cuts::abseta < _lepetamax && Cuts::pT > _lepptmin*GeV);
-    for(Jets::const_iterator itdl = dressLeps.begin() ; itdl != dressLeps.end() ; ++itdl)
-    {
-     Particles jetconst = itdl->particles();
-     for(Particles::const_iterator itpar = jetconst.begin() ; itpar != jetconst.end(); ++itpar)
-     {
-      if((abs(itpar->pdgId()) == 11 || abs(itpar->pdgId()) == 13) && itpar->pt()/itdl->pt() > 0.5)
-      {
-       _dressLeps.push_back(*itdl);
-      } 
-     }
-    }
-
-    if(_dressLeps.size() != 1) return;
-
-    const vector<const HepMC::GenParticle*>& allgenpars = Rivet::particles(event.genEvent());
-    for(vector<const HepMC::GenParticle*>::const_iterator itgenpar = allgenpars.begin() ; itgenpar != allgenpars.end() ; ++itgenpar)
-    {
-     const HepMC::GenParticle* genpar = *itgenpar;
-     const int pdgid = genpar->pdg_id();
-     if(isFinalBHadron(genpar))
-     {
-      _jetparticles.push_back(Particle(555555555, 1E-20*FourMomentum(genpar->momentum())));
-      continue;
-     }
-     if(genpar->status() != 1) continue;
-
-     //remove selected neutrinos
-     bool isneutrino = false; 
-     for(Particles::const_iterator itnu = _neutrinos.begin() ; itnu != _neutrinos.end(); ++itnu)
-     {
-      if(itnu->genParticle() == genpar)
-      {
-       isneutrino = true;
-       break;  
-      } 
-     }
-     if(isneutrino) continue;
-
-     //remove dressed lepton constituents
-     bool islepton = false; 
-     for(Jets::const_iterator itdl = _dressLeps.begin() ; itdl != _dressLeps.end() ; ++itdl)
-     {
-      Particles jetconst = itdl->particles();
-      for(Particles::const_iterator itpar = jetconst.begin() ; itpar != jetconst.end(); ++itpar)
-      {
-       if(itpar->genParticle() == genpar)
-       {
-        islepton = true;   
-        break;
-       } 
-      }
-     }
-     if(islepton) continue;
-
-     _jetparticles.push_back(Particle(pdgid, FourMomentum(genpar->momentum())));
-    }
-
-    FastJets _fjJets(FinalState(), FastJets::ANTIKT, 0.4);
-    _fjJets.calc(_jetparticles);
-    const Jets allJets = _fjJets.jets(Cuts::abseta < _jetetamax && Cuts::pT > _jetptmin*GeV);
-    for(Jets::const_iterator itjet = allJets.begin() ; itjet != allJets.end() ; ++itjet)
-    {
-     const Particles jetconst = itjet->particles();
-     for(Particles::const_iterator itpar = jetconst.begin() ; itpar != jetconst.end(); ++itpar)
-     {
-      if(itpar->pdgId() == 555555555)
-      {
-       _bJets.push_back(&(*itjet));
-       break;
-      } 
-     }
-    }
-
-    if(_bJets.size() < 2 || allJets.size() < 4) return;
-
-
+    
+    // leptons
+    const SpecialDressedLeptons& dressedleptons_proj = applyProjection<SpecialDressedLeptons>(event, "DressedLeptons");
+    std::vector<DressedLepton> dressedLeptons = dressedleptons_proj.dressedLeptons();
+    
+    if(dressedLeptons.size() != 1) return;
+    
+    // neutrinos
+    const Particles neutrinos = applyProjection<FinalState>(event, "Neutrinos").particlesByPt();
     _nusum = FourMomentum(0., 0., 0., 0.);
-    for(Particles::const_iterator itnu = _neutrinos.begin() ; itnu != _neutrinos.end(); ++itnu)
+    for(const Particle& neutrino : neutrinos)
     {
-     _nusum += itnu->momentum();
+      _nusum += neutrino.momentum();
     }
-    _wl = _nusum + _dressLeps[0].momentum();
+    _wl = _nusum + dressedLeptons[0].momentum();
+    
+    // jets
+    Cut jet_cut = (Cuts::abseta < 2.5) and (Cuts::pT > 25.*GeV);
 
+    const Jets jets = applyProjection<FastJets>(event, "Jets").jetsByPt(jet_cut);
+    Jets allJets;
+    for (const Jet& jet : jets) {
+      allJets.push_back(jet);
+    }    
+    Jets bJets;
+    for (const Jet& jet : allJets) {
+      if (jet.bTagged()) bJets.push_back(jet);
+    }
+
+    if(bJets.size() < 2 || allJets.size() < 4) return;
+    
     //construct top quark proxies
     double Kmin = numeric_limits<double>::max();
-    for(Jets::const_iterator itaj = allJets.begin() ; itaj != allJets.end() ; ++itaj)
+    for(const Jet& itaj : allJets)
     {
-     for(Jets::const_iterator itbj = allJets.begin() ; itbj != itaj ; ++itbj)
-     {
-      FourMomentum wh(itaj->momentum() + itbj->momentum());
-      for(vector<const Jet*>::const_iterator ithbj = _bJets.begin() ; ithbj != _bJets.end() ; ++ithbj)
+      for(const Jet& itbj : allJets)
       {
-       FourMomentum th(wh + (*ithbj)->momentum());
-       if(&(*itaj) == *ithbj || &(*itbj) == *ithbj) continue;
-       for(vector<const Jet*>::const_iterator itlbj = _bJets.begin() ; itlbj != _bJets.end() ; ++itlbj)
-       {
-        if(&(*itaj) == *itlbj || &(*itbj) == *itlbj || ithbj == itlbj) continue;
-        FourMomentum tl(_wl + (*itlbj)->momentum());
-
-        double K = pow(wh.mass() - 80.4, 2) + pow(th.mass() - 172.5, 2) + pow(tl.mass() - 172.5, 2);
-        if(K < Kmin)
+        if (itaj.momentum() == itbj.momentum()) continue;
+        FourMomentum wh(itaj.momentum() + itbj.momentum());
+        for(const Jet& ithbj : bJets)
         {
-         Kmin = K;
-         _bl = *itlbj;
-         _bh = *ithbj;
-         _wja = &(*itaj); 
-         _wjb = &(*itbj);
-         _tl = tl;
-         _th = th;
-         _wh = wh;
+          if(itaj.momentum() == ithbj.momentum() || itbj.momentum() == ithbj.momentum()) continue;
+          FourMomentum th(wh + ithbj.momentum());
+          for(const Jet& itlbj : bJets)
+          {
+            if(itaj.momentum() == itlbj.momentum() || itbj.momentum() == itlbj.momentum() || ithbj.momentum() == itlbj.momentum()) continue;
+            FourMomentum tl(_wl + itlbj.momentum());
+
+            double K = pow(wh.mass() - 80.4, 2) + pow(th.mass() - 172.5, 2) + pow(tl.mass() - 172.5, 2);
+            if(K < Kmin)
+            {
+              Kmin = K;
+              _tl = tl;
+              _th = th;
+              _wh = wh;
+            }
+          }
         }
-       }
       }
-     }
     }
 
     _hist_thadpt->fill(_th.pt(), weight); 
@@ -494,47 +422,71 @@ namespace Rivet
 
    }
 
-   bool isFinalBHadron(const HepMC::GenParticle* genp)
-   {
-    if(isBHadron(genp->pdg_id()) == false) return false;
+  private:
+   FourMomentum _tl;
+   FourMomentum _th;
+   FourMomentum _wl;
+   FourMomentum _wh;
+   FourMomentum _nusum;
 
-    const GenVertex* prodVtx = genp->production_vertex();
-    if (prodVtx == nullptr) return false;
-    const vector<const GenParticle*> ancestors(particles(prodVtx, HepMC::ancestors));
-    for(vector<const GenParticle*>::const_iterator itan = ancestors.begin() ; itan != ancestors.end() ; ++itan)
-    {
-     if(isBHadron((*itan)->pdg_id()) == true) return false;
-    }
-    return true;
-   }
+   Histo1DPtr _hist_thadpt;
+   Histo1DPtr _hist_thady;
+   Histo1DPtr _hist_tleppt;
+   Histo1DPtr _hist_tlepy;
+   Histo1DPtr _hist_ttpt;
+   Histo1DPtr _hist_tty;
+   Histo1DPtr _hist_ttm;
+   Histo1DPtr _hist_njet;
+   Histo1DPtr _hist_njets_thadpt_1;
+   Histo1DPtr _hist_njets_thadpt_2;
+   Histo1DPtr _hist_njets_thadpt_3;
+   Histo1DPtr _hist_njets_thadpt_4;
+   Histo1DPtr _hist_njets_ttpt_1;
+   Histo1DPtr _hist_njets_ttpt_2;
+   Histo1DPtr _hist_njets_ttpt_3;
+   Histo1DPtr _hist_njets_ttpt_4;
+   Histo1DPtr _hist_thady_thadpt_1;
+   Histo1DPtr _hist_thady_thadpt_2;
+   Histo1DPtr _hist_thady_thadpt_3;
+   Histo1DPtr _hist_thady_thadpt_4;
+   Histo1DPtr _hist_ttm_tty_1;
+   Histo1DPtr _hist_ttm_tty_2;
+   Histo1DPtr _hist_ttm_tty_3;
+   Histo1DPtr _hist_ttm_tty_4;
+   Histo1DPtr _hist_ttpt_ttm_1;
+   Histo1DPtr _hist_ttpt_ttm_2;
+   Histo1DPtr _hist_ttpt_ttm_3;
+   Histo1DPtr _hist_ttpt_ttm_4;
 
-   bool isBHadron(int pdgid)
-   {
-    int abspdgid = abs(pdgid);
-    if(abspdgid <= 100) return false;
-
-    int nq3 = (abspdgid / 10) % 10;
-    int nq2 = (abspdgid / 100) % 10;
-    int nq1 = (abspdgid / 1000) % 10;
-
-    if ( nq3 == 0 ) return false;
-    if ( nq1 == 5 or nq2 == 5 ) return true;
-
-    return false;
-   }
-
-   bool isFromHadron(const HepMC::GenParticle* genp)
-   {
-    const GenVertex* prodVtx = genp->production_vertex();
-    const vector<const GenParticle*> ancestors(particles(prodVtx, HepMC::ancestors));
-    for(vector<const GenParticle*>::const_iterator itan = ancestors.begin() ; itan != ancestors.end() ; ++itan)
-    {
-     if((*itan)->status() == 2 && abs((*itan)->pdg_id()) > 100) return true;
-    }
-    return false;
-   }
-
-
+   Histo1DPtr _histnorm_thadpt;
+   Histo1DPtr _histnorm_thady;
+   Histo1DPtr _histnorm_tleppt;
+   Histo1DPtr _histnorm_tlepy;
+   Histo1DPtr _histnorm_ttpt;
+   Histo1DPtr _histnorm_tty;
+   Histo1DPtr _histnorm_ttm;
+   Histo1DPtr _histnorm_njet;
+   Histo1DPtr _histnorm_njets_thadpt_1;
+   Histo1DPtr _histnorm_njets_thadpt_2;
+   Histo1DPtr _histnorm_njets_thadpt_3;
+   Histo1DPtr _histnorm_njets_thadpt_4;
+   Histo1DPtr _histnorm_njets_ttpt_1;
+   Histo1DPtr _histnorm_njets_ttpt_2;
+   Histo1DPtr _histnorm_njets_ttpt_3;
+   Histo1DPtr _histnorm_njets_ttpt_4;
+   Histo1DPtr _histnorm_thady_thadpt_1;
+   Histo1DPtr _histnorm_thady_thadpt_2;
+   Histo1DPtr _histnorm_thady_thadpt_3;
+   Histo1DPtr _histnorm_thady_thadpt_4;
+   Histo1DPtr _histnorm_ttm_tty_1;
+   Histo1DPtr _histnorm_ttm_tty_2;
+   Histo1DPtr _histnorm_ttm_tty_3;
+   Histo1DPtr _histnorm_ttm_tty_4;
+   Histo1DPtr _histnorm_ttpt_ttm_1;
+   Histo1DPtr _histnorm_ttpt_ttm_2;
+   Histo1DPtr _histnorm_ttpt_ttm_3;
+   Histo1DPtr _histnorm_ttpt_ttm_4;   
+   
  };
 
 

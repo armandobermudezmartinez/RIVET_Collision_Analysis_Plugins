@@ -55,6 +55,7 @@ else:
         'CMS_LesHouches2015', # MC analysis for dilepton
         'MC_GENERIC', # MC generic analysis
         'MC_XS', # MC xs analysis
+        'CMS_2016_I1491950',  # diff xs lepton+jets (2015 paper)
     )
 process.rivetAnalyzer.OutputFile      = options.yodafile
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")

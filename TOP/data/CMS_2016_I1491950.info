@@ -12,8 +12,9 @@ Authors:
  - Aran Garcia-Bellido <aran.garcia-bellido@cern.ch>
  - Otto Hindrichs <otto.heinz.hindrichs@cern.ch>
  - Mauro Verzetti <Mauro.Verzetti@cern.ch>
+ - Markus Seidel <markus.seidel@cern.ch>
 References:
- - CMS PAS TOP-16-008 -- for the analysis
+ - Phys. Rev. D 95 (2017) 092001
 RunInfo:
   pp QCD interactions at $\sqrt{s} = 13$ TeV. Data collected by CMS during the year 2015. Selection of lepton+jets top pair candidate events at particle level. 
 NumEvents: 1000000

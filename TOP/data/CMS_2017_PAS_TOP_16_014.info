@@ -1,0 +1,37 @@
+Name: CMS_2017_PAS_TOP_16_014
+Year: 2017
+Summary: Measurement of the differential cross sections of top quark pair production as a function of kinematic event variables in pp collisions at sqrt(s) = 13 TeV
+Experiment: CMS
+Collider: LHC
+InspireID: 
+Status: UNVALIDATED
+Authors:
+ - Doug Burns <Douglas.Burns@cern.ch>
+ - Emyr Clement <Emyr.Clement@bristol.ac.uk>
+ - Markus Seidel <markus.seidel@cern.ch>
+
+References:
+ - TOP-16-014
+RunInfo:
+  ttbar events at sqrt(s) = 13 TeV, lepton+jets selection at particle level
+Luminosity: 35.9 / fb
+Beams: [p+, p+]
+Energies: [13000]
+Description:
+      'Abstract : 
+
+      Measurements are reported of the normalized differential cross sections for top quark pair production with respect to four kinematic event variables: the missing transverse energy; the scalar sum of the jet transverse momentum (pT); the scalar sum of the pT of all objects in the event; and the pT of leptonically decaying W bosons from top quark decays.
+
+      Rivet : 
+
+	  This analysis is to be run on ${\rm t\bar{t}}$ simulation. 
+
+	  The particle level selection requires:
+	  - exactly one electron or muon with $p_{T} > 26$~GeV and $|\eta| < 2.4$
+	  - no additional electrons or muons with $p_{T} > 15$~GeV and $|\eta| < 2.4$
+	  - at least thress jets with $p_{T} > 30$~GeV and $|\eta| < 2.4$, and one jet with $p_{T} > 25$~GeV and $|\eta| < 2.4$
+	  - two of these selected jets must be tagged as originating from a b quark.
+      '
+
+BibKey: 
+BibTeX: 

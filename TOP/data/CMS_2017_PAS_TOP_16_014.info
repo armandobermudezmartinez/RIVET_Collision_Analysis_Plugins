@@ -20,7 +20,7 @@ Energies: [13000]
 Description:
       'Abstract : 
 
-      Measurements are reported of the normalized differential cross sections for top quark pair production with respect to four kinematic event variables: the missing transverse energy; the scalar sum of the jet transverse momentum (pT); the scalar sum of the pT of all objects in the event; and the pT of leptonically decaying W bosons from top quark decays.
+	Measurements of the differential $\mathrm{t}\overline{\mathrm{t}}$ production cross section are presented in the single-lepton decay channel, with respect to a number of global event observables. The measurements are performed with $\text{35.9~fb}^{-1}$ of proton-proton collision data collected by the CMS experiment at the LHC during 2016 at $\sqrt{s} = \text{13~TeV}$. The differential cross sections are measured at the level of long-lived generated particles in a phase space similar to that accessible by the CMS detector, and are compared to state-of-the-art leading-order and next-to-leading-order $\mathrm{t}\overline{\mathrm{t}}$ simulations.
 
       Rivet : 
 

@@ -34,7 +34,7 @@ namespace Rivet {
       WFinder wfinder_mu(fs, Cuts::abseta < 2.4 && Cuts::pT > 0*GeV, PID::MUON, 0*GeV, 1000000*GeV, 0*GeV, 0.1, WFinder::CLUSTERNODECAY, WFinder::TRACK, WFinder::TRANSMASS);
       //WFinder wfinder_mu(fs, Cuts::abseta < 2.4 && Cuts::pT > 0*GeV, PID::MUON, 0*GeV, 1000000*GeV, 0*GeV, 0.1, WFinder::CLUSTERNODECAY, WFinder::NOTRACK, WFinder::TRANSMASS);
       addProjection(wfinder_mu, "WFinder_mu");
-		
+
       // Define veto FS
       VetoedFinalState vfs;
       vfs.addVetoOnThisFinalState(wfinder_mu);
@@ -76,7 +76,7 @@ namespace Rivet {
       _hist_dRmuj_1j =bookHisto1D("d19-x01-y01");
 
     }
-	  
+
     // define function used for filiing inc Njets histo
     void Fill(Histo1DPtr& _histJetMult, const double& weight, std::vector<FourMomentum>& finaljet_list){
       _histJetMult->fill(0, weight);
@@ -104,7 +104,7 @@ namespace Rivet {
         double WmT = sqrt( 2 * lepton0.pT() * neutrino.pT() * (1 - cos(deltaPhi(lepton0, neutrino))) );
 
         if (WmT < 50.0*GeV) vetoEvent;
-		  
+
         double pt0 = lepton0.pT();
         double eta0 = lepton0.eta();
 
@@ -132,7 +132,7 @@ namespace Rivet {
 
         //---------------------- FILL HISTOGRAMS ------------------
 
-		// Multiplicity exc plot.
+        // Multiplicity exc plot.
         _hist_Mult_exc->fill(finaljet_list.size(), weight);
 
         // Multiplicity inc plot.
@@ -213,7 +213,7 @@ namespace Rivet {
       scale(_hist_dphij4mu_4j, crossec/picobarn/sumOfWeights());
 
       scale(_hist_dRmuj_1j, crossec/picobarn/sumOfWeights());
-		
+
     }
 
     //@}
@@ -232,7 +232,7 @@ namespace Rivet {
     Histo1DPtr _hist_JetPt4j;
 
     Histo1DPtr _hist_JetRap1j;
-	Histo1DPtr _hist_JetRap2j;
+    Histo1DPtr _hist_JetRap2j;
     Histo1DPtr _hist_JetRap3j;
     Histo1DPtr _hist_JetRap4j;
 
@@ -243,7 +243,7 @@ namespace Rivet {
 
     Histo1DPtr _hist_dphij1mu_1j;
     Histo1DPtr _hist_dphij2mu_2j;
-	Histo1DPtr _hist_dphij3mu_3j;
+    Histo1DPtr _hist_dphij3mu_3j;
     Histo1DPtr _hist_dphij4mu_4j;
 
     Histo1DPtr _hist_dRmuj_1j;

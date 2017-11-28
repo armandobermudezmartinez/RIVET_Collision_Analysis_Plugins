@@ -5,9 +5,6 @@
 #include "Rivet/Projections/DressedLeptons.hh"
 #include "Rivet/Projections/FastJets.hh"
 #include "Rivet/Projections/ZFinder.hh"
-#include "DataFormats/Math/interface/LorentzVector.h"
-#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
-#include "TLorentzVector.h"
 
 //#define DebugLog 
 

@@ -34,7 +34,11 @@ to the associated production with any jet are also presented.  The
 production of a Z boson with at least two b jets is investigated,
 and differential cross sections are measured for the dijet system.
 Results are compared to theoretical predictions, testing two different
-flavour schemes for the choice of initial-state partons.'
+flavour schemes for the choice of initial-state partons. Note of the authors:
+the Z boson selection and b-tagging algorithms used in the code are based on
+standard Rivet code and do not exactly coincide with those used in the paper.
+They anyway reproduce the paper results at the percent level or better for most
+of the bins.'
 BibKey: Khachatryan:2016iob
 BibTeX: '@article{Khachatryan:2016iob,
       author         = "Khachatryan, Vardan and others",
@@ -49,6 +53,4 @@ BibTeX: '@article{Khachatryan:2016iob,
       reportNumber   = "CMS-SMP-14-010, CERN-EP-2016-254",
       SLACcitation   = "%%CITATION = ARXIV:1611.06507;%%"
 }'
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
 

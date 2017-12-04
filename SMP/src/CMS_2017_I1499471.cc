@@ -134,30 +134,7 @@ namespace Rivet {
       //identification of bjets
             
       foreach (const Jet& j, goodjets) {
-        bool bjet_found = false;
-        bool bjet_found1 = false;
-        
-        FourMomentum pim=j.momentum();
-        
-        foreach (const Particle& part, j.constituents()) {
-          if ( part.hasBottom() && deltaR(j,part.momentum().eta(),part.momentum().phi())<0.5) bjet_found = true;
-          GenVertex* prodVtx = part.genParticle()->production_vertex();
-          if (prodVtx == NULL) continue;
-          foreach (const GenParticle* ancestor, particles(prodVtx, HepMC::ancestors)) {
-            const PdgId pid = ancestor->pdg_id();
-            if (ancestor->status() == 2 && (PID::isHadron(pid) && PID::hasBottom(pid))) {
-              bjet_found = true;
-              pim=ancestor->momentum();
-              break;
-            }
-          } 
-          if (bjet_found && deltaR(j,pim.eta(),pim.phi())<0.5) bjet_found1=true;
-        }
-        
-        if (bjet_found1) {
-          jb_final.push_back(j);
-        }
-        
+        if ( j.bTagged() ) { jb_final.push_back(j); }
       }
             
       //Event weight

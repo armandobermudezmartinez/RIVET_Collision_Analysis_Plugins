@@ -187,7 +187,10 @@ namespace Rivet {
 
     /// Normalise histograms etc., after the run
     void finalize() {
-      double crossec = 60290.0*picobarn;
+      const double crossec = !std::isnan(crossSectionPerEvent()) ? crossSection() : 61526.7*picobarn;
+      if (std::isnan(crossSectionPerEvent())){
+        MSG_INFO("No valid cross-section given, using NNLO xsec calculated by FEWZ " << crossec/picobarn << " pb");
+      }
 
       scale(_hist_Mult_exc, crossec/picobarn/sumOfWeights());
       scale(_hist_inc_WJetMult, crossec/picobarn/sumOfWeights());

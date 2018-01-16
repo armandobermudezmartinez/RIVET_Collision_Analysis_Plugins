@@ -4,7 +4,7 @@ Summary: Differential cross sections for top quark pair production using the lep
 Experiment: CMS
 Collider: LHC
 SpiresID: 1491950
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Regina Demina <R.Demina@cern.ch>
  - Yi-Ting Duh <kaliduh@gmail.com>
@@ -15,6 +15,8 @@ Authors:
  - Markus Seidel <markus.seidel@cern.ch>
 References:
  - Phys. Rev. D 95 (2017) 092001
+ - arXiv:1610.04191
+ - CMS-TOP-16-008
 RunInfo:
   pp QCD interactions at $\sqrt{s} = 13$ TeV. Data collected by CMS during the year 2015. Selection of lepton+jets top pair candidate events at particle level. 
 NumEvents: 1000000

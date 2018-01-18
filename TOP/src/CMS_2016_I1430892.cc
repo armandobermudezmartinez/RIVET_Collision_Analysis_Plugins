@@ -138,7 +138,7 @@ namespace Rivet {
           // PartonicTops::E_MU is being fixed in Rivet, and when it is the veto below should do nothing.
           for (unsigned int i = 0; i < lepton_candidates.size(); ++i) {
             Particle lepton_candidate = lepton_candidates[i];
-            if ( hasParentWith(lepton_candidate, Cuts::abspid == 22) ) {
+            if ( lepton_candidate.hasParentWith(Cuts::abspid == 22) ) {
               MSG_DEBUG("found gamma parent, top: "<<k+1<<" of "<<leptonicpartontops.size()<<" , lepton: "<<i+1<<" of "<<lepton_candidates.size());
               continue;
             }

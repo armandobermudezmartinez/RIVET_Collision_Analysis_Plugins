@@ -4,14 +4,13 @@ Summary: Measurement and QCD analysis of double-differential inclusive jet cross
 Experiment: CMS
 Collider: LHC
 InspireID: 1487277
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Hannes Jung
 References:
-DOI:10.1007/JHEP03(2017)156
-#- '<Example: Eur.Phys.J. C76 (2016) no.7, 392>'
-#- '<Example: DOI:10.1140/epjc/s10052-016-4184-8>'
-#- '<Example: arXiv:1605.03814>'
+ - DOI:10.1007/JHEP03(2017)156
+ - arXiv:1609.05331
+ - CMS-SMP-14-001
 RunInfo: QCD at $\sqrt{s} = 8\;\TeV$
 NumEvents: 1000000
 NeedCrossSection: no

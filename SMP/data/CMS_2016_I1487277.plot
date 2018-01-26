@@ -13,25 +13,25 @@ RatioPlotYMax=2.0
 #RatioPlot=0
 # END PLOT
 # BEGIN PLOT /CMS_2016_I1487277/d01-x01-y01
-Title=Inclusive jets, $0.0 < |y| < 0.5$, anti-$k_T$, R=0.7
+Title=CMS, 8 TeV, Inclusive jets, $0.0 < |y| < 0.5$, anti-$k_T$, R=0.7
 #RatioPlot=0
 # END PLOT
 # BEGIN PLOT /CMS_2016_I1487277/d02-x01-y01
-Title=Inclusive jets, $0.5 < |y| < 1.0$, anti-$k_T$, R=0.7
+Title=CMS, 8 TeV, Inclusive jets, $0.5 < |y| < 1.0$, anti-$k_T$, R=0.7
 #RatioPlot=0
 # END PLOT
 # BEGIN PLOT /CMS_2016_I1487277/d03-x01-y01
-Title=Inclusive jets, $1.0 < |y| < 1.5$, anti-$k_T$, R=0.7
+Title=CMS, 8 TeV, Inclusive jets, $1.0 < |y| < 1.5$, anti-$k_T$, R=0.7
 # END PLOT
 # BEGIN PLOT /CMS_2016_I1487277/d04-x01-y01
-Title=Inclusive jets, $1.5 < |y| < 2.0$, anti-$k_T$, R=0.7
+Title=CMS, 8 TeV, Inclusive jets, $1.5 < |y| < 2.0$, anti-$k_T$, R=0.7
 # END PLOT
 # BEGIN PLOT /CMS_2016_I1487277/d05-x01-y01
-Title=Inclusive jets, $2.0 < |y| < 2.5$, anti-$k_T$, R=0.7
+Title=CMS, 8 TeV, Inclusive jets, $2.0 < |y| < 2.5$, anti-$k_T$, R=0.7
 # END PLOT
 # BEGIN PLOT /CMS_2016_I1487277/d06-x01-y01
-Title=Inclusive jets, $2.5 < |y| < 3.0$, anti-$k_T$, R=0.7
+Title=CMS, 8 TeV, Inclusive jets, $2.5 < |y| < 3.0$, anti-$k_T$, R=0.7
 # END PLOT
 # BEGIN PLOT /CMS_2016_I1487277/d07-x01-y01
-Title=Inclusive jets, $3.2 < |y| < 4.7$, anti-$k_T$, R=0.7
+Title=CMS, 8 TeV, Inclusive jets, $3.2 < |y| < 4.7$, anti-$k_T$, R=0.7
 # END PLOT

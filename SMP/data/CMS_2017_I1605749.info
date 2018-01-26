@@ -4,7 +4,7 @@ Summary: Measurements of jet charge with dijet events in pp collisions at $\sqrt
 Experiment: CMS
 Collider: LHC
 SpiresID: 1605749
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Debarati Roy <debarati.roy@cern.ch> 
  - Andreas Hinzmann <andreas.hinzmann@cern.ch>
@@ -12,9 +12,9 @@ Authors:
  - Sunanda Banerjee <Sunanda.Banerjee@cern.ch>
 
 References:
- - hep-ex arXiv:1706.05868
- - inspirehep 1605749
- - http://cms-results.web.cern.ch/cms-results/public-results/publications/SMP-15-003/
+ - DOI:10.1007/JHEP10(2017)131
+ - arXiv:1706.05868
+ - CMS-SMP-15-003
 
 RunInfo:
   pp QCD interactions at $\sqrt{s} = 8$ TeV. Data collected by CMS during the year 2012.

@@ -7,7 +7,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-1.0
 XMax=1.0
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d02-x01-y01
@@ -19,7 +18,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-1.5
 XMax=1.5
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d03-x01-y01
@@ -31,7 +29,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-2.52
 XMax=2.52
-NormalizeToIntegral=1
 # END PLOT
 
 
@@ -44,7 +41,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-1.0
 XMax=1.0
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d05-x01-y01
@@ -56,7 +52,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.8
 XMax=0.8
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d06-x01-y01
@@ -68,7 +63,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.6
 XMax=0.6
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d07-x01-y01
@@ -80,7 +74,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-1.0
 XMax=1.0
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d08-x01-y01
@@ -92,7 +85,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.7
 XMax=0.7
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d09-x01-y01
@@ -104,7 +96,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.7
 XMax=0.7
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d10-x01-y01
@@ -116,7 +107,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-1.5
 XMax=1.5
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d11-x01-y01
@@ -128,7 +118,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-1.5
 XMax=1.5
-NormalizeToIntegral=1
 # END PLOT
 
 
@@ -141,7 +130,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-1.5
 XMax=1.5
-NormalizeToIntegral=1
 # END PLOT
 
 
@@ -154,7 +142,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.8
 XMax=0.8
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d14-x01-y01
@@ -166,7 +153,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.8
 XMax=0.8
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d15-x01-y01
@@ -178,7 +164,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.8
 XMax=0.8
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d16-x01-y01
@@ -190,7 +175,6 @@ LegendYPos=0.7
 LogY=0
 XMin=-0.7
 XMax=0.7
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d17-x01-y01
@@ -202,7 +186,6 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.7
 XMax=0.7
-NormalizeToIntegral=1
 # END PLOT
 
 # BEGIN PLOT /CMS_2017_I1605749/d18-x01-y01
@@ -214,5 +197,4 @@ LegendYPos=0.78
 LogY=0
 XMin=-0.7
 XMax=0.7
-NormalizeToIntegral=1
 # END PLOT

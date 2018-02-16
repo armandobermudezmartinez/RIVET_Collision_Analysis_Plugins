@@ -132,6 +132,9 @@ namespace Rivet {
     void finalize() {
       for (int j = 0; j < 18; j++) {
         normalize(_h_Charge[j]);
+        for (size_t i = 0; i <  _h_Charge[j]-> numBins(); i++) {
+          _h_Charge[j]->bin(i).scaleW(1.0 / _h_Charge[j]->bin(i).width());
+        }
       }
     }
 

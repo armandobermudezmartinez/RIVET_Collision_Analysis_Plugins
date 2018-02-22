@@ -13,12 +13,12 @@ namespace Rivet {
 
 
   /// Underlying event activity in the Drell-Yan process at 13 TeV
-  class CMS_2017_PAS_FSQ_16_008 : public Analysis {
+  class CMS_2017_I1635889 : public Analysis {
   public:
 
     /// Constructor
-    CMS_2017_PAS_FSQ_16_008()
-      : Analysis("CMS_2017_PAS_FSQ_16_008")
+    CMS_2017_I1635889()
+      : Analysis("CMS_2017_I1635889")
     {   }
 
 
@@ -115,6 +115,6 @@ namespace Rivet {
 
 
   // Hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2017_PAS_FSQ_16_008);
+  DECLARE_RIVET_PLUGIN(CMS_2017_I1635889);
 
 }

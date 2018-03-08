@@ -3,19 +3,21 @@
 #include "Rivet/Tools/BinnedHistogram.hh"
 #include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Projections/FastJets.hh"
-#include <iostream>
+
 namespace Rivet {
 
-   /// CMS Azimuthal deccorellations at 8TeV
-   class CMS_2016_I1421646 : public Analysis {
+
+  /// CMS azimuthal decorrelations at 8 TeV
+  class CMS_2016_I1421646 : public Analysis {
   public:
 
-    CMS_2016_I1421646() : Analysis("CMS_2016_I1421646") {}
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2016_I1421646);
 
 
+    /// Book projections and histograms
     void init() {
-      FinalState fs;
-      FastJets akt(fs, FastJets::ANTIKT, 0.7);
+
+      FastJets akt(FinalState(), FastJets::ANTIKT, 0.7);
       addProjection(akt, "antikT");
 
       _h_deltaPhi.addHistogram( 200.,  300., bookHisto1D(1, 1, 1));
@@ -25,31 +27,27 @@ namespace Rivet {
       _h_deltaPhi.addHistogram( 700.,  900., bookHisto1D(5, 1, 1));
       _h_deltaPhi.addHistogram( 900.,  1100., bookHisto1D(6, 1, 1));
       _h_deltaPhi.addHistogram( 1100., 4000., bookHisto1D(7, 1, 1));
-
     }
 
 
+    /// Per-event analysis
     void analyze(const Event & event) {
 
-      const double weight = event.weight();
+      const Jets& jets = apply<JetAlg>(event, "antikT").jetsByPt(Cuts::absrap < 5.0 && Cuts::pT > 100*GeV);
+      if (jets.size() < 2) vetoEvent;
+      if (jets[0].pT() < 200*GeV) vetoEvent;
+      if (jets[0].absrap() > 2.5 || jets[1].absrap() > 2.5) vetoEvent;
 
-      const Jets& jets = applyProjection<JetAlg>(event, "antikT").jetsByPt( Cuts::absrap < 2.5 && Cuts::pT > 100.*GeV );
-      
-      if ( jets.size() < 2 ) vetoEvent;
-      if ( jets[0].pT() < 200.*GeV ) vetoEvent;
-      
-      double dphi = deltaPhi(jets[0].phi(), jets[1].phi());
-      
-      _h_deltaPhi.fill(jets[0].pT(), dphi, weight);
+      const double dphi = deltaPhi(jets[0].phi(), jets[1].phi());
+      _h_deltaPhi.fill(jets[0].pT(), dphi, event.weight());
     }
 
 
+    /// Scale histograms
     void finalize() {
-      
-      foreach (Histo1DPtr histo, _h_deltaPhi.getHistograms()) {
-        normalize(histo); 
-      }
+      for (Histo1DPtr histo : _h_deltaPhi.getHistograms()) normalize(histo);
     }
+
 
   private:
 

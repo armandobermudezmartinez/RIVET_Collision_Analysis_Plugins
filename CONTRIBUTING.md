@@ -4,7 +4,7 @@
 * Add a preliminary version of your plugin
 * Create a work-in-progress (WIP) merge request
 * Receive comments and finalize plugin
-* Add validation plots to the merge request
+* Add validation plots to the merge request using the [cmsRivetPlots2Web](https://gitlab.cern.ch/cms-gen/Rivet/blob/master/scripts/cmsRivetPlots2Web) script
 * If code and validation is ok, CMS Rivet contacts will send the plugin to the Rivet authors
 
 #### Resolving merge conflicts

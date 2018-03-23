@@ -7,10 +7,9 @@
 <use name="gsl"/>
 <use name="root"/>
 <use name="GeneratorInterface/Core"/>
-<use name="GeneratorInterface/Pythia8Interface"/>
 <use name="GeneratorInterface/Pythia6Interface"/>
 <flags   RIVET_PLUGIN="1"/>
 <export>
   <lib name="1"/>
 </export>
-
+<!-- Do not compile plugins integrated (and working) in official Rivet -->

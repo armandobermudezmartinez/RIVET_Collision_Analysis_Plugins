@@ -110,7 +110,7 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
                 pythia8CP5SettingsBlock, 
                 processParameters = cms.vstring(
                         'HardQCD:all = on',
-                        'PhaseSpace:pTHatMin = 10',
+                        'PhaseSpace:pTHatMin = 8',
                         'PhaseSpace:pTHatMax = 3500',
                         'PhaseSpace:bias2Selection = on',
                         'PhaseSpace:bias2SelectionPow = 4.5',

@@ -13,11 +13,11 @@
 
 namespace Rivet {
 
-  class CMS_2017_PAS_TOP_16_014 : public Analysis {
+  class CMS_2018_I1662081 : public Analysis {
   public:
 
     // Minimal constructor
-    CMS_2017_PAS_TOP_16_014() : Analysis("CMS_2017_PAS_TOP_16_014") {
+    CMS_2018_I1662081() : Analysis("CMS_2018_I1662081") {
     }
 
     // Set up projections and book histograms
@@ -51,19 +51,19 @@ namespace Rivet {
       addProjection(MissingMomentum(fs), "MET");
 
       // Booking of histograms
-      _hist_norm_met = bookHisto1D(1, 1, 1);
+      _hist_norm_met = bookHisto1D(4, 1, 1);
       _hist_norm_ht  = bookHisto1D(2, 1, 1);
       _hist_norm_st  = bookHisto1D(3, 1, 1);
-      _hist_norm_wpt = bookHisto1D(4, 1, 1);
-      _hist_norm_njets = bookHisto1D(5, 1, 1);
+      _hist_norm_wpt = bookHisto1D(5, 1, 1);
+      _hist_norm_njets = bookHisto1D(1, 1, 1);
       _hist_norm_lpt = bookHisto1D(6, 1, 1);
       _hist_norm_labseta = bookHisto1D(7, 1, 1);
 
-      _hist_abs_met = bookHisto1D(8, 1, 1);
+      _hist_abs_met = bookHisto1D(11, 1, 1);
       _hist_abs_ht  = bookHisto1D(9, 1, 1);
       _hist_abs_st  = bookHisto1D(10, 1, 1);
-      _hist_abs_wpt = bookHisto1D(11, 1, 1);
-      _hist_abs_njets = bookHisto1D(12, 1, 1);
+      _hist_abs_wpt = bookHisto1D(12, 1, 1);
+      _hist_abs_njets = bookHisto1D(8, 1, 1);
       _hist_abs_lpt = bookHisto1D(13, 1, 1);
       _hist_abs_labseta = bookHisto1D(14, 1, 1);
 
@@ -173,5 +173,5 @@ namespace Rivet {
   };
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2017_PAS_TOP_16_014);
+  DECLARE_RIVET_PLUGIN(CMS_2018_I1662081);
 }

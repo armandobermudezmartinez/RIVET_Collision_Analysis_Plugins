@@ -1,10 +1,10 @@
-Name: CMS_2017_PAS_TOP_16_014
+Name: CMS_2018_I1662081
 Year: 2017
 Summary: Measurement of the differential cross sections of top quark pair production as a function of kinematic event variables in pp collisions at sqrt(s) = 13 TeV
 Experiment: CMS
 Collider: LHC
 InspireID: 
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Doug Burns <Douglas.Burns@cern.ch>
  - Emyr Clement <Emyr.Clement@bristol.ac.uk>
@@ -12,6 +12,8 @@ Authors:
 
 References:
  - TOP-16-014
+ - arxiv:1803.03991
+ - Submitted to JHEP
 RunInfo:
   ttbar events at sqrt(s) = 13 TeV, lepton+jets selection at particle level
 Luminosity: 35.9 / fb
@@ -33,5 +35,17 @@ Description:
 	  - two of these selected jets must be tagged as originating from a b quark.
       '
 
-BibKey: 
-BibTeX: 
+BibKey: Sirunyan:2018ptc
+BibTeX: '@article{Sirunyan:2018ptc,
+      author         = "Sirunyan, Albert M and others",
+      title          = "{Measurements of differential cross sections of top quark
+                        pair production as a function of kinematic event variables
+                        in proton-proton collisions at $\sqrt{s}=$ 13 TeV}",
+      collaboration  = "CMS",
+      year           = "2018",
+      eprint         = "1803.03991",
+      archivePrefix  = "arXiv",
+      primaryClass   = "hep-ex",
+      reportNumber   = "CMS-TOP-16-014, CERN-EP-2018-013",
+      SLACcitation   = "%%CITATION = ARXIV:1803.03991;%%"
+}'

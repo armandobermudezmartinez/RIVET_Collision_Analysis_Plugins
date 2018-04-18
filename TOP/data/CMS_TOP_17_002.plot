@@ -13,6 +13,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$|y(\text{t}_\text{h})|$
 YLabel=$\frac{{d}\sigma}{{d}|y(\text{t}_\text{h})|}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -35,6 +36,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$|y(\text{t}_\text{l})|$
 YLabel=$\frac{{d}\sigma}{{d}|y(\text{t}_\text{l})|}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -68,6 +70,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$|y(\text{t}\bar{\text{t}})|$
 YLabel=$\frac{{d}\sigma}{{d}|y(\text{t}\bar{\text{t}})|}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -266,6 +269,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 300.0 TO 450.0
 YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -277,6 +281,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 450.0 TO 625.0
 YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -288,6 +293,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 625.0 TO 850.0
 YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -299,6 +305,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 850.0 TO 2000.0
 YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -442,6 +449,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: -0.5 TO 0.5
 YLabel=$\frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -453,6 +461,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 0.5 TO 1.5
 YLabel=$\frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -464,6 +473,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 1.5 TO 2.5
 YLabel=$\frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -475,6 +485,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 2.5 TO 3.5
 YLabel=$\frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -486,6 +497,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 3.5 TO 4.5
 YLabel=$\frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -497,6 +509,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 4.5 TO 5.5
 YLabel=$\frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -508,6 +521,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 5.5 TO 6.5
 YLabel=$\frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -530,6 +544,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: -0.5 TO 0.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -541,6 +556,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 0.5 TO 1.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -552,6 +568,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 1.5 TO 2.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -563,6 +580,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 2.5 TO 3.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -574,6 +592,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 3.5 TO 4.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -585,6 +604,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 4.5 TO 5.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -596,6 +616,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 5.5 TO 6.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -607,6 +628,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 6.5 TO 7.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -618,6 +640,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: -0.5 TO 0.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -629,6 +652,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 0.5 TO 1.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -640,6 +664,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 1.5 TO 2.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -651,6 +676,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 2.5 TO 3.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -662,6 +688,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 3.5 TO 4.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -673,6 +700,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 4.5 TO 5.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -684,6 +712,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 5.5 TO 6.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -695,6 +724,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 6.5 TO 7.5
 YLabel=$\frac{{d}\sigma}{{d}\Delta R_\text{t}}$ [pb ]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -717,6 +747,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$|y(\text{t}_\text{h})|$
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}|y(\text{t}_\text{h})|}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -739,6 +770,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$|y(\text{t}_\text{l})|$
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}|y(\text{t}_\text{l})|}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -772,6 +804,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$|y(\text{t}\bar{\text{t}})|$
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}|y(\text{t}\bar{\text{t}})|}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -970,6 +1003,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 300.0 TO 450.0
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -981,6 +1015,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 450.0 TO 625.0
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -992,6 +1027,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 625.0 TO 850.0
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1003,6 +1039,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 850.0 TO 2000.0
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1146,6 +1183,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: -0.5 TO 0.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1157,6 +1195,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 0.5 TO 1.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1168,6 +1207,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 1.5 TO 2.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1179,6 +1219,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 2.5 TO 3.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1190,6 +1231,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 3.5 TO 4.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1201,6 +1243,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 4.5 TO 5.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1212,6 +1255,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 5.5 TO 6.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1223,6 +1267,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $|\eta(\textrm{jet})|$ ; x-range: 6.5 TO 7.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\eta(\mathrm{jet})}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1234,6 +1279,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: -0.5 TO 0.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1245,6 +1291,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 0.5 TO 1.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1256,6 +1303,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 1.5 TO 2.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1267,6 +1315,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 2.5 TO 3.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1278,6 +1327,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 3.5 TO 4.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1289,6 +1339,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 4.5 TO 5.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1300,6 +1351,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 5.5 TO 6.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1311,6 +1363,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_{\text{j}_\text{t}}$ ; x-range: 6.5 TO 7.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_{\text{j}_\text{t}}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1322,6 +1375,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: -0.5 TO 0.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1333,6 +1387,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 0.5 TO 1.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1344,6 +1399,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 1.5 TO 2.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1355,6 +1411,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 2.5 TO 3.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1366,6 +1423,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 3.5 TO 4.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1377,6 +1435,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 4.5 TO 5.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1388,6 +1447,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 5.5 TO 6.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1399,6 +1459,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=Jet type : $\Delta R_\text{t}$ ; x-range: 6.5 TO 7.5
 YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}\Delta R_\text{t}}$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1410,6 +1471,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$p_\mathrm{T}$
 YLabel=$f_\mathrm{1}(p_\mathrm{T})$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1421,6 +1483,7 @@ PlotSize=10.7,7.2
 Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
 XLabel=$p_\mathrm{T}$
 YLabel=$f_\mathrm{2}(p_\mathrm{T})$
+LogY=0
 RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
 RatioPlotYMin=0.5
 RatioPlotYMax=1.5
@@ -1471,466 +1534,3 @@ RatioPlotYMax=1.5
 RatioPlotYSize=2.6
 PlotSize=10.7,7.2
 #END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d174-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\PQt_\textrm{high})$ [GeV]
-YLabel=$\frac{{d}\sigma}{{d}p_\text{T}(\PQt_\textrm{high})}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d176-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\PQt_\textrm{low})$ [GeV]
-YLabel=$\frac{{d}\sigma}{{d}p_\text{T}(\PQt_\textrm{low})}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d178-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV]
-YLabel=$\frac{{d}\sigma}{{d}p_\text{T}(\text{t}_\text{h})}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d180-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$
-YLabel=$\frac{{d}\sigma}{{d}|y(\text{t}_\text{h})|}$ [pb ]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d182-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{l})$ [GeV]
-YLabel=$\frac{{d}\sigma}{{d}p_\text{T}(\text{t}_\text{l})}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d184-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{l})|$
-YLabel=$\frac{{d}\sigma}{{d}|y(\text{t}_\text{l})|}$ [pb ]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d186-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV]
-YLabel=$\frac{{d}\sigma}{{d}M(\text{t}\bar{\text{t}})}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d188-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}\bar{\text{t}})$ [GeV]
-YLabel=$\frac{{d}\sigma}{{d}p_\text{T}(\text{t}\bar{\text{t}})}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d190-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}\bar{\text{t}})|$
-YLabel=$\frac{{d}\sigma}{{d}|y(\text{t}\bar{\text{t}})|}$ [pb ]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d192-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 0.0 TO 0.5
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}|y(\text{t}_\text{h})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d193-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 0.5 TO 1.0
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}|y(\text{t}_\text{h})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d194-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 1.0 TO 1.5
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}|y(\text{t}_\text{h})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d195-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 1.5 TO 2.5
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}|y(\text{t}_\text{h})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d197-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 300.0 TO 450.0
-YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d198-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 450.0 TO 625.0
-YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d199-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 625.0 TO 850.0
-YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d200-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 850.0 TO 2000.0
-YLabel=$\frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [pb GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d202-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 0.0 TO 90.0
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}M(\text{t}\bar{\text{t}})}$ [pb GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d203-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 90.0 TO 180.0
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}M(\text{t}\bar{\text{t}})}$ [pb GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d204-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 180.0 TO 270.0
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}M(\text{t}\bar{\text{t}})}$ [pb GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d205-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 270.0 TO 800.0
-YLabel=$\frac{{d}^2\sigma}{{d}p_\text{T}(\text{t}_\text{h}) {d}M(\text{t}\bar{\text{t}})}$ [pb GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d207-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\PQt_\textrm{high})$ [GeV]
-YLabel=$\frac{1}{\sigma_\mathrm{norm}}\frac{{d}\sigma}{{d}p_\text{T}(\PQt_\mathrm{high})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d209-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\PQt_\textrm{low})$ [GeV]
-YLabel=$\frac{1}{\sigma_\mathrm{norm}}\frac{{d}\sigma}{{d}p_\text{T}(\PQt_\mathrm{low})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d211-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV]
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}p_\text{T}(\text{t}_\text{h})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d213-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}|y(\text{t}_\text{h})|}$
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d215-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{l})$ [GeV]
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}p_\text{T}(\text{t}_\text{l})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d217-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{l})|$
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}|y(\text{t}_\text{l})|}$
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d219-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV]
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}M(\text{t}\bar{\text{t}})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d221-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}\bar{\text{t}})$ [GeV]
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}p_\text{T}(\text{t}\bar{\text{t}})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d223-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}\bar{\text{t}})|$
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}\sigma}{{d}|y(\text{t}\bar{\text{t}})|}$
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d225-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 0.0 TO 0.5
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}p_\text{T}(\text{t}_\text{h})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d226-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 0.5 TO 1.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}p_\text{T}(\text{t}_\text{h})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d227-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 1.0 TO 1.5
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}p_\text{T}(\text{t}_\text{h})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d228-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$|y(\text{t}_\text{h})|$ : $p_\text{T}(\text{t}_\text{h})$ [GeV] ; x-range: 1.5 TO 2.5
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}p_\text{T}(\text{t}_\text{h})}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d230-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 300.0 TO 450.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d231-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 450.0 TO 625.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d232-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 625.0 TO 850.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d233-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$M(\text{t}\bar{\text{t}})$ [GeV] : $|y(\text{t}\bar{\text{t}})|$ ; x-range: 850.0 TO 2000.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}M(\text{t}\bar{\text{t}}) {d}|y(\text{t}\bar{\text{t}})|}$ [GeV$^{-1}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d235-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 0.0 TO 90.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}M(\text{t}\bar{\text{t}})}$ [GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d236-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 90.0 TO 180.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}M(\text{t}\bar{\text{t}})}$ [GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d237-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 180.0 TO 270.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}M(\text{t}\bar{\text{t}})}$ [GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-
-# BEGIN PLOT /CMS_TOP_17_002/d238-x01-y01
-Title=CMS, 13 TeV, $t\bar{t}$ lepton+jets
-XLabel=$p_\text{T}(\text{t}_\text{h})$ [GeV] : $M(\text{t}\bar{\text{t}})$ [GeV] ; x-range: 270.0 TO 800.0
-YLabel=$\frac{1}{\sigma_\mathrm{norm}} \frac{{d}^2\sigma}{{d}|y(\text{t}_\text{h})| {d}M(\text{t}\bar{\text{t}})}$ [GeV$^{-2}$]
-RatioPlotYLabel=$\frac{\text{theory}}{\text{data}}$
-RatioPlotYMin=0.5
-RatioPlotYMax=1.5
-RatioPlotYSize=2.6
-PlotSize=10.7,7.2
-#END PLOT
-

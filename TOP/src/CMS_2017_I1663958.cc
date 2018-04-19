@@ -139,7 +139,7 @@ namespace Rivet
       IdentifiedFinalState leptons(vfs);
       leptons.acceptIds({11,-11,13,-13});
 
-      DressedLeptons dressed_leptons(all_photons, leptons, m_lepdressdr, Cuts::abseta < m_lepetamax && Cuts::pT > m_lepptmin*GeV, true, true);
+      DressedLeptons dressed_leptons(all_photons, leptons, m_lepdressdr, Cuts::abseta < m_lepetamax && Cuts::pT > m_vetolepptmin*GeV, true, true);
       addProjection(dressed_leptons, "MyLeptons");
 
       VetoedFinalState photons(all_photons);
@@ -247,8 +247,6 @@ namespace Rivet
       const Jets& allJets = applyProjection<FastJets>(event, "Jets").jetsByPt(Cuts::abseta < m_jetetamax && Cuts::pT > m_jetptmin*GeV);
       for(const Jet& jet : allJets)
       {
-
-        if(jet.pt() < m_jetptmin || jet.abseta() > m_jetetamax) continue;
         //clean jets from leptons
         if(find_if(m_leptons.begin(), m_leptons.end(), [&](const Particle& par){return deltaR(jet, par) < m_jetdr;}) != m_leptons.end()) continue;
         //clean jets from veto leptons

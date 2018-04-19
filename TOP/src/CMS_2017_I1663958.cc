@@ -349,8 +349,8 @@ namespace Rivet
       m_nhist_ttpt->fill(tt.pt(), weight);
       m_hist_tty->fill(abs(tt.rapidity()), weight);
       m_nhist_tty->fill(abs(tt.rapidity()), weight);
-      m_hist_njet->fill(m_additionaljets.size(), weight);
-      m_nhist_njet->fill(m_additionaljets.size(), weight);
+      m_hist_njet->fill(min(m_additionaljets.size(), (size_t)5), weight);
+      m_nhist_njet->fill(min(m_additionaljets.size(), (size_t)5), weight);
       int njet = min((size_t)3, m_additionaljets.size());
       m_hist_njet_ttm->fill(njet, tt.mass(), weight);
       m_nhist_njet_ttm->fill(njet, tt.mass(), weight);

@@ -17,12 +17,15 @@
 #include <algorithm>
 
 using namespace std;
+using namespace Rivet;
 
 namespace Rivet
 {
-
   class CMS_2017_I1663958;
+}
 
+namespace Rivet_CMS_2017_I1663958
+{
   class Histo1DGroup
   {
     private:
@@ -38,12 +41,14 @@ namespace Rivet
 
       void gapfractionfromjetpt(Scatter2DPtr hgap, int njet);
   };
+}
 
+namespace Rivet
+{
   class CMS_2017_I1663958 : public Analysis
   {
-    friend class Histo1DGroup;
+    friend class Rivet_CMS_2017_I1663958::Histo1DGroup;
     private:
-
     Histo1DPtr m_hist_thadpt;
     Histo1DPtr m_hist_thady;
     Histo1DPtr m_hist_tleppt;
@@ -52,17 +57,17 @@ namespace Rivet
     Histo1DPtr m_hist_tty;
     Histo1DPtr m_hist_ttm;
     Histo1DPtr m_hist_njet;
-    Histo1DGroup* m_hist_njet_ttm;
-    Histo1DGroup* m_hist_njet_thadpt;
-    Histo1DGroup* m_hist_njet_ttpt;
-    Histo1DGroup* m_hist_thady_thadpt;
-    Histo1DGroup* m_hist_ttm_tty;
-    Histo1DGroup* m_hist_thadpt_ttm;
-    Histo1DGroup* m_hist_jetspt;
-    Histo1DGroup* m_hist_jetseta;
-    Histo1DGroup* m_hist_jetsdrjets;
-    Histo1DGroup* m_hist_jetsdrtops;
-    Histo1DGroup* m_hist_njetspt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_njet_ttm;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_njet_thadpt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_njet_ttpt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_thady_thadpt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_ttm_tty;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_thadpt_ttm;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_jetspt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_jetseta;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_jetsdrjets;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_jetsdrtops;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_hist_njetspt;
 
     Histo1DPtr m_nhist_thadpt;
     Histo1DPtr m_nhist_thady;
@@ -72,16 +77,16 @@ namespace Rivet
     Histo1DPtr m_nhist_ttpt;
     Histo1DPtr m_nhist_tty;
     Histo1DPtr m_nhist_njet;
-    Histo1DGroup* m_nhist_njet_ttm;
-    Histo1DGroup* m_nhist_njet_thadpt;
-    Histo1DGroup* m_nhist_njet_ttpt;
-    Histo1DGroup* m_nhist_thady_thadpt;
-    Histo1DGroup* m_nhist_ttm_tty;
-    Histo1DGroup* m_nhist_thadpt_ttm;
-    Histo1DGroup* m_nhist_jetspt;
-    Histo1DGroup* m_nhist_jetseta;
-    Histo1DGroup* m_nhist_jetsdrjets;
-    Histo1DGroup* m_nhist_jetsdrtops;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_njet_ttm;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_njet_thadpt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_njet_ttpt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_thady_thadpt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_ttm_tty;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_thadpt_ttm;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_jetspt;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_jetseta;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_jetsdrjets;
+    Rivet_CMS_2017_I1663958::Histo1DGroup* m_nhist_jetsdrtops;
     Scatter2DPtr m_hist_gap1;
     Scatter2DPtr m_hist_gap2;
 
@@ -161,17 +166,17 @@ namespace Rivet
       m_hist_ttpt = bookHisto1D("d11-x01-y01");
       m_hist_tty = bookHisto1D("d13-x01-y01");
       m_hist_njet = bookHisto1D("d15-x01-y01");
-      m_hist_njet_ttm = new Histo1DGroup(this, {"d17-x01-y01", "d18-x01-y01", "d19-x01-y01", "d20-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
-      m_hist_njet_thadpt = new Histo1DGroup(this, {"d22-x01-y01", "d23-x01-y01", "d24-x01-y01", "d25-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
-      m_hist_njet_ttpt = new Histo1DGroup(this, {"d27-x01-y01", "d28-x01-y01", "d29-x01-y01", "d30-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
-      m_hist_thady_thadpt = new Histo1DGroup(this, {"d32-x01-y01", "d33-x01-y01", "d34-x01-y01", "d35-x01-y01"}, {0.0,0.5, 1.0, 1.5, 2.5});
-      m_hist_ttm_tty = new Histo1DGroup(this, {"d37-x01-y01", "d38-x01-y01", "d39-x01-y01", "d40-x01-y01"}, {300., 450., 625., 850., 2000.});
-      m_hist_thadpt_ttm = new Histo1DGroup(this, {"d42-x01-y01", "d43-x01-y01", "d44-x01-y01", "d45-x01-y01"}, {0., 90., 180., 270., 800.});
-      m_hist_jetspt = new Histo1DGroup(this, {"d47-x01-y01", "d48-x01-y01", "d49-x01-y01", "d50-x01-y01", "d51-x01-y01", "d52-x01-y01", "d53-x01-y01", "d54-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
-      m_hist_jetseta = new Histo1DGroup(this, {"d56-x01-y01", "d57-x01-y01", "d58-x01-y01", "d59-x01-y01", "d60-x01-y01", "d61-x01-y01", "d62-x01-y01", "d63-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
-      m_hist_jetsdrjets = new Histo1DGroup(this, {"d65-x01-y01", "d66-x01-y01", "d67-x01-y01", "d68-x01-y01", "d69-x01-y01", "d70-x01-y01", "d71-x01-y01", "d72-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
-      m_hist_jetsdrtops = new Histo1DGroup(this, {"d74-x01-y01", "d75-x01-y01", "d76-x01-y01", "d77-x01-y01", "d78-x01-y01", "d79-x01-y01", "d80-x01-y01", "d81-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
-      m_hist_njetspt = new Histo1DGroup(this, {"d169-x01-y01", "d170-x01-y01", "d171-x01-y01", "d172-x01-y01"}, {0., 40., 60., 80., 120.});
+      m_hist_njet_ttm = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d17-x01-y01", "d18-x01-y01", "d19-x01-y01", "d20-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
+      m_hist_njet_thadpt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d22-x01-y01", "d23-x01-y01", "d24-x01-y01", "d25-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
+      m_hist_njet_ttpt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d27-x01-y01", "d28-x01-y01", "d29-x01-y01", "d30-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
+      m_hist_thady_thadpt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d32-x01-y01", "d33-x01-y01", "d34-x01-y01", "d35-x01-y01"}, {0.0,0.5, 1.0, 1.5, 2.5});
+      m_hist_ttm_tty = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d37-x01-y01", "d38-x01-y01", "d39-x01-y01", "d40-x01-y01"}, {300., 450., 625., 850., 2000.});
+      m_hist_thadpt_ttm = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d42-x01-y01", "d43-x01-y01", "d44-x01-y01", "d45-x01-y01"}, {0., 90., 180., 270., 800.});
+      m_hist_jetspt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d47-x01-y01", "d48-x01-y01", "d49-x01-y01", "d50-x01-y01", "d51-x01-y01", "d52-x01-y01", "d53-x01-y01", "d54-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_hist_jetseta = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d56-x01-y01", "d57-x01-y01", "d58-x01-y01", "d59-x01-y01", "d60-x01-y01", "d61-x01-y01", "d62-x01-y01", "d63-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_hist_jetsdrjets = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d65-x01-y01", "d66-x01-y01", "d67-x01-y01", "d68-x01-y01", "d69-x01-y01", "d70-x01-y01", "d71-x01-y01", "d72-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_hist_jetsdrtops = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d74-x01-y01", "d75-x01-y01", "d76-x01-y01", "d77-x01-y01", "d78-x01-y01", "d79-x01-y01", "d80-x01-y01", "d81-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_hist_njetspt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d169-x01-y01", "d170-x01-y01", "d171-x01-y01", "d172-x01-y01"}, {0., 40., 60., 80., 120.});
 
       m_nhist_thadpt = bookHisto1D("d83-x01-y01");
       m_nhist_thady = bookHisto1D("d85-x01-y01");
@@ -181,16 +186,16 @@ namespace Rivet
       m_nhist_ttpt = bookHisto1D("d93-x01-y01");
       m_nhist_tty = bookHisto1D("d95-x01-y01");
       m_nhist_njet = bookHisto1D("d97-x01-y01");
-      m_nhist_njet_ttm = new Histo1DGroup(this, {"d99-x01-y01", "d100-x01-y01", "d101-x01-y01", "d102-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
-      m_nhist_njet_thadpt = new Histo1DGroup(this, {"d104-x01-y01", "d105-x01-y01", "d106-x01-y01", "d107-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
-      m_nhist_njet_ttpt = new Histo1DGroup(this, {"d109-x01-y01", "d110-x01-y01", "d111-x01-y01", "d112-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
-      m_nhist_thady_thadpt = new Histo1DGroup(this, {"d114-x01-y01", "d115-x01-y01", "d116-x01-y01", "d117-x01-y01"}, {0.0,0.5, 1.0, 1.5, 2.5});
-      m_nhist_ttm_tty = new Histo1DGroup(this, {"d119-x01-y01", "d120-x01-y01", "d121-x01-y01", "d122-x01-y01"}, {300., 450., 625., 850., 2000.});
-      m_nhist_thadpt_ttm = new Histo1DGroup(this, {"d124-x01-y01", "d125-x01-y01", "d126-x01-y01", "d127-x01-y01"}, {0., 90., 180., 270., 800.});
-      m_nhist_jetspt = new Histo1DGroup(this, {"d129-x01-y01", "d130-x01-y01", "d131-x01-y01", "d132-x01-y01", "d133-x01-y01", "d134-x01-y01", "d135-x01-y01", "d136-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
-      m_nhist_jetseta = new Histo1DGroup(this, {"d138-x01-y01", "d139-x01-y01", "d140-x01-y01", "d141-x01-y01", "d142-x01-y01", "d143-x01-y01", "d144-x01-y01", "d145-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
-      m_nhist_jetsdrjets = new Histo1DGroup(this, {"d147-x01-y01", "d148-x01-y01", "d149-x01-y01", "d150-x01-y01", "d151-x01-y01", "d152-x01-y01", "d153-x01-y01", "d154-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
-      m_nhist_jetsdrtops = new Histo1DGroup(this, {"d156-x01-y01", "d157-x01-y01", "d158-x01-y01", "d159-x01-y01", "d160-x01-y01", "d161-x01-y01", "d162-x01-y01", "d163-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_nhist_njet_ttm = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d99-x01-y01", "d100-x01-y01", "d101-x01-y01", "d102-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
+      m_nhist_njet_thadpt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d104-x01-y01", "d105-x01-y01", "d106-x01-y01", "d107-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
+      m_nhist_njet_ttpt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d109-x01-y01", "d110-x01-y01", "d111-x01-y01", "d112-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5});
+      m_nhist_thady_thadpt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d114-x01-y01", "d115-x01-y01", "d116-x01-y01", "d117-x01-y01"}, {0.0,0.5, 1.0, 1.5, 2.5});
+      m_nhist_ttm_tty = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d119-x01-y01", "d120-x01-y01", "d121-x01-y01", "d122-x01-y01"}, {300., 450., 625., 850., 2000.});
+      m_nhist_thadpt_ttm = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d124-x01-y01", "d125-x01-y01", "d126-x01-y01", "d127-x01-y01"}, {0., 90., 180., 270., 800.});
+      m_nhist_jetspt = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d129-x01-y01", "d130-x01-y01", "d131-x01-y01", "d132-x01-y01", "d133-x01-y01", "d134-x01-y01", "d135-x01-y01", "d136-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_nhist_jetseta = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d138-x01-y01", "d139-x01-y01", "d140-x01-y01", "d141-x01-y01", "d142-x01-y01", "d143-x01-y01", "d144-x01-y01", "d145-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_nhist_jetsdrjets = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d147-x01-y01", "d148-x01-y01", "d149-x01-y01", "d150-x01-y01", "d151-x01-y01", "d152-x01-y01", "d153-x01-y01", "d154-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
+      m_nhist_jetsdrtops = new Rivet_CMS_2017_I1663958::Histo1DGroup(this, {"d156-x01-y01", "d157-x01-y01", "d158-x01-y01", "d159-x01-y01", "d160-x01-y01", "d161-x01-y01", "d162-x01-y01", "d163-x01-y01"}, {-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5});
       m_hist_gap1 = bookScatter2D("d165-x01-y01");
       m_hist_gap2 = bookScatter2D("d167-x01-y01");
 
@@ -452,8 +457,12 @@ namespace Rivet
 
 
   };
+  DECLARE_RIVET_PLUGIN(CMS_2017_I1663958);
+}
 
 
+namespace Rivet_CMS_2017_I1663958
+{
   Histo1DGroup::Histo1DGroup(CMS_2017_I1663958* an, const vector<string>& hnames, const vector<double>& xbinranges) : m_an(an), m_xbins(xbinranges)
   {
     for(const string& hname : hnames)
@@ -505,8 +514,5 @@ namespace Rivet
     }
 
   }
-
-
-  DECLARE_RIVET_PLUGIN(CMS_2017_I1663958);
 
 }

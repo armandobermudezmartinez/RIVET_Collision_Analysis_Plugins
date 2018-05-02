@@ -118,7 +118,7 @@ LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_2012_I1111014/d18-x01-y01
-Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 399 GeV, $|y|$ $<$ 0.5)
+Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 300 GeV, $|y|$ $<$ 0.5)
 XLabel=r
 YLabel=$\rho$(r)
 LogY=0
@@ -155,7 +155,7 @@ LogY=0
 # BEGIN PLOT /CMS_2012_I1111014/d23-x01-y01
 Title=CMS, 7 TeV, Jet shape $\rho$ (20 $<$ $p_T$ $<$ 25 GeV, 0.5 $<$ $|y|$ $<$ 1.0)
 XLabel=r
-YLabel=$rho$(r)
+YLabel=$\rho$(r)
 LogY=0
 # END PLOT
 
@@ -272,7 +272,7 @@ LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_2012_I1111014/d40-x01-y01
-Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 399 GeV, 0.5 $<$ $|y|$ $<$ 1.0)
+Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 300 GeV, 0.5 $<$ $|y|$ $<$ 1.0)
 XLabel=r
 YLabel=$\rho$(r)
 LogY=0
@@ -309,7 +309,7 @@ LogY=0
 # BEGIN PLOT /CMS_2012_I1111014/d45-x01-y01
 Title=CMS, 7 TeV, Jet shape $\rho$ (20 $<$ $p_T$ $<$ 25 GeV, 1.0 $<$ $|y|$ $<$ 1.5)
 XLabel=r
-YLabel=$rho$(r)
+YLabel=$\rho$(r)
 LogY=0
 # END PLOT
 
@@ -426,7 +426,7 @@ LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_2012_I1111014/d62-x01-y01
-Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 399 GeV, 1.0 $<$ $|y|$ $<$ 1.5)
+Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 300 GeV, 1.0 $<$ $|y|$ $<$ 1.5)
 XLabel=r
 YLabel=$\rho$(r)
 LogY=0
@@ -463,7 +463,7 @@ LogY=0
 # BEGIN PLOT /CMS_2012_I1111014/d67-x01-y01
 Title=CMS, 7 TeV, Jet shape $\rho$ (20 $<$ $p_T$ $<$ 25 GeV, 1.5 $<$ $|y|$ $<$ 2.0)
 XLabel=r
-YLabel=$rho$(r)
+YLabel=$\rho$(r)
 LogY=0
 # END PLOT
 
@@ -580,7 +580,7 @@ LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_2012_I1111014/d84-x01-y01
-Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 399 GeV, 1.5 $<$ $|y|$ $<$ 2.0)
+Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 300 GeV, 1.5 $<$ $|y|$ $<$ 2.0)
 XLabel=r
 YLabel=$\rho$(r)
 LogY=0
@@ -610,7 +610,7 @@ LogY=0
 # BEGIN PLOT /CMS_2012_I1111014/d88-x01-y01
 Title=CMS, 7 TeV, Jet shape $\rho$ (20 $<$ $p_T$ $<$ 25 GeV, 2.0 $<$ $|y|$ $<$ 2.5)
 XLabel=r
-YLabel=$rho$(r)
+YLabel=$\rho$(r)
 LogY=0
 # END PLOT
 
@@ -727,7 +727,7 @@ LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_2012_I1111014/d105-x01-y01
-Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 399 GeV, 2.0 $<$ $|y|$ $<$ 2.5)
+Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 300 GeV, 2.0 $<$ $|y|$ $<$ 2.5)
 XLabel=r
 YLabel=$\rho$(r)
 LogY=0
@@ -743,7 +743,7 @@ LogY=0
 # BEGIN PLOT /CMS_2012_I1111014/d107-x01-y01
 Title=CMS, 7 TeV, Jet shape $\rho$ (20 $<$ $p_T$ $<$ 25 GeV, 2.5 $<$ $|y|$ $<$ 3.0)
 XLabel=r
-YLabel=$rho$(r)
+YLabel=$\rho$(r)
 LogY=0
 # END PLOT
 
@@ -860,7 +860,7 @@ LogY=0
 # END PLOT
 
 # BEGIN PLOT /CMS_2012_I1111014/d124-x01-y01
-Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 399 GeV, 2.5 $<$ $|y|$ $<$ 3.0)
+Title=CMS, 7 TeV, Jet shape $\rho$ (250 $<$ $p_T$ $<$ 300 GeV, 2.5 $<$ $|y|$ $<$ 3.0)
 XLabel=r
 YLabel=$\rho$(r)
 LogY=0

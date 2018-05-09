@@ -82,8 +82,7 @@ namespace Rivet {
 	  
 	  const PdgId pid = p->pdg_id();
 	  if (abs(pid) == 5) { 
-	    double difference=deltaR(j.momentum().eta(),j.momentum().phi(),p->momentum().eta(),p->momentum().phi());
-	    if(sqrt(difference)<0.3){
+	    if(deltaR(j.momentum().eta(),j.momentum().phi(),p->momentum().eta(),p->momentum().phi())<0.3){
 	      btag=true;
 	      onebtag=true;
 	    }

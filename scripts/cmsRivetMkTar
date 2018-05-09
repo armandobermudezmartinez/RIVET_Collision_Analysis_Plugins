@@ -95,8 +95,6 @@ if not os.path.isfile(ccFile) or not os.path.isfile(infoFile) or not os.path.isf
 
 
 TmpDir    = tempfile.mkdtemp()
-os.mkdir(TmpDir+'/src')
-os.mkdir(TmpDir+'/data')
 os.mkdir(TmpDir+'/plots')
 
 TarFile   = CMSSW_BASE+'/src/Rivet/'+PlugInName+'.tgz'
@@ -115,10 +113,10 @@ infoFile  = 'data/'+PlugInName+'.info'
 plotFile  = 'data/'+PlugInName+'.plot'
 yodaFile  = 'data/'+PlugInName+'.yoda'
 
-shutil.copy(SrcDir+'/'+ccFile,TmpDir+'/src')
-shutil.copy(SrcDir+'/'+infoFile,TmpDir+'/data')
-shutil.copy(SrcDir+'/'+plotFile,TmpDir+'/data')
-shutil.copy(SrcDir+'/'+yodaFile,TmpDir+'/data')
+shutil.copy(SrcDir+'/'+ccFile,TmpDir)
+shutil.copy(SrcDir+'/'+infoFile,TmpDir)
+shutil.copy(SrcDir+'/'+plotFile,TmpDir)
+shutil.copy(SrcDir+'/'+yodaFile,TmpDir)
 
 print TmpDir
 

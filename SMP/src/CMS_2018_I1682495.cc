@@ -9,15 +9,15 @@
 namespace Rivet {
 
 
-  class CMS_SMP_16_010 : public Analysis {
+  class CMS_2018_I1682495 : public Analysis {
   public:
 
     /// @name Constructors etc.
     //@{
 
     /// Constructor
-    CMS_SMP_16_010()
-      : Analysis("CMS_SMP_16_010"),
+    CMS_2018_I1682495()
+      : Analysis("CMS_2018_I1682495"),
         _softdrop(fastjet::contrib::SoftDrop(0, 0.1, 0.8) ) // parameters are beta, zcut, R0
     {    }
 
@@ -149,7 +149,7 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_SMP_16_010);
+  DECLARE_RIVET_PLUGIN(CMS_2018_I1682495);
 
 
 }

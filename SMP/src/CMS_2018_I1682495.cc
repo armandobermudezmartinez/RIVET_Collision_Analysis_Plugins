@@ -86,8 +86,8 @@ namespace Rivet {
       const size_t njetBin0 = findPtBin(j0.pt()/GeV);
       const size_t njetBin1 = findPtBin(j1.pt()/GeV);
       if (njetBin0 < N_PT_BINS_dj && njetBin1 < N_PT_BINS_dj) {
-	_h_ungroomedJetMass_dj[njetBin0]->fill(j0.m()/GeV, weight);
-	_h_ungroomedJetMass_dj[njetBin1]->fill(j1.m()/GeV, weight);
+        _h_ungroomedJetMass_dj[njetBin0]->fill(j0.m()/GeV, weight);
+        _h_ungroomedJetMass_dj[njetBin1]->fill(j1.m()/GeV, weight);
       }
 
       // Now run the substructure algs...
@@ -95,8 +95,8 @@ namespace Rivet {
       fastjet::PseudoJet sd1 = _softdrop(j1);
       // ... and repeat
       if (njetBin0 < N_PT_BINS_dj && njetBin1 < N_PT_BINS_dj) {
-	_h_sdJetMass_dj[njetBin0]->fill(sd0.m()/GeV, weight);
-	_h_sdJetMass_dj[njetBin1]->fill(sd1.m()/GeV, weight);
+        _h_sdJetMass_dj[njetBin0]->fill(sd0.m()/GeV, weight);
+        _h_sdJetMass_dj[njetBin1]->fill(sd1.m()/GeV, weight);
       }
 
     }
@@ -125,18 +125,18 @@ namespace Rivet {
     /// @name Histograms
     //@{
     enum { PT_200_260_dj=0, 
-	   PT_260_350_dj,
-	   PT_350_460_dj,
-	   PT_460_550_dj,
-	   PT_550_650_dj,
-	   PT_650_760_dj,
-	   PT_760_900_dj,
-	   PT_900_1000_dj,
-	   PT_1000_1100_dj,
-	   PT_1100_1200_dj,
-	   PT_1200_1300_dj,
-	   PT_1300_Inf_dj,
-	   N_PT_BINS_dj } BINS_dj;
+           PT_260_350_dj,
+           PT_350_460_dj,
+           PT_460_550_dj,
+           PT_550_650_dj,
+           PT_650_760_dj,
+           PT_760_900_dj,
+           PT_900_1000_dj,
+           PT_1000_1100_dj,
+           PT_1100_1200_dj,
+           PT_1200_1300_dj,
+           PT_1300_Inf_dj,
+           N_PT_BINS_dj } BINS_dj;
     Histo1DPtr _h_ungroomedJet0pt, _h_ungroomedJet1pt;
     Histo1DPtr _h_sdJet0pt, _h_sdJet1pt;
     Histo1DPtr _h_ungroomedJetMass_dj[N_PT_BINS_dj];

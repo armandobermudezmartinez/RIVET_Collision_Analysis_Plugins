@@ -104,11 +104,6 @@ namespace Rivet {
 
     /// Normalise histograms etc., after the run
     void finalize() {
-      const double normalizationVal = 1;
-      for (size_t i = 0; i < N_PT_BINS_dj; ++i) {
-        normalize(_h_ungroomedJetMass_dj[i], normalizationVal);
-        normalize(_h_sdJetMass_dj[i], normalizationVal);
-      }
     }
 
     //@}

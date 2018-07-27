@@ -24,8 +24,7 @@ process.load('GeneratorInterface.Core.genFilterSummary_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 
 
-inputfile_list = open( 'files_powheg.txt' )
-
+inputfile_list = open( 'files_powheg.txt' ).readlines()
 dirstr = 'root://cmsxrootd.fnal.gov//store/user/rappocc/POWHEG_DIJET_LHE/'
 #infilestr = '/store/user/rappocc/POWHEG_DIJET_LHE/Dijet_NNPDF30_born10_LHESET/pwgevents-%04d.lhe'
 infiles = [ ]
@@ -135,8 +134,8 @@ def customise(process):
 	process.load('GeneratorInterface.RivetInterface.rivetAnalyzer_cfi')
 	process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2018_I1682495')
 	process.rivetAnalyzer.CrossSection = cms.double(9757000000)
-	process.rivetAnalyzer.OutputFile = cms.string('CMS_2018_I1682495.yoda')
-	#process.rivetAnalyzer.OutputFile = cms.string ('output.yoda')
+	#process.rivetAnalyzer.OutputFile = cms.string('CMS_2018_I1682495.yoda')
+	process.rivetAnalyzer.OutputFile = cms.string ('powheg.yoda')
 	process.generation_step+=process.rivetAnalyzer
 	process.schedule.remove(process.RAWSIMoutput_step)
         return(process)      

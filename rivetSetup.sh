@@ -8,11 +8,11 @@ do
   export RIVET_PLOT_PATH=$RIVET_PLOT_PATH:$CMSSW_BASE/src/Rivet/${GROUP}/data
 done
 
+# cmsRivet scripts
+export PATH=$PATH:$CMSSW_BASE/src/Rivet/scripts
+
 which yodamerge &> /dev/null || GETYODA=1
 if [ $GETYODA==1 ]; then
   eval `scram tool info yoda | grep YODA_BASE`
   export PATH=$PATH:$YODA_BASE/bin
 fi
-
-# cmsRivet scripts
-export PATH=$PATH:$CMSSW_BASE/src/Rivet/scripts

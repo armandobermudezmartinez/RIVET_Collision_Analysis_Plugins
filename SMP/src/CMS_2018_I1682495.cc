@@ -43,10 +43,13 @@ namespace Rivet {
       addProjection(FastJets(fs, FastJets::ANTIKT, 0.8), "JetsAK8");
 
       // Histograms
-      for (size_t i = 0; i < N_PT_BINS_dj; ++i ) {
-        _h_ungroomedJetMass_dj[i] = bookHisto1D(i+1+0*N_PT_BINS_dj, 1, 1);
-        _h_sdJetMass_dj[i] = bookHisto1D(i+1+1*N_PT_BINS_dj, 1, 1);
+      for (size_t i = 0; i < N_PT_BINS_dj; ++i ) {	
+	_h_ungroomedJetMass_dj[i][0] = bookHisto1D(i+1+0*N_PT_BINS_dj, 1, 1); // Ungroomed mass, absolute
+	_h_sdJetMass_dj[i][0]        = bookHisto1D(i+1+1*N_PT_BINS_dj, 1, 1); // Groomed mass, absolute
+	_h_ungroomedJetMass_dj[i][1] = bookHisto1D(i+1+2*N_PT_BINS_dj, 1, 1); // Ungroomed mass, normalized
+	_h_sdJetMass_dj[i][1]        = bookHisto1D(i+1+3*N_PT_BINS_dj, 1, 1); // Groomed mass, normalized
       }
+
     }
 
 
@@ -86,8 +89,10 @@ namespace Rivet {
       const size_t njetBin0 = findPtBin(j0.pt()/GeV);
       const size_t njetBin1 = findPtBin(j1.pt()/GeV);
       if (njetBin0 < N_PT_BINS_dj && njetBin1 < N_PT_BINS_dj) {
-        _h_ungroomedJetMass_dj[njetBin0]->fill(j0.m()/GeV, weight);
-        _h_ungroomedJetMass_dj[njetBin1]->fill(j1.m()/GeV, weight);
+	for ( size_t jbin = 0; jbin < N_CATEGORIES; jbin++ ){
+	  _h_ungroomedJetMass_dj[njetBin0][jbin]->fill(j0.m()/GeV, weight);
+	  _h_ungroomedJetMass_dj[njetBin1][jbin]->fill(j1.m()/GeV, weight);
+	}
       }
 
       // Now run the substructure algs...
@@ -95,15 +100,29 @@ namespace Rivet {
       fastjet::PseudoJet sd1 = _softdrop(j1);
       // ... and repeat
       if (njetBin0 < N_PT_BINS_dj && njetBin1 < N_PT_BINS_dj) {
-        _h_sdJetMass_dj[njetBin0]->fill(sd0.m()/GeV, weight);
-        _h_sdJetMass_dj[njetBin1]->fill(sd1.m()/GeV, weight);
+	for ( size_t jbin = 0; jbin < N_CATEGORIES; jbin++ ){
+	  _h_sdJetMass_dj[njetBin0][jbin]->fill(sd0.m()/GeV, weight);
+	  _h_sdJetMass_dj[njetBin1][jbin]->fill(sd1.m()/GeV, weight);
+	}
       }
-
     }
 
 
     /// Normalise histograms etc., after the run
     void finalize() {
+      // Normalize the normalized cross section histograms to unity,
+      // and the unnormalized cross sections to the cross section x luminosity
+      for (size_t i = 0; i < N_PT_BINS_dj; ++i) {
+        normalize(_h_ungroomedJetMass_dj[i][0]);
+        normalize(_h_sdJetMass_dj[i][0]);
+        normalize(_h_ungroomedJetMass_dj[i][1]);
+        normalize(_h_sdJetMass_dj[i][1]);
+      }
+      // Normalize the normalized cross section histograms to unity. 
+      for (size_t i = 0; i < N_PT_BINS_dj; ++i) {
+        scale(_h_ungroomedJetMass_dj[i][0],   crossSection()/picobarn / sumOfWeights());
+        scale(_h_sdJetMass_dj[i][0],          crossSection()/picobarn / sumOfWeights());
+      }
     }
 
     //@}
@@ -132,10 +151,12 @@ namespace Rivet {
            PT_1200_1300_dj,
            PT_1300_Inf_dj,
            N_PT_BINS_dj } BINS_dj;
+    static const int N_CATEGORIES=2;
     Histo1DPtr _h_ungroomedJet0pt, _h_ungroomedJet1pt;
     Histo1DPtr _h_sdJet0pt, _h_sdJet1pt;
-    Histo1DPtr _h_ungroomedJetMass_dj[N_PT_BINS_dj];
-    Histo1DPtr _h_sdJetMass_dj[N_PT_BINS_dj];
+    // Here, store both the absolute (index 0) and normalized (index 1) cross sections. 
+    Histo1DPtr _h_ungroomedJetMass_dj[N_PT_BINS_dj][2];
+    Histo1DPtr _h_sdJetMass_dj[N_PT_BINS_dj][2];
     //@}
 
 

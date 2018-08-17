@@ -86,7 +86,7 @@ process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 
 process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 				 comEnergy = cms.double(13000.0),
-				 crossSection = cms.untracked.double(9.573213e+08),
+				 crossSection = cms.untracked.double(3.278e+09),
 				 filterEfficiency = cms.untracked.double(1),
 				 maxEventsToPrint = cms.untracked.int32(0),
 				 pythiaHepMCVerbosity = cms.untracked.bool(False),

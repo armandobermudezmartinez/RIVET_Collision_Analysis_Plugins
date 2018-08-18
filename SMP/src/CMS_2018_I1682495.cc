@@ -107,24 +107,19 @@ namespace Rivet {
       }
     }
 
-
     /// Normalise histograms etc., after the run
     void finalize() {
       // Normalize the normalized cross section histograms to unity,
-      // and the unnormalized cross sections to the cross section x luminosity
       for (size_t i = 0; i < N_PT_BINS_dj; ++i) {
-        normalize(_h_ungroomedJetMass_dj[i][0]);
-        normalize(_h_sdJetMass_dj[i][0]);
         normalize(_h_ungroomedJetMass_dj[i][1]);
         normalize(_h_sdJetMass_dj[i][1]);
       }
-      // Normalize the normalized cross section histograms to unity. 
+      // Normalize the absolute cross section histograms to xs * lumi.
       for (size_t i = 0; i < N_PT_BINS_dj; ++i) {
         scale(_h_ungroomedJetMass_dj[i][0],   crossSection()/picobarn / sumOfWeights());
         scale(_h_sdJetMass_dj[i][0],          crossSection()/picobarn / sumOfWeights());
       }
     }
-
     //@}
 
 

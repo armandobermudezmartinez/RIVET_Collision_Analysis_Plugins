@@ -34,11 +34,6 @@ namespace Rivet {
       // define a projection that keeps all the particles up to |eta|=5
       const FinalState fs(Cuts::abseta < 5.);
 
-      // for clustering, veto neutrinos and muon pairs
-      VetoedFinalState jet_input(fs);
-      jet_input.vetoNeutrinos();
-      addProjection(jet_input, "JET_INPUT");
-
       // use FastJet, anti-kt(R=0.8) to do the clustering
       addProjection(FastJets(fs, FastJets::ANTIKT, 0.8), "JetsAK8");
 
@@ -69,15 +64,12 @@ namespace Rivet {
       const double weight = event.weight();
 
       // Look at events with >= 2 jets
-      auto psjetsAK8 = applyProjection<FastJets>(event, "JetsAK8").pseudoJetsByPt( 200*GeV );
-      if (psjetsAK8.size() < 2) vetoEvent;
+      auto jetsAK8 = applyProjection<FastJets>(event, "JetsAK8").jetsByPt(Cuts::pT > 200*GeV and Cuts::abseta < 2.4);
+      if (jetsAK8.size() < 2) vetoEvent;
 
       // Get the leading two jets
-      const fastjet::PseudoJet& j0 = psjetsAK8[0];
-      const fastjet::PseudoJet& j1 = psjetsAK8[1];
-
-      // Requre |eta| < 2.4 because pseudoJetsByPt won't handle it.
-      if (std::abs(j0.rap()) > 2.4 || std::abs(j1.rap()) > 2.4 ) vetoEvent;
+      const fastjet::PseudoJet& j0 = jetsAK8[0].pseudojet();
+      const fastjet::PseudoJet& j1 = jetsAK8[1].pseudojet();
 
       // Calculate delta phi and the pt asymmetry
       double deltaPhi = Rivet::deltaPhi( j0.phi(), j1.phi() );

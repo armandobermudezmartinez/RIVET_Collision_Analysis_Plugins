@@ -135,7 +135,7 @@ else:
         #'CMS_LesHouches2015', # MC analysis for dilepton
         #'MC_GENERIC', # MC generic analysis
         #'MC_XS', # MC xs analysis
-        'CMS_2017_PAS_TOP_17_013',  # jet substructure
+        'CMS_2018_I1690148',  # jet substructure
     )
 process.rivetAnalyzer.OutputFile      = options.yodafile
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")
@@ -146,5 +146,3 @@ process.generation_step = cms.Path(process.generator)
 process.analysis_step = cms.Path(process.rivetAnalyzer)
 
 process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.analysis_step)
-
-

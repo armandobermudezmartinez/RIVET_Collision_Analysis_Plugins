@@ -16,16 +16,16 @@ namespace Rivet {
     void init() {
         addProjection(FinalState(),"FS");
 
-		_h_xsec = bookHisto1D(1, 1, 1);
+        _h_xsec = bookHisto1D(1, 1, 1);
 
     }
 
     void analyze(const Event& event) {
 
-		const double weight = event.weight();
-
-		const FinalState& fs = applyProjection<FinalState>(event, "FS");	
-		if (fs.size() < 3) vetoEvent; // veto on elastic events 
+        const double weight = event.weight();
+        
+        const FinalState& fs = applyProjection<FinalState>(event, "FS");     
+        if (fs.size() < 3) vetoEvent; // veto on elastic events 
         const ParticleVector particlesByRapidity = fs.particles(cmpMomByRap);
         const size_t num_particles = particlesByRapidity.size();
 
@@ -62,26 +62,26 @@ namespace Rivet {
         double xiy = (My * My) / (sqrtS()/GeV * sqrtS()/GeV);
         double xi  = std::max(xix, xiy);
 
-		if (xi > _xi_hf_cut) {
-			_h_xsec->fill(0.5, weight);
-		}
-		if (xix > _xi_castor_cut || xiy > _xi_hf_cut) { 
-			_h_xsec->fill(1.5, weight);
-		}
+        if (xi > _xi_hf_cut) {
+            _h_xsec->fill(0.5, weight);
+        }
+        if (xix > _xi_castor_cut || xiy > _xi_hf_cut) { 
+            _h_xsec->fill(1.5, weight);
+        }
 
-	}
-		
+    }
+     
     void finalize() {
 
         scale(_h_xsec, crossSection()/millibarn/sumOfWeights());
 
-	}
+    }
 
   private:
 
-	Histo1DPtr _h_xsec;
-	double _xi_hf_cut;
-	double _xi_castor_cut;
+    Histo1DPtr _h_xsec;
+    double _xi_hf_cut;
+    double _xi_castor_cut;
 
   };
 

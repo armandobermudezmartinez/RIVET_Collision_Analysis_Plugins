@@ -5,12 +5,12 @@
 
 namespace Rivet {
 
-  class CMS_2018_PAS_FSQ_16_011 : public Analysis {
+  class CMS_2018_I1680318 : public Analysis {
   public:
 
     /// Constructor
-    CMS_2018_PAS_FSQ_16_011()
-      : Analysis("CMS_2018_PAS_FSQ_16_011")
+    CMS_2018_I1680318()
+      : Analysis("CMS_2018_I1680318")
     {    }
 
 //-----------------------------------------------------
@@ -237,5 +237,5 @@ namespace Rivet {
         _hist_dNev_all_dM_OR;
   };
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2018_PAS_FSQ_16_011);
+  DECLARE_RIVET_PLUGIN(CMS_2018_I1680318);
 }

@@ -54,6 +54,6 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
 process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 process.rivetAnalyzer.OutputFile = cms.string(OUTPUT_FILE)
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")
-process.rivetAnalyzer.AnalysisNames   = cms.vstring('CMS_2018_PAS_FSQ_16_011')
+process.rivetAnalyzer.AnalysisNames   = cms.vstring('CMS_2018_I1680318')
 
 process.p = cms.Path(process.generator*process.rivetAnalyzer)

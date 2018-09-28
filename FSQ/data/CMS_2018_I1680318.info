@@ -3,12 +3,15 @@ Year: 2018
 Summary: Charged particle distributions in different final states at $\sqrt{s} = 13$~TeV with the CMS experiment
 Experiment: CMS collaboration
 Collider: LHC
-SpiresID: FSQ-16-011
-Status: UNVALIDATED
+InspireID: 1680318
+Status: VALIDATED
 Authors:
  - Juan Manuel Grados Luyando <juan.grados.luyando@desy.de>
-#References:
-# - <Example: Phys.Lett.B639:151-158,2006, Erratum-ibid.B658:285-289,2008>
+ - Pieters Maxim <Maxim.Pieters@uantwerpen.be>
+ References:
+  - arXiv:1806.11245
+  - CMS-FSQ-16-011
+  - Eur.Phys.J. C78 (2018) no.9, 697
 RunInfo:
   <Inelastic events at 13~TeV centre of mass energy.
    Tracks in $|\eta|<2.4$ and with $\pT > 0.5~GeV$>
@@ -25,7 +28,22 @@ Description:
     Please note, that the MC predictions are not scaled to the datapoints, 
     in contrast to figure 6 in the publication.'
 
-BibKey: 
-BibTeX: ''
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
+BibKey: Sirunyan:2018zdc
+BibTeX: '@article{Sirunyan:2018zdc,
+      author         = "Sirunyan, Albert M. and others",
+      title          = "{Measurement of charged particle spectra in minimum-bias
+                        events from proton–proton collisions at
+                        $\sqrt{s}=13\,\text {TeV} $}",
+      collaboration  = "CMS",
+      journal        = "Eur. Phys. J.",
+      volume         = "C78",
+      year           = "2018",
+      number         = "9",
+      pages          = "697",
+      doi            = "10.1140/epjc/s10052-018-6144-y",
+      eprint         = "1806.11245",
+      archivePrefix  = "arXiv",
+      primaryClass   = "hep-ex",
+      reportNumber   = "CMS-FSQ-16-011, CERN-EP-2018-187",
+      SLACcitation   = "%%CITATION = ARXIV:1806.11245;%%"
+}'

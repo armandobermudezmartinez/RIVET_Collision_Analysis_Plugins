@@ -195,9 +195,8 @@ namespace Rivet {
     }
 
 
-    /// Normalise histograms etc., after the run 
-    // WARNING not in case of splitting (crab), apply normalization after merging (yodaNormalize.py)
-    /*
+    /// Normalise histograms etc., after the run
+
     void finalize() {
 
       normalize(_h_njets);
@@ -228,7 +227,6 @@ namespace Rivet {
       normalize(_h_jetb_l_mass);
 
     }
-    */
 
     //@}
 

@@ -115,8 +115,6 @@ namespace Rivet {
         if (!p_leadjet.isZero()){
 	  double dphi_leadjet = deltaPhi(phileadjet, p.phi());
 	  
-	  cout<<dphi_leadjet<<endl;
-
 	  if (dphi_leadjet > PI/3. && dphi_leadjet < PI*2./3.) {   // Transverse region
 	    nTransverse_leadjet++;
 	    ptSumTransverse_leadjet += pT;

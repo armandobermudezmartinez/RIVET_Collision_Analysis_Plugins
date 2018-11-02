@@ -13,7 +13,7 @@ RatioPlotErrorBandColor=grey!40!yellow!60
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMIN charged $p_\text{T}^{\text{sum}}$ density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMIN charged $p_\text{T}^{\text{sum}}$ density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -24,7 +24,7 @@ LegendYPos=0.50
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMAX charged $p_\text{T}^{\text{sum}}$ density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMAX charged $p_\text{T}^{\text{sum}}$ density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -35,7 +35,7 @@ LegendYPos=0.50
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransDIF charged $p_\text{T}^{\text{sum}}$ density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransDIF charged $p_\text{T}^{\text{sum}}$ density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -46,7 +46,7 @@ LegendYPos=0.50
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransAVG charged $p_\text{T}^{\text{sum}}$ density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransAVG charged $p_\text{T}^{\text{sum}}$ density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -57,7 +57,7 @@ LegendYPos=0.50
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMIN charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMIN charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
@@ -68,7 +68,7 @@ LegendYPos=0.50
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMAX charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMAX charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
@@ -79,7 +79,7 @@ LegendYPos=0.50
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransDIF charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransDIF charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
@@ -90,7 +90,7 @@ LegendYPos=0.50
 XMax=24
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransAVG charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransAVG charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{max}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
@@ -101,7 +101,7 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMIN charged $p_\text{T}^{\text{sum}} density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMIN charged $p_\text{T}^{\text{sum}} density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -112,7 +112,7 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMAX charged $p_\text{T}^{\text{sum}} density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMAX charged $p_\text{T}^{\text{sum}} density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -123,7 +123,7 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransDIF charged $p_\text{T}^{\text{sum}} density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransDIF charged $p_\text{T}^{\text{sum}} density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -134,7 +134,7 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransAVG charged $p_\text{T}^{\text{sum}} density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransAVG charged $p_\text{T}^{\text{sum}} density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dp_\text{T}^{\text{sum}}\,/d\eta\, d\phi$}
 LogY=0
@@ -145,7 +145,7 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMIN charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMIN charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
@@ -156,7 +156,7 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransMAX charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransMAX charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
@@ -167,7 +167,7 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransDIF charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransDIF charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
@@ -178,11 +178,10 @@ LegendYPos=0.50
 XMax=52
 XTwosidedTicks=1
 YTwosidedTicks=1
-Title=\large{TransAVG charged-particle density , CMS $\sqrt{s}=13\,\text{TeV}$}
+Title=\large{CMS, 13 TeV, MB, TransAVG charged-particle density}
 XLabel=\large{$p_\text{T}^{\text{jet}}$[GeV]}
 YLabel=\large{$(1/N_\text{events})\; dN_\text{ch}\,/d\eta\, d\phi$}
 LogY=0
 LegendXPos=0.40
 LegendYPos=0.50
 # END PLOT
-

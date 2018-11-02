@@ -45,7 +45,14 @@ namespace Rivet {
       _h_Nch_vs_leadJetPt_transMax = bookProfile1D(14,1,1);
       _h_Nch_vs_leadJetPt_transDiff = bookProfile1D(15,1,1);
       _h_Nch_vs_leadJetPt_transAvg = bookProfile1D(16,1,1);
-   }
+    }
+    
+    double signedDeltaPhi(double jetphi, double partphi) {
+      double delta = partphi - jetphi;
+      while (delta <= -PI) delta += 2 * PI;
+      while (delta > PI) delta -= 2 * PI;
+      return delta;
+    }
 
 
     /// Perform the per-event analysis

@@ -3,7 +3,7 @@ Year: 2015
 Summary:  Underlying Event Measurements with Leading Particles and Jets in pp collisions at 13 TeV
 Experiment: CMS
 Collider: LHC
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Paolo Gunnellini <paolo.gunnellini@cern.ch>
 References:

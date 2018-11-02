@@ -113,28 +113,28 @@ namespace Rivet {
         const double pT = p.pT()/GeV;
 	
         if (!p_leadjet.isZero()){
-	  double dphi_leadjet = deltaPhi(phileadjet, p.phi());
+	  double dphi_leadjet = signedDeltaPhi(phileadjet, p.phi());
 	  
-	  if (dphi_leadjet > PI/3. && dphi_leadjet < PI*2./3.) {   // Transverse region
+	  if (dphi_leadjet > PI/3. && dphi_leadjet < PI*2./3.) {   // Transverse1 region
 	    nTransverse_leadjet++;
 	    ptSumTransverse_leadjet += pT;
 	    nTransverse1_leadjet++;
 	    ptSumTransverse1_leadjet += pT;
 	  }
 
-	  if (dphi_leadjet < PI*4./3. && dphi_leadjet > -PI*5./3.) {   // Transverse region
+	  if (dphi_leadjet < -PI/3. && dphi_leadjet > -PI*2./3.) {   // Transverse2 region
 	    nTransverse_leadjet++;
 	    ptSumTransverse_leadjet += pT;
 	    nTransverse2_leadjet++;
 	    ptSumTransverse2_leadjet += pT;
 	  }
 
-	  if (dphi_leadjet < PI/3. || dphi_leadjet> PI*5./3.) {   // Toward region
+	  if (fabs(dphi_leadjet) < PI/3.) {   // Toward region
 	    nTowards_leadjet++;
 	    ptSumTowards_leadjet += pT;
 	  }
 
-	  if (dphi_leadjet > 2.*PI/3. && dphi_leadjet < 4.*PI/3.) {   // Away region
+	  if (fabs(dphi_leadjet) > 2.*PI/3.) {   // Away region
 	    nAway_leadjet++;
 	    ptSumAway_leadjet += pT;
 	  }
@@ -143,28 +143,28 @@ namespace Rivet {
 
 	if (!p_leadtrack.isZero()){
 
-	  double dphi_leadtrack = deltaPhi(phileadtrack, p.phi());
+	  double dphi_leadtrack = signedDeltaPhi(phileadtrack, p.phi());
 	  
-	  if (dphi_leadtrack > PI/3. && dphi_leadtrack < PI*2./3.) {   // Transverse region
+	  if (dphi_leadtrack > PI/3. && dphi_leadtrack < PI*2./3.) {   // Transverse1 region
 	    nTransverse_leadtrack++;
 	    ptSumTransverse_leadtrack += pT;
 	    nTransverse1_leadtrack++;
 	    ptSumTransverse1_leadtrack += pT;
 	  }
 	  
-	  if (dphi_leadtrack < -PI/3. && dphi_leadtrack > -PI*2./3.) {   // Transverse region
+	  if (dphi_leadtrack < -PI/3. && dphi_leadtrack > -PI*2./3.) {   // Transverse2 region
 	    nTransverse_leadtrack++;
 	    ptSumTransverse_leadtrack += pT;
 	    nTransverse2_leadtrack++;
 	    ptSumTransverse2_leadtrack += pT;
 	  }
 
-	  if (fabs(dphi_leadtrack) < PI/3.) {   // Transverse region
+	  if (fabs(dphi_leadtrack) < PI/3.) {   // Toward region
 	    nTowards_leadtrack++;
 	    ptSumTowards_leadtrack += pT;
 	  }
 
-	  if (fabs(dphi_leadtrack) > 2.*PI/3.) {   // Transverse region
+	  if (fabs(dphi_leadtrack) > 2.*PI/3.) {   // Away region
 	    nAway_leadtrack++;
 	    ptSumAway_leadtrack += pT;
 	  }

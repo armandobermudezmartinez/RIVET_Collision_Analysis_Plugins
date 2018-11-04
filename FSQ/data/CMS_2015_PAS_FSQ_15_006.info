@@ -1,0 +1,35 @@
+Name: CMS_FSQ_15_006
+Year: 2015
+Summary: Measurement of the pseudorapidity dependence of the energy and transverse energy density in pp collisions at $\sqrt{s}$= 13 TeV with CMS
+Experiment: CMS
+Collider: LHC
+SpireID:
+InspireID: 
+Status: 
+Authors:
+ - Deniz Sunar Cerci <deniz.sunar.cerci@cern.ch>
+References:
+ - CMS-FSQ-15-006
+RunInfo:
+NumEvents: 1M
+Beams: [p+, p+]
+Energies: [13000]
+PtCuts:
+Description:
+    'The measurement of forward energy flow in pseudo-rapidity range $3.0<|\eta|<6.6$ using the proton-proton 
+    collisions collected in the first LHC Run II operation in 2015 at \sqrt{s} = 13 TeV is presented. 
+    The energy flow measurement is performed with zero bias events. The energy flow, $\mathrm{d}E/\mathrm{d}\eta$, 
+    as well as the transverse energy density, $\mathrm{d}E_{T}/\mathrm{d}\eta$, are studied as a function of 
+    pseudorapidity. The results are compared with models used to describe high-energy hadronic interactions.'
+BibKey: Khachatryan:2015gka
+BibTeX: '@article{Khachatryan:2015gka,
+      author         = "Khachatryan, Vardan and others",
+      title          = "{Measurement of the energy density as a function of pseudorapidity in proton-proton collisions at sqrt(s)=13 TeV}",
+      collaboration  = "CMS",
+      year           = "2015",
+      eprint         = "",
+      archivePrefix  = "",
+      primaryClass   = "",
+      reportNumber   = "CMS-FSQ-15-006",
+      SLACcitation   = "",
+}'

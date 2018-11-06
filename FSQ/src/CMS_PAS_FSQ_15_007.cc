@@ -44,14 +44,8 @@ namespace Rivet {
       _h_Nch_vs_leadJetPt_transMin = bookProfile1D(13,1,1);
       _h_Nch_vs_leadJetPt_transMax = bookProfile1D(14,1,1);
       _h_Nch_vs_leadJetPt_transDiff = bookProfile1D(15,1,1);
-      _h_Nch_vs_leadJetPt_transAvg = bookProfile1D(16,1,1);
-    }
-    
-    double signedDeltaPhi(double jetphi, double partphi) {
-      double delta = partphi - jetphi;
-      while (delta <= -PI) delta += 2 * PI;
-      while (delta > PI) delta -= 2 * PI;
-      return delta;
+      _h_Nch_vs_leadJetPt_transAvg = bookProfile1D(16,1,1);     
+
     }
 
 
@@ -74,7 +68,6 @@ namespace Rivet {
           break;
         }
       }
- 
       
       if (p_leadjet.isZero() && p_leadtrack.isZero()) vetoEvent;
       const double phileadjet = p_leadjet.phi();
@@ -83,7 +76,6 @@ namespace Rivet {
       const double phileadtrack = p_leadtrack.phi();
       const double pTleadtrack  = p_leadtrack.pT();
       
-
       Particles particles = applyProjection<ChargedFinalState>(event, "CFS").particlesByPt();
       
       int nTransverse_leadjet = 0;
@@ -115,27 +107,35 @@ namespace Rivet {
       double ptSumTowards_leadtrack = 0.;
       int nAway_leadtrack = 0;
       double ptSumAway_leadtrack = 0.;
-      
+
       foreach (const Particle& p, particles) {
         const double pT = p.pT()/GeV;
 	
         if (!p_leadjet.isZero()){
-	  double dphi_leadjet = signedDeltaPhi(phileadjet, p.phi());
+	  double dphi_leadjet = p.phi() - phileadjet;
+	  while( dphi_leadjet > PI){
+	    dphi_leadjet = dphi_leadjet - 2.0*PI;
+	  }
+	  while( dphi_leadjet < -PI){
+	    dphi_leadjet = dphi_leadjet + 2.*PI;
+	  }
 	  
 	  if (dphi_leadjet > PI/3. && dphi_leadjet < PI*2./3.) {   // Transverse1 region
 	    nTransverse_leadjet++;
 	    ptSumTransverse_leadjet += pT;
 	    nTransverse1_leadjet++;
 	    ptSumTransverse1_leadjet += pT;
+	    
 	  }
-
+	  
 	  if (dphi_leadjet < -PI/3. && dphi_leadjet > -PI*2./3.) {   // Transverse2 region
 	    nTransverse_leadjet++;
 	    ptSumTransverse_leadjet += pT;
 	    nTransverse2_leadjet++;
 	    ptSumTransverse2_leadjet += pT;
-	  }
 
+	  }
+	  
 	  if (fabs(dphi_leadjet) < PI/3.) {   // Toward region
 	    nTowards_leadjet++;
 	    ptSumTowards_leadjet += pT;
@@ -147,16 +147,23 @@ namespace Rivet {
 	  }
 
 	}//jet found
-
+      
 	if (!p_leadtrack.isZero()){
-
-	  double dphi_leadtrack = signedDeltaPhi(phileadtrack, p.phi());
+	  
+	  double dphi_leadtrack = p.phi() - phileadtrack;
+	  while( dphi_leadtrack > PI){
+	    dphi_leadtrack = dphi_leadtrack - 2.0*PI;
+	  }
+	  while( dphi_leadtrack < -PI){
+	    dphi_leadtrack = dphi_leadtrack + 2.*PI;
+	  }
 	  
 	  if (dphi_leadtrack > PI/3. && dphi_leadtrack < PI*2./3.) {   // Transverse1 region
 	    nTransverse_leadtrack++;
 	    ptSumTransverse_leadtrack += pT;
 	    nTransverse1_leadtrack++;
 	    ptSumTransverse1_leadtrack += pT;
+	    
 	  }
 	  
 	  if (dphi_leadtrack < -PI/3. && dphi_leadtrack > -PI*2./3.) {   // Transverse2 region
@@ -164,19 +171,22 @@ namespace Rivet {
 	    ptSumTransverse_leadtrack += pT;
 	    nTransverse2_leadtrack++;
 	    ptSumTransverse2_leadtrack += pT;
+	    
 	  }
-
+	  
 	  if (fabs(dphi_leadtrack) < PI/3.) {   // Toward region
 	    nTowards_leadtrack++;
 	    ptSumTowards_leadtrack += pT;
 	  }
-
+	  
 	  if (fabs(dphi_leadtrack) > 2.*PI/3.) {   // Away region
 	    nAway_leadtrack++;
 	    ptSumAway_leadtrack += pT;
 	  }
 
 	}//track found
+
+	
       }//Loop over particles
 
       const double fullarea = 8./3. * PI;
@@ -187,7 +197,9 @@ namespace Rivet {
 	if (nTransverse2_leadjet > nTransverse1_leadjet){
 	  nTransverseMax_leadjet = nTransverse2_leadjet;
 	  nTransverseMin_leadjet = nTransverse1_leadjet;
-	} else{
+	} 
+
+	else{
 	  nTransverseMax_leadjet = nTransverse1_leadjet;
 	  nTransverseMin_leadjet = nTransverse2_leadjet;
 	}
@@ -196,6 +208,7 @@ namespace Rivet {
 	  ptSumTransverseMax_leadjet = ptSumTransverse2_leadjet;
 	  ptSumTransverseMin_leadjet = ptSumTransverse1_leadjet;
 	}
+	
 	else{
 	  ptSumTransverseMax_leadjet = ptSumTransverse1_leadjet;
 	  ptSumTransverseMin_leadjet = ptSumTransverse2_leadjet;
@@ -213,11 +226,13 @@ namespace Rivet {
       } //for leading jet
       
       if (!p_leadtrack.isZero()){
-
+	
 	if (nTransverse2_leadtrack > nTransverse1_leadtrack){
 	  nTransverseMax_leadtrack = nTransverse2_leadtrack;
 	  nTransverseMin_leadtrack = nTransverse1_leadtrack;
-	} else{
+	} 
+
+	else{
 	  nTransverseMax_leadtrack = nTransverse1_leadtrack;
 	  nTransverseMin_leadtrack = nTransverse2_leadtrack;
 	}
@@ -226,11 +241,12 @@ namespace Rivet {
 	  ptSumTransverseMax_leadtrack = ptSumTransverse2_leadtrack;
 	  ptSumTransverseMin_leadtrack = ptSumTransverse1_leadtrack;
 	}
+
 	else{
 	  ptSumTransverseMax_leadtrack = ptSumTransverse1_leadtrack;
 	  ptSumTransverseMin_leadtrack = ptSumTransverse2_leadtrack;
 	}
-
+	
 	_h_Nch_vs_leadTrackPt_transDiff->fill(pTleadtrack/GeV, 1./halfarea*(nTransverseMax_leadtrack - nTransverseMin_leadtrack), weight);
 	_h_PtSum_vs_leadTrackPt_transDiff->fill(pTleadtrack/GeV, 1./halfarea*(ptSumTransverseMax_leadtrack - ptSumTransverseMin_leadtrack), weight);
 	_h_Nch_vs_leadTrackPt_transAvg->fill(pTleadtrack/GeV, 1./fullarea*(nTransverseMax_leadtrack + nTransverseMin_leadtrack), weight);
@@ -240,15 +256,14 @@ namespace Rivet {
 	_h_PtSum_vs_leadTrackPt_transMax->fill(pTleadtrack/GeV, 1./halfarea*ptSumTransverseMax_leadtrack, weight);
 	_h_Nch_vs_leadTrackPt_transMin->fill(pTleadtrack/GeV, 1./halfarea*nTransverseMin_leadtrack, weight);
 	_h_PtSum_vs_leadTrackPt_transMin->fill(pTleadtrack/GeV, 1./halfarea*ptSumTransverseMin_leadtrack, weight);
-
+      
       }//for leading track
+
     }
     
-     
     /// Normalise histograms etc., after the run
     void finalize() {
     }
-    
     
     
   private:
@@ -262,7 +277,7 @@ namespace Rivet {
     Profile1DPtr _h_PtSum_vs_leadJetPt_transDiff;
     Profile1DPtr _h_Nch_vs_leadJetPt_transAvg;
     Profile1DPtr _h_PtSum_vs_leadJetPt_transAvg;
-    
+
     Profile1DPtr _h_Nch_vs_leadTrackPt_transMax;
     Profile1DPtr _h_PtSum_vs_leadTrackPt_transMax;
     Profile1DPtr _h_Nch_vs_leadTrackPt_transMin;
@@ -272,10 +287,10 @@ namespace Rivet {
     Profile1DPtr _h_Nch_vs_leadTrackPt_transAvg;
     Profile1DPtr _h_PtSum_vs_leadTrackPt_transAvg;
 
-    
+
   };
-  
-  
+
+
   // This global object acts as a hook for the plugin system
   DECLARE_RIVET_PLUGIN(CMS_PAS_FSQ_15_007);
 }

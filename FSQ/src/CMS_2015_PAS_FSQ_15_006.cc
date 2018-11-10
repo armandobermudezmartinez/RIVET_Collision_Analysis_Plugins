@@ -177,10 +177,10 @@ namespace Rivet {
 		     }
 		     sd = true;       
 		     ++_noe_sd;
-		 }//SD-selection
-		 if (nsd && sd ) ++_noe_nsd_sd;
+	}//SD-selection
+	if (nsd && sd ) ++_noe_nsd_sd;
      }//event
-		      
+
    void finalize() {
 
        scale(_h_inel, (1./(2.*_noe_inel)));
@@ -199,11 +199,11 @@ namespace Rivet {
     Histo1DPtr _h_nsd;
     Histo1DPtr _h_et;
     Histo1DPtr _h_sd;
-	double _noe_inel;
-	double _noe_nsd;
-	double _noe_bsc;
-	double _noe_sd;
-	double _noe_nsd_sd;
+double _noe_inel;
+double _noe_nsd;
+double _noe_bsc;
+double _noe_sd;
+double _noe_nsd_sd;
 
    };
 

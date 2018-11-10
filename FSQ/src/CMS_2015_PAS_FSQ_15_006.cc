@@ -13,7 +13,7 @@ namespace Rivet {
     CMS_FSQ_15_006()
         : Analysis("CMS_FSQ_15_006"), _noe_inel(0.), _noe_nsd(0.), _noe_bsc(0.), _noe_sd(0.) , _noe_nsd_sd(0.)
        {    }
-	
+        
     public:
 
     void init() {
@@ -105,7 +105,7 @@ namespace Rivet {
         
         foreach(const Particle& p, fs.particlesByRapidity()) {
             double eta = p.momentum().eta();
-			 //double energy = p.momentum().E();
+            //double energy = p.momentum().E();
             double tenergy = p.momentum().Et();
             if (abs(p.pid()) >= 12 && abs(p.pid()) <= 16) continue;
             if (eta > 2.866 && eta < 5.205) ++nplus;
@@ -126,16 +126,16 @@ namespace Rivet {
             double energy = p.momentum().E();
             if (inel) {
                 _h_inel->fill(abs(eta), energy*weight);
-				 //if(eta < 0.) cout << "inel eta = " << eta << endl;
+                //if(eta < 0.) cout << "inel eta = " << eta << endl;
             }
             if (nsd) {
                 _h_nsd->fill(abs(eta), energy*weight);
             }
         }
 
-		 //////////////
-		 //sd selection
-		 //////////////
+        //////////////
+        //sd selection
+        //////////////
         float etamaxminus = -3.152;
         float etaminminus = -5.205;
         float etamin   = 3.152;
@@ -147,31 +147,31 @@ namespace Rivet {
         foreach(const Particle& p, fs.particlesByRapidity()) {
             double eta    = p.momentum().eta();
             double energy = p.momentum().E();
-		     //check whether this particle is stable according to the generator
+            //check whether this particle is stable according to the generator
             if (p.genParticle()->status() == 1) {
                 if (eta >= etaminminus && eta <= etamaxminus && energy > emin)  StableParticleEnergyCutMinus=true;
                 if (eta >= etamin && eta <= etamax && energy > emin)            StableParticleEnergyCutPlus=true;
             }
         }//decision on SD-event selection
-		 
-		 //in order to select SD-enhanced events use the following condition
+        
+        //in order to select SD-enhanced events use the following condition
         if((StableParticleEnergyCutPlus && !StableParticleEnergyCutMinus) ||
-		    (!StableParticleEnergyCutPlus && StableParticleEnergyCutMinus)) {
-		     foreach(const Particle& p, fs.particlesByRapidity()) {
+           (!StableParticleEnergyCutPlus && StableParticleEnergyCutMinus)) {
+            foreach(const Particle& p, fs.particlesByRapidity()) {
                  double eta    = p.momentum().eta();
                  double energy = p.momentum().E();
                  if(StableParticleEnergyCutPlus && !StableParticleEnergyCutMinus){
                      if (abs(eta) >= etamin && abs(eta) <= etamax) {
                          if (eta > 0) _h_sd->fill(abs(eta), energy*weight);
                      }
-			     //for CASTOR
+                     //for CASTOR
                      else  _h_sd->fill(abs(eta), energy*weight*0.5);
                  }
                  if(!StableParticleEnergyCutPlus && StableParticleEnergyCutMinus ){
                      if (abs(eta) >= etamin && abs(eta) <= etamax) {
                          if (eta < 0) _h_sd->fill(abs(eta), energy*weight);
                      }
-			     //for CASTOR
+                     //for CASTOR
                      else  _h_sd->fill(abs(eta), energy*weight*0.5);
                  }
              }

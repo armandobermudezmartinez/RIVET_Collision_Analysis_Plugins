@@ -11,11 +11,11 @@ namespace Rivet {
 
 
   // UE charged particles vs. leading jet
-  class CMS_PAS_FSQ_15_007 : public Analysis {
+  class CMS_2015_PAS_FSQ_15_007 : public Analysis {
   public:
 
     /// Constructor
-    CMS_PAS_FSQ_15_007() : Analysis("CMS_PAS_FSQ_15_007") {}
+    CMS_2015_PAS_FSQ_15_007() : Analysis("CMS_2015_PAS_FSQ_15_007") {}
 
 
     void init() {
@@ -292,6 +292,6 @@ namespace Rivet {
 
 
   // This global object acts as a hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_PAS_FSQ_15_007);
+  DECLARE_RIVET_PLUGIN(CMS_2015_PAS_FSQ_15_007);
 }
 

@@ -1,0 +1,43 @@
+Name: CMS_2016_I1426517
+Year: 2016
+Summary: CMS measurement of the differential cross section and charge asymmetry for inclusive W boson production and subsequent decay into muon and neutrino in proton-proton collisions at center of mass energy of 8 TeV.
+Experiment: CMS
+Collider: LHC
+InspireID: 1426517
+Status: UNVALIDATED
+Authors:
+ - saranya.ghosh@cern.ch
+ - Aleko.Khukhunaishvili@cern.ch
+#References:
+# - <Example: Phys.Lett.B639:151-158,2006, Erratum-ibid.B658:285-289,2008>
+# - <Example: doi:10.1016/j.physletb.2006.04.048>
+# - <Example: arXiv:hep-ex/0511054 (plus erratum)>
+RunInfo:
+  Proton-proton collisions at center of mass energy of 8 TeV. Events are required to have one isolated muon with $\pT$ $>$ 25 GeV and $|\eta|$ $<$ 2.4 .
+NumEvents: 1000000
+NeedCrossSection: no
+Beams: [p+, p+]
+Energies: [8000]
+PtCuts: [25]
+#NeedCrossSection: True
+Description:
+  'The differential cross section and charge asymmetry for inclusive $pp \rightarrow W^{\pm} + X \rightarrow \mu^{\pm}\nu + X$ production at $\sqrt{s} = 8$ TeV are measured as a function of muon pseudorapidity. The data sample corresponds to an integrated luminosity of 18.8 $fb^{-1}$ recorded with the CMS detector at the LHC. These results provide important constraints on the parton distribution functions of the proton in the range of the Bjorken scaling variable $x$ from $10^{-3}$ to $10^{-1}$.'
+BibKey: Khachatryan:2016pev
+BibTeX: '@article{Khachatryan:2016pev,
+      author         = "Khachatryan, Vardan and others",
+      title          = "{Measurement of the differential cross section and charge
+                        asymmetry for inclusive pp to W + X production at sqrt(s)
+                        = 8 TeV}",
+      collaboration  = "CMS",
+      journal        = "Eur. Phys. J. C",
+      year           = "2016",
+      doi            = "10.1140/epjc/s10052-016-4293-4",
+      eprint         = "1603.01803",
+      archivePrefix  = "arXiv",
+      primaryClass   = "hep-ex",
+      reportNumber   = "CMS-SMP-14-022, CERN-EP-2016-043",
+      SLACcitation   = "%%CITATION = ARXIV:1603.01803;%%"
+}'
+ToDo:
+ - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
+

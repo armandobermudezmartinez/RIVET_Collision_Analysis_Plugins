@@ -2,7 +2,7 @@
 Path=/REF/CMS_FSQ_15_006/d01-x01-y01
 Legend=1
 LogY=1
-Title= INEL
+Title= 
 XLabel=$|\eta|$
 YLabel= $dE/d\eta$
 YMin= 1.
@@ -23,6 +23,7 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_FSQ_15_006/d02-x01-y01
 Path=/REF/CMS_FSQ_15_006/d02-x01-y01
+Title= 
 Type=Scatter2D
 # xval   xerr-   xerr+   yval   yerr-   yerr+
 3.3275  0.1755  0.1755          97.7309  10.2146   10.2146
@@ -37,6 +38,7 @@ Type=Scatter2D
 
 # BEGIN YODA_SCATTER2D /REF/CMS_FSQ_15_006/d03-x01-y01
 Path=/REF/CMS_FSQ_15_006/d03-x01-y01
+Title= 
 Type=Scatter2D
 # xval   xerr-   xerr+   yval   yerr-   yerr+
 -6.209199999999999  0.17550000000000043 0.17549999999999955         8.76    0.876   0.876
@@ -47,8 +49,10 @@ Type=Scatter2D
 -4.485200000000001  0.1484999999999994  0.1485000000000003          5.02    0.502   0.502
 -3.6367000000000003 0.7000000000000002  0.7000000000000002          4.36    0.7412  0.7412
 # END YODA_SCATTER2D
+
 # BEGIN YODA_SCATTER2D /REF/CMS_FSQ_15_006/d04-x01-y01
 Path=/REF/CMS_FSQ_15_006/d04-x01-y01
+Title= 
 Type=Scatter2D
 # xval   xerr-   xerr+   yval   yerr-   yerr+
 3.3275	0.1755	0.1755			24.84536	8.3371    8.3371

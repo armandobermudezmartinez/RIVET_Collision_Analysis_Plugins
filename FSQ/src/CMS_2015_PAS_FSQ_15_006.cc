@@ -11,12 +11,23 @@ namespace Rivet {
     public:
         
     CMS_FSQ_15_006()
-        : Analysis("CMS_FSQ_15_006"), _noe_inel(0.), _noe_nsd(0.), _noe_bsc(0.), _noe_sd(0.) , _noe_nsd_sd(0.)
+        : Analysis("CMS_FSQ_15_006")
        {    }
         
-    public:
-
+//-----------------------------------------------------------------
+        
     void init() {
+       // _noe_inel(0.);
+        //_noe_nsd(0.);
+        //_noe_bsc(0.);
+        //_noe_sd(0.);
+        //_noe_nsd_sd(0.);
+        
+        _noe_inel = 0.;
+        _noe_nsd = 0.;
+        _noe_bsc = 0.;
+        _noe_sd = 0.;
+        _noe_nsd_sd = 0.;
         
         addProjection(FinalState(),"FS");
         
@@ -33,14 +44,15 @@ namespace Rivet {
         
      }
         
+//-----------------------------------------------------------
+
     void analyze(const Event& event) {
         
     const double weight = event.weight();
 
-        double ybeam = 9.54;
-
-         bool bscplus  = true;
-         bool bscminus = true;
+    double ybeam = 9.54;
+    bool bscplus  = true;
+    bool bscminus = true;
 
      const ChargedFinalState& cfsBSCplus = applyProjection<ChargedFinalState>(event, "cfsBSCplus");
     if (cfsBSCplus.empty()) bscplus = false;
@@ -180,17 +192,24 @@ namespace Rivet {
         }//SD-selection
         if (nsd && sd ) ++_noe_nsd_sd;
     }//event
-        
+
+//---------------------------------------------------------------
+
         void finalize() {
 
             scale(_h_inel, (1./(2.*_noe_inel)));
             scale(_h_nsd, (1./(2.*_noe_nsd)));
             scale(_h_et, 1./_noe_bsc);
             scale(_h_sd, 1./_noe_sd);
-            cout << "Number of events of INEL " << _noe_inel << endl;
-            cout << "Number of events of NSD  " << _noe_nsd << endl;
-            cout << "Number of events of SD  " << _noe_sd << endl;
-            cout << "Number of events of NSD and SD contribution " << _noe_nsd_sd << endl;
+            MSG_INFO( "Number of events of INEL : " << _noe_inel );
+            MSG_INFO( "Number of events of NSD : " << _noe_nsd );
+            MSG_INFO( "Number of events of SD : " << _noe_sd );
+            MSG_INFO( "Number of events of NSD and SD contribution :" << _noe_nsd_sd );
+            
+            //cout << "Number of events of INEL " << _noe_inel << endl;
+            //cout << "Number of events of NSD  " << _noe_nsd << endl;
+            //cout << "Number of events of SD  " << _noe_sd << endl;
+            //cout << "Number of events of NSD and SD contribution " << _noe_nsd_sd << endl;
         }
 
     private:

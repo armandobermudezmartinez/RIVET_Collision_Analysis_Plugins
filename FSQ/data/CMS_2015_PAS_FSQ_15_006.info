@@ -1,35 +1,33 @@
 Name: CMS_FSQ_15_006
 Year: 2015
-Summary: Measurement of the pseudorapidity dependence of the energy and transverse energy density in pp collisions at $\sqrt{s}$= 13 TeV with CMS
+Summary: Measurement of the energy density as a function of pseudorapidity  in proton-proton collisions at $\sqrt{s}$= 13 TeV
 Experiment: CMS
 Collider: LHC
 SpireID:
 InspireID: 
 Status: 
 Authors:
- - Deniz Sunar Cerci <deniz.sunar.cerci@cern.ch>
+ - Deniz Sunar Cerci <deniz.sunar.cerci@cern.ch>,Sercan Sen <sercan.sen@cern.ch>, Salim Cerci <salim.cerci@cern.ch>, Caglar Zorbilmez <caglar.zorbilmez@cern.ch>, Ilknur Hos <ilknur.hos@cern.ch>  
 References:
  - CMS-FSQ-15-006
+ - arXiv:1812.04095
 RunInfo:
 NumEvents: 1M
+NeedCrossSection: no
 Beams: [p+, p+]
 Energies: [13000]
 PtCuts:
 Description:
-    'The measurement of forward energy flow in pseudo-rapidity range $3.0<|\eta|<6.6$ using the proton-proton 
-    collisions collected in the first LHC Run II operation in 2015 at \sqrt{s} = 13 TeV is presented. 
-    The energy flow measurement is performed with zero bias events. The energy flow, $\mathrm{d}E/\mathrm{d}\eta$, 
-    as well as the transverse energy density, $\mathrm{d}E_{T}/\mathrm{d}\eta$, are studied as a function of 
-    pseudorapidity. The results are compared with models used to describe high-energy hadronic interactions.'
-BibKey: Khachatryan:2015gka
-BibTeX: '@article{Khachatryan:2015gka,
+    'A measurement of the energy density in proton-proton collisions at a centre-of-mass energy of $\sqrt{s} = 13$ TeV is presented. The data have been recorded with the CMS experiment at the LHC during low luminosity operations in 2015. The energy density is studied as a function of pseudorapidity in the ranges $-6.6 < \eta < -5.2$ and $3.15 < |\eta| < 5.20$. The results are compared with the predictions of several models. All the models considered suggest a different shape of the pseudorapidity dependence compared to that observed in the data. A comparison with LHC proton-proton collision data at $\sqrt{s} = 0.9$ and 7 TeV confirms the compatibility of the data with the hypothesis of limiting fragmentation.'
+BibKey: Sirunyan:2018jwn,
+BibTeX: '@article{Sirunyan:2018jwn,
       author         = "Khachatryan, Vardan and others",
-      title          = "{Measurement of the energy density as a function of pseudorapidity in proton-proton collisions at sqrt(s)=13 TeV}",
+      title          = "{Measurement of the energy density as a function of pseudorapidity in proton-proton collisions at sqrt$\sqrt{s}=$ 13 TeV}",
       collaboration  = "CMS",
       year           = "2015",
-      eprint         = "",
-      archivePrefix  = "",
-      primaryClass   = "",
-      reportNumber   = "CMS-FSQ-15-006",
-      SLACcitation   = "",
+      eprint         = "1812.04095",
+      archivePrefix  = "arXiv",
+      primaryClass   = "hep-ex",
+      reportNumber   = "CMS-FSQ-15-006, CERN-EP-2018-308”,
+      SLACcitation   = "%%CITATION = ARXIV:1812.04095;%%",
 }'

@@ -17,12 +17,7 @@ namespace Rivet {
 //-----------------------------------------------------------------
         
     void init() {
-       // _noe_inel(0.);
-        //_noe_nsd(0.);
-        //_noe_bsc(0.);
-        //_noe_sd(0.);
-        //_noe_nsd_sd(0.);
-        
+
         _noe_inel = 0.;
         _noe_nsd = 0.;
         _noe_bsc = 0.;
@@ -138,7 +133,6 @@ namespace Rivet {
             double energy = p.momentum().E();
             if (inel) {
                 _h_inel->fill(abs(eta), energy*weight);
-                //if(eta < 0.) cout << "inel eta = " << eta << endl;
             }
             if (nsd) {
                 _h_nsd->fill(abs(eta), energy*weight);
@@ -205,11 +199,7 @@ namespace Rivet {
             MSG_INFO( "Number of events of NSD : " << _noe_nsd );
             MSG_INFO( "Number of events of SD : " << _noe_sd );
             MSG_INFO( "Number of events of NSD and SD contribution :" << _noe_nsd_sd );
-            
-            //cout << "Number of events of INEL " << _noe_inel << endl;
-            //cout << "Number of events of NSD  " << _noe_nsd << endl;
-            //cout << "Number of events of SD  " << _noe_sd << endl;
-            //cout << "Number of events of NSD and SD contribution " << _noe_nsd_sd << endl;
+
         }
 
     private:

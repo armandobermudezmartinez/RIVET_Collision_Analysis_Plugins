@@ -33,7 +33,7 @@ namespace Rivet {
 
       /// Get W's with muons with |eta| < 2.4, pT > 25 GeV
       WFinder wfinder(fs, Cuts::abseta < 2.4 && Cuts::pT > 25.0*GeV, PID::MUON, 0.0*GeV, MAXDOUBLE, 0.0*GeV, 0.1, 
-		      WFinder::CLUSTERNODECAY, WFinder::NOTRACK, WFinder::TRANSMASS);
+      WFinder::CLUSTERNODECAY, WFinder::NOTRACK, WFinder::TRANSMASS);
 
         addProjection(wfinder, "WFinder");
     //  declare(wfinder, "WFinder");
@@ -66,11 +66,11 @@ namespace Rivet {
 
       // Fill histograms
       if(_lep_charge == 1){
-	_h_dsigmadeta_Wplus->fill(_lep_abseta, weight);
+        _h_dsigmadeta_Wplus->fill(_lep_abseta, weight);
       }
 
       if(_lep_charge == -1){
-	_h_dsigmadeta_Wminus->fill(_lep_abseta, weight);
+        _h_dsigmadeta_Wminus->fill(_lep_abseta, weight);
       }
 
     }
@@ -87,12 +87,12 @@ namespace Rivet {
       // normalize(_h_YYYY); // normalize to unity
       assert(_h_dsigmadeta_Wplus->numBins() == _h_dsigmadeta_Wminus->numBins());
       for (size_t i = 0; i < _h_dsigmadeta_Wplus->numBins(); ++i) {
-	const double num   = _h_dsigmadeta_Wplus->bin(i).sumW() - _h_dsigmadeta_Wminus->bin(i).sumW();
-	const double denom = _h_dsigmadeta_Wplus->bin(i).sumW() + _h_dsigmadeta_Wminus->bin(i).sumW();
-	const double relerr = _h_dsigmadeta_Wplus->bin(i).relErr()  + _h_dsigmadeta_Wminus->bin(i).relErr();
-	const double asym = (num != 0 && denom != 0) ? num / denom : 0;
-	const double asym_err = (num != 0 && denom != 0) ? asym*relerr : 0;
-	_h_asymmetry->addPoint(_h_dsigmadeta_Wplus->bin(i).xMid(), asym, _h_dsigmadeta_Wplus->bin(i).xWidth()/2.0, asym_err);
+        const double num   = _h_dsigmadeta_Wplus->bin(i).sumW() - _h_dsigmadeta_Wminus->bin(i).sumW();
+        const double denom = _h_dsigmadeta_Wplus->bin(i).sumW() + _h_dsigmadeta_Wminus->bin(i).sumW();
+        const double relerr = _h_dsigmadeta_Wplus->bin(i).relErr()  + _h_dsigmadeta_Wminus->bin(i).relErr();
+        const double asym = (num != 0 && denom != 0) ? num / denom : 0;
+        const double asym_err = (num != 0 && denom != 0) ? asym*relerr : 0;
+        _h_asymmetry->addPoint(_h_dsigmadeta_Wplus->bin(i).xMid(), asym, _h_dsigmadeta_Wplus->bin(i).xWidth()/2.0, asym_err);
       }
 
     }

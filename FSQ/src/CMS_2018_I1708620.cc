@@ -7,11 +7,11 @@ namespace Rivet {
     
     ///forward energy flow at 13 TeV with CMS
     
-    class CMS-2018-I1708620 : public Analysis {
+    class CMS_2018_I1708620 : public Analysis {
     public:
         
-    CMS-2018-I1708620()
-        : Analysis("CMS-2018-I1708620")
+    CMS_2018_I1708620()
+        : Analysis("CMS_2018_I1708620")
        {    }
         
 //-----------------------------------------------------------------
@@ -215,6 +215,6 @@ namespace Rivet {
         double _noe_nsd_sd;
     };
     
-    DECLARE_RIVET_PLUGIN(CMS-2018-I1708620);
+    DECLARE_RIVET_PLUGIN(CMS_2018_I1708620);
 
  }

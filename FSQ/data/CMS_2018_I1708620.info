@@ -1,4 +1,4 @@
-Name: CMS_2018_I1708620
+Name: CMS-2018-I1708620
 Year: 2018
 Summary: Measurement of the energy density as a function of pseudorapidity in proton-proton collisions at $\sqrt{s}=$ 13 TeV
 Experiment: CMS
@@ -6,13 +6,13 @@ Collider: LHC
 InspireID: 1708620
 Status: VALIDATED
 Authors:
- -  Deniz Sunar Cerci <deniz.sunar.cerci@cern.ch>, 
- -  Sercan Sen <sercan.sen@cern.ch>, 
- -  Salim Cerci <salim.cerci@cern.ch>, 
- -  Caglar Zorbilmez <caglar.zorbilmez@cern.ch>, 
+ -  Deniz Sunar Cerci <deniz.sunar.cerci@cern.ch> 
+ -  Sercan Sen <sercan.sen@cern.ch>
+ -  Salim Cerci <salim.cerci@cern.ch>
+ -  Caglar Zorbilmez <caglar.zorbilmez@cern.ch> 
  -  Ilknur Hos <ilknur.hos@cern.ch> 
 References:
- - CMS_2018_I1708620
+ - CMS-FSQ-15-006
  - CERN-EP-2018-308
  - arXiv:1812.04095 [hep-ex]
 RunInfo:
@@ -39,6 +39,6 @@ BibTeX: '@article{Sirunyan:2018jwn,
       eprint         = "1812.04095",
       archivePrefix  = "arXiv",
       primaryClass   = "hep-ex"",
-      reportNumber   = "CMS_2018_I1708620, CERN-EP-2018-308",
+      reportNumber   = "CMS-FSQ-15-006, CERN-EP-2018-308",
       SLACcitation   = "%%CITATION = ARXIV:1812.04095;%%"
 }'

@@ -65,7 +65,7 @@ namespace Rivet {
         IdentifiedFinalState photons(fs);
         photons.acceptIdPair(PID::PHOTON);
         PromptFinalState prompt_photons(photons); //photons not from hadrons
-        DressedLeptons dressed_leptons(prompt_photons, prompt_leptons, 0.1, lepton_cut, true, true);
+        DressedLeptons dressed_leptons(prompt_photons, prompt_leptons, 0.1, lepton_cut, true);
         declare(dressed_leptons, "DressedLeptons");
         
         // Neutrinos

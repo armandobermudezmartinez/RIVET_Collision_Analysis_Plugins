@@ -39,7 +39,7 @@ namespace Rivet {
       Cut looseLeptonCuts = Cuts::pt > 15*GeV && Cuts::abseta < 2.4;
 
       DressedLeptons dressed_leptons(prompt_photons, prompt_leptons, 0.1, 
-                     looseLeptonCuts, true, true);
+                     looseLeptonCuts, true);
       addProjection(dressed_leptons, "DressedLeptons");
 
       // Projection for jets

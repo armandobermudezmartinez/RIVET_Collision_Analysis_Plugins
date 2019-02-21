@@ -40,7 +40,7 @@ namespace Rivet {
 
       Cut leptonCuts = Cuts::pt > 45*GeV && Cuts::abseta < 2.1;          
    
-      DressedLeptons dressed_leptons(photons, prompt_leptons, 0.1, leptonCuts, true, false);       
+      DressedLeptons dressed_leptons(photons, prompt_leptons, 0.1, leptonCuts, false);       
       declare(dressed_leptons, "DressedLeptons");             
 
       //jets

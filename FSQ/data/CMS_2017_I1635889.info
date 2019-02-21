@@ -20,7 +20,7 @@ Beams: [p+, p+]
 Energies: [13000]
 Description:
    Measurement of the underlying event activity, in proton-proton collisions at a centre-of-mass energy of $13~\mathrm{TeV}$, performed using inclusive Z-boson events collected by the CMS experiment at the Large Hadron Collider. The analyzed data corresponds to an integrated luminosity of $2.1~\mathrm{fb}^{-1}$. The underlying event activity is quantified in terms of charged particle multiplicity and their scalar sum of their transverse momentum in different topological regions defined with respect to the resultatnt azimuthal direction of the two muons coming from the decay of a Z-boson. The distributions are unfolded to stable charged-particle level and are compared with predictions from various simulations, as well as with the measurements at a centre-of-mass energy of $1.96~\mathrm{TeV}$ and $7~\mathrm{TeV}$ by the CDF and CMS experiments.
-   BibKey: Sirunyan:2017vio
+BibKey: Sirunyan:2017vio
 BibTeX:'@article{Sirunyan:2017vio,
       author         = "Sirunyan, Albert M and others",
       title          = "{Measurement of the underlying event activity in

@@ -8,12 +8,12 @@
 namespace Rivet {
 
 
-  class CMS_SMP_16_011 : public Analysis {
+  class CMS_2017_I1598460 : public Analysis {
   public:
 
     /// Constructor
-    CMS_SMP_16_011()
-      : Analysis("CMS_SMP_16_011")
+    CMS_2017_I1598460()
+      : Analysis("CMS_2017_I1598460")
     {    }
 
 
@@ -22,7 +22,7 @@ namespace Rivet {
 
     /// Book histograms and initialise projections before the run
     void init() {
-  
+
       const FinalState fs;
       addProjection(FastJets(fs, FastJets::ANTIKT, 0.7),"Jets");
       /// @todo Book histgrams here, e.g.:
@@ -39,7 +39,7 @@ namespace Rivet {
       // Require two jets
       if (jets.size() < 2)
         return;
-      // Veto events if one of two leading jets |y|>3.0, otherwise 
+      // Veto events if one of two leading jets |y|>3.0, otherwise
       // the subleading jets can become the leading jets through jet selection
       if (jets[0].absrap() > 3. || jets[1].absrap() > 3.)
         return;
@@ -61,7 +61,6 @@ namespace Rivet {
     void finalize() {
 
       /// @todo Normalise, scale and otherwise manipulate histograms here
-       cout << crossSection() << "\n";
       foreach (Histo1DPtr hist, _h_ybys) {
         scale(hist, crossSection()/sumOfWeights());
       }
@@ -82,7 +81,7 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_SMP_16_011);
+  DECLARE_RIVET_PLUGIN(CMS_2017_I1598460);
 
 
 }

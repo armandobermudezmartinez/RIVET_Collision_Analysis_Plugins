@@ -25,9 +25,9 @@ namespace Rivet {
       // Initialise and register projections
       FinalState fs(Cuts::abseta < 2.4 && Cuts::pT > 25*GeV);
 
-      ZFinder zeeFind(fs, Cuts::abseta < 2.4, PID::ELECTRON, 71.1876*GeV, 106.1876*GeV, 0.1 );
+      ZFinder zeeFind(fs, Cuts::abseta < 2.4, PID::ELECTRON, 76.1876*GeV, 106.1876*GeV, 0.1 );
       addProjection(zeeFind, "ZeeFind");
-      ZFinder zmmFind(fs, Cuts::abseta < 2.4, PID::MUON    , 71.1876*GeV, 106.1876*GeV, 0.1 );
+      ZFinder zmmFind(fs, Cuts::abseta < 2.4, PID::MUON    , 76.1876*GeV, 106.1876*GeV, 0.1 );
       addProjection(zmmFind, "ZmmFind");
       
       // Book histograms

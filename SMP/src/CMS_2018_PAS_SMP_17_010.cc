@@ -207,23 +207,41 @@ namespace Rivet {
       //normalize(_h_YYYY); // normalize to unity
       //scale(_h_ZZZZ, crossSection()/picobarn/sumOfWeights()); // norm to cross section
       //
-      scale(_h_Zmm_pt_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_absY_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_phiStar_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y0_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y1_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y2_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y3_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y4_norm, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_absY, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_phiStar, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt_Y0, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt_Y1, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt_Y2, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt_Y3, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt_Y4, crossSection()/picobarn/sumOfWeights());
       
-      scale(_h_Zee_pt_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_absY_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_phiStar_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y0_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y1_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y2_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y3_norm, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y4_norm, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_absY, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_phiStar, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt_Y0, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt_Y1, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt_Y2, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt_Y3, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt_Y4, crossSection()/picobarn/sumOfWeights());
+
+      normalize(_h_Zmm_pt_norm);
+      normalize(_h_Zmm_absY_norm);
+      normalize(_h_Zmm_phiStar_norm);
+      normalize(_h_Zmm_pt_Y0_norm);
+      normalize(_h_Zmm_pt_Y1_norm);
+      normalize(_h_Zmm_pt_Y2_norm);
+      normalize(_h_Zmm_pt_Y3_norm);
+      normalize(_h_Zmm_pt_Y4_norm);
+      
+      normalize(_h_Zee_pt_norm);
+      normalize(_h_Zee_absY_norm);
+      normalize(_h_Zee_phiStar_norm);
+      normalize(_h_Zee_pt_Y0_norm);
+      normalize(_h_Zee_pt_Y1_norm);
+      normalize(_h_Zee_pt_Y2_norm);
+      normalize(_h_Zee_pt_Y3_norm);
+      normalize(_h_Zee_pt_Y4_norm);
 
     }
 

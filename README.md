@@ -8,15 +8,18 @@ Please follow the [contribution guide](CONTRIBUTING.md) for developing your plug
 
 ## Installation
 
-    cmsrel CMSSW_10_0_0
-    cd CMSSW_10_0_0/src
+First, create a personal fork of this repository: https://gitlab.cern.ch/cms-gen/Rivet/forks/new
+
+    cmsrel CMSSW_10_6_0
+    cd CMSSW_10_6_0/src
     cmsenv
 
     git-cms-init
     git-cms-addpkg GeneratorInterface/RivetInterface
     git-cms-addpkg Configuration/Generator
 
-    git clone https://:@gitlab.cern.ch:8443/${USER}/Rivet.git
+    git clone ssh://git@gitlab.cern.ch:7999/${USER}/Rivet.git
+    git remote add cms-gen ssh://git@gitlab.cern.ch:7999/cms-gen/Rivet.git
 
     source Rivet/rivetSetup.sh
     scram b -j8

@@ -56,7 +56,8 @@ namespace Rivet {
 
         const FinalState& fs = applyProjection<FinalState>(event, "FS");
 
-        const ParticleVector particlesByRapidity = fs.particlesByRapidity();
+        const ParticleVector particlesByRapidity = fs.particlesByPt();
+        sortBy(particlesByRapidity, cmpMomByRap);
         const size_t num_particles = particlesByRapidity.size();
 
          vector<double> gaps;
@@ -77,7 +78,7 @@ namespace Rivet {
         FourMomentum MxFourVector(0.,0.,0.,0.);
         FourMomentum MyFourVector(0.,0.,0.,0.);
         
-        foreach(const Particle& p, fs.particlesByRapidity()) {
+        foreach(const Particle& p, particlesByRapidity) {
             if (p.momentum().rapidity() > gapcenter) {
                 MxFourVector += p.momentum();
             } else {
@@ -110,7 +111,7 @@ namespace Rivet {
             bsc = true;
         }
         
-        foreach(const Particle& p, fs.particlesByRapidity()) {
+        foreach(const Particle& p, particlesByRapidity) {
             double eta = p.momentum().eta();
             //double energy = p.momentum().E();
             double tenergy = p.momentum().Et();
@@ -128,7 +129,7 @@ namespace Rivet {
             ++_noe_nsd;
         }
         
-        foreach(const Particle& p, fs.particlesByRapidity()) {
+        foreach(const Particle& p, particlesByRapidity) {
             double eta = p.momentum().eta();
             double energy = p.momentum().E();
             if (inel) {
@@ -150,7 +151,7 @@ namespace Rivet {
         bool StableParticleEnergyCutMinus = false;
         bool StableParticleEnergyCutPlus  = false;
         
-        foreach(const Particle& p, fs.particlesByRapidity()) {
+        foreach(const Particle& p, particlesByRapidity) {
             double eta    = p.momentum().eta();
             double energy = p.momentum().E();
             //check whether this particle is stable according to the generator
@@ -163,7 +164,7 @@ namespace Rivet {
         //in order to select SD-enhanced events use the following condition
         if((StableParticleEnergyCutPlus && !StableParticleEnergyCutMinus) ||
            (!StableParticleEnergyCutPlus && StableParticleEnergyCutMinus)) {
-            foreach(const Particle& p, fs.particlesByRapidity()) {
+            foreach(const Particle& p, particlesByRapidity) {
                  double eta    = p.momentum().eta();
                  double energy = p.momentum().E();
                  if(StableParticleEnergyCutPlus && !StableParticleEnergyCutMinus){

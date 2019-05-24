@@ -33,7 +33,7 @@ namespace Rivet {
       //       * remove unused includes on top of this file
       
       bool _usePromptFinalStates = true;
-      bool _excludePromptLeptonsFromJetClustering = true;
+      bool _excludePromptLeptonsFromJetClustering = false;
       bool _excludeNeutrinosFromJetClustering = true;
       
       double _particleMinPt = 0.;
@@ -43,7 +43,7 @@ namespace Rivet {
       double _lepMinPt = 15.;
       double _lepMaxEta = 2.5;
       
-      double _jetConeSize = 0.8;
+      double _jetConeSize = 0.4;
       double _fatJetConeSize = 0.8;
       
       // Cuts
@@ -70,10 +70,10 @@ namespace Rivet {
       // photons from hadrons are vetoed by the PromptFinalState;
       // will be default DressedLeptons behaviour for Rivet >= 2.5.4
       DressedLeptons dressed_leptons(prompt_photons, prompt_leptons, _lepConeSize, 
-                     lepton_cut, /*cluster*/ true, /*useDecayPhotons*/ true);
+                     lepton_cut, /*useDecayPhotons*/ true);
       if (not _usePromptFinalStates)
         dressed_leptons = DressedLeptons(photons, charged_leptons, _lepConeSize, 
-                          lepton_cut, /*cluster*/ true, /*useDecayPhotons*/ true);
+                          lepton_cut, /*useDecayPhotons*/ true);
       addProjection(dressed_leptons, "DressedLeptons");
       
       // Photons
@@ -131,7 +131,7 @@ namespace Rivet {
       double _jetMinPt = 30.;
       double _jetMaxEta = 2.4;
       
-      double _fatJetMinPt = 200.;
+      double _fatJetMinPt = 170.;
       double _fatJetMaxEta = 2.4;
       
       // Actual analyze code begins here

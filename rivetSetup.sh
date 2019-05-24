@@ -11,8 +11,11 @@ done
 # cmsRivet scripts
 export PATH=$PATH:$CMSSW_BASE/src/Rivet/scripts
 
+# add latex package missing on lxplus7
+export TEXMFHOME=$TEXMFHOME:$CMSSW_BASE/src/Rivet/texmf
+
 which yodamerge &> /dev/null || GETYODA=1
-if [ $GETYODA==1 ]; then
+if [ $GETYODA ]; then
   eval `scram tool info yoda | grep YODA_BASE`
   export PATH=$PATH:$YODA_BASE/bin
 fi

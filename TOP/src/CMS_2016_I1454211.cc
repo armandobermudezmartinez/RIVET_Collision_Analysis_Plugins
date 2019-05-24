@@ -41,13 +41,13 @@ namespace Rivet {
       IdentifiedFinalState el_id(fs);
       el_id.acceptIdPair(PID::ELECTRON);
       PromptFinalState electrons(el_id);
-      DressedLeptons dressed_electrons(photons, electrons, 0.1, leptonCuts, true, false);
+      DressedLeptons dressed_electrons(photons, electrons, 0.1, leptonCuts, false);
       declare(dressed_electrons, "DressedElectrons");
       
       IdentifiedFinalState mu_id(fs);
       mu_id.acceptIdPair(PID::MUON);
       PromptFinalState muons(mu_id);
-      DressedLeptons dressed_muons(photons, muons, 0.1, leptonCuts, true, false);
+      DressedLeptons dressed_muons(photons, muons, 0.1, leptonCuts, false);
       declare(dressed_muons, "DressedMuons");
       
       // Projection for jets

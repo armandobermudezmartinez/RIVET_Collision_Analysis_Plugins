@@ -3,7 +3,7 @@ Year: 2017
 Summary: Measurements of differential cross sections for the associated production of a W boson and jets in proton-proton collisions at sqrt(s) = 13 TeV
 Experiment: CMS
 Collider: LHC
-SpiresID: 1610623
+InspireID: 1610623
 Status: VALIDATED
 Authors:
  - Emanuela.Barberis@cern.ch

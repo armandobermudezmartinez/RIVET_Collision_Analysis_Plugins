@@ -114,7 +114,7 @@ namespace Rivet {
               _h_dNch_dEta_incl ->fill(p.eta(), weight); 
           }
 
-                        _h_dNch_all_dEta_incl -> fill(p.eta(), weight); 
+          _h_dNch_all_dEta_incl -> fill(p.eta(), weight); 
           if (cutsor)   _h_dNch_all_dEta_OR   -> fill(p.eta(), weight);
           if (cutsand)  _h_dNch_all_dEta_AND  -> fill(p.eta(), weight);
           if (cutsxor)  _h_dNch_all_dEta_XOR  -> fill(p.eta(), weight);
@@ -124,7 +124,7 @@ namespace Rivet {
           if (cutsxorm) _h_dNch_all_dEta_XORpm -> fill(p.eta(), weight);   //It has to be normilized to _Nevt_after_cuts_xorm + _Nevt_after_cuts_xorp
           if (cutsxorp) _h_dNch_all_dEta_XORpm -> fill(-1*p.eta(), weight);
 
-                        _h_dNch_all_dpt_incl -> fill(p.pT(), weight); 
+          _h_dNch_all_dpt_incl -> fill(p.pT(), weight); 
           if (cutsor)   _h_dNch_all_dpt_OR   -> fill(p.pT(), weight);
           if (cutsand)  _h_dNch_all_dpt_AND  -> fill(p.pT(), weight);
           if (cutsxor)  _h_dNch_all_dpt_XOR  -> fill(p.pT(), weight);

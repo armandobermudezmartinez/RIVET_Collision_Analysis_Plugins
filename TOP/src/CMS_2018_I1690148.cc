@@ -19,9 +19,7 @@ using namespace fastjet;
 using namespace fastjet::contrib;
 
 #include "Rivet/Math/MatrixN.hh"
-#include "Rivet/Math/MatrixDiag.hh"
 using Rivet::Matrix;
-using Rivet::EigenSystem;
 
 namespace Rivet {
   class CMS_2018_I1690148 : public Analysis {
@@ -70,7 +68,7 @@ namespace Rivet {
       // photons from hadrons are vetoed by the PromptFinalState;
       // will be default DressedLeptons behaviour for Rivet >= 2.5.4
       DressedLeptons dressed_leptons(prompt_photons, prompt_leptons, 0.1,
-                     lepton_cut, /*cluster*/ true, /*useDecayPhotons*/ true);
+                     lepton_cut, /*useDecayPhotons*/ true);
       addProjection(dressed_leptons, "DressedLeptons");
 
       // Projection for jets
@@ -86,7 +84,7 @@ namespace Rivet {
         for (int o = 0; o < 33; ++o) { // observable
           d += 1;
           for (int f = 0; f < 4; ++f) { // flavor
-            char buffer [11];
+            char buffer [20];
             sprintf(buffer, "d%02d-x01-y%02d", d, f+1);
             _h[r][o][f] = bookHisto1D(buffer);
           }
@@ -384,8 +382,23 @@ namespace Rivet {
         M += MPart * p.e();
       }
       // Calculate eccentricity from eigenvalues
-      const EigenSystem<2> eigen = diagonalize(M);
-      return 1. - eigen.getEigenValues()[1]/eigen.getEigenValues()[0];
+      // Check that the matrix is symmetric.
+      const bool isSymm = M.isSymm();
+      if (!isSymm) {
+        MSG_ERROR("Error: energy tensor not symmetric:");
+        MSG_ERROR("[0,1] vs. [1,0]: " << M.get(0,1) << ", " << M.get(1,0));
+      }
+      // If not symmetric, something's wrong (we made sure the error msg appeared first).
+
+      assert(isSymm);
+      const double a = M.get(0,0);
+      const double b = M.get(1,1);
+      const double c = M.get(1,0);
+
+      const double l1 = 0.5*(a+b+sqrt( (a-b)*(a-b) + 4 *c*c));
+      const double l2 = 0.5*(a+b-sqrt( (a-b)*(a-b) + 4 *c*c));
+      
+      return 1. - l2/l1;
     }
 
     double getTau(int N, int M, PseudoJet jet) {

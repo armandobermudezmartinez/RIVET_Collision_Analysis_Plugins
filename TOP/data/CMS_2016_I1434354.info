@@ -3,7 +3,7 @@ Year: 2016
 Summary: Differential cross sections for top quark pair production using the lepton+jets final state in proton proton collisions at 13 TeV
 Experiment: CMS
 Collider: LHC
-SpiresID: 1434354
+InspireID: 1434354
 Status: UNVALIDATED
 Authors:
  - Regina Demina <R.Demina@cern.ch>

@@ -1,6 +1,6 @@
 # Rivet CMS analysis coverage
 
-Current coverage: https://gitlab.cern.ch/cms-gen/Rivet/raw/master/coverage/rivet-coverage-cms.html
+Current coverage: https://cms-rivet.web.cern.ch/cms-rivet/rivet-coverage-cms.html
 
 ## Instructions for updating
 

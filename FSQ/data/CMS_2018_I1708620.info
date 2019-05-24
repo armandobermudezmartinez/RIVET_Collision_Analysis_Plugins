@@ -16,7 +16,7 @@ References:
  - CERN-EP-2018-308
  - arXiv:1812.04095 [hep-ex]
 RunInfo:
-inelastic, single-diffractive and non-single diffractive events at sqrt(s) = 13 TeV
+  inelastic, single-diffractive and non-single diffractive events at sqrt(s) = 13 TeV
 Luminosity: 0.06 / nb
 NumEvents: 1M
 NeedCrossSection: no

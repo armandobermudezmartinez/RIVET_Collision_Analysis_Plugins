@@ -28,8 +28,6 @@ list-analyses:
   script:
     - cd CMSSW_10_6_0/src
     - eval `/cvmfs/cms.cern.ch/common/scramv1 runtime -sh`
-    - mkdir -p GeneratorInterface/RivetInterface/test/
-    - wget https://raw.githubusercontent.com/cms-sw/cmssw/CMSSW_10_6_X/GeneratorInterface/RivetInterface/test/rivetSetup.sh -P GeneratorInterface/RivetInterface/test/
     - source Rivet/rivetSetup.sh
     - rivet --list-analyses
 

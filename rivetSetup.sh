@@ -1,6 +1,4 @@
 #!/bin/bash
-source $CMSSW_BASE/src/GeneratorInterface/RivetInterface/test/rivetSetup.sh
-
 for GROUP in TOP FSQ SMP HIG SUS HIN EXO BPH B2G GEN
 do
   export RIVET_REF_PATH=$RIVET_REF_PATH:$CMSSW_BASE/src/Rivet/${GROUP}/data

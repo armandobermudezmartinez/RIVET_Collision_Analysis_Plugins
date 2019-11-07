@@ -1,0 +1,38 @@
+Name: CMS_2019_I1747892
+Year: 2019
+Summary: Measurement of the average very forward energy as a function of the track multiplicity at central pseudorapidities in proton-proton collisions 13 TeV
+Experiment: CMS
+Collider: LHC
+InspireID: 1747892
+Status: VALIDATED
+Authors:
+ - sebastian.baur@cern.ch
+ - ralf.ulrich@cern.ch
+References:
+- 'Eur.Phys.J.C 79 (2019) 893'
+RunInfo:
+  Proton-proton beam, 13 TeV center-of-mass-energy, minimum-bias processes.
+NumEvents: 200000
+NeedCrossSection: no
+Beams: [p+,p+]
+Energies: [13000]
+Description:
+  'The average total energy as well as its hadronic and electromagnetic components are measured with the CMS detector at
+   pseudorapidities as a function of the charged particle multiplicity in the region |eta|<2. This measurement is sensitive to correlations
+   induced by the underlying event structure over a very wide pseudorapidity region. The predictions of Monte Carlo event generators
+   commonly used in collider experiments and ultra-high energy cosmic ray physics are compared to the data.'
+Keywords: ['CMS', 'CERN LHC', 'forward phase space', 'CASTOR', 'underlying event']
+BibKey: 'Sirunyan:2019rqy'
+BibTeX: '@article{Sirunyan:2019rqy,
+      author         = "Sirunyan, Albert M and others",
+      title          = "{Measurement of the average very forward energy as a
+                        function of the track multiplicity at central
+                        pseudorapidities in proton-proton collisions at
+                        $\sqrt{s}=$ 13 TeV}",
+      collaboration  = "CMS",
+      year           = "2019",
+      eprint         = "1908.01750",
+      archivePrefix  = "arXiv",
+      primaryClass   = "hep-ex",
+      reportNumber   = "CMS-FSQ-18-001, CERN-EP-2019-146",
+      SLACcitation   = "%%CITATION = ARXIV:1908.01750;%%"}'

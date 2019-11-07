@@ -8,6 +8,8 @@ Status: VALIDATED
 Authors:
  - cms-pag-conveners-fsq@cern.ch
  - sebastian.baur@cern.ch
+References:
+ - 'JHEP 08 (2017) 046'
 RunInfo:
   proton-proton beam, 13 TeV center-of-mass-energy, MinimumBias
 NumEvents: 200000

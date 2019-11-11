@@ -86,10 +86,6 @@ namespace Rivet {
     }
 
 
-    Histo1DPtr _h_XXXX, _h_YYYY, _h_ZZZZ;
-    Profile1DPtr _p_AAAA;
-    CounterPtr _c_BBBB;
-
     Histo1DPtr _hist_Wplus_MuAbseta;
     Histo1DPtr _hist_Wminus_MuAbseta;
     Histo1DPtr _hist_WplusMinus_MuAbseta;

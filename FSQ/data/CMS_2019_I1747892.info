@@ -17,10 +17,7 @@ NeedCrossSection: no
 Beams: [p+,p+]
 Energies: [13000]
 Description:
-  'The average total energy as well as its hadronic and electromagnetic components are measured with the CMS detector at
-   pseudorapidities as a function of the charged particle multiplicity in the region |eta|<2. This measurement is sensitive to correlations
-   induced by the underlying event structure over a very wide pseudorapidity region. The predictions of Monte Carlo event generators
-   commonly used in collider experiments and ultra-high energy cosmic ray physics are compared to the data.'
+  'The average total energy as well as its hadronic and electromagnetic components are measured with the CMS detector at very-forward pseudorapidity, as a function of the charged particle multiplicity in the region |eta|<2. Note: this RIVET plugin generates results on detector level by applying a final forward-folding of a migration matrix provided as part of this plugin. This is done to create consistency with the published data. To estimate the modelling uncertainty of this approach, it is repeated for four variants of the migration matrix, each of which is obtained from a full detector Monte Carlo simulation using one of the following event generators: PYTHIA 8 tune CUETP8M1 (variant 1), PYTHIA 8 tune 4C/MBR (variant 2), EPOS-LHC (variant 3), and SIBYLL2.1 (variant 4). Then final result is the average of those variations. Model uncertainties can be obtained from the spread of the individual results. Read the paper for more information on this approach, and the definition of the matrices. '
 Keywords: ['CMS', 'CERN LHC', 'forward phase space', 'CASTOR', 'underlying event']
 BibKey: 'Sirunyan:2019rqy'
 BibTeX: '@article{Sirunyan:2019rqy,

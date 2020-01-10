@@ -51,7 +51,7 @@ for ifile, xmlfile in enumerate(args.XMLFILES):
         print("Inspire", ins)
 
         summs = rn.xpath("./mx:datafield[@tag='245']/mx:subfield[@code='a']", namespaces=nsm)
-        summ = summs[0].text if summs else None
+        summ = summs[0].text.encode('utf-8') if summs else None
         print("Title:", summ)
 
         expts = rn.xpath("./mx:datafield[@tag='710']/mx:subfield[@code='g']", namespaces=nsm)

@@ -325,8 +325,8 @@ style += ".grey.git { background: repeating-linear-gradient(135deg, #ddd, #ddd 1
 
 body = OUT.html.body(newlines=True)
 body.h1(title)
-body.p("Priorities are assigned by hand here: https://bitbucket.org/heprivet/rivet/src/release-2-7-x/doc/rivet-coverage-cms.rank?fileviewer=file-view-default ")
-body.p("X=blacklist, ?=greylist, .=wanted, !=really wanted. Please feel free to suggest changes.")
+body.p("Priorities are proposed by Rivet authors here: https://gitlab.com/hepcedar/rivet/blob/master/doc/coverage/rivet-coverage-cms.rank (X=blacklist, ?=greylist, .=wanted, !=really wanted. Please feel free to suggest changes.)")
+body.p("Please note that analysis authors and PAG L2/L3 conveners are responsible for identifying analyses that should go into Rivet. These include all analyses that are unfolded to the particle level.")
 body.p().b("Rivet analyses exist for {}/{} papers = {:.0f}%. {} priority analyses required.".format(nrivet, ntarget, 100*nrivet/ntarget, nurgent))
 body.p("Total number of Inspire papers scanned = {}, at {}, Rivet version {}".format(ntot, now.strftime("%Y-%m-%d"), rivet.__version__))
 

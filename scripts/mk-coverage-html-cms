@@ -102,13 +102,6 @@ while True:
                     hganas[int(i[1:])] = info.encode()
 
 
-# if os.path.isdir(pluginDir):
-#     infos = [file[:-5] for file in os.listdir(pluginDir) if '.info' in file]
-#     for info in infos:
-#         for i in info.split('_'):
-#             if i[0] == 'I':
-#                 hganas[int(i[1:])] = []
-
 ## Read data from JSON files
 records = {}
 import json

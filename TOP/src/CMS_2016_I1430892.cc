@@ -21,7 +21,7 @@ namespace Rivet {
     void init() {
 
       // Complete final state
-      FinalState fs(-MAXDOUBLE, MAXDOUBLE, 0*GeV);
+      FinalState fs;
 
       // Projection for dressed electrons and muons
       IdentifiedFinalState photons(fs);
@@ -30,89 +30,93 @@ namespace Rivet {
       IdentifiedFinalState el_id(fs);
       el_id.acceptIdPair(PID::ELECTRON);
       PromptFinalState electrons(el_id);
-      addProjection(electrons, "Electrons");
-      DressedLeptons dressed_electrons(photons, electrons, 0.1, Cuts::open(), false);
-      addProjection(dressed_electrons, "DressedElectrons");
-  
+      declare(electrons, "Electrons");
+      DressedLeptons dressed_electrons(photons, electrons, 0.1);
+      declare(dressed_electrons, "DressedElectrons");
+
       IdentifiedFinalState mu_id(fs);
       mu_id.acceptIdPair(PID::MUON);
       PromptFinalState muons(mu_id);
-      addProjection(muons, "Muons");
-      DressedLeptons dressed_muons(photons, muons, 0.1, Cuts::open(), false);
-      addProjection(dressed_muons, "DressedMuons");
+      declare(muons, "Muons");
+      DressedLeptons dressed_muons(photons, muons, 0.1);
+      declare(dressed_muons, "DressedMuons");
 
-      // Parton level top quarks
-      declare(PartonicTops(PartonicTops::E_MU, false), "LeptonicPartonTops");
+      // Parton-level top quarks
+      declare(PartonicTops(PartonicTops::DecayMode::E_MU, false), "LeptonicPartonTops");
+
 
       // Booking of histograms
 
-      // This histogram is independent of the parton-level information, and is an addition to the original analysis. It is compared to the same data as the parton-level delta_abseta histogram d05-x01-y01.
-      _h_dabsetadressedleptons = bookHisto1D("d00-x01-y01", _bins_dabseta);
+      // This histogram is independent of the parton-level information, and is an
+      // addition to the original analysis. It is compared to the same data as
+      // the parton-level delta_abseta histogram d05-x01-y01.
+      book(_h_dabsetadressedleptons, "d00-x01-y01", _bins_dabseta);
 
       // The remaining histos use parton-level information
-      _h_dabseta = bookHisto1D("d05-x01-y01", _bins_dabseta);
-      _h_dabsrapidity = bookHisto1D("d02-x01-y01", _bins_dabsrapidity);
+      book(_h_dabseta, "d05-x01-y01", _bins_dabseta);
+      book(_h_dabsrapidity, "d02-x01-y01", _bins_dabsrapidity);
 
-      //2D histos
-      _h_dabsrapidity_var[0] = bookHisto2D("d11-x01-y01", _bins_dabsrapidity, _bins_tt_mass);
-      _h_dabseta_var[0] = bookHisto2D("d17-x01-y01", _bins_dabseta, _bins_tt_mass);
+      // 2D histos
+      book(_h_dabsrapidity_var[0], "d11-x01-y01", _bins_dabsrapidity, _bins_tt_mass);
+      book(_h_dabseta_var[0], "d17-x01-y01", _bins_dabseta, _bins_tt_mass);
 
-      _h_dabsrapidity_var[1] = bookHisto2D("d23-x01-y01", _bins_dabsrapidity, _bins_tt_pT);
-      _h_dabseta_var[1] = bookHisto2D("d29-x01-y01", _bins_dabseta, _bins_tt_pT);
+      book(_h_dabsrapidity_var[1], "d23-x01-y01", _bins_dabsrapidity, _bins_tt_pT);
+      book(_h_dabseta_var[1], "d29-x01-y01", _bins_dabseta, _bins_tt_pT);
 
-      _h_dabsrapidity_var[2] = bookHisto2D("d35-x01-y01", _bins_dabsrapidity, _bins_tt_absrapidity);
-      _h_dabseta_var[2] = bookHisto2D("d41-x01-y01", _bins_dabseta, _bins_tt_absrapidity);
+      book(_h_dabsrapidity_var[2], "d35-x01-y01", _bins_dabsrapidity, _bins_tt_absrapidity);
+      book(_h_dabseta_var[2], "d41-x01-y01", _bins_dabseta, _bins_tt_absrapidity);
 
-      //profile histos for asymmetries
-      _h_dabsrapidity_profile[0] = bookProfile1D("d08-x01-y01", _bins_tt_mass);
-      _h_dabseta_profile[0] = bookProfile1D("d14-x01-y01", _bins_tt_mass);
+      // Profile histos for asymmetries
+      book(_h_dabsrapidity_profile[0], "d08-x01-y01", _bins_tt_mass);
+      book(_h_dabseta_profile[0], "d14-x01-y01", _bins_tt_mass);
 
-      _h_dabsrapidity_profile[1] = bookProfile1D("d20-x01-y01", _bins_tt_pT);
-      _h_dabseta_profile[1] = bookProfile1D("d26-x01-y01", _bins_tt_pT);
+      book(_h_dabsrapidity_profile[1], "d20-x01-y01", _bins_tt_pT);
+      book(_h_dabseta_profile[1], "d26-x01-y01", _bins_tt_pT);
 
-      _h_dabsrapidity_profile[2] = bookProfile1D("d32-x01-y01", _bins_tt_absrapidity);
-      _h_dabseta_profile[2] = bookProfile1D("d38-x01-y01", _bins_tt_absrapidity);
-      
+      book(_h_dabsrapidity_profile[2], "d32-x01-y01", _bins_tt_absrapidity);
+      book(_h_dabseta_profile[2], "d38-x01-y01", _bins_tt_absrapidity);
+
     }
 
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
 
-      const double weight = event.weight();
+      const double weight = 1.0;
 
-      // use particle-level leptons for the first histogram
+      // Use particle-level leptons for the first histogram
       const DressedLeptons& dressed_electrons = applyProjection<DressedLeptons>(event, "DressedElectrons");
       const DressedLeptons& dressed_muons = applyProjection<DressedLeptons>(event, "DressedMuons");
 
-      const std::vector<DressedLepton> dressedels = dressed_electrons.dressedLeptons();
-      const std::vector<DressedLepton> dressedmus = dressed_muons.dressedLeptons();
+      const vector<DressedLepton> dressedels = dressed_electrons.dressedLeptons();
+      const vector<DressedLepton> dressedmus = dressed_muons.dressedLeptons();
 
-      int ndressedel = dressedels.size();
-      int ndressedmu = dressedmus.size();
+      const size_t ndressedel = dressedels.size();
+      const size_t ndressedmu = dressedmus.size();
 
-      // For the particle-level histogram, require exactly one electron and exactly one muon, to select the ttbar->emu channel. Note this means ttbar->emu events with additional PromptFinalState dilepton pairs from the shower are vetoed - for PYTHIA8, this affects ~0.5% of events, so the effect is well below the level of sensitivity of the measured distribution.
+      // For the particle-level histogram, require exactly one electron and exactly one muon, to select the ttbar->emu channel.
+      // Note this means ttbar->emu events with additional PromptFinalState dilepton pairs from the shower are vetoed - for PYTHIA8,
+      // this affects ~0.5% of events, so the effect is well below the level of sensitivity of the measured distribution.
       if ( ndressedel == 1 && ndressedmu == 1 ) {
 
-        int electrontouse = 0;
-        int muontouse = 0;
+        const int electrontouse = 0, muontouse = 0;
 
-        // opposite-charge leptons only
-        if ( sameSign(dressedels[electrontouse],dressedmus[muontouse]) ) {
-          MSG_WARNING("error, e and mu have same charge, skipping event");
-        }
-        else {
-          //Get the four-momenta of the positively- and negatively-charged leptons
-          FourMomentum lepPlus = dressedels[electrontouse].charge() > 0 ? dressedels[electrontouse].momentum() : dressedmus[muontouse].momentum();
-          FourMomentum lepMinus = dressedels[electrontouse].charge() > 0 ? dressedmus[muontouse].momentum() : dressedels[electrontouse].momentum();
+        // Opposite-charge leptons only
+        if ( sameSign(dressedels[electrontouse], dressedmus[muontouse]) ) {
+          MSG_INFO("Error, e and mu have same charge, skipping event");
+        } else {
+          // Get the four-momenta of the positively- and negatively-charged leptons
+          FourMomentum lepPlus = dressedels[electrontouse].charge() > 0 ? dressedels[electrontouse] : dressedmus[muontouse];
+          FourMomentum lepMinus = dressedels[electrontouse].charge() > 0 ? dressedmus[muontouse] : dressedels[electrontouse];
 
-          //now calculate the variable
+          // Now calculate the variable
           double dabseta_temp = lepPlus.abseta() - lepMinus.abseta();
 
           fillWithUFOF( _h_dabsetadressedleptons, dabseta_temp, weight );
         }
 
       }
+
 
       // The remaining variables use parton-level information.
 
@@ -122,31 +126,32 @@ namespace Rivet {
 
       unsigned int ntrueleptonictops = 0;
       bool oppositesign = false;
-  
+
       if ( leptonicpartontops.size() == 2 ) {
-        for (unsigned int k = 0; k < leptonicpartontops.size(); ++k) {
-    
-          //get the lepton
+        for (size_t k = 0; k < leptonicpartontops.size(); ++k) {
+
+          // Get the lepton
           const Particle lepTop = leptonicpartontops[k];
           const auto isPromptChargedLepton = [](const Particle& p){return (isChargedLepton(p) && isPrompt(p, false, false));};
-          Particles lepton_candidates = lepTop.allDescendants(firstParticleWith(isPromptChargedLepton), false); 
-          if ( lepton_candidates.size() < 1 ) MSG_WARNING("error, PartonicTops::E_MU top quark had no daughter lepton candidate, skipping event.");
+          Particles lepton_candidates = lepTop.allDescendants(firstParticleWith(isPromptChargedLepton), false);
+          if ( lepton_candidates.size() < 1 ) MSG_WARNING("error, PartonicTops::DecayMode::E_MU top quark had no daughter lepton candidate, skipping event.");
 
+          // In some cases there is no lepton from the W decay but only leptons from the decay of a radiated gamma.
+          // These hadronic PartonicTops are currently being mistakenly selected by PartonicTops::DecayMode::E_MU (as of April 2017), and need to be rejected.
+          // PartonicTops::DecayMode::E_MU is being fixed in Rivet, and when it is the veto below should do nothing.
+          /// @todo Should no longer be necessary -- remove
           bool istrueleptonictop = false;
-          // In some cases there is no lepton from the W decay but only leptons from the decay of a radiated gamma. 
-          // These hadronic PartonicTops are currently being mistakenly selected by PartonicTops::E_MU (as of April 2017), and need to be rejected.
-          // PartonicTops::E_MU is being fixed in Rivet, and when it is the veto below should do nothing.
-          for (unsigned int i = 0; i < lepton_candidates.size(); ++i) {
-            Particle lepton_candidate = lepton_candidates[i];
-            if ( lepton_candidate.hasParentWith(Cuts::abspid == 22) ) {
-              MSG_DEBUG("found gamma parent, top: "<<k+1<<" of "<<leptonicpartontops.size()<<" , lepton: "<<i+1<<" of "<<lepton_candidates.size());
+          for (size_t i = 0; i < lepton_candidates.size(); ++i) {
+            const Particle& lepton_candidate = lepton_candidates[i];
+            if ( lepton_candidate.hasParent(PID::PHOTON) ) {
+              MSG_DEBUG("Found gamma parent, top: " << k+1 << " of " << leptonicpartontops.size() << " , lepton: " << i+1 << " of " << lepton_candidates.size());
               continue;
             }
             if ( !istrueleptonictop && sameSign(lepTop,lepton_candidate) ) {
               chargedleptons.push_back(lepton_candidate);
               istrueleptonictop = true;
             }
-            else MSG_WARNING("error, found extra prompt charged lepton from top decay (and without gamma parent), ignoring it.");
+            else MSG_WARNING("Error, found extra prompt charged lepton from top decay (and without gamma parent), ignoring it.");
           }
           if ( istrueleptonictop ) ++ntrueleptonictops;
         }
@@ -158,40 +163,36 @@ namespace Rivet {
       }
 
       if ( ntrueleptonictops == 2 && oppositesign ) {
- 
-        //Get the four-momenta of the positively- and negatively-charged leptons
-        FourMomentum lepPlus = chargedleptons[0].charge() > 0 ? chargedleptons[0].momentum() : chargedleptons[1].momentum();
-        FourMomentum lepMinus = chargedleptons[0].charge() > 0 ? chargedleptons[1].momentum() : chargedleptons[0].momentum();
- 
-        double dabseta_temp = lepPlus.abseta() - lepMinus.abseta();
 
-        //Get the four-momenta of the positively- and negatively-charged tops
-        FourMomentum topPlus_p4 = leptonicpartontops[0].pdgId() > 0 ? leptonicpartontops[0].momentum() : leptonicpartontops[1].momentum();
-        FourMomentum topMinus_p4 = leptonicpartontops[0].pdgId() > 0 ? leptonicpartontops[1].momentum() : leptonicpartontops[0].momentum();
+        // Get the four-momenta of the positively- and negatively-charged leptons
+        const FourMomentum lepPlus = chargedleptons[0].charge() > 0 ? chargedleptons[0] : chargedleptons[1];
+        const FourMomentum lepMinus = chargedleptons[0].charge() > 0 ? chargedleptons[1] : chargedleptons[0];
 
-        FourMomentum ttbar_p4 = topPlus_p4 + topMinus_p4;
+        const double dabseta_temp = lepPlus.abseta() - lepMinus.abseta();
 
-        double tt_mass_temp = ttbar_p4.mass();
-        double tt_absrapidity_temp = ttbar_p4.absrapidity();
-        double tt_pT_temp = ttbar_p4.pT();
+        // Get the four-momenta of the positively- and negatively-charged tops
+        const FourMomentum topPlus_p4 = leptonicpartontops[0].pid() > 0 ? leptonicpartontops[0] : leptonicpartontops[1];
+        const FourMomentum topMinus_p4 = leptonicpartontops[0].pid() > 0 ? leptonicpartontops[1] : leptonicpartontops[0];
 
-        double dabsrapidity_temp = topPlus_p4.absrapidity() - topMinus_p4.absrapidity();
+        const FourMomentum ttbar_p4 = topPlus_p4 + topMinus_p4;
 
-        //fill parton-level histos
+        const double tt_mass_temp = ttbar_p4.mass();
+        const double tt_absrapidity_temp = ttbar_p4.absrapidity();
+        const double tt_pT_temp = ttbar_p4.pT();
+        const double dabsrapidity_temp = topPlus_p4.absrapidity() - topMinus_p4.absrapidity();
+
+        // Fill parton-level histos
         fillWithUFOF( _h_dabseta, dabseta_temp, weight );
         fillWithUFOF( _h_dabsrapidity, dabsrapidity_temp, weight );
 
-        //now fill the same variables in the 2D and profile histos vs ttbar invariant mass, pT, and absolute rapidity
+        // Now fill the same variables in the 2D and profile histos vs ttbar invariant mass, pT, and absolute rapidity
         for (int i_var = 0; i_var < 3; ++i_var) {
           double var;
-
           if ( i_var == 0 ) {
             var = tt_mass_temp;
-          }
-          else if ( i_var == 1 ) {
+          } else if ( i_var == 1 ) {
             var = tt_pT_temp;
-          }
-          else {
+          } else {
             var = tt_absrapidity_temp;
           }
 
@@ -224,15 +225,16 @@ namespace Rivet {
 
 
   private:
+
     Histo1DPtr _h_dabsetadressedleptons, _h_dabseta, _h_dabsrapidity;
     Histo2DPtr _h_dabseta_var[3], _h_dabsrapidity_var[3];
     Profile1DPtr _h_dabseta_profile[3], _h_dabsrapidity_profile[3];
 
-    const std::vector<double> _bins_tt_mass = {300., 430., 530., 1200.};
-    const std::vector<double> _bins_tt_pT = {0., 41., 92., 300.};
-    const std::vector<double> _bins_tt_absrapidity = {0., 0.34, 0.75, 1.5};
-    const std::vector<double> _bins_dabseta = { -2., -68./60., -48./60., -32./60., -20./60., -8./60., 0., 8./60., 20./60., 32./60., 48./60., 68./60., 2.};
-    const std::vector<double> _bins_dabsrapidity = {-2., -44./60., -20./60., 0., 20./60., 44./60., 2.};
+    const vector<double> _bins_tt_mass = {300., 430., 530., 1200.};
+    const vector<double> _bins_tt_pT = {0., 41., 92., 300.};
+    const vector<double> _bins_tt_absrapidity = {0., 0.34, 0.75, 1.5};
+    const vector<double> _bins_dabseta = { -2., -68./60., -48./60., -32./60., -20./60., -8./60., 0., 8./60., 20./60., 32./60., 48./60., 68./60., 2.};
+    const vector<double> _bins_dabsrapidity = {-2., -44./60., -20./60., 0., 20./60., 44./60., 2.};
 
     void fillWithUFOF(Histo1DPtr h, double x, double w) {
       h->fill(std::max(std::min(x, h->xMax()-1e-9),h->xMin()+1e-9), w);

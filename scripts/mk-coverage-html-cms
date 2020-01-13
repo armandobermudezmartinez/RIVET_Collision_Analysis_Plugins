@@ -75,16 +75,6 @@ for aname in rivet.AnalysisLoader.analysisNames():
         if p:
             ranas.setdefault(int(p.group(1)), []).append(ana.name())
 
-## Analyses in hg repository
-hganas = {}
-pluginDir = '../analyses/pluginCMS'
-if os.path.isdir(pluginDir):
-    infos = [file[:-5] for file in os.listdir(pluginDir) if '.info' in file]
-    for info in infos:
-        for i in info.split('_'):
-            if i[0] == 'I':
-                hganas[int(i[1:])] = []
-
 ## Analyses in CMS gitlab
 gitanas = {}
 gitanas_ins = {}
@@ -95,6 +85,22 @@ if args.TOKEN:
     for j in resp.json():
         m = re.search(r'(\w{3}-\d{2}-\d{3})', j['title'])
         if m: gitanas[m.group(1)] = j['web_url']
+
+## Analyses in rivet gitlab repository
+hganas = {}
+iPage = 0
+while True:
+    resp = requests.get('https://gitlab.com/api/v4/projects/15397086/repository/tree?path=analyses/pluginCMS&per_page=100&page=%i' % iPage)
+    iPage += 1
+    if resp.json() == []:
+        break
+    for j in resp.json():
+        if '.info' in j['name']:
+            info = j['name'].split('.')[0]
+            for i in info.split('_'):
+                if i[0] == 'I':
+                    hganas[int(i[1:])] = info.encode()
+
 
 ## Read data from JSON files
 records = {}
@@ -162,7 +168,7 @@ for ins, rec in records.items():
     if ins in ranas:
         code = "rivet"
     elif ins in hganas:
-        code = "hg"
+        code = "hg rivet"
     elif ins in greylist:
         code = "grey"
     elif ins in blacklist:
@@ -430,7 +436,9 @@ for ex in GROUPS:
         ## HG
         elif ins in hganas:
             p += " "
-            p.a("NOTE: analysis is new in Rivet >%s, or its .info file is broken -> please check" % rivet.__version__)
+            p.a(anas, href="https://rivet.hepforge.org/analyses/{}.html".format(hganas[ins]))
+            p += " "
+            p.span("NOTE: analysis is new in Rivet >%s" % rivet.__version__)
         ## In-progress/assignment
         if ins in assigned:
             p += " "

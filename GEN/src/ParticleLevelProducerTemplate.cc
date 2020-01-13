@@ -74,30 +74,30 @@ namespace Rivet {
       if (not _usePromptFinalStates)
         dressed_leptons = DressedLeptons(photons, charged_leptons, _lepConeSize, 
                           lepton_cut, /*useDecayPhotons*/ true);
-      addProjection(dressed_leptons, "DressedLeptons");
+      declare(dressed_leptons, "DressedLeptons");
       
       // Photons
       if (_usePromptFinalStates) {
         // We remove the photons used up for lepton dressing in this case
         VetoedFinalState vetoed_prompt_photons(prompt_photons);
         vetoed_prompt_photons.addVetoOnThisFinalState(dressed_leptons);
-        addProjection(vetoed_prompt_photons, "Photons");
+        declare(vetoed_prompt_photons, "Photons");
       }
       else
-        addProjection(photons, "Photons");
+        declare(photons, "Photons");
       
       // Jets
       VetoedFinalState fsForJets(fs);
       if (_usePromptFinalStates and _excludePromptLeptonsFromJetClustering)
         fsForJets.addVetoOnThisFinalState(dressed_leptons);
-      JetAlg::InvisiblesStrategy invisiblesStrategy = JetAlg::DECAY_INVISIBLES;
+      JetAlg::Invisibles invisiblesStrategy = JetAlg::Invisibles::DECAY;
       if (_excludeNeutrinosFromJetClustering)
-        invisiblesStrategy = JetAlg::NO_INVISIBLES;
-      addProjection(FastJets(fsForJets, FastJets::ANTIKT, _jetConeSize,
-                             JetAlg::ALL_MUONS, invisiblesStrategy), "Jets");
+        invisiblesStrategy = JetAlg::Invisibles::NONE;
+      declare(FastJets(fsForJets, FastJets::ANTIKT, _jetConeSize,
+                             JetAlg::Muons::ALL, invisiblesStrategy), "Jets");
       
       // FatJets
-      addProjection(FastJets(fsForJets, FastJets::ANTIKT, _fatJetConeSize), "FatJets");
+      declare(FastJets(fsForJets, FastJets::ANTIKT, _fatJetConeSize), "FatJets");
       
       // Neutrinos
       IdentifiedFinalState neutrinos(fs);
@@ -106,20 +106,20 @@ namespace Rivet {
         PromptFinalState prompt_neutrinos(neutrinos);
         prompt_neutrinos.acceptMuonDecays(true);
         prompt_neutrinos.acceptTauDecays(true);
-        addProjection(prompt_neutrinos, "Neutrinos");
+        declare(prompt_neutrinos, "Neutrinos");
       }
       else
-        addProjection(neutrinos, "Neutrinos");
+        declare(neutrinos, "Neutrinos");
       
       // MET
-      addProjection(MissingMomentum(fs), "MET");
+      declare(MissingMomentum(fs), "MET");
       
       // Booking of histograms
-      _h["n_lep"]  = bookHisto1D("nlep",    10, -0.5,   9.5);
-      _h["lep_pt"] = bookHisto1D("lep_pt", 100,  0.0, 200.0);
-      _h["n_jet"]  = bookHisto1D("njet",    10, -0.5,   9.5);
-      _h["jet_pt"] = bookHisto1D("jet_pt", 100,  0.0, 500.0);
-      _h["n_bjet"] = bookHisto1D("nbjet",   10, -0.5,   9.5);
+      book(_h["n_lep"] ,  10, -0.5,   9.5);
+      book(_h["lep_pt"], 100,  0.0, 200.0);
+      book(_h["n_jet"] ,  10, -0.5,   9.5);
+      book(_h["jet_pt"], 100,  0.0, 500.0);
+      book(_h["n_bjet"],  10, -0.5,   9.5);
     };
 
     // Apply Rivet projections
@@ -135,25 +135,24 @@ namespace Rivet {
       double _fatJetMaxEta = 2.4;
       
       // Actual analyze code begins here
-      const double weight = event.weight();
       
       // Leptons
       const std::vector<DressedLepton>& leptons = applyProjection<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
-      _h["n_lep"]->fill(leptons.size(), weight);
+      _h["n_lep"]->fill(leptons.size());
       for (const DressedLepton& lepton : leptons) {
-        _h["lep_pt"]->fill(lepton.pt(), weight);
+        _h["lep_pt"]->fill(lepton.pt());
       }
       
       // Jets
       Cut jet_cut = (Cuts::abseta < _jetMaxEta) and (Cuts::pT > _jetMinPt*GeV);
       const Jets jets = applyProjection<FastJets>(event, "Jets").jetsByPt(jet_cut);
-      _h["n_jet"]->fill(jets.size(), weight);
+      _h["n_jet"]->fill(jets.size());
       Jets bjets;
       for (const Jet& jet : jets) {
-        _h["jet_pt"]->fill(jet.pt(), weight);
+        _h["jet_pt"]->fill(jet.pt());
         if (jet.bTagged()) bjets.push_back(jet);
       }
-      _h["n_bjet"]->fill(bjets.size(), weight);
+      _h["n_bjet"]->fill(bjets.size());
       
       Cut fatjet_cut = (Cuts::abseta < _fatJetMaxEta) and (Cuts::pT > _fatJetMinPt*GeV);
       const Jets fatjets   = applyProjection<FastJets>(event, "FatJets").jetsByPt(fatjet_cut);

@@ -11,7 +11,9 @@ Authors:
  -  Salim Cerci <salim.cerci@cern.ch>
  -  Caglar Zorbilmez <caglar.zorbilmez@cern.ch> 
  -  Ilknur Hos <ilknur.hos@cern.ch> 
+ -  Ralf Ulrich <ralf.ulrich@cern.ch>
 References:
+ - Eur.Phys.J.C 79 (2019) 391
  - CMS-FSQ-15-006
  - CERN-EP-2018-308
  - arXiv:1812.04095 [hep-ex]
@@ -24,21 +26,33 @@ Beams: [p+, p+]
 Energies: [13000]
 PtCuts:
 Description:
-    'A measurement of the energy density in proton-proton collisions at a centre-of-mass energy of $\sqrt{s} = 13$ TeV is presented. 
-The data have been recorded with the CMS experiment at the LHC during low luminosity operations in 2015. The energy density is studied
-as a function of pseudorapidity in the ranges $-6.6 < \eta < -5.2$ and $3.15 < |\eta| < 5.20$. The results are compared with the predictions
-of several models. All the models considered suggest a different shape of the pseudorapidity dependence compared to that observed in the data.
-A comparison with LHC proton-proton collision data at $\sqrt{s} = 0.9$ and 7 TeV confirms the compatibility of the data with the hypothesis
-of limiting fragmentation.'
+    'A measurement of the energy density in proton-proton collisions
+     at a centre-of-mass energy of $\sqrt{s} = 13$ TeV is presented.
+     The data have been recorded with the CMS experiment at the LHC
+     during low luminosity operations in 2015. The energy density is
+     studied as a function of pseudorapidity in the ranges $-6.6 <
+     \eta < -5.2$ and $3.15 < |\eta| < 5.20$. The results are compared
+     with the predictions of several models. All the models considered
+     suggest a different shape of the pseudorapidity dependence
+     compared to that observed in the data.  A comparison with LHC
+     proton-proton collision data at $\sqrt{s} = 0.9$ and 7 TeV
+     confirms the compatibility of the data with the hypothesis of
+     limiting fragmentation.'
 BibKey: Sirunyan:2018jwn
 BibTeX: '@article{Sirunyan:2018jwn,
       author         = "Sirunyan, Albert M and others",
-      title          = "{Measurement of the energy density as a function of pseudorapidity in proton-proton collisions at sqrt$\sqrt{s}=$ 13 TeV}",
+      title          = "{Measurement of the energy density as a function of
+                        pseudorapidity in proton-proton collisions at $\sqrt{s} =$
+                        13 TeV}",
       collaboration  = "CMS",
-      year           = "2018",
+      journal        = "Eur. Phys. J.",
+      volume         = "C79",
+      year           = "2019",
+      number         = "5",
+      pages          = "391",
+      doi            = "10.1140/epjc/s10052-019-6861-x",
       eprint         = "1812.04095",
       archivePrefix  = "arXiv",
-      primaryClass   = "hep-ex"",
+      primaryClass   = "hep-ex",
       reportNumber   = "CMS-FSQ-15-006, CERN-EP-2018-308",
-      SLACcitation   = "%%CITATION = ARXIV:1812.04095;%%"
-}'
+      SLACcitation   = "%%CITATION = ARXIV:1812.04095;%%"}'

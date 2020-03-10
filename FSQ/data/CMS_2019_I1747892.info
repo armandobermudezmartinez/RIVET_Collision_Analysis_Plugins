@@ -18,10 +18,10 @@ Beams: [p+,p+]
 Energies: [13000]
 Description:
   'The average total energy as well as its hadronic and electromagnetic components are measured with the CMS detector at
-   pseudorapidities as a function of the charged particle multiplicity in the region |eta|<2. This measurement is sensitive to correlations
+   pseudorapidities of -6.6<eta<-5.2 as a function of the charged particle multiplicity in the region |eta|<2. This measurement is sensitive to correlations
    induced by the underlying event structure over a very wide pseudorapidity region. The predictions of Monte Carlo event generators
    commonly used in collider experiments and ultra-high energy cosmic ray physics are compared to the data.'
-Keywords: ['CMS', 'CERN LHC', 'forward phase space', 'CASTOR', 'underlying event']
+Keywords: ['CMS', 'CERN LHC', 'very forward phase space', 'CASTOR', 'underlying event']
 BibKey: 'Sirunyan:2019rqy'
 BibTeX: '@article{Sirunyan:2019rqy,
       author         = "Sirunyan, Albert M and others",

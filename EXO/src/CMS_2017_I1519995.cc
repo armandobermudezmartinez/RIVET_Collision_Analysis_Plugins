@@ -6,54 +6,50 @@
 namespace Rivet {
 
 
+  /// Search for new physics with dijet angular distributions at 13 TeV
   class CMS_2017_I1519995 : public Analysis {
   public:
 
-    CMS_2017_I1519995()
-      : Analysis("CMS_2017_I1519995")
-    { }
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2017_I1519995);
 
 
+    /// Book projections and histograms
     void init() {
-      FinalState fs;
-      FastJets antikt(fs, FastJets::ANTIKT, 0.4);
-      addProjection(antikt, "ANTIKT");      
-      _h_chi_dijet.addHistogram(4800., 8000., bookHisto1D(1, 1, 1));
-      _h_chi_dijet.addHistogram(4200., 4800., bookHisto1D(2, 1, 1));
-      _h_chi_dijet.addHistogram(3600., 4200., bookHisto1D(3, 1, 1));
-      _h_chi_dijet.addHistogram(3000., 3600., bookHisto1D(4, 1, 1));
-      _h_chi_dijet.addHistogram(2400., 3000., bookHisto1D(5, 1, 1));
-      _h_chi_dijet.addHistogram(1900., 2400., bookHisto1D(6, 1, 1));
+      FastJets antikt(FinalState(), FastJets::ANTIKT, 0.4);
+      declare(antikt, "ANTIKT");
+      /// @todo We need a better way!!
+      {Histo1DPtr tmp; _h_chi_dijet.add(4800., 8000., book(tmp, 1, 1, 1));}
+      {Histo1DPtr tmp; _h_chi_dijet.add(4200., 4800., book(tmp, 2, 1, 1));}
+      {Histo1DPtr tmp; _h_chi_dijet.add(3600., 4200., book(tmp, 3, 1, 1));}
+      {Histo1DPtr tmp; _h_chi_dijet.add(3000., 3600., book(tmp, 4, 1, 1));}
+      {Histo1DPtr tmp; _h_chi_dijet.add(2400., 3000., book(tmp, 5, 1, 1));}
+      {Histo1DPtr tmp; _h_chi_dijet.add(1900., 2400., book(tmp, 6, 1, 1));}
     }
 
+
+    /// Per-event analysis
     void analyze(const Event& event) {
-      const double weight = event.weight();
-      const Jets& jets = applyProjection<JetAlg>(event, "ANTIKT").jetsByPt();
+      const Jets& jets = apply<JetAlg>(event, "ANTIKT").jetsByPt();
       if (jets.size() < 2) vetoEvent;
-      FourMomentum j0(jets[0].momentum());
-      FourMomentum j1(jets[1].momentum());
-      double y0 = j0.rapidity();
-      double y1 = j1.rapidity();
-      if (fabs(y0+y1)/2. > 1.11) vetoEvent;
-      double mjj = FourMomentum(j0+j1).mass();
-      double chi = exp(fabs(y0-y1));
-      if(chi<16.)  _h_chi_dijet.fill(mjj, chi, weight);
+
+      const FourMomentum j0(jets[0].mom()), j1(jets[1].mom());
+      if (fabs(j0.rap()+j1.rap())/2 > 1.11) vetoEvent;
+
+      const double mjj = (j0+j1).mass();
+      const double chi = exp(fabs(j0.rap()-j1.rap()));
+      if (chi < 16) _h_chi_dijet.fill(mjj/GeV, chi, 1.0);
     }
 
 
+    /// Normalize histograms
     void finalize() {
-      foreach (Histo1DPtr hist, _h_chi_dijet.getHistograms()) {
-        normalize(hist);
-      }
+      for (Histo1DPtr hist : _h_chi_dijet.histos()) normalize(hist);
     }
 
 
-  private:
-
-    BinnedHistogram<double> _h_chi_dijet;
+    BinnedHistogram _h_chi_dijet;
 
   };
-
 
 
   // The hook for the plugin system

@@ -1,9 +1,6 @@
 // -*- C++ -*-
 #include "Rivet/Analysis.hh"
 #include "Rivet/Projections/FinalState.hh"
-#include "Rivet/Projection.hh"
-#include "Rivet/Particle.hh"
-#include "Rivet/Event.hh"
 #include "Rivet/Projections/ChargedLeptons.hh"
 #include "Rivet/Projections/DressedLeptons.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
@@ -13,26 +10,26 @@
 namespace Rivet {
 
 
-  /// @brief Add a short analysis description here
+  /// Higgs -> WW -> emu + MET in 8 TeV pp collisions
   class CMS_2017_I1467451 : public Analysis {
   public:
 
     /// Constructor
     DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2017_I1467451);
 
+
     /// Book histograms and initialise projections before the run
     void init() {
 
-      double lepConeSize = 0.1;
-      double lepMaxEta = 2.5;
-
-      Cut lepton_cut   = (Cuts::abseta < lepMaxEta);
+      const double lepConeSize = 0.1;
+      const double lepMaxEta = 2.5;
+      const Cut lepton_cut = (Cuts::abseta < lepMaxEta);
 
       // Initialise and register projections
-      FinalState fs(-2.5,2.5,0.0*GeV);
-      FinalState fsm(-5,5,0.0*GeV);
-      addProjection(fs, "FS");
-      addProjection(fsm, "FSM");
+      FinalState fs((Cuts::etaIn(-2.5,2.5)));
+      FinalState fsm((Cuts::etaIn(-5,5)));
+      declare(fs, "FS");
+      declare(fsm, "FSM");
 
       ChargedLeptons charged_leptons(fs);
       IdentifiedFinalState photons(fs);
@@ -46,61 +43,56 @@ namespace Rivet {
       prompt_photons.acceptMuonDecays(true);
       prompt_photons.acceptTauDecays(false);
 
-      DressedLeptons dressed_leptons = DressedLeptons(prompt_photons, prompt_leptons, lepConeSize, lepton_cut, /*useDecayPhotons*/ true);
-      addProjection(dressed_leptons, "DressedLeptons");
+      DressedLeptons dressed_leptons = DressedLeptons(prompt_photons, prompt_leptons, lepConeSize, lepton_cut, true);
+      declare(dressed_leptons, "DressedLeptons");
 
       MissingMomentum Met(fsm);
-      addProjection(Met, "MET");
+      declare(Met, "MET");
+
 
       // Book histograms
-      histoPtH=bookHisto1D(1,1,1);
-      histoXsec=bookHisto1D(2,1,1);
-
+      book(histoPtH , 1,1,1);
+      book(histoXsec, 2,1,1);
     }
 
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
-      const double weight = event.weight();
+      const double weight = 1.0;
 
       Particles leptons = applyProjection<DressedLeptons>(event, "DressedLeptons").particlesByPt(10.0*GeV);
+      if (leptons.size() < 2) vetoEvent;
+      if (leptons[0].pT() < 20*GeV || leptons[1].pT() < 10*GeV) vetoEvent;
+      if (leptons[0].charge() == leptons[1].charge()) vetoEvent;
+      if (leptons[0].abspid() == leptons[1].abspid()) vetoEvent;
 
-      if(leptons.size()<2) vetoEvent;
-      if(leptons[0].momentum().pT()<20*GeV || leptons[1].momentum().pT()<10*GeV) vetoEvent;
-      if(leptons[0].charge()==leptons[1].charge()) vetoEvent;
-      if(abs(leptons[0].pdgId())==abs(leptons[1].pdgId())) vetoEvent;
-
-      FourMomentum LL=(leptons[0].momentum()+leptons[1].momentum());
-
-      if(LL.mass()<12*GeV) vetoEvent;
-      if(LL.pT()<30*GeV) vetoEvent;
+      FourMomentum LL = (leptons[0].momentum() + leptons[1].momentum());
+      if (LL.mass() < 12*GeV) vetoEvent;
+      if (LL.pT() < 30*GeV) vetoEvent;
 
       FourMomentum EtMiss = applyProjection<MissingMomentum>(event,"MET").missingMomentum();
-      FourMomentum P4H = LL+EtMiss;
+      FourMomentum P4H = LL + EtMiss;
 
-      double dphi = deltaPhi(LL,EtMiss);
+      double dphi = deltaPhi(LL, EtMiss);
 
       double mT = sqrt(2*LL.pT()*EtMiss.pT()*(1-cos(dphi)));
-      if (mT<50*GeV) vetoEvent;
+      if (mT < 50*GeV) vetoEvent;
 
-      histoPtH->fill(min(P4H.pT(),199.),weight);
-      histoXsec->fill(8000.,weight);
+      histoPtH->fill(min(P4H.pT()/GeV, 199.), weight);
+      histoXsec->fill(8000, weight); ///< @todo Should probably be a Counter
     }
 
 
     /// Normalise histograms etc., after the run
     void finalize() {
-
-      scale(histoPtH,crossSection()/sumOfWeights());
-      scale(histoXsec,(histoXsec->xMax()-histoXsec->xMin())*crossSection()/sumOfWeights());
-
+      scale(histoPtH, crossSection()/sumOfWeights()/femtobarn);
+      scale(histoXsec, (histoXsec->xMax()-histoXsec->xMin())*crossSection()/sumOfWeights()/femtobarn);
     }
 
 
   private:
 
-    Histo1DPtr histoPtH;
-    Histo1DPtr histoXsec;   
+    Histo1DPtr histoPtH, histoXsec;
 
   };
 

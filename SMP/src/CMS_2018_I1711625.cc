@@ -35,42 +35,37 @@ namespace Rivet {
       const DressedLeptons mu_dressed(photon_fs, mu_pfs, 0.1, Cuts::open());
       declare(mu_dressed, "DressedMuons");
 
-      _h_massMuMu = bookHisto1D(3, 1, 1); /// muon channel result in full-phase space @ dressed level
-      _h_massMuMuFiducial = bookHisto1D(5, 1, 1); /// muon channel result in fiducial region @ post-FSR level
-      _h_massEEFiducial = bookHisto1D(6, 1, 1); /// electron channel result in fiducial region @ post-FSR level
-
-      _sumWeight_mumu = 0;
-      _sumWeight_ee = 0;
+      book(_h_massMuMu, 3, 1, 1); /// muon channel result in full-phase space @ dressed level
+      book(_h_massMuMuFiducial, 5, 1, 1); /// muon channel result in fiducial region @ post-FSR level
+      book(_h_massEEFiducial, 6, 1, 1); /// electron channel result in fiducial region @ post-FSR level
     }
 
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
 
-      double weight = event.weight();
-
       const DressedLeptons muons_dressed = apply<DressedLeptons>(event, "DressedMuons");
-      bool filled_mu = FillHistogram_DressedLepton(muons_dressed, 13, weight);
+      bool filled_mu = FillHistogram_DressedLepton(muons_dressed, 13);
       if ( filled_mu ) {
-        _sumWeight_mumu += weight;
 
         const PromptFinalState muons_PFS = apply<PromptFinalState>(event, "PromptFinalStateMuons");
-        FillHistogram_PFSLepton(muons_PFS, 13, weight);
+        FillHistogram_PFSLepton(muons_PFS, 13);
       }
       else { // electron channel
-        _sumWeight_ee += weight;
 
         const PromptFinalState electrons_PFS = apply<PromptFinalState>(event, "PromptFinalStateElectrons");
-        FillHistogram_PFSLepton(electrons_PFS, 11, weight);
+        FillHistogram_PFSLepton(electrons_PFS, 11);
       }
     }
 
 
     /// Normalise histograms etc., after the run
     void finalize() {
-      scale(_h_massMuMu, crossSection()/picobarn/_sumWeight_mumu); /// norm to cross section
-      scale(_h_massMuMuFiducial, crossSection()/picobarn/_sumWeight_mumu); /// norm to cross section
-      scale(_h_massEEFiducial, crossSection()/picobarn/_sumWeight_ee); /// norm to cross section
+
+      scale(_h_massMuMu, crossSection()/picobarn/sumOfWeights()); /// norm to cross section
+      scale(_h_massMuMuFiducial, crossSection()/picobarn/sumOfWeights()); /// norm to cross section
+      scale(_h_massEEFiducial, crossSection()/picobarn/sumOfWeights()); /// norm to cross section
+
     }
 
     //@}
@@ -86,19 +81,12 @@ namespace Rivet {
     Histo1DPtr _h_massEEFiducial;
     //@}
 
-    // weights for each channel
-    double _sumWeight_mumu;
-    double _sumWeight_ee;
-
 
     // select two opposite sign leptons with highest pT & fill the histogram for full-phase space diff. x-section
-    bool FillHistogram_DressedLepton(DressedLeptons leptons_dressed, int leptonID, double weight )
-    {
+    bool FillHistogram_DressedLepton(DressedLeptons leptons_dressed, int leptonID) {
       bool filled = false;
 
       vector< DressedLepton > vec_dressedLepByPt = leptons_dressed.dressedLeptons();
-      // sorting (decreasing order of pT)
-      std::sort(vec_dressedLepByPt.begin(), vec_dressedLepByPt.end(), CompareDressedLeptonByPt);
 
       int nLepton_dressed = (int)vec_dressedLepByPt.size();
       if ( nLepton_dressed >= 2 ) {
@@ -114,7 +102,7 @@ namespace Rivet {
           double mass = pVec_diLep.mass();
 
           // // fill histograms
-          if ( leptonID == 13 ) _h_massMuMu->fill(mass/GeV, weight);
+          if ( leptonID == 13 ) _h_massMuMu->fill(mass/GeV);
 
           filled = true;
         }
@@ -143,10 +131,10 @@ namespace Rivet {
       }
 
       // 2nd lepton: lepton with highest-pT among the leptons with the opposite sign with 1st lepton
-      int pdgID_lepton1 = vec_dressedLepByPt[index_lepton1].pdgId();
+      int pdgID_lepton1 = vec_dressedLepByPt[index_lepton1].pid();
       for (int i=index_lepton1+1; i<nLepton_dressed; ++i) { // starting after lepton1
         auto& lepton = vec_dressedLepByPt[i];
-        if ( lepton.isLepton() && lepton.pdgId() == (-1)*pdgID_lepton1 ) {
+        if ( lepton.isLepton() && lepton.pid() == (-1)*pdgID_lepton1 ) {
           index_lepton2 = i;
           break;
         }
@@ -155,7 +143,7 @@ namespace Rivet {
 
 
     // select two opposite sign leptons with highest pT & fill the histogram for the fiducial diff. x-section
-    void FillHistogram_PFSLepton(PromptFinalState leptons_PFS, int leptonID, double weight) {
+    void FillHistogram_PFSLepton(PromptFinalState leptons_PFS, int leptonID) {
       vector< Particle > vec_PFSLepByPt = leptons_PFS.particlesByPt();
 
       int nLepton_PFS = int(vec_PFSLepByPt.size());
@@ -170,8 +158,8 @@ namespace Rivet {
           const FourMomentum pVec_diLep = lepton1_PFS.mom() + lepton2_PFS.mom();
           double mass = pVec_diLep.mass();
 
-          if      ( leptonID == 11 ) _h_massEEFiducial->fill(mass/GeV, weight);
-          else if ( leptonID == 13 ) _h_massMuMuFiducial->fill(mass/GeV, weight);
+          if      ( leptonID == 11 ) _h_massEEFiducial->fill(mass/GeV);
+          else if ( leptonID == 13 ) _h_massMuMuFiducial->fill(mass/GeV);
         }
       } // end of if ( nLepton_PFS >= 2 )
     }
@@ -213,10 +201,10 @@ namespace Rivet {
       }
 
       // 2nd lepton: lepton with highest-pT among the leptons with the opposite sign with 1st lepton
-      int pdgID_lepton1 = vec_PFSLepByPt[index_lepton1].pdgId();
+      int pdgID_lepton1 = vec_PFSLepByPt[index_lepton1].pid();
       for (int i=index_lepton1+1; i<nLepton; ++i) { // starting after lepton1
         auto& lepton = vec_PFSLepByPt[i];
-        if ( lepton.isLepton() && lepton.pdgId() == (-1)*pdgID_lepton1 && 
+        if ( lepton.isLepton() && lepton.pid() == (-1)*pdgID_lepton1 && 
              lepton.pT() > pTCut_sub && lepton.abseta() < etaCut_sub ) {
           if ( pdgID == 11 ) { // electron channel: check ECAL gap
             if ( !(lepton.abseta() > 1.4442 && lepton.abseta() < 1.566) ) {
@@ -230,11 +218,6 @@ namespace Rivet {
           }
         }
       } // end of lepton iteration
-    }
-
-
-    static bool CompareDressedLeptonByPt( DressedLepton lep1, DressedLepton lep2 ) {
-      return lep1.pT() > lep2.pT();
     }
   };
 

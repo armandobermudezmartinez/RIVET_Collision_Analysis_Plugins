@@ -313,40 +313,40 @@ namespace Rivet {
         // Step 5: Create and save distributions as Scatter2Ds
         // ----------------------------
 
- // d01-x01-y01: average total energy, average value and variations
+	// d01-x01-y01: average total energy, average value and variations
         Scatter2DPtr _h_nCh_E_tot_smeared_profile = bookScatter2D(1,1,1);
         Scatter2DPtr _h_nCh_E_tot_smeared_profile_cuetp8m1 = bookScatter2D("d01-x01-y01_cuetp8m1");
         Scatter2DPtr _h_nCh_E_tot_smeared_profile_epos = bookScatter2D("d01-x01-y01_epos");
         Scatter2DPtr _h_nCh_E_tot_smeared_profile_mbr = bookScatter2D("d01-x01-y01_mbr");
         Scatter2DPtr _h_nCh_E_tot_smeared_profile_sibyll = bookScatter2D("d01-x01-y01_sibyll");
 
- // d01-x01-y02: shape normalized average total energy, average value and variations
+	// d01-x01-y02: shape normalized average total energy, average value and variations
         Scatter2DPtr _h_nCh_E_tot_normalized_smeared_profile = bookScatter2D(1,1,2);
         Scatter2DPtr _h_nCh_E_tot_normalized_smeared_profile_cuetp8m1 = bookScatter2D("d01-x01-y02_cuetp8m1");
         Scatter2DPtr _h_nCh_E_tot_normalized_smeared_profile_epos = bookScatter2D("d01-x01-y02_epos");
         Scatter2DPtr _h_nCh_E_tot_normalized_smeared_profile_mbr = bookScatter2D("d01-x01-y02_mbr");
         Scatter2DPtr _h_nCh_E_tot_normalized_smeared_profile_sibyll = bookScatter2D("d01-x01-y02_sibyll");
 
- // d02-x01-y01: average electromagnetic energy, average value and variations
+	// d02-x01-y01: average electromagnetic energy, average value and variations
         Scatter2DPtr _h_nCh_E_em_smeared_profile = bookScatter2D(2,1,1);
         Scatter2DPtr _h_nCh_E_em_smeared_profile_cuetp8m1 = bookScatter2D("d02-x01-y01_cuetp8m1");
         Scatter2DPtr _h_nCh_E_em_smeared_profile_epos = bookScatter2D("d02-x01-y01_epos");
         Scatter2DPtr _h_nCh_E_em_smeared_profile_mbr = bookScatter2D("d02-x01-y01_mbr");
         Scatter2DPtr _h_nCh_E_em_smeared_profile_sibyll = bookScatter2D("d02-x01-y01_sibyll");
 
- // d03-x01-y01: average hadronic energy, average value and variations
-        Scatter2DPtr _h_nCh_E_had_smeared_profile = bookScatter2D(3,1,1);
-        Scatter2DPtr _h_nCh_E_had_smeared_profile_cuetp8m1 = bookScatter2D("d03-x01-y01_cuetp8m1");
-        Scatter2DPtr _h_nCh_E_had_smeared_profile_epos = bookScatter2D("d03-x01-y01_epos");
-        Scatter2DPtr _h_nCh_E_had_smeared_profile_mbr = bookScatter2D("d03-x01-y01_mbr");
-        Scatter2DPtr _h_nCh_E_had_smeared_profile_sibyll = bookScatter2D("d03-x01-y01_sibyll");
+	// d02-x01-y02: average hadronic energy, average value and variations
+        Scatter2DPtr _h_nCh_E_had_smeared_profile = bookScatter2D(2,1,2);
+        Scatter2DPtr _h_nCh_E_had_smeared_profile_cuetp8m1 = bookScatter2D("d02-x01-y02_cuetp8m1");
+        Scatter2DPtr _h_nCh_E_had_smeared_profile_epos = bookScatter2D("d02-x01-y02_epos");
+        Scatter2DPtr _h_nCh_E_had_smeared_profile_mbr = bookScatter2D("d02-x01-y02_mbr");
+        Scatter2DPtr _h_nCh_E_had_smeared_profile_sibyll = bookScatter2D("d02-x01-y02_sibyll");
 
- // d04-x01-y01: ratio of average electromagnetic to hadronic energy, average value and variations
-        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile = bookScatter2D(4,1,1);
-        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_cuetp8m1 = bookScatter2D("d04-x01-y01_cuetp8m1");
-        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_epos = bookScatter2D("d04-x01-y01_epos");
-        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_mbr = bookScatter2D("d04-x01-y01_mbr");
-        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_sibyll = bookScatter2D("d04-x01-y01_sibyll");
+	// d03-x01-y01: ratio of average electromagnetic to hadronic energy, average value and variations
+        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile = bookScatter2D(3,1,1);
+        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_cuetp8m1 = bookScatter2D("d03-x01-y01_cuetp8m1");
+        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_epos = bookScatter2D("d03-x01-y01_epos");
+        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_mbr = bookScatter2D("d03-x01-y01_mbr");
+        Scatter2DPtr _h_nCh_E_emhadRatio_smeared_profile_sibyll = bookScatter2D("d03-x01-y01_sibyll");
 
 
         for (unsigned int iBin=0; iBin<_nReducedMultiplicityBins; iBin++) {
@@ -355,20 +355,20 @@ namespace Rivet {
             double multiplicityHalfWidth = multiplicityCenter-_multiplicityBinEdges[iBin+1];
 
 
-     // d01-x01-y01: average total energy, average value and variations
+	    // d01-x01-y01: average total energy, average value and variations
             _h_nCh_E_tot_smeared_profile->addPoint(multiplicityCenter, AverageEnergy["total"]["average"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 SystErrorOnTheMeanDown["total"][iBin], SystErrorOnTheMeanUp["total"][iBin]);
-     _h_nCh_E_tot_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, AverageEnergy["total"]["cuetp8m1"][iBin],
+	    _h_nCh_E_tot_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, AverageEnergy["total"]["cuetp8m1"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["total"]["cuetp8m1"][iBin], ErrorOnTheMean["total"]["cuetp8m1"][iBin]);
-     _h_nCh_E_tot_smeared_profile_epos->addPoint(multiplicityCenter, AverageEnergy["total"]["epos"][iBin],
+	    _h_nCh_E_tot_smeared_profile_epos->addPoint(multiplicityCenter, AverageEnergy["total"]["epos"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["total"]["epos"][iBin], ErrorOnTheMean["total"]["epos"][iBin]);
-     _h_nCh_E_tot_smeared_profile_mbr->addPoint(multiplicityCenter, AverageEnergy["total"]["mbr"][iBin],
+	    _h_nCh_E_tot_smeared_profile_mbr->addPoint(multiplicityCenter, AverageEnergy["total"]["mbr"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["total"]["mbr"][iBin], ErrorOnTheMean["total"]["mbr"][iBin]);
-     _h_nCh_E_tot_smeared_profile_sibyll->addPoint(multiplicityCenter, AverageEnergy["total"]["sibyll"][iBin],
+	    _h_nCh_E_tot_smeared_profile_sibyll->addPoint(multiplicityCenter, AverageEnergy["total"]["sibyll"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["total"]["sibyll"][iBin], ErrorOnTheMean["total"]["sibyll"][iBin]);
 
@@ -377,16 +377,16 @@ namespace Rivet {
             _h_nCh_E_tot_normalized_smeared_profile->addPoint(multiplicityCenter, shapeAnalysis["average"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 SystErrorOnTheMeanDown["shape"][iBin], SystErrorOnTheMeanUp["shape"][iBin]);
-           _h_nCh_E_tot_normalized_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, shapeAnalysis["cuetp8m1"][iBin],
+	    _h_nCh_E_tot_normalized_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, shapeAnalysis["cuetp8m1"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 shapeAnalysis_uncertainty["cuetp8m1"][iBin], shapeAnalysis_uncertainty["cuetp8m1"][iBin]);
-           _h_nCh_E_tot_normalized_smeared_profile_epos->addPoint(multiplicityCenter, shapeAnalysis["mbr"][iBin],
+	    _h_nCh_E_tot_normalized_smeared_profile_epos->addPoint(multiplicityCenter, shapeAnalysis["mbr"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 shapeAnalysis_uncertainty["epos"][iBin], shapeAnalysis_uncertainty["epos"][iBin]);
-           _h_nCh_E_tot_normalized_smeared_profile_mbr->addPoint(multiplicityCenter, shapeAnalysis["mbr"][iBin],
+	    _h_nCh_E_tot_normalized_smeared_profile_mbr->addPoint(multiplicityCenter, shapeAnalysis["mbr"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 shapeAnalysis_uncertainty["mbr"][iBin], shapeAnalysis_uncertainty["mbr"][iBin]);
-           _h_nCh_E_tot_normalized_smeared_profile_sibyll->addPoint(multiplicityCenter, shapeAnalysis["sibyll"][iBin],
+	    _h_nCh_E_tot_normalized_smeared_profile_sibyll->addPoint(multiplicityCenter, shapeAnalysis["sibyll"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 shapeAnalysis_uncertainty["sibyll"][iBin], shapeAnalysis_uncertainty["sibyll"][iBin]);
 
@@ -395,52 +395,52 @@ namespace Rivet {
             _h_nCh_E_em_smeared_profile->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["average"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 SystErrorOnTheMeanDown["electromagnetic"][iBin], SystErrorOnTheMeanUp["electromagnetic"][iBin]);
-     _h_nCh_E_em_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["cuetp8m1"][iBin],
+	    _h_nCh_E_em_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["cuetp8m1"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["electromagnetic"]["cuetp8m1"][iBin], ErrorOnTheMean["electromagnetic"]["cuetp8m1"][iBin]);
-     _h_nCh_E_em_smeared_profile_epos->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["epos"][iBin],
+	    _h_nCh_E_em_smeared_profile_epos->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["epos"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["electromagnetic"]["epos"][iBin], ErrorOnTheMean["electromagnetic"]["epos"][iBin]);
-     _h_nCh_E_em_smeared_profile_mbr->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["mbr"][iBin],
+	    _h_nCh_E_em_smeared_profile_mbr->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["mbr"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["electromagnetic"]["mbr"][iBin], ErrorOnTheMean["electromagnetic"]["mbr"][iBin]);
-     _h_nCh_E_em_smeared_profile_sibyll->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["sibyll"][iBin],
+	    _h_nCh_E_em_smeared_profile_sibyll->addPoint(multiplicityCenter, AverageEnergy["electromagnetic"]["sibyll"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["electromagnetic"]["sibyll"][iBin], ErrorOnTheMean["electromagnetic"]["sibyll"][iBin]);
 
 
-            // d03-x01-y01: average hadronic energy, average value and variations
+            // d02-x01-y02: average hadronic energy, average value and variations
             _h_nCh_E_had_smeared_profile->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["average"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 SystErrorOnTheMeanDown["hadronic"][iBin], SystErrorOnTheMeanUp["hadronic"][iBin]);
-     _h_nCh_E_had_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["cuetp8m1"][iBin],
+	    _h_nCh_E_had_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["cuetp8m1"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["hadronic"]["cuetp8m1"][iBin], ErrorOnTheMean["hadronic"]["cuetp8m1"][iBin]);
-     _h_nCh_E_had_smeared_profile_epos->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["epos"][iBin],
+	    _h_nCh_E_had_smeared_profile_epos->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["epos"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["hadronic"]["epos"][iBin], ErrorOnTheMean["hadronic"]["epos"][iBin]);
-     _h_nCh_E_had_smeared_profile_mbr->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["mbr"][iBin],
+	    _h_nCh_E_had_smeared_profile_mbr->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["mbr"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["hadronic"]["mbr"][iBin], ErrorOnTheMean["hadronic"]["mbr"][iBin]);
-     _h_nCh_E_had_smeared_profile_sibyll->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["sibyll"][iBin],
+	    _h_nCh_E_had_smeared_profile_sibyll->addPoint(multiplicityCenter, AverageEnergy["hadronic"]["sibyll"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 ErrorOnTheMean["hadronic"]["sibyll"][iBin], ErrorOnTheMean["hadronic"]["sibyll"][iBin]);
 
 
-     // d04-x01-y01: ratio of average electromagnetic to hadronic energy, average value and variations
+	    // d03-x01-y01: ratio of average electromagnetic to hadronic energy, average value and variations
             _h_nCh_E_emhadRatio_smeared_profile->addPoint(multiplicityCenter, emHadRatio["average"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 SystErrorOnTheMeanDown["emhadratio"][iBin], SystErrorOnTheMeanUp["emhadratio"][iBin]);
-     _h_nCh_E_emhadRatio_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, emHadRatio["cuetp8m1"][iBin],
+	    _h_nCh_E_emhadRatio_smeared_profile_cuetp8m1->addPoint(multiplicityCenter, emHadRatio["cuetp8m1"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 emHadRatio_uncertainty["cuetp8m1"][iBin], emHadRatio_uncertainty["cuetp8m1"][iBin]);
-     _h_nCh_E_emhadRatio_smeared_profile_epos->addPoint(multiplicityCenter, emHadRatio["epos"][iBin],
+	    _h_nCh_E_emhadRatio_smeared_profile_epos->addPoint(multiplicityCenter, emHadRatio["epos"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 emHadRatio_uncertainty["epos"][iBin], emHadRatio_uncertainty["epos"][iBin]);
-     _h_nCh_E_emhadRatio_smeared_profile_mbr->addPoint(multiplicityCenter, emHadRatio["mbr"][iBin],
+	    _h_nCh_E_emhadRatio_smeared_profile_mbr->addPoint(multiplicityCenter, emHadRatio["mbr"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 emHadRatio_uncertainty["mbr"][iBin], emHadRatio_uncertainty["mbr"][iBin]);
-     _h_nCh_E_emhadRatio_smeared_profile_sibyll->addPoint(multiplicityCenter, emHadRatio["sibyll"][iBin],
+	    _h_nCh_E_emhadRatio_smeared_profile_sibyll->addPoint(multiplicityCenter, emHadRatio["sibyll"][iBin],
                                                 multiplicityHalfWidth, multiplicityHalfWidth,
                                                 emHadRatio_uncertainty["sibyll"][iBin], emHadRatio_uncertainty["sibyll"][iBin]);
         }

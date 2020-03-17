@@ -8,7 +8,7 @@ process.load('Configuration.StandardSequences.Services_cff')
 
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(10000)
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1000000))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100000))
 
 process.source = cms.Source("EmptySource")
 
@@ -25,6 +25,7 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
                 'Main:timesAllowErrors    = 10000',
                 'ParticleDecays:limitTau0 = on',
                 'ParticleDecays:tauMax = 10',
+                'SoftQCD:inelastic = on',
                 'SoftQCD:nonDiffractive = on',
                 'SoftQCD:singleDiffractive = on',
                 'SoftQCD:centralDiffractive = on',
@@ -33,7 +34,7 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
                 'Tune:ee 7',
                 'MultipartonInteractions:pT0Ref=2.4024',
                 'MultipartonInteractions:ecmPow=0.25208',
-                'MultipartonInteractions:expPow=1.6',
+                'MultipartonInteractions:expPow=1.61',
             ),
     parameterSets = cms.vstring('processParameters')
 	)
@@ -43,6 +44,7 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring(
     'CMS_2017_I1511284', # CASTOR energy spectra
+    'CMS_2019_I1747892', # CASTOR mulitiplicity-dependent energy spectra
 )
 process.rivetAnalyzer.OutputFile      = "MinBiasPythia8CUETP8M1.yoda"
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")

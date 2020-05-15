@@ -9,11 +9,11 @@ namespace Rivet {
 
 
   /// @brief Add a short analysis description here
-  class CMS_2018_PAS_SMP_17_010 : public Analysis {
+  class CMS_2019_I1753680 : public Analysis {
   public:
     
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2018_PAS_SMP_17_010);
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2019_I1753680);
     
 
     /// @name Analysis methods
@@ -232,7 +232,7 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2018_PAS_SMP_17_010);
+  DECLARE_RIVET_PLUGIN(CMS_2019_I1753680);
 
 
 }

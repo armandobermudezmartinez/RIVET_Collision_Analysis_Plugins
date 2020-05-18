@@ -23,47 +23,39 @@ namespace Rivet {
     void init() {
 
       // Initialise and register projections
-      FinalState fs(Cuts::abseta < 2.4 && Cuts::pT > 25*GeV);
+      FinalState fs;
+      Cut cut = Cuts::abseta < 2.4 && Cuts::pT > 25*GeV;
 
-      ZFinder zeeFind(fs, Cuts::abseta < 2.4, PID::ELECTRON, 76.1876*GeV, 106.1876*GeV, 0.1 );
+      ZFinder zeeFind(fs, cut, PID::ELECTRON, 76.1876*GeV, 106.1876*GeV, 0.1, ZFinder::ChargedLeptons::PROMPT, ZFinder::ClusterPhotons::NODECAY, ZFinder::AddPhotons::YES );
       declare(zeeFind, "ZeeFind");
-      ZFinder zmmFind(fs, Cuts::abseta < 2.4, PID::MUON    , 76.1876*GeV, 106.1876*GeV, 0.1 );
+      ZFinder zmmFind(fs, cut, PID::MUON    , 76.1876*GeV, 106.1876*GeV, 0.1, ZFinder::ChargedLeptons::PROMPT, ZFinder::ClusterPhotons::NODECAY, ZFinder::AddPhotons::YES );
       declare(zmmFind, "ZmmFind");
       
       // Book histograms
       // FIXME: use HepData file with new mapping
-      book(_h_Zmm_pt            ,  2, 1, 1);
-      book(_h_Zee_pt            ,  4, 1, 1);
-      book(_h_Zmm_phiStar       ,  6, 1, 1);
-      book(_h_Zee_phiStar       ,  8, 1, 1);
-      book(_h_Zmm_absY          , 10, 1, 1);
-      book(_h_Zee_absY          , 12, 1, 1);
-      book(_h_Zmm_pt_Y0         , 14, 1, 1);
-      book(_h_Zee_pt_Y0         , 16, 1, 1);
-      book(_h_Zmm_pt_Y1         , 18, 1, 1);
-      book(_h_Zee_pt_Y1         , 20, 1, 1);
-      book(_h_Zmm_pt_Y2         , 22, 1, 1);
-      book(_h_Zee_pt_Y2         , 24, 1, 1);
-      book(_h_Zmm_pt_Y3         , 26, 1, 1);
-      book(_h_Zee_pt_Y3         , 28, 1, 1);
-      book(_h_Zmm_pt_Y4         , 30, 1, 1);
-      book(_h_Zee_pt_Y4         , 32, 1, 1);
-      book(_h_Zmm_pt_norm       , 34, 1, 1);
-      book(_h_Zee_pt_norm       , 36, 1, 1);
-      book(_h_Zmm_phiStar_norm  , 38, 1, 1);
-      book(_h_Zee_phiStar_norm  , 40, 1, 1);
-      book(_h_Zmm_absY_norm     , 42, 1, 1);
-      book(_h_Zee_absY_norm     , 44, 1, 1);
-      book(_h_Zmm_pt_Y0_norm    , 46, 1, 1);
-      book(_h_Zee_pt_Y0_norm    , 48, 1, 1);
-      book(_h_Zmm_pt_Y1_norm    , 50, 1, 1);
-      book(_h_Zee_pt_Y1_norm    , 52, 1, 1);
-      book(_h_Zmm_pt_Y2_norm    , 54, 1, 1);
-      book(_h_Zee_pt_Y2_norm    , 56, 1, 1);
-      book(_h_Zmm_pt_Y3_norm    , 58, 1, 1);
-      book(_h_Zee_pt_Y3_norm    , 60, 1, 1);
-      book(_h_Zmm_pt_Y4_norm    , 62, 1, 1);
-      book(_h_Zee_pt_Y4_norm    , 64, 1, 1);
+      book(_h_Zmm_absY          , 26, 1, 1);
+      book(_h_Zee_absY          , 26, 1, 2);
+      book(_h_Zll_absY          , 26, 1, 3);
+      book(_h_Zmm_pt            , 27, 1, 1);
+      book(_h_Zee_pt            , 27, 1, 2);
+      book(_h_Zll_pt            , 27, 1, 3);
+      book(_h_Zmm_phiStar       , 28, 1, 1);
+      book(_h_Zee_phiStar       , 28, 1, 2);
+      book(_h_Zll_phiStar       , 28, 1, 3);
+      book(_h_Zll_pt_Y0         , 29, 1, 1);
+      book(_h_Zll_pt_Y1         , 29, 1, 2);
+      book(_h_Zll_pt_Y2         , 29, 1, 3);
+      book(_h_Zll_pt_Y3         , 29, 1, 4);
+      book(_h_Zll_pt_Y4         , 29, 1, 5);
+      
+      book(_h_Zll_pt_norm       , 30, 1, 1);
+      book(_h_Zll_phiStar_norm  , 31, 1, 1);
+      book(_h_Zll_absY_norm     , 32, 1, 1);
+      book(_h_Zll_pt_Y0_norm    , 33, 1, 1);
+      book(_h_Zll_pt_Y1_norm    , 33, 1, 2);
+      book(_h_Zll_pt_Y2_norm    , 33, 1, 3);
+      book(_h_Zll_pt_Y3_norm    , 33, 1, 4);
+      book(_h_Zll_pt_Y4_norm    , 33, 1, 5);
       
     }
     
@@ -93,7 +85,7 @@ namespace Rivet {
         mm_event = true; 
       }
 
-      const Particles& theLeptons = zees.size() ? zeeFS.constituents() : zmumuFS.constituents();
+      const Particles& theLeptons = ee_event ? zeeFS.constituents() : zmumuFS.constituents();
       const Particle& lminus = theLeptons[0].charge() < 0 ? theLeptons[0] : theLeptons[1];
       const Particle& lplus = theLeptons[0].charge() < 0 ? theLeptons[1] : theLeptons[0];
 
@@ -101,111 +93,91 @@ namespace Rivet {
       const double thetaStar = acos(tanh( 0.5 * (lminus.eta() - lplus.eta()) ));
       const double dPhi = M_PI - deltaPhi(lminus, lplus);
       const double phiStar = tan(0.5 * dPhi) * sin(thetaStar);
+      
+      const Particle& zcand = ee_event ? zees[0] : zmumus[0];
 
       if (ee_event) {
-        _h_Zee_pt->fill(zees[0].pt());
-        _h_Zee_pt_norm->fill(zees[0].pt());
+        _h_Zee_absY->fill(zcand.absrap());
+        _h_Zee_pt->fill(zcand.pt());
         _h_Zee_phiStar->fill(phiStar);
-        _h_Zee_phiStar_norm->fill(phiStar);
-        _h_Zee_absY->fill(zees[0].absrap());
-        _h_Zee_absY_norm->fill(zees[0].absrap());
-        if      (zees[0].absrap()<0.4) {
-          _h_Zee_pt_Y0->fill(zees[0].pt());
-          _h_Zee_pt_Y0_norm->fill(zees[0].pt());
-        }
-        else if (zees[0].absrap()<0.8) {
-          _h_Zee_pt_Y1->fill(zees[0].pt());
-          _h_Zee_pt_Y1_norm->fill(zees[0].pt());
-        }
-        else if (zees[0].absrap()<1.2) {
-          _h_Zee_pt_Y2->fill(zees[0].pt());
-          _h_Zee_pt_Y2_norm->fill(zees[0].pt());
-        }
-        else if (zees[0].absrap()<1.6) {
-          _h_Zee_pt_Y3->fill(zees[0].pt());
-          _h_Zee_pt_Y3_norm->fill(zees[0].pt());
-        }
-        else if (zees[0].absrap()<2.4) {
-          _h_Zee_pt_Y4->fill(zees[0].pt());
-          _h_Zee_pt_Y4_norm->fill(zees[0].pt());
-        }
-
-      } 
+      }
       else if (mm_event) {
-        _h_Zmm_pt->fill(zmumus[0].pt());
-        _h_Zmm_pt_norm->fill(zmumus[0].pt());
+        _h_Zmm_absY->fill(zcand.absrap());
+        _h_Zmm_pt->fill(zcand.pt());
         _h_Zmm_phiStar->fill(phiStar);
-        _h_Zmm_phiStar_norm->fill(phiStar);
-        _h_Zmm_absY->fill(zmumus[0].absrap());
-        _h_Zmm_absY_norm->fill(zmumus[0].absrap());
-        if      (zmumus[0].absrap()<0.4) {
-          _h_Zmm_pt_Y0->fill(zmumus[0].pt());
-          _h_Zmm_pt_Y0_norm->fill(zmumus[0].pt());
-        }
-        else if (zmumus[0].absrap()<0.8) {
-          _h_Zmm_pt_Y1->fill(zmumus[0].pt());
-          _h_Zmm_pt_Y1_norm->fill(zmumus[0].pt());
-        }
-        else if (zmumus[0].absrap()<1.2) {
-          _h_Zmm_pt_Y2->fill(zmumus[0].pt());
-          _h_Zmm_pt_Y2_norm->fill(zmumus[0].pt());
-        }
-        else if (zmumus[0].absrap()<1.6) {
-          _h_Zmm_pt_Y3->fill(zmumus[0].pt());
-          _h_Zmm_pt_Y3_norm->fill(zmumus[0].pt());
-        }
-        else if (zmumus[0].absrap()<2.4) {
-          _h_Zmm_pt_Y4->fill(zmumus[0].pt());
-          _h_Zmm_pt_Y4_norm->fill(zmumus[0].pt());
-	}
-
       }
 
+      _h_Zll_pt->fill(zcand.pt());
+      _h_Zll_pt_norm->fill(zcand.pt());
+      _h_Zll_phiStar->fill(phiStar);
+      _h_Zll_phiStar_norm->fill(phiStar);
+      _h_Zll_absY->fill(zcand.absrap());
+      _h_Zll_absY_norm->fill(zcand.absrap());
+
+      if      (zcand.absrap()<0.4) {
+        _h_Zll_pt_Y0->fill(zcand.pt());
+        _h_Zll_pt_Y0_norm->fill(zcand.pt());
+      }
+      else if (zcand.absrap()<0.8) {
+        _h_Zll_pt_Y1->fill(zcand.pt());
+        _h_Zll_pt_Y1_norm->fill(zcand.pt());
+      }
+      else if (zcand.absrap()<1.2) {
+        _h_Zll_pt_Y2->fill(zcand.pt());
+        _h_Zll_pt_Y2_norm->fill(zcand.pt());
+      }
+      else if (zcand.absrap()<1.6) {
+        _h_Zll_pt_Y3->fill(zcand.pt());
+        _h_Zll_pt_Y3_norm->fill(zcand.pt());
+      }
+      else if (zcand.absrap()<2.4) {
+        _h_Zll_pt_Y4->fill(zcand.pt());
+        _h_Zll_pt_Y4_norm->fill(zcand.pt());
+      }
+
+    }
+    
+    void normalizeToSum(Histo1DPtr hist) {
+      //normalize(hist);
+      double sum = 0.;
+      for (size_t i = 0; i < hist->numBins(); ++i) {
+        //hist->bin(i).scaleW(hist->bin(i).width());
+        sum += hist->bin(i).height();
+      }
+      scale(hist, 1./sum);
     }
 
     /// Normalise histograms etc., after the run
     void finalize() {
 
-      //normalize(_h_Z_pt);
-      
-      //normalize(_h_YYYY); // normalize to unity
-      //scale(_h_ZZZZ, crossSection()/picobarn/sumOfWeights()); // norm to cross section
-      //
-      scale(_h_Zmm_pt, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_absY, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt,      crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_absY,    crossSection()/picobarn/sumOfWeights());
       scale(_h_Zmm_phiStar, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y0, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y1, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y2, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y3, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_pt_Y4, crossSection()/picobarn/sumOfWeights());
       
-      scale(_h_Zee_pt, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_absY, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt,      crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_absY,    crossSection()/picobarn/sumOfWeights());
       scale(_h_Zee_phiStar, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y0, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y1, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y2, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y3, crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_pt_Y4, crossSection()/picobarn/sumOfWeights());
-
-      normalize(_h_Zmm_pt_norm);
-      normalize(_h_Zmm_absY_norm);
-      normalize(_h_Zmm_phiStar_norm);
-      normalize(_h_Zmm_pt_Y0_norm);
-      normalize(_h_Zmm_pt_Y1_norm);
-      normalize(_h_Zmm_pt_Y2_norm);
-      normalize(_h_Zmm_pt_Y3_norm);
-      normalize(_h_Zmm_pt_Y4_norm);
       
-      normalize(_h_Zee_pt_norm);
-      normalize(_h_Zee_absY_norm);
-      normalize(_h_Zee_phiStar_norm);
-      normalize(_h_Zee_pt_Y0_norm);
-      normalize(_h_Zee_pt_Y1_norm);
-      normalize(_h_Zee_pt_Y2_norm);
-      normalize(_h_Zee_pt_Y3_norm);
-      normalize(_h_Zee_pt_Y4_norm);
+      double aveFac = 0.5; // average ee and mumu for ll sample
+      if (_h_Zmm_pt->numEntries() == 0 or _h_Zee_pt->numEntries() == 0)
+        aveFac = 1.0; // for exclusive ee or mumu samples
+      scale(_h_Zll_pt,      aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_absY,    aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_phiStar, aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y0,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y1,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y2,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y3,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y4,   aveFac*crossSection()/picobarn/sumOfWeights());
+
+      normalizeToSum(_h_Zll_pt_norm);
+      normalizeToSum(_h_Zll_absY_norm);
+      normalizeToSum(_h_Zll_phiStar_norm);
+      normalizeToSum(_h_Zll_pt_Y0_norm);
+      normalizeToSum(_h_Zll_pt_Y1_norm);
+      normalizeToSum(_h_Zll_pt_Y2_norm);
+      normalizeToSum(_h_Zll_pt_Y3_norm);
+      normalizeToSum(_h_Zll_pt_Y4_norm);
 
     }
 
@@ -217,16 +189,13 @@ namespace Rivet {
   private:
     
     Histo1DPtr   _h_Zmm_pt, _h_Zmm_phiStar, _h_Zmm_absY;
-    Histo1DPtr   _h_Zmm_pt_Y0, _h_Zmm_pt_Y1, _h_Zmm_pt_Y2, _h_Zmm_pt_Y3, _h_Zmm_pt_Y4;
-    	
-    Histo1DPtr   _h_Zmm_pt_norm, _h_Zmm_phiStar_norm, _h_Zmm_absY_norm;
-    Histo1DPtr   _h_Zmm_pt_Y0_norm, _h_Zmm_pt_Y1_norm, _h_Zmm_pt_Y2_norm, _h_Zmm_pt_Y3_norm, _h_Zmm_pt_Y4_norm;
-	
     Histo1DPtr   _h_Zee_pt, _h_Zee_phiStar, _h_Zee_absY;
-    Histo1DPtr   _h_Zee_pt_Y0, _h_Zee_pt_Y1, _h_Zee_pt_Y2, _h_Zee_pt_Y3, _h_Zee_pt_Y4;
+    
+    Histo1DPtr   _h_Zll_pt, _h_Zll_phiStar, _h_Zll_absY;
+    Histo1DPtr   _h_Zll_pt_Y0, _h_Zll_pt_Y1, _h_Zll_pt_Y2, _h_Zll_pt_Y3, _h_Zll_pt_Y4;
 	
-    Histo1DPtr   _h_Zee_pt_norm, _h_Zee_phiStar_norm, _h_Zee_absY_norm;
-    Histo1DPtr   _h_Zee_pt_Y0_norm, _h_Zee_pt_Y1_norm, _h_Zee_pt_Y2_norm, _h_Zee_pt_Y3_norm, _h_Zee_pt_Y4_norm;
+    Histo1DPtr   _h_Zll_pt_norm, _h_Zll_phiStar_norm, _h_Zll_absY_norm;
+    Histo1DPtr   _h_Zll_pt_Y0_norm, _h_Zll_pt_Y1_norm, _h_Zll_pt_Y2_norm, _h_Zll_pt_Y3_norm, _h_Zll_pt_Y4_norm;
 
   };
 

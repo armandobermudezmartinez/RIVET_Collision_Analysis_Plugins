@@ -8,7 +8,7 @@
 namespace Rivet {
 
 
-  /// @brief Add a short analysis description here
+  /// @brief Measurements of differential Z boson production cross sections in proton-proton collisions at 13 TeV
   class CMS_2019_I1753680 : public Analysis {
   public:
     
@@ -32,7 +32,6 @@ namespace Rivet {
       declare(zmmFind, "ZmmFind");
       
       // Book histograms
-      // FIXME: use HepData file with new mapping
       book(_h_Zmm_absY          , 26, 1, 1);
       book(_h_Zee_absY          , 26, 1, 2);
       book(_h_Zll_absY          , 26, 1, 3);
@@ -138,10 +137,8 @@ namespace Rivet {
     }
     
     void normalizeToSum(Histo1DPtr hist) {
-      //normalize(hist);
       double sum = 0.;
       for (size_t i = 0; i < hist->numBins(); ++i) {
-        //hist->bin(i).scaleW(hist->bin(i).width());
         sum += hist->bin(i).height();
       }
       scale(hist, 1./sum);

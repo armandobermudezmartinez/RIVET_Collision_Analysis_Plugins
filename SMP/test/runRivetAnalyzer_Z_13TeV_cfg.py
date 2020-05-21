@@ -53,7 +53,7 @@ if options.runOnly:
     process.rivetAnalyzer.AnalysisNames = cms.vstring(options.runOnly)
 else:
     process.rivetAnalyzer.AnalysisNames = cms.vstring(
-        'CMS_2018_I1711625',
+        'CMS_2018_I1711625', 'CMS_2018_PAS_SMP_17_010',
     )
 process.rivetAnalyzer.OutputFile      = options.yodafile
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")

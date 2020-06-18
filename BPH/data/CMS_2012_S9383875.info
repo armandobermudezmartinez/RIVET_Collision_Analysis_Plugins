@@ -1,18 +1,20 @@
 Name: CMS_2012_S9383875
 Year: 2011
-Summary:  Inclusive b- jet production in pp collisions at $\sqrt{s} = 7\;\TeV$
+Summary:  Inclusive b- jet production in pp collisions at $\sqrt{s} = 7$ TeV
 Experiment: CMS
 Collider: LHC
 SpiresID: 9383875
 Status: VALIDATED
 Authors:
  - Paolo Gunnellini <paolo.gunnellini@desy.de>
+ 
 References:
  - JHEP 1204 (2012) 084
  - DOI: 10.1007/JHEP04(2012)084
  - arXiv:hep-ex/1202.4617 
 RunInfo:
- QCD events with pT > 10 GeV
+ QCD events with $p_T$ $>$ 10 GeV
+
 NumEvents: 1000000
 Beams: [p+, p+]
 Energies: [7000]

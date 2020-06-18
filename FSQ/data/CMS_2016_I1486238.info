@@ -3,7 +3,7 @@ Year: 2016
 Summary: Studies of 2 b-jet + 2 jet production in proton-proton collisions at 7 TeV
 Experiment: CMS
 Collider: LHC
-SpiresID: 1486238
+InspireID: 1486238
 Status: VALIDATED
 Authors:
  - P. Gunnellini
@@ -20,16 +20,5 @@ Beams: [p+, p+]
 Energies: [7000]
 PtCuts: 2 b-jets with $\pT > 20$ GeV in $|\eta|$ $<$ 2.4; 2 jets with $\pT > 20$ GeV in $|\eta|$ $<$ 4.7
 Description:
-	Measurements are presented of the cross section for the production of at
-least four jets, of which at least two originate from b quarks, in
-proton-proton collisions. Data collected with the CMS detector at the LHC at a
-center-of-mass energy of 7 TeV are used, corresponding to an integrated
-luminosity of 3 inverse picobarns. The cross section is measured as a function
-of the jet transverse momentum for pt 20 GeV, and of the jet pseudorapidity for
-abs(eta)<2.4 (b jets), 4.7 (untagged jets). The correlations in azimuthal angle
-and pt between the jets are also studied. The eta and pt distributions of the four jets and the correlations between them
-are well reproduced by event generators that combine perturbative QCD
-calculations at next-to-leading-order accuracy with contributions from parton
-showers and multiparton interactions.stat)  
-
+	'Measurements are presented of the cross section for the production of at least four jets, of which at least two originate from b quarks, in proton-proton collisions. Data collected with the CMS detector at the LHC at a center-of-mass energy of 7 TeV are used, corresponding to an integrated luminosity of 3 inverse picobarns. The cross section is measured as a function of the jet transverse momentum for pt 20 GeV, and of the jet pseudorapidity for abs(eta)<2.4 (b jets), 4.7 (untagged jets). The correlations in azimuthal angle and pt between the jets are also studied. The eta and pt distributions of the four jets and the correlations between them are well reproduced by event generators that combine perturbative QCD calculations at next-to-leading-order accuracy with contributions from parton showers and multiparton interactions.'  
 

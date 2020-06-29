@@ -27,6 +27,13 @@ namespace Rivet {
     /// Book histograms and initialise projections before the run
     void init() {
 
+      // Get options from the new option system
+      // default to combined.
+      _mode = 2;
+      if ( getOption("LMODE") == "EL" ) _mode = 0;
+      if ( getOption("LMODE") == "MU" ) _mode = 1;
+      if ( getOption("LMODE") == "EMU" ) _mode = 2;
+
       FinalState fs;
       VisibleFinalState visfs(fs);
       VetoedFinalState fs_notaudecay(fs);
@@ -180,20 +187,18 @@ namespace Rivet {
     void finalize() {
 
       double norm = (sumOfWeights() != 0) ? crossSection()/sumOfWeights() : 1.0;
+      
+      // when running in combined mode, need to average to get lepton xsec
+      if (_mode == 2) norm /= 2.;
 
-      norm /= 2.; //assumes the MC sample contains both Z->ee and Z->mumu. if
-      //            only one decay channel is included the cross section input
-      //            parameter should include a factor 2 to compensate the
-      //            missing channel.
-
-      MSG_INFO("Cross section = " << std::setfill(' ') << std::setw(14)
-               << std::fixed << std::setprecision(3) << crossSection() << " pb");
-      MSG_INFO("# Events      = " << std::setfill(' ') << std::setw(14)
-               << std::fixed << std::setprecision(3) << numEvents() );
-      MSG_INFO("SumW          = " << std::setfill(' ') << std::setw(14)
-               << std::fixed << std::setprecision(3) << sumOfWeights());
-      MSG_INFO("Norm factor   = " << std::setfill(' ') << std::setw(14)
-               << std::fixed << std::setprecision(6) << norm);
+      // MSG_INFO("Cross section = " << std::setfill(' ') << std::setw(14)
+      //          << std::fixed << std::setprecision(3) << crossSection() << " pb");
+      // MSG_INFO("# Events      = " << std::setfill(' ') << std::setw(14)
+      //          << std::fixed << std::setprecision(3) << numEvents() );
+      // MSG_INFO("SumW          = " << std::setfill(' ') << std::setw(14)
+      //          << std::fixed << std::setprecision(3) << sumOfWeights());
+      // MSG_INFO("Norm factor   = " << std::setfill(' ') << std::setw(14)
+      //          << std::fixed << std::setprecision(6) << norm);
 
       scale(_h_excmult_jets_tot, norm);
       scale(_h_incmult_jets_tot, norm);
@@ -214,6 +219,10 @@ namespace Rivet {
       scale(_h_jzb_ptHigh, norm);
       scale(_h_jzb_ptLow, norm);
     }
+
+  protected:
+
+    size_t _mode;
 
   private:
 

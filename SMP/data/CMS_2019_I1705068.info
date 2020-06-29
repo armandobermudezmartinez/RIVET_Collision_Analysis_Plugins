@@ -4,8 +4,9 @@ Summary: Measurement of associated production of a W boson and a charm quark in 
 Experiment: CMS
 Collider: LHC
 InspireID: 1705068
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
+ - cms-pag-conveners-smp@cern.ch
  - Svenja.Karen.Pflitsch@cern.ch
  - Katerina.Lipka@cern.ch 
 References:
@@ -43,6 +44,3 @@ BibTeX: '@article{Sirunyan:2018hde,
       reportNumber   = "CMS-SMP-17-014, CERN-EP-2018-282",
       SLACcitation   = "%%CITATION = ARXIV:1811.10021;%%"
 }'
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
-

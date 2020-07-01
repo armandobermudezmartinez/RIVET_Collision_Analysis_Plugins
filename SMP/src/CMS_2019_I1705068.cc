@@ -4,7 +4,7 @@
 #include "Rivet/Projections/FastJets.hh"
 
 #include "Rivet/Projections/WFinder.hh"
-#include "Rivet/Projections/UnstableFinalState.hh"
+#include "Rivet/Projections/UnstableParticles.hh"
 #include <iostream>
 
 namespace Rivet {
@@ -18,22 +18,21 @@ namespace Rivet {
     void init() {
 
       FinalState fs;
-      WFinder wfinder_mu(fs, Cuts::abseta < 2.4 && Cuts::pT > 0*GeV, PID::MUON, 0*GeV, 1000000*GeV, 0*GeV, 0.1, WFinder::CLUSTERNODECAY, WFinder::NOTRACK, WFinder::TRANSMASS);
-      addProjection(wfinder_mu, "WFinder_mu");
+      WFinder wfinder_mu(fs, Cuts::abseta < 2.4 && Cuts::pT > 0*GeV, PID::MUON, 0*GeV, 1000000*GeV, 0*GeV, 0.1, WFinder::ChargedLeptons::PROMPT, WFinder::ClusterPhotons::NODECAY, WFinder::AddPhotons::NO, WFinder::MassWindow::MT);
+      declare(wfinder_mu, "WFinder_mu");
       
       UnstableParticles dst(Cuts::pT > 5*GeV && Cuts::abseta < 2.4); 
-      addProjection(dst, "Dstar");
+      declare(dst, "Dstar");
       
       // Particle-Level Histograms form the paper: 
-      _hist_WplusMinus_MuAbseta = bookHisto1D("d04-x01-y01");
-      _hist_Wplus_MuAbseta = bookHisto1D("d05-x01-y01");
-      _hist_Wminus_MuAbseta = bookHisto1D("d06-x01-y01");   
+      book(_hist_WplusMinus_MuAbseta, "d04-x01-y01");
+      book(_hist_Wplus_MuAbseta, "d05-x01-y01");
+      book(_hist_Wminus_MuAbseta, "d06-x01-y01");   
            
     }
 
     void analyze(const Event& event) {
         
-        const double weight = event.weight();        
         const WFinder& wfinder_mu = applyProjection<WFinder>(event, "WFinder_mu"); 
         
         if (wfinder_mu.bosons().size() != 1) vetoEvent;  
@@ -54,23 +53,23 @@ namespace Rivet {
         // W+ccbar (ccbar from gluon splitting) has equal probability to be OS or SS
         // OS-SS to remove the gluon splitting background
         
-        const UnstableParticles& dst = applyProjection<UnstableFinalState>(event, "Dstar");
+        const UnstableParticles& dst = applyProjection<UnstableParticles>(event, "Dstar");
         for(auto p: dst.particles()) {
           if(muID == -13 && p.pid() == -413){ // OS
-            _hist_Wplus_MuAbseta->fill(eta0, weight); 
-            _hist_WplusMinus_MuAbseta->fill(eta0, weight); 
+            _hist_Wplus_MuAbseta->fill(eta0); 
+            _hist_WplusMinus_MuAbseta->fill(eta0); 
           }
           else if(muID == 13 && p.pid() == 413){ // OS
-            _hist_Wminus_MuAbseta->fill(eta0, weight);
-            _hist_WplusMinus_MuAbseta->fill(eta0, weight);
+            _hist_Wminus_MuAbseta->fill(eta0);
+            _hist_WplusMinus_MuAbseta->fill(eta0);
           }
           else if (muID == -13 && p.pid() == 413) { // SS
-            _hist_Wplus_MuAbseta->fill(eta0, weight*-1); 
-            _hist_WplusMinus_MuAbseta->fill(eta0, weight*-1); 
+            _hist_Wplus_MuAbseta->fill(eta0*-1); 
+            _hist_WplusMinus_MuAbseta->fill(eta0*-1); 
           }
           else if (muID == 13 && p.pid() == -413) { // SS
-            _hist_Wminus_MuAbseta->fill(eta0, weight*-1); 
-            _hist_WplusMinus_MuAbseta->fill(eta0, weight*-1); 
+            _hist_Wminus_MuAbseta->fill(eta0*-1); 
+            _hist_WplusMinus_MuAbseta->fill(eta0*-1); 
           }
         }
         

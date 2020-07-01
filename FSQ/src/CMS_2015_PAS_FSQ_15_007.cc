@@ -19,50 +19,49 @@ namespace Rivet {
 
 
     void init() {
-      const ChargedFinalState cfs(-2.0, 2.0, 500*MeV);
-      addProjection(cfs, "CFS");
+      const ChargedFinalState cfs(Cuts::abseta < 2.0 && Cuts::pt > 500*MeV);
+      declare(cfs, "CFS");
 
-      const ChargedFinalState cfsforjet(-2.5, 2.5, 500*MeV);
+      const ChargedFinalState cfsforjet(Cuts::abseta < 2.5 && Cuts::pt > 500*MeV);
       const FastJets jetpro(cfsforjet, FastJets::SISCONE, 0.5);
-      addProjection(jetpro, "Jets");
+      declare(jetpro, "Jets");
 
-      _h_PtSum_vs_leadTrackPt_transMin = bookProfile1D(1,1,1);
-      _h_PtSum_vs_leadTrackPt_transMax = bookProfile1D(2,1,1); 
-      _h_PtSum_vs_leadTrackPt_transDiff = bookProfile1D(3,1,1);
-      _h_PtSum_vs_leadTrackPt_transAvg = bookProfile1D(4,1,1);
-      
-      _h_Nch_vs_leadTrackPt_transMin = bookProfile1D(5,1,1);
-      _h_Nch_vs_leadTrackPt_transMax = bookProfile1D(6,1,1);
-      _h_Nch_vs_leadTrackPt_transDiff = bookProfile1D(7,1,1);
-      _h_Nch_vs_leadTrackPt_transAvg = bookProfile1D(8,1,1);
+      book(_h_PtSum_vs_leadTrackPt_transMin, 1,1,1);
+      book(_h_PtSum_vs_leadTrackPt_transMax, 2,1,1); 
+      book(_h_PtSum_vs_leadTrackPt_transDiff, 3,1,1);
+      book(_h_PtSum_vs_leadTrackPt_transAvg, 4,1,1);
 
-      _h_PtSum_vs_leadJetPt_transMin = bookProfile1D(9,1,1);
-      _h_PtSum_vs_leadJetPt_transMax = bookProfile1D(10,1,1);
-      _h_PtSum_vs_leadJetPt_transDiff = bookProfile1D(11,1,1);
-      _h_PtSum_vs_leadJetPt_transAvg = bookProfile1D(12,1,1);
- 
-      _h_Nch_vs_leadJetPt_transMin = bookProfile1D(13,1,1);
-      _h_Nch_vs_leadJetPt_transMax = bookProfile1D(14,1,1);
-      _h_Nch_vs_leadJetPt_transDiff = bookProfile1D(15,1,1);
-      _h_Nch_vs_leadJetPt_transAvg = bookProfile1D(16,1,1);     
+      book(_h_Nch_vs_leadTrackPt_transMin, 5,1,1);
+      book(_h_Nch_vs_leadTrackPt_transMax, 6,1,1);
+      book(_h_Nch_vs_leadTrackPt_transDiff, 7,1,1);
+      book(_h_Nch_vs_leadTrackPt_transAvg, 8,1,1);
+
+      book(_h_PtSum_vs_leadJetPt_transMin, 9,1,1);
+      book(_h_PtSum_vs_leadJetPt_transMax, 10,1,1);
+      book(_h_PtSum_vs_leadJetPt_transDiff, 11,1,1);
+      book(_h_PtSum_vs_leadJetPt_transAvg, 12,1,1);
+
+      book(_h_Nch_vs_leadJetPt_transMin, 13,1,1);
+      book(_h_Nch_vs_leadJetPt_transMax, 14,1,1);
+      book(_h_Nch_vs_leadJetPt_transDiff, 15,1,1);
+      book(_h_Nch_vs_leadJetPt_transAvg, 16,1,1);     
 
     }
 
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
-      const double weight = event.weight();
 
       // Find the lead jet, applying a restriction that the jets must be within |eta| < 2.
       FourMomentum p_leadjet,p_leadtrack;
-      foreach (const Jet& j, applyProjection<FastJets>(event, "Jets").jetsByPt(1.0*GeV)) {
+      for (const Jet& j : apply<FastJets>(event, "Jets").jetsByPt(1.0*GeV)) {
         if (j.abseta() < 2.0) {
           p_leadjet = j.momentum();
           break;
         }
       }
       
-      foreach (const Particle& j, applyProjection<ChargedFinalState>(event, "CFS").particlesByPt(0.5*GeV)) {
+      for (const Particle& j : apply<ChargedFinalState>(event, "CFS").particlesByPt(0.5*GeV)) {
         if (j.abseta() < 2.0) {
           p_leadtrack = j.momentum();
           break;
@@ -76,7 +75,7 @@ namespace Rivet {
       const double phileadtrack = p_leadtrack.phi();
       const double pTleadtrack  = p_leadtrack.pT();
       
-      Particles particles = applyProjection<ChargedFinalState>(event, "CFS").particlesByPt();
+      Particles particles = apply<ChargedFinalState>(event, "CFS").particlesByPt();
       
       int nTransverse_leadjet = 0;
       double ptSumTransverse_leadjet = 0.;
@@ -108,7 +107,7 @@ namespace Rivet {
       int nAway_leadtrack = 0;
       double ptSumAway_leadtrack = 0.;
 
-      foreach (const Particle& p, particles) {
+      for (const Particle& p : particles) {
         const double pT = p.pT()/GeV;
     
         if (!p_leadjet.isZero()){
@@ -214,14 +213,14 @@ namespace Rivet {
       ptSumTransverseMin_leadjet = ptSumTransverse2_leadjet;
     }
     
-    _h_Nch_vs_leadJetPt_transDiff->fill(pTleadjet/GeV, 1./halfarea*(nTransverseMax_leadjet - nTransverseMin_leadjet), weight);
-    _h_PtSum_vs_leadJetPt_transDiff->fill(pTleadjet/GeV, 1./halfarea*(ptSumTransverseMax_leadjet - ptSumTransverseMin_leadjet), weight);
-    _h_Nch_vs_leadJetPt_transAvg->fill(pTleadjet/GeV, 1./fullarea*(nTransverseMax_leadjet + nTransverseMin_leadjet), weight);
-    _h_PtSum_vs_leadJetPt_transAvg->fill(pTleadjet/GeV, 1./fullarea*(ptSumTransverseMax_leadjet + ptSumTransverseMin_leadjet), weight);
-    _h_Nch_vs_leadJetPt_transMax->fill(pTleadjet/GeV, 1./halfarea*nTransverseMax_leadjet, weight);
-    _h_PtSum_vs_leadJetPt_transMax->fill(pTleadjet/GeV, 1./halfarea*ptSumTransverseMax_leadjet, weight);
-    _h_Nch_vs_leadJetPt_transMin->fill(pTleadjet/GeV, 1./halfarea*nTransverseMin_leadjet, weight);
-    _h_PtSum_vs_leadJetPt_transMin->fill(pTleadjet/GeV, 1./halfarea*ptSumTransverseMin_leadjet, weight);
+    _h_Nch_vs_leadJetPt_transDiff->fill(pTleadjet/GeV, 1./halfarea*(nTransverseMax_leadjet - nTransverseMin_leadjet));
+    _h_PtSum_vs_leadJetPt_transDiff->fill(pTleadjet/GeV, 1./halfarea*(ptSumTransverseMax_leadjet - ptSumTransverseMin_leadjet));
+    _h_Nch_vs_leadJetPt_transAvg->fill(pTleadjet/GeV, 1./fullarea*(nTransverseMax_leadjet + nTransverseMin_leadjet));
+    _h_PtSum_vs_leadJetPt_transAvg->fill(pTleadjet/GeV, 1./fullarea*(ptSumTransverseMax_leadjet + ptSumTransverseMin_leadjet));
+    _h_Nch_vs_leadJetPt_transMax->fill(pTleadjet/GeV, 1./halfarea*nTransverseMax_leadjet);
+    _h_PtSum_vs_leadJetPt_transMax->fill(pTleadjet/GeV, 1./halfarea*ptSumTransverseMax_leadjet);
+    _h_Nch_vs_leadJetPt_transMin->fill(pTleadjet/GeV, 1./halfarea*nTransverseMin_leadjet);
+    _h_PtSum_vs_leadJetPt_transMin->fill(pTleadjet/GeV, 1./halfarea*ptSumTransverseMin_leadjet);
     
       } //for leading jet
       
@@ -247,15 +246,15 @@ namespace Rivet {
       ptSumTransverseMin_leadtrack = ptSumTransverse2_leadtrack;
     }
     
-    _h_Nch_vs_leadTrackPt_transDiff->fill(pTleadtrack/GeV, 1./halfarea*(nTransverseMax_leadtrack - nTransverseMin_leadtrack), weight);
-    _h_PtSum_vs_leadTrackPt_transDiff->fill(pTleadtrack/GeV, 1./halfarea*(ptSumTransverseMax_leadtrack - ptSumTransverseMin_leadtrack), weight);
-    _h_Nch_vs_leadTrackPt_transAvg->fill(pTleadtrack/GeV, 1./fullarea*(nTransverseMax_leadtrack + nTransverseMin_leadtrack), weight);
-    _h_PtSum_vs_leadTrackPt_transAvg->fill(pTleadtrack/GeV, 1./fullarea*(ptSumTransverseMax_leadtrack + ptSumTransverseMin_leadtrack), weight);
+    _h_Nch_vs_leadTrackPt_transDiff->fill(pTleadtrack/GeV, 1./halfarea*(nTransverseMax_leadtrack - nTransverseMin_leadtrack));
+    _h_PtSum_vs_leadTrackPt_transDiff->fill(pTleadtrack/GeV, 1./halfarea*(ptSumTransverseMax_leadtrack - ptSumTransverseMin_leadtrack));
+    _h_Nch_vs_leadTrackPt_transAvg->fill(pTleadtrack/GeV, 1./fullarea*(nTransverseMax_leadtrack + nTransverseMin_leadtrack));
+    _h_PtSum_vs_leadTrackPt_transAvg->fill(pTleadtrack/GeV, 1./fullarea*(ptSumTransverseMax_leadtrack + ptSumTransverseMin_leadtrack));
     
-    _h_Nch_vs_leadTrackPt_transMax->fill(pTleadtrack/GeV, 1./halfarea*nTransverseMax_leadtrack, weight);
-    _h_PtSum_vs_leadTrackPt_transMax->fill(pTleadtrack/GeV, 1./halfarea*ptSumTransverseMax_leadtrack, weight);
-    _h_Nch_vs_leadTrackPt_transMin->fill(pTleadtrack/GeV, 1./halfarea*nTransverseMin_leadtrack, weight);
-    _h_PtSum_vs_leadTrackPt_transMin->fill(pTleadtrack/GeV, 1./halfarea*ptSumTransverseMin_leadtrack, weight);
+    _h_Nch_vs_leadTrackPt_transMax->fill(pTleadtrack/GeV, 1./halfarea*nTransverseMax_leadtrack);
+    _h_PtSum_vs_leadTrackPt_transMax->fill(pTleadtrack/GeV, 1./halfarea*ptSumTransverseMax_leadtrack);
+    _h_Nch_vs_leadTrackPt_transMin->fill(pTleadtrack/GeV, 1./halfarea*nTransverseMin_leadtrack);
+    _h_PtSum_vs_leadTrackPt_transMin->fill(pTleadtrack/GeV, 1./halfarea*ptSumTransverseMin_leadtrack);
       
       }//for leading track
 

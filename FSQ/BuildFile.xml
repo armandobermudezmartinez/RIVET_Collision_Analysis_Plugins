@@ -15,4 +15,3 @@
 </export>
 
 <!-- Do not compile plugins that have not been ported to Rivet 3 yet -->
-<flags SKIP_FILES="CMS_2015_PAS_FSQ_15_007.cc"/>

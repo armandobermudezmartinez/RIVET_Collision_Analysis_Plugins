@@ -1,0 +1,205 @@
+// -*- C++ -*-
+#include "Rivet/Analysis.hh"
+#include "Rivet/Projections/FinalState.hh"
+#include "Rivet/Projections/FastJets.hh"
+#include "Rivet/Projections/DressedLeptons.hh"
+#include "Rivet/Projections/ZFinder.hh"
+
+namespace Rivet {
+
+
+  /// @brief Measurements of differential Z boson production cross sections in proton-proton collisions at 13 TeV
+  class CMS_2019_I1753680 : public Analysis {
+  public:
+    
+    /// Constructor
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2019_I1753680);
+    
+
+    /// @name Analysis methods
+    //@{
+
+    /// Book histograms and initialise projections before the run
+    void init() {
+
+      // Initialise and register projections
+      FinalState fs;
+      Cut cut = Cuts::abseta < 2.4 && Cuts::pT > 25*GeV;
+
+      ZFinder zeeFind(fs, cut, PID::ELECTRON, 76.1876*GeV, 106.1876*GeV, 0.1, ZFinder::ChargedLeptons::PROMPTCHLEPTONS, ZFinder::ClusterPhotons::CLUSTERNODECAY, ZFinder::PhotonTracking::TRACK );
+      declare(zeeFind, "ZeeFind");
+      ZFinder zmmFind(fs, cut, PID::MUON    , 76.1876*GeV, 106.1876*GeV, 0.1, ZFinder::ChargedLeptons::PROMPTCHLEPTONS, ZFinder::ClusterPhotons::CLUSTERNODECAY, ZFinder::PhotonTracking::TRACK );
+      declare(zmmFind, "ZmmFind");
+      
+      // Book histograms
+      _h_Zmm_absY          = bookHisto1D(26, 1, 1);
+      _h_Zee_absY          = bookHisto1D(26, 1, 2);
+      _h_Zll_absY          = bookHisto1D(26, 1, 3);
+      _h_Zmm_pt            = bookHisto1D(27, 1, 1);
+      _h_Zee_pt            = bookHisto1D(27, 1, 2);
+      _h_Zll_pt            = bookHisto1D(27, 1, 3);
+      _h_Zmm_phiStar       = bookHisto1D(28, 1, 1);
+      _h_Zee_phiStar       = bookHisto1D(28, 1, 2);
+      _h_Zll_phiStar       = bookHisto1D(28, 1, 3);
+      _h_Zll_pt_Y0         = bookHisto1D(29, 1, 1);
+      _h_Zll_pt_Y1         = bookHisto1D(29, 1, 2);
+      _h_Zll_pt_Y2         = bookHisto1D(29, 1, 3);
+      _h_Zll_pt_Y3         = bookHisto1D(29, 1, 4);
+      _h_Zll_pt_Y4         = bookHisto1D(29, 1, 5);
+      _h_Zll_pt_norm       = bookHisto1D(30, 1, 1);
+      _h_Zll_phiStar_norm  = bookHisto1D(31, 1, 1);
+      _h_Zll_absY_norm     = bookHisto1D(32, 1, 1);
+      _h_Zll_pt_Y0_norm    = bookHisto1D(33, 1, 1);
+      _h_Zll_pt_Y1_norm    = bookHisto1D(33, 1, 2);
+      _h_Zll_pt_Y2_norm    = bookHisto1D(33, 1, 3);
+      _h_Zll_pt_Y3_norm    = bookHisto1D(33, 1, 4);
+      _h_Zll_pt_Y4_norm    = bookHisto1D(33, 1, 5);
+      
+    }
+    
+
+    /// Perform the per-event analysis
+    void analyze(const Event& event) {
+      
+      double weight = event.weight();
+      
+      const ZFinder& zeeFS = apply<ZFinder>(event, "ZeeFind");
+      const ZFinder& zmumuFS = apply<ZFinder>(event, "ZmmFind");
+
+      const Particles& zees = zeeFS.bosons();
+      const Particles& zmumus = zmumuFS.bosons();
+
+      if (zees.size() + zmumus.size() != 1) {
+        MSG_DEBUG("Did not find exactly one good Z candidate");
+        vetoEvent;
+      }
+
+      //event identification depending on mass window
+      bool ee_event=false;
+      bool mm_event=false;
+
+      if (zees.size() == 1) { 
+        ee_event = true; 
+      }
+      if (zmumus.size() == 1) { 
+        mm_event = true; 
+      }
+
+      const Particles& theLeptons = ee_event ? zeeFS.constituents() : zmumuFS.constituents();
+      const Particle& lminus = theLeptons[0].charge() < 0 ? theLeptons[0] : theLeptons[1];
+      const Particle& lplus = theLeptons[0].charge() < 0 ? theLeptons[1] : theLeptons[0];
+
+      //calculate phi*
+      const double thetaStar = acos(tanh( 0.5 * (lminus.eta() - lplus.eta()) ));
+      const double dPhi = M_PI - deltaPhi(lminus, lplus);
+      const double phiStar = tan(0.5 * dPhi) * sin(thetaStar);
+      
+      const Particle& zcand = ee_event ? zees[0] : zmumus[0];
+
+      if (ee_event) {
+        _h_Zee_absY->fill(zcand.absrap(), weight);
+        _h_Zee_pt->fill(zcand.pt(), weight);
+        _h_Zee_phiStar->fill(phiStar, weight);
+      }
+      else if (mm_event) {
+        _h_Zmm_absY->fill(zcand.absrap(), weight);
+        _h_Zmm_pt->fill(zcand.pt(), weight);
+        _h_Zmm_phiStar->fill(phiStar, weight);
+      }
+
+      _h_Zll_pt->fill(zcand.pt(), weight);
+      _h_Zll_pt_norm->fill(zcand.pt(), weight);
+      _h_Zll_phiStar->fill(phiStar, weight);
+      _h_Zll_phiStar_norm->fill(phiStar, weight);
+      _h_Zll_absY->fill(zcand.absrap(), weight);
+      _h_Zll_absY_norm->fill(zcand.absrap(), weight);
+
+      if      (zcand.absrap()<0.4) {
+        _h_Zll_pt_Y0->fill(zcand.pt(), weight);
+        _h_Zll_pt_Y0_norm->fill(zcand.pt(), weight);
+      }
+      else if (zcand.absrap()<0.8) {
+        _h_Zll_pt_Y1->fill(zcand.pt(), weight);
+        _h_Zll_pt_Y1_norm->fill(zcand.pt(), weight);
+      }
+      else if (zcand.absrap()<1.2) {
+        _h_Zll_pt_Y2->fill(zcand.pt(), weight);
+        _h_Zll_pt_Y2_norm->fill(zcand.pt(), weight);
+      }
+      else if (zcand.absrap()<1.6) {
+        _h_Zll_pt_Y3->fill(zcand.pt(), weight);
+        _h_Zll_pt_Y3_norm->fill(zcand.pt(), weight);
+      }
+      else if (zcand.absrap()<2.4) {
+        _h_Zll_pt_Y4->fill(zcand.pt(), weight);
+        _h_Zll_pt_Y4_norm->fill(zcand.pt(), weight);
+      }
+
+    }
+    
+    void normalizeToSum(Histo1DPtr hist) {
+      double sum = 0.;
+      for (size_t i = 0; i < hist->numBins(); ++i) {
+        sum += hist->bin(i).height();
+      }
+      scale(hist, 1./sum);
+    }
+
+    /// Normalise histograms etc., after the run
+    void finalize() {
+      
+      scale(_h_Zmm_pt,      crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_absY,    crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_phiStar, crossSection()/picobarn/sumOfWeights());
+      
+      scale(_h_Zee_pt,      crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_absY,    crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_phiStar, crossSection()/picobarn/sumOfWeights());
+      
+      double aveFac = 0.5; // average ee and mumu for ll sample
+      if (_h_Zmm_pt->numEntries() == 0 or _h_Zee_pt->numEntries() == 0)
+        aveFac = 1.0; // for exclusive ee or mumu samples
+      scale(_h_Zll_pt,      aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_absY,    aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_phiStar, aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y0,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y1,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y2,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y3,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zll_pt_Y4,   aveFac*crossSection()/picobarn/sumOfWeights());
+
+      normalizeToSum(_h_Zll_pt_norm);
+      normalizeToSum(_h_Zll_absY_norm);
+      normalizeToSum(_h_Zll_phiStar_norm);
+      normalizeToSum(_h_Zll_pt_Y0_norm);
+      normalizeToSum(_h_Zll_pt_Y1_norm);
+      normalizeToSum(_h_Zll_pt_Y2_norm);
+      normalizeToSum(_h_Zll_pt_Y3_norm);
+      normalizeToSum(_h_Zll_pt_Y4_norm);
+
+    }
+
+    //@}
+
+
+    /// @name Histograms
+
+  private:
+    
+    Histo1DPtr   _h_Zmm_pt, _h_Zmm_phiStar, _h_Zmm_absY;
+    Histo1DPtr   _h_Zee_pt, _h_Zee_phiStar, _h_Zee_absY;
+
+    Histo1DPtr   _h_Zll_pt, _h_Zll_phiStar, _h_Zll_absY;
+    Histo1DPtr   _h_Zll_pt_Y0, _h_Zll_pt_Y1, _h_Zll_pt_Y2, _h_Zll_pt_Y3, _h_Zll_pt_Y4;
+
+    Histo1DPtr   _h_Zll_pt_norm, _h_Zll_phiStar_norm, _h_Zll_absY_norm;
+    Histo1DPtr   _h_Zll_pt_Y0_norm, _h_Zll_pt_Y1_norm, _h_Zll_pt_Y2_norm, _h_Zll_pt_Y3_norm, _h_Zll_pt_Y4_norm;
+
+  };
+
+
+  // The hook for the plugin system
+  DECLARE_RIVET_PLUGIN(CMS_2019_I1753680);
+
+
+}

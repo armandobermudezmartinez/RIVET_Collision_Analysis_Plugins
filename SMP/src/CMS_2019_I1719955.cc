@@ -39,36 +39,26 @@ namespace Rivet {
       _h_deltaPhi_3J.add( 800., 1000., book(dummy,16,1,1));
       _h_deltaPhi_3J.add( 1000.,1200., book(dummy,17,1,1));
       _h_deltaPhi_3J.add( 1200.,4000., book(dummy,18,1,1));
-
-      for (int i=0;i<9;i++) norm[i] = 0.; 
     }
 
     /// Per-event analysis
     void analyze(const Event& event) {
       const Jets& jets = applyProjection<JetAlg>(event, "ANTIKT").jetsByPt(Cuts::absrap < 5. && Cuts::pT > 100*GeV);
       const Jets& lowjets = applyProjection<JetAlg>(event, "ANTIKT").jetsByPt(Cuts::absrap < 2.5 && Cuts::pT > 30*GeV);
-      const double weight = 1.0;
       if (jets.size() < 2) vetoEvent;
       if (jets[0].absrap() > 2.5 || jets[1].absrap() > 2.5) vetoEvent;
 
       const double dphi = 180./M_PI*deltaPhi(jets[0].phi(), jets[1].phi());
       _h_deltaPhi_2J.fill(jets[0].pT(), dphi);    
       if (lowjets.size() > 2) _h_deltaPhi_3J.fill(jets[0].pT(), dphi);
-
-      double ptmax[10] = { 200., 300., 400., 500., 600., 700., 800., 1000., 1200., 4000. };
-
-      for (int i = 1; i < 10; i++){
-        if (jets[0].pT() > ptmax[i-1] && jets[0].pT() < ptmax[i]) norm[i-1] = norm[i-1] + weight;
-      } 
-      
     }
 
     /// Scale histograms
     void finalize() {
       int region_ptmax_2J = 0;
       double norm_finalize[9];
-      for (int i=0;i<9;i++) norm_finalize[i] = norm[i];
       for (Histo1DPtr histo_2J : _h_deltaPhi_2J.histos()) {
+        norm_finalize[region_ptmax_2J] = histo_2J->integral();
         if (norm_finalize[region_ptmax_2J] != 0) scale(histo_2J, 1.0/norm_finalize[region_ptmax_2J]);
         region_ptmax_2J++;  
       }
@@ -84,7 +74,6 @@ namespace Rivet {
 
     BinnedHistogram _h_deltaPhi_2J;
     BinnedHistogram _h_deltaPhi_3J;
-    double norm[9];
 
   };
  

@@ -207,6 +207,8 @@ namespace Rivet {
     }
     
     static void fillRatioHist(Histo1DPtr& hist_ratio, const Histo1DPtr& hist_t, const Histo1DPtr& hist_tbar) {
+      
+    
       for (size_t i = 0; i < hist_ratio->numBins(); ++i) {
         const auto& t_bin = hist_t->bin(i);
         const auto& tbar_bin = hist_tbar->bin(i);
@@ -259,6 +261,7 @@ namespace Rivet {
         prompt_photons, prompt_leptons, 0.1,
         lepton_cut, true, true
       );
+      declare(prompt_leptons, "Leptons");
       declare(dressed_leptons, "DressedLeptons");
 
 
@@ -337,17 +340,39 @@ namespace Rivet {
       }
       
       
-      vector<DressedLepton> leptons = applyProjection<DressedLeptons>(
+      vector<DressedLepton> dressedLeptons = applyProjection<DressedLeptons>(
         event,
         "DressedLeptons"
       ).dressedLeptons();
       
+      vector<Particle> leptons = applyProjection<PromptFinalState>(
+        event,
+        "Leptons"
+      ).particles();
       
-      if (leptons.size() != 1) {
+      
+      if (leptons.size() == 0) {
         return;
       }
-      std::cout<<leptons[0].pid()<<std::endl;
+      /*
+      if (dressedLeptons.size()!=1)
+      {
+        return;
+      }
+      */
       
+      if (abs(leptons[0].pid())!=11) {
+        return;
+      }
+      
+      std::cout<<_sum_t_weights<<", "<<_sum_tbar_weights<<std::endl;
+      for (size_t i = 0; i<leptons.size(); ++i)
+      {
+        std::cout<<"  "<<i<<": pt="<<leptons[i].pt()/GeV<<", eta="<<leptons[i].eta()<<std::endl;
+        if (leptons[i].parents().size()>0) std::cout<<" <- "<<leptons[i].parents()[0].pid()<<std::endl;
+      }
+      
+      /*
       Cut jet_cut((Cuts::abseta < 4.7) and (Cuts::pT > 40.*GeV));
       vector<Jet> jets = applyProjection<FastJets>(
         event,
@@ -374,15 +399,15 @@ namespace Rivet {
       if (neutrinos.size() == 0) {
         return;
       }
-
+      */
       
       if (topQuarks[0].charge() > 0) {
         _hist_t_lepton_pt->fill(leptons[0].pt()/GeV);
-        _hist_t_lepton_y->fill(leptons[0].absrapidity());
+        _hist_t_lepton_y->fill(leptons[0].abseta());
         
       } else {
         _hist_tbar_lepton_pt->fill(leptons[0].pt()/GeV);
-        _hist_tbar_lepton_y->fill(leptons[0].absrapidity());
+        _hist_tbar_lepton_y->fill(leptons[0].abseta());
       }
     }
 
@@ -391,18 +416,31 @@ namespace Rivet {
       std::cout<<"int (w/o overflow)="<<_hist_t_lepton_pt->integral(false)<<", int="<<_hist_t_lepton_pt->integral(true)<<", xsec="<<(0.5*_hist_t_lepton_pt->integral(false)*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights)<<std::endl;
       std::cout<<"int (w/o overflow)="<<_hist_tbar_lepton_pt->integral(false)<<", int="<<_hist_tbar_lepton_pt->integral(true)<<", xsec="<<(0.5*_hist_tbar_lepton_pt->integral(false)*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights)<<std::endl;
       
-
+      for (size_t ibin = 0; ibin < _hist_t_lepton_pt->numBins (); ++ibin)
+      {
+        double t = _hist_t_lepton_pt->bin(ibin).area();
+        double tbar = _hist_tbar_lepton_pt->bin(ibin).area();
+        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
+      }
+      for (size_t ibin = 0; ibin < _hist_t_lepton_y->numBins (); ++ibin)
+      {
+        double t = _hist_t_lepton_y->bin(ibin).area();
+        double tbar = _hist_tbar_lepton_y->bin(ibin).area();
+        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
+      }
+      //std::cout<<_hist_t_lepton_pt->bin(0).area()<<", "<<_hist_t_lepton_y->bin(0).area()<<std::endl;
+      /*
       scale(_hist_t_top_pt, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
       scale(_hist_tbar_top_pt, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/sumOfWeights());
       
       scale(_hist_t_top_y, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
       scale(_hist_tbar_top_y, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
       
-      scale(_hist_t_lepton_pt, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_lepton_pt, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
+      scale(_hist_t_lepton_pt, _t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
+      scale(_hist_tbar_lepton_pt,_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
       
-      scale(_hist_t_lepton_y, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_lepton_y, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
+      scale(_hist_t_lepton_y, _t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
+      scale(_hist_tbar_lepton_y, _tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
 
       scale(_hist_t_w_pt,0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
       scale(_hist_tbar_w_pt, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
@@ -435,6 +473,7 @@ namespace Rivet {
       fillNormHist(_hist_norm_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
       
       std::cout<<"int xsec: lpt="<<calcXsec(_hist_abs_lepton_pt)<<", ly="<<calcXsec(_hist_abs_lepton_y)<<std::endl;
+      */
     }
 
     //calculated with Hathor v2.1 for a top quark mass of 172.5 GeV at NLO in QCD 

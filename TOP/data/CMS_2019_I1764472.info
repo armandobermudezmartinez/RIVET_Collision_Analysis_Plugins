@@ -4,7 +4,7 @@ Summary: Measurement of the differential ttbar production cross section as a fun
 Experiment: CMS
 Collider: LHC
 InspireID: 1764472
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Dennis Schwarz <dennis.schwarz@desy.de>
  - Roman Kogler

@@ -142,7 +142,7 @@ namespace Rivet {
         }
 
         for ( size_t i = 0; i < solutions2.size(); ++i) {
-          if (solutions2[i] < 0 ) continue;
+          if (solutions2[i] < 0) continue;
           double p_x = (solutions2[i] * solutions2[i] - WMASS * WMASS) / (4 * pxlep);
           double p_y = ( WMASS * WMASS * pylep + 2 * pxlep * pylep * p_x + WMASS * ptlep * solutions2[i]) / (2 * pxlep * pxlep);
           double Delta2 = (p_x - metpx) * (p_x - metpx) + (p_y - metpy) * (p_y - metpy);
@@ -156,8 +156,10 @@ namespace Rivet {
         double pyZeroValue = ( WMASS * WMASS * pxlep + 2 * pxlep * pylep * zeroValue);
         double delta2ZeroValue = (zeroValue - metpx) * (zeroValue - metpx) + (pyZeroValue - metpy) * (pyZeroValue - metpy);
 
-        if (deltaMin == 14000 * 14000)return std::make_pair(result,result2);
-
+        if (deltaMin == 14000 * 14000) {
+          return std::make_pair(result,result2);
+        }
+        
         if (delta2ZeroValue < deltaMin) {
           deltaMin = delta2ZeroValue;
           minPx = zeroValue;
@@ -180,13 +182,6 @@ namespace Rivet {
     static void fillAbsHist(Histo1DPtr& hist_abs, const Histo1DPtr& hist_t, const Histo1DPtr& hist_tbar) {
       (*hist_abs)+=(*hist_t);
       (*hist_abs)+=(*hist_tbar);
-      /*
-      for (size_t i = 0; i < hist_abs->numBins(); ++i) {
-        const auto& t_bin = hist_t->bin(i);
-        const auto& tbar_bin = hist_tbar->bin(i);
-        hist_abs->bin(i).fillBin(t_bin.height()+tbar_bin.height());
-      }
-      */
     }
     
     static void fillNormHist(Histo1DPtr& hist_norm, const Histo1DPtr& hist_t, const Histo1DPtr& hist_tbar) {
@@ -194,20 +189,7 @@ namespace Rivet {
       (*hist_norm)+=(*hist_tbar);
       hist_norm->normalize();
     }
-    
-    static void fillRatioHist(Histo1DPtr& hist_ratio, const Histo1DPtr& hist_t, const Histo1DPtr& hist_tbar) {
-      //YODA::Histo1D hist_sum = hist_t->clone();
-      //hist_sum+=(*hist_tbar);
-      
-      for (size_t i = 0; i < hist_ratio->numBins(); ++i) {
-        const auto& t_bin = hist_t->bin(i);
-        const auto& tbar_bin = hist_tbar->bin(i);
-        hist_ratio->bin(i).fillBin(t_bin.area()/(t_bin.area()+tbar_bin.area()));
-      }
-    }
-    
-  
-  
+
   public:
     CMS_2019_I1744604(): 
       Analysis("CMS_2019_I1744604"),
@@ -383,15 +365,11 @@ namespace Rivet {
      	Vector3 leptonInTopFrame = boostToTopFrame.transform(dressedLeptons[0].momentum()).vector3().unit();
      	double polarizationAngle = ljetInTopFrame.dot(leptonInTopFrame);
 
-      
-      
-      //std::cout<<dressedLeptons[0].pt()<<", cos="<<polarizationAngle<<std::endl;
-      
       if (topQuarks[0].charge() > 0) {
         _hist_t_top_pt->fill(topQuark.pt()/GeV);
         _hist_t_top_y->fill(topQuark.absrapidity());
         _hist_t_lepton_pt->fill(dressedLeptons[0].pt()/GeV);
-        _hist_t_lepton_y->fill(dressedLeptons[0].abseta());
+        _hist_t_lepton_y->fill(dressedLeptons[0].absrapidity());
         _hist_t_w_pt->fill(wboson.pt()/GeV);
         _hist_t_top_cos->fill(polarizationAngle);
         
@@ -399,66 +377,13 @@ namespace Rivet {
         _hist_tbar_top_pt->fill(topQuark.pt()/GeV);
         _hist_tbar_top_y->fill(topQuark.absrapidity());
         _hist_tbar_lepton_pt->fill(dressedLeptons[0].pt()/GeV);
-        _hist_tbar_lepton_y->fill(dressedLeptons[0].abseta());
+        _hist_tbar_lepton_y->fill(dressedLeptons[0].absrapidity());
         _hist_tbar_w_pt->fill(wboson.pt()/GeV);
         _hist_tbar_top_cos->fill(polarizationAngle);
       }
     }
 
     void finalize() {
-      /*
-      std::cout<<"weights="<<sumOfWeights()<<", t="<<_sum_t_weights<<", tbar="<<_sum_tbar_weights<<", xsec="<<(crossSection()/picobarn)<<std::endl;
-      std::cout<<"int (w/o overflow)="<<_hist_t_lepton_pt->integral(false)<<", int="<<_hist_t_lepton_pt->integral(true)<<", xsec="<<(0.5*_hist_t_lepton_pt->integral(false)*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights)<<std::endl;
-      std::cout<<"int (w/o overflow)="<<_hist_tbar_lepton_pt->integral(false)<<", int="<<_hist_tbar_lepton_pt->integral(true)<<", xsec="<<(0.5*_hist_tbar_lepton_pt->integral(false)*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights)<<std::endl;
-      
-      std::cout<<"top pt"<<std::endl;
-      for (size_t ibin = 0; ibin < _hist_t_top_pt->numBins (); ++ibin)
-      {
-        double t = _hist_t_top_pt->bin(ibin).area();
-        double tbar = _hist_tbar_top_pt->bin(ibin).area();
-        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
-      }
-      
-      std::cout<<"top y"<<std::endl;
-      for (size_t ibin = 0; ibin < _hist_t_top_y->numBins (); ++ibin)
-      {
-        double t = _hist_t_top_y->bin(ibin).area();
-        double tbar = _hist_tbar_top_y->bin(ibin).area();
-        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
-      }
-      
-      std::cout<<"lpt"<<std::endl;
-      for (size_t ibin = 0; ibin < _hist_t_lepton_pt->numBins (); ++ibin)
-      {
-        double t = _hist_t_lepton_pt->bin(ibin).area();
-        double tbar = _hist_tbar_lepton_pt->bin(ibin).area();
-        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
-      }
-      
-      std::cout<<"leta"<<std::endl;
-      for (size_t ibin = 0; ibin < _hist_t_lepton_y->numBins (); ++ibin)
-      {
-        double t = _hist_t_lepton_y->bin(ibin).area();
-        double tbar = _hist_tbar_lepton_y->bin(ibin).area();
-        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
-      }
-      std::cout<<"wpt"<<std::endl;
-      for (size_t ibin = 0; ibin < _hist_t_w_pt->numBins (); ++ibin)
-      {
-        double t = _hist_t_w_pt->bin(ibin).area();
-        double tbar = _hist_tbar_w_pt->bin(ibin).area();
-        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
-      }
-      std::cout<<"cos"<<std::endl;
-      for (size_t ibin = 0; ibin < _hist_t_top_cos->numBins (); ++ibin)
-      {
-        double t = _hist_t_top_cos->bin(ibin).area();
-        double tbar = _hist_tbar_top_cos->bin(ibin).area();
-        std::cout<<ibin<<", t="<<t<<", tbar="<<tbar<<", sum="<<(t+tbar)<<std::endl;
-      }
-      */
-      //std::cout<<_hist_t_lepton_pt->bin(0).area()<<", "<<_hist_t_lepton_y->bin(0).area()<<std::endl;
-      
       scale(_hist_t_top_pt, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
       scale(_hist_tbar_top_pt, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
       

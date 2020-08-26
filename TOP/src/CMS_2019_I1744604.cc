@@ -379,26 +379,24 @@ namespace Rivet {
     }
 
     void finalize() override {
-    
+   
       //multiply by 0.5 to average e/mu channels
-      if (_top_charge3 > 0) {
-        scale(_hist_t_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_t_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_t_lepton_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_t_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_t_w_pt,0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_t_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
-      } else if (_top_charge3 < 0) {
-        scale(_hist_tbar_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_tbar_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_tbar_lepton_pt,0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_tbar_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_tbar_w_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-        scale(_hist_tbar_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
-      }
+      scale(_hist_t_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_t_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_t_lepton_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_t_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_t_w_pt,0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_t_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
+
+      scale(_hist_tbar_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_tbar_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_tbar_lepton_pt,0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_tbar_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_tbar_w_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_tbar_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
+
       
-      if (_hist_abs_top_pt->numEntries() > 0 and _hist_tbar_top_pt->numEntries() > 0)
-      {
+      if (_hist_t_top_pt->numEntries() > 0 and _hist_tbar_top_pt->numEntries() > 0) {
         fillAbsHist(_hist_abs_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
         fillNormHist(_hist_norm_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
         divide(_hist_t_top_pt,_hist_abs_top_pt,_hist_ratio_top_pt);

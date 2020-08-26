@@ -4,7 +4,7 @@ Summary: Measurement of differential cross sections and charge ratios for $t$-ch
 Experiment: CMS
 Collider: LHC
 InspireID: 1744604
-Status: VALIDATED
+Status: VALIDATED REENTRANT
 Authors:
  - Matthias Komm Matthias.Komm@cern.ch
 References:
@@ -15,6 +15,7 @@ RunInfo: t-channel single top quark and antiquark events at sqrt(s) = 13 TeV; ch
 Beams: [p+, p+]
 Energies: [13000]
 Luminosity_fb: 35.9
+Reentrant: True
 Description:
     'Abstract: 
     A measurement is presented of differential cross sections for $t$-channel single top quark and antiquark production in 

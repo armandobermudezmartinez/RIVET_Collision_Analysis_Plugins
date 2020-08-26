@@ -191,9 +191,8 @@ namespace Rivet {
     }
 
   public:
-    CMS_2019_I1744604(): 
-      Analysis("CMS_2019_I1744604"),
-      _top_charge3(0) {}
+  
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2019_I1744604);
 
     void init() override {
       Cut particle_cut = (Cuts::abseta < 5.0) and (Cuts::pT > 0.*MeV);
@@ -352,13 +351,10 @@ namespace Rivet {
       Jet bjet = cleanedJets[bjetIndex];
       Jet lightjet = cleanedJets[(bjetIndex+1)%2]; //select the other jet of the 2
       
-     	LorentzTransform boostToTopFrame = LorentzTransform::mkFrameTransform(topQuark);
-     	Vector3 ljetInTopFrame = boostToTopFrame.transform(lightjet.momentum()).vector3().unit();
-     	Vector3 leptonInTopFrame = boostToTopFrame.transform(dressedLeptons[0].momentum()).vector3().unit();
-     	double polarizationAngle = ljetInTopFrame.dot(leptonInTopFrame);
-
-      _top_charge3 = topQuarks[0].charge3();
-
+      LorentzTransform boostToTopFrame = LorentzTransform::mkFrameTransform(topQuark);
+      Vector3 ljetInTopFrame = boostToTopFrame.transform(lightjet.momentum()).vector3().unit();
+      Vector3 leptonInTopFrame = boostToTopFrame.transform(dressedLeptons[0].momentum()).vector3().unit();
+      double polarizationAngle = ljetInTopFrame.dot(leptonInTopFrame);
 
       if (topQuarks[0].charge() > 0) {
         _hist_t_top_pt->fill(topQuark.pt()/GeV);
@@ -421,8 +417,6 @@ namespace Rivet {
         fillNormHist(_hist_norm_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
       }
     }
-    
-    int _top_charge3;
     
     static constexpr double WMASS = 80.399; //for reconstruction only
     static constexpr double TOPMASS = 172.5; //for reconstruction only

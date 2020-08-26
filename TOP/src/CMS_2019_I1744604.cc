@@ -193,11 +193,9 @@ namespace Rivet {
   public:
     CMS_2019_I1744604(): 
       Analysis("CMS_2019_I1744604"),
-      _sum_t_weights(0.),
-      _sum_tbar_weights(0.) {
-    }
+      _top_charge3(0) {}
 
-    void init() {
+    void init() override {
       Cut particle_cut = (Cuts::abseta < 5.0) and (Cuts::pT > 0.*MeV);
       Cut lepton_cut   = (Cuts::abseta < 2.4) and (Cuts::pT > 26.*GeV);
 
@@ -280,7 +278,7 @@ namespace Rivet {
     }
 
 
-    void analyze(const Event& event) {
+    void analyze(const Event& event) override {
       vector<Particle> topQuarks = applyProjection<PartonicTops>(
         event,
         "TopQuarks"
@@ -288,12 +286,6 @@ namespace Rivet {
       
       if (topQuarks.size() != 1) {
         return;
-      }
-      
-      if (topQuarks[0].charge() > 0) {
-        _sum_t_weights += 1.;
-      } else {
-        _sum_tbar_weights += 1.;
       }
       
       vector<DressedLepton> dressedLeptons = applyProjection<DressedLeptons>(
@@ -365,6 +357,9 @@ namespace Rivet {
      	Vector3 leptonInTopFrame = boostToTopFrame.transform(dressedLeptons[0].momentum()).vector3().unit();
      	double polarizationAngle = ljetInTopFrame.dot(leptonInTopFrame);
 
+      _top_charge3 = topQuarks[0].charge3();
+
+
       if (topQuarks[0].charge() > 0) {
         _hist_t_top_pt->fill(topQuark.pt()/GeV);
         _hist_t_top_y->fill(topQuark.absrapidity());
@@ -383,60 +378,56 @@ namespace Rivet {
       }
     }
 
-    void finalize() {
-      scale(_hist_t_top_pt, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_top_pt, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
+    void finalize() override {
+    
+      //multiply by 0.5 to average e/mu channels
+      if (_top_charge3 > 0) {
+        scale(_hist_t_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_t_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_t_lepton_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_t_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_t_w_pt,0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_t_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
+      } else if (_top_charge3 < 0) {
+        scale(_hist_tbar_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_tbar_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_tbar_lepton_pt,0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_tbar_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_tbar_w_pt, 0.5*crossSection()/picobarn/sumOfWeights());
+        scale(_hist_tbar_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
+      }
       
-      scale(_hist_t_top_y, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_top_y, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
-      
-      scale(_hist_t_lepton_pt, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_lepton_pt,0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
-      
-      scale(_hist_t_lepton_y, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_lepton_y, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
-
-      scale(_hist_t_w_pt,0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_w_pt, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
-      
-      scale(_hist_t_top_cos, 0.5*_t_xsec_fraction*crossSection()/picobarn/_sum_t_weights);
-      scale(_hist_tbar_top_cos, 0.5*_tbar_xsec_fraction*crossSection()/picobarn/_sum_tbar_weights);
-      
-      
-      fillAbsHist(_hist_abs_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
-      fillNormHist(_hist_norm_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
-      divide(_hist_t_top_pt,_hist_abs_top_pt,_hist_ratio_top_pt);
-      
-      fillAbsHist(_hist_abs_top_y,_hist_t_top_y,_hist_tbar_top_y);
-      fillNormHist(_hist_norm_top_y,_hist_t_top_y,_hist_tbar_top_y);
-      divide(_hist_t_top_y,_hist_abs_top_y,_hist_ratio_top_y);
-      
-      fillAbsHist(_hist_abs_lepton_pt,_hist_t_lepton_pt,_hist_tbar_lepton_pt);
-      fillNormHist(_hist_norm_lepton_pt,_hist_t_lepton_pt,_hist_tbar_lepton_pt);
-      divide(_hist_t_lepton_pt,_hist_abs_lepton_pt,_hist_ratio_lepton_pt);
-      
-      fillAbsHist(_hist_abs_lepton_y,_hist_t_lepton_y,_hist_tbar_lepton_y);
-      fillNormHist(_hist_norm_lepton_y,_hist_t_lepton_y,_hist_tbar_lepton_y);
-      divide(_hist_t_lepton_y,_hist_abs_lepton_y,_hist_ratio_lepton_y);
-      
-      fillAbsHist(_hist_abs_w_pt,_hist_t_w_pt,_hist_tbar_w_pt);
-      fillNormHist(_hist_norm_w_pt,_hist_t_w_pt,_hist_tbar_w_pt);
-      divide(_hist_t_w_pt,_hist_abs_w_pt,_hist_ratio_w_pt);
-      
-      fillAbsHist(_hist_abs_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
-      fillNormHist(_hist_norm_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
-
+      if (_hist_abs_top_pt->numEntries() > 0 and _hist_tbar_top_pt->numEntries() > 0)
+      {
+        fillAbsHist(_hist_abs_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
+        fillNormHist(_hist_norm_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
+        divide(_hist_t_top_pt,_hist_abs_top_pt,_hist_ratio_top_pt);
+        
+        fillAbsHist(_hist_abs_top_y,_hist_t_top_y,_hist_tbar_top_y);
+        fillNormHist(_hist_norm_top_y,_hist_t_top_y,_hist_tbar_top_y);
+        divide(_hist_t_top_y,_hist_abs_top_y,_hist_ratio_top_y);
+        
+        fillAbsHist(_hist_abs_lepton_pt,_hist_t_lepton_pt,_hist_tbar_lepton_pt);
+        fillNormHist(_hist_norm_lepton_pt,_hist_t_lepton_pt,_hist_tbar_lepton_pt);
+        divide(_hist_t_lepton_pt,_hist_abs_lepton_pt,_hist_ratio_lepton_pt);
+        
+        fillAbsHist(_hist_abs_lepton_y,_hist_t_lepton_y,_hist_tbar_lepton_y);
+        fillNormHist(_hist_norm_lepton_y,_hist_t_lepton_y,_hist_tbar_lepton_y);
+        divide(_hist_t_lepton_y,_hist_abs_lepton_y,_hist_ratio_lepton_y);
+        
+        fillAbsHist(_hist_abs_w_pt,_hist_t_w_pt,_hist_tbar_w_pt);
+        fillNormHist(_hist_norm_w_pt,_hist_t_w_pt,_hist_tbar_w_pt);
+        divide(_hist_t_w_pt,_hist_abs_w_pt,_hist_ratio_w_pt);
+        
+        fillAbsHist(_hist_abs_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
+        fillNormHist(_hist_norm_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
+      }
     }
-
-    //calculated with Hathor v2.1 for a top quark mass of 172.5 GeV at NLO in QCD 
-    static constexpr double _t_xsec_fraction = 136.02/216.99;
-    static constexpr double _tbar_xsec_fraction = 80.95/216.99;
+    
+    int _top_charge3;
     
     static constexpr double WMASS = 80.399; //for reconstruction only
     static constexpr double TOPMASS = 172.5; //for reconstruction only
-    
-    double _sum_t_weights;
-    double _sum_tbar_weights;
     
     Histo1DPtr _hist_abs_top_pt;
     Histo1DPtr _hist_norm_top_pt;

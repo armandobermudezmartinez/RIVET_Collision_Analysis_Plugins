@@ -70,7 +70,7 @@ END PLOT
 BEGIN PLOT /CMS_2019_I1744604/d37-x01-y01
 Title=CMS, 13\,TeV, $\textrm{t}+\bar{\textrm{t}}$, $\textrm{e}/\mu +\mathrm{jets}$
 XLabel=Particle-level top quark $p_{\textrm{T}}$ (GeV)
-YLabel=$1/\sigma_{\textrm{t+}\bar{\textrm{t}}}\times\textrm{d}\sigma_{\textrm{t+}\bar{\textrm{t}}}/\textrm{d}p_{\textrm{T}} (1/GeV)$
+YLabel=$1/\sigma_{\textrm{t+}\bar{\textrm{t}}}\times\textrm{d}\sigma_{\textrm{t+}\bar{\textrm{t}}}/\textrm{d}p_{\textrm{T}} ~\textrm{(1/GeV)}$
 YMin=0.0001
 YMax=0.025
 RatioPlotYMin=0.55
@@ -92,7 +92,7 @@ END PLOT
 BEGIN PLOT /CMS_2019_I1744604/d41-x01-y01
 Title=CMS, 13\,TeV, $\textrm{t}+\bar{\textrm{t}}$, $\textrm{e}/\mu +\mathrm{jets}$
 XLabel=Particle-level lepton $p_{\textrm{T}}$ (GeV)
-YLabel=$1/\sigma_{\textrm{t+}\bar{\textrm{t}}}\times\textrm{d}\sigma_{\textrm{t+}\bar{\textrm{t}}}/\textrm{d}p_{\textrm{T}} (1/GeV)$
+YLabel=$1/\sigma_{\textrm{t+}\bar{\textrm{t}}}\times\textrm{d}\sigma_{\textrm{t+}\bar{\textrm{t}}}/\textrm{d}p_{\textrm{T}} ~\textrm{(1/GeV)}$
 YMin=0.0001
 YMax=0.08
 RatioPlotYMin=0.55
@@ -114,7 +114,7 @@ END PLOT
 BEGIN PLOT /CMS_2019_I1744604/d45-x01-y01
 Title=CMS, 13\,TeV, $\textrm{t}+\bar{\textrm{t}}$, $\textrm{e}/\mu +\mathrm{jets}$
 XLabel=Particle-level W $p_{\textrm{T}}$ (GeV)
-YLabel=$1/\sigma_{\textrm{t+}\bar{\textrm{t}}}\times\textrm{d}\sigma_{\textrm{t+}\bar{\textrm{t}}}/\textrm{d}p_{\textrm{T}} (1/GeV)$
+YLabel=$1/\sigma_{\textrm{t+}\bar{\textrm{t}}}\times\textrm{d}\sigma_{\textrm{t+}\bar{\textrm{t}}}/\textrm{d}p_{\textrm{T}} ~\textrm{(1/GeV)}$
 YMin=0.0001
 YMax=0.02
 RatioPlotYMin=0.55

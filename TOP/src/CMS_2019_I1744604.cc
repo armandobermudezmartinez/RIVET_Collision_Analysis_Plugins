@@ -12,66 +12,77 @@ namespace Rivet {
   class CMS_2019_I1744604 : public Analysis {
   private:
 
-    static std::vector<double> EquationSolve(double a, double b, double c, double d) {
+    static std::vector<double> EquationSolve(
+      double a, double b, 
+      double c, double d
+    ) {
       std::vector<double> result;
       
       std::complex<double> x1;
       std::complex<double> x2;
       std::complex<double> x3;
 
-      double q = (3*a*c-b*b)/(9*a*a);
-      double r = (9*a*b*c - 27*a*a*d - 2*b*b*b)/(54*a*a*a);
-      double Delta = q*q*q + r*r;
+      double q = (3 * a * c - b * b) / (9 * a * a);
+      double r = (9 * a * b * c - 27 * a * a * d - 2 * b * b * b
+                 ) / (54 * a * a * a);
+      double Delta = q * q * q + r * r;
 
       std::complex<double> s;
       std::complex<double> t;
 
-      double rho=0;
-      double theta=0;
+      double rho = 0;
+      double theta = 0;
       
       if (Delta <= 0) {
-        rho = sqrt(-(q*q*q));
+        rho = sqrt(-(q * q * q));
 
-        theta = acos(r/rho);
+        theta = acos(r / rho);
 
-        s = std::polar<double>(sqrt(-q),theta/3.0);
-        t = std::polar<double>(sqrt(-q),-theta/3.0);
+        s = std::polar<double>(sqrt(-q), theta / 3.0);
+        t = std::polar<double>(sqrt(-q), -theta / 3.0);
       }
       
       if (Delta > 0) {
-        s = std::complex<double>(cbrt(r+sqrt(Delta)),0);
-        t = std::complex<double>(cbrt(r-sqrt(Delta)),0);
+        s = std::complex<double>(cbrt(r + sqrt(Delta)), 0);
+        t = std::complex<double>(cbrt(r - sqrt(Delta)), 0);
       }
     
-      std::complex<double> i(0,1.0);
+      std::complex<double> i(0, 1.0);
       
       
-      x1 = s+t+std::complex<double>(-b/(3.0*a),0);
-      x2 = (s+t)*std::complex<double>(-0.5,0)-std::complex<double>(b/(3.0*a),0)+(s-t)*i*std::complex<double>(sqrt(3)/2.0,0);
-      x3 = (s+t)*std::complex<double>(-0.5,0)-std::complex<double>(b/(3.0*a),0)-(s-t)*i*std::complex<double>(sqrt(3)/2.0,0);
+      x1 = s + t + std::complex<double>(-b / (3.0 * a), 0);
+      
+      x2 = (s + t) * std::complex<double>(-0.5, 0)
+           - std::complex<double>(b / (3.0 * a), 0) 
+           + (s - t) * i * std::complex<double>(sqrt(3) / 2.0, 0);
+           
+      x3 = (s + t) * std::complex<double>(-0.5, 0) 
+           - std::complex<double>(b / (3.0 * a), 0) 
+           - (s - t) * i * std::complex<double>(sqrt(3) / 2.0, 0);
 
-      if (fabs(x1.imag())<0.0001) result.push_back(x1.real());
-      if (fabs(x2.imag())<0.0001) result.push_back(x2.real());
-      if (fabs(x3.imag())<0.0001) result.push_back(x3.real());
+      if (fabs(x1.imag()) < 0.0001) result.push_back(x1.real());
+      if (fabs(x2.imag()) < 0.0001) result.push_back(x2.real());
+      if (fabs(x3.imag()) < 0.0001) result.push_back(x3.real());
 
       return result;
     }
 
     static std::pair<FourMomentum,FourMomentum> NuMomentum(
-      double leptonPx, double leptonPy, double leptonPz, double leptonPt, 
-      double leptonE, double metPx, double metPy
+      double pxlep, double pylep, double pzlep,
+      double elep, double metpx, double metpy
     ) {
+    
+      FourMomentum result(0, 0, 0, 0);
+      FourMomentum result2(0, 0, 0, 0);
 
-   
-      FourMomentum result(0,0,0,0);
-      FourMomentum result2(0,0,0,0);
-
-
-      double MisET2 = (metPx * metPx + metPy * metPy);
-      double mu = (WMASS * WMASS) / 2 + metPx * leptonPx + metPy * leptonPy;
-      double a  = (mu * leptonPz) / (leptonE * leptonE - leptonPz * leptonPz);
+      double misET2 = (metpx * metpx + metpy * metpy);
+      double mu = (WMASS * WMASS) / 2 + metpx * pxlep + metpy * pylep;
+      double a  = (mu * pzlep) / (elep * elep - pzlep * pzlep);
       double a2 = std::pow(a, 2);
-      double b  = (std::pow(leptonE, 2.) * (MisET2) - std::pow(mu, 2.)) / (std::pow(leptonE, 2) - std::pow(leptonPz, 2));
+      
+      double b  = (std::pow(elep, 2.) * (misET2) - std::pow(mu, 2.)) 
+                  / (std::pow(elep, 2) - std::pow(pzlep, 2));
+                  
       double pz1(0), pz2(0), pznu(0), pznu2(0);
 
       FourMomentum p4W_rec;
@@ -79,13 +90,11 @@ namespace Rivet {
       FourMomentum p4Top_rec;
       FourMomentum p4lep_rec;
 
-      p4lep_rec.setXYZE(leptonPx, leptonPy, leptonPz, leptonE);
+      p4lep_rec.setXYZE(pxlep, pylep, pzlep, elep);
 
       FourMomentum p40_rec(0, 0, 0, 0);
 
-      if (a2 - b > 0 )
-      {
-
+      if (a2 - b > 0 ) {
         double root = sqrt(a2 - b);
         pz1 = a + root;
         pz2 = a - root;
@@ -98,28 +107,30 @@ namespace Rivet {
           pznu2 = pz1;
         }
 
+        double Enu = sqrt(misET2 + pznu * pznu);
+        double Enu2 = sqrt(misET2 + pznu2 * pznu2);
 
-        double Enu = sqrt(MisET2 + pznu * pznu);
-        double Enu2 = sqrt(MisET2 + pznu2 * pznu2);
-
-        result.setXYZE(metPx, metPy, pznu, Enu);
-        result2.setXYZE(metPx, metPy, pznu2, Enu2);
+        result.setXYZE(metpx, metpy, pznu, Enu);
+        result2.setXYZE(metpx, metpy, pznu2, Enu2);
    
-
       } else {
 
-
-        double ptlep = leptonPt, pxlep = leptonPx, pylep = leptonPy, metpx = metPx, metpy = metPy;
+        double ptlep = sqrt(pxlep * pxlep + pylep * pylep);
 
         double EquationA = 1;
         double EquationB = -3 * pylep * WMASS / (ptlep);
-        double EquationC = WMASS * WMASS * (2 * pylep * pylep) / (ptlep * ptlep) + WMASS * WMASS - 4 * pxlep * pxlep * pxlep * metpx / (ptlep * ptlep) - 4 * pxlep * pxlep * pylep * metpy / (ptlep * ptlep);
-        double EquationD = 4 * pxlep * pxlep * WMASS * metpy / (ptlep) - pylep * WMASS * WMASS * WMASS / ptlep;
+        
+        double EquationC = WMASS * WMASS * (2 * pylep * pylep) / (ptlep * ptlep) 
+                           + WMASS * WMASS 
+                           - 4 * pxlep * pxlep * pxlep * metpx / (ptlep * ptlep) 
+                           - 4 * pxlep * pxlep * pylep * metpy / (ptlep * ptlep);
+                           
+        double EquationD = 4 * pxlep * pxlep * WMASS * metpy / (ptlep) 
+                           - pylep * WMASS * WMASS * WMASS / ptlep;
 
         vector<double> solutions = EquationSolve(EquationA, EquationB, EquationC, EquationD);
 
         vector<double> solutions2 = EquationSolve(EquationA, -EquationB, EquationC, -EquationD);
-
 
         double deltaMin = 14000 * 14000;
         double zeroValue = -WMASS * WMASS / (4 * pxlep);
@@ -127,11 +138,13 @@ namespace Rivet {
         double minPy = 0;
 
         for ( size_t i = 0; i < solutions.size(); ++i) {
-          if (solutions[i] < 0 ) continue;
+          if (solutions[i] < 0) continue;
           double p_x = (solutions[i] * solutions[i] - WMASS * WMASS) / (4 * pxlep);
-          double p_y = ( WMASS * WMASS * pylep + 2 * pxlep * pylep * p_x - WMASS * ptlep * solutions[i]) / (2 * pxlep * pxlep);
+          double p_y = (WMASS * WMASS * pylep 
+                        + 2 * pxlep * pylep * p_x 
+                        - WMASS * ptlep * solutions[i]
+                        ) / (2 * pxlep * pxlep);
           double Delta2 = (p_x - metpx) * (p_x - metpx) + (p_y - metpy) * (p_y - metpy);
-
 
           if (Delta2 < deltaMin && Delta2 > 0) {
             deltaMin = Delta2;
@@ -144,7 +157,10 @@ namespace Rivet {
         for ( size_t i = 0; i < solutions2.size(); ++i) {
           if (solutions2[i] < 0) continue;
           double p_x = (solutions2[i] * solutions2[i] - WMASS * WMASS) / (4 * pxlep);
-          double p_y = ( WMASS * WMASS * pylep + 2 * pxlep * pylep * p_x + WMASS * ptlep * solutions2[i]) / (2 * pxlep * pxlep);
+          double p_y = (WMASS * WMASS * pylep 
+                        + 2 * pxlep * pylep * p_x 
+                        + WMASS * ptlep * solutions2[i]
+                       ) / (2 * pxlep * pxlep);         
           double Delta2 = (p_x - metpx) * (p_x - metpx) + (p_y - metpy) * (p_y - metpy);
           if (Delta2 < deltaMin && Delta2 > 0) {
             deltaMin = Delta2;
@@ -153,11 +169,12 @@ namespace Rivet {
           }
         }
 
-        double pyZeroValue = ( WMASS * WMASS * pxlep + 2 * pxlep * pylep * zeroValue);
-        double delta2ZeroValue = (zeroValue - metpx) * (zeroValue - metpx) + (pyZeroValue - metpy) * (pyZeroValue - metpy);
+        double pyZeroValue = (WMASS * WMASS * pxlep + 2 * pxlep * pylep * zeroValue);
+        double delta2ZeroValue = (zeroValue - metpx) * (zeroValue - metpx) 
+                                 + (pyZeroValue - metpy) * (pyZeroValue - metpy);
 
         if (deltaMin == 14000 * 14000) {
-          return std::make_pair(result,result2);
+          return std::make_pair(result, result2);
         }
         
         if (delta2ZeroValue < deltaMin) {
@@ -168,25 +185,30 @@ namespace Rivet {
 
 
         double mu_Minimum = (WMASS * WMASS) / 2 + minPx * pxlep + minPy * pylep;
-        double a_Minimum  = (mu_Minimum * leptonPz) / (leptonE * leptonE - leptonPz * leptonPz);
+        double a_Minimum  = (mu_Minimum * pzlep) / 
+                            (elep * elep - pzlep * pzlep);
         pznu = a_Minimum;
 
         double Enu = sqrt(minPx * minPx + minPy * minPy + pznu * pznu);
         result.setXYZE(minPx, minPy, pznu , Enu);
-
-
       }
-      return std::make_pair(result,result2);
+      return std::make_pair(result, result2);
     }
     
-    static void fillAbsHist(Histo1DPtr& hist_abs, const Histo1DPtr& hist_t, const Histo1DPtr& hist_tbar) {
-      (*hist_abs)+=(*hist_t);
-      (*hist_abs)+=(*hist_tbar);
+    static void fillAbsHist(
+      Histo1DPtr& hist_abs, const Histo1DPtr& hist_t, 
+      const Histo1DPtr& hist_tbar
+    ) {
+      (*hist_abs) += (*hist_t);
+      (*hist_abs) += (*hist_tbar);
     }
     
-    static void fillNormHist(Histo1DPtr& hist_norm, const Histo1DPtr& hist_t, const Histo1DPtr& hist_tbar) {
-      (*hist_norm)+=(*hist_t);
-      (*hist_norm)+=(*hist_tbar);
+    static void fillNormHist(
+      Histo1DPtr& hist_norm, const Histo1DPtr& hist_t, 
+      const Histo1DPtr& hist_tbar
+    ) {
+      (*hist_norm) += (*hist_t);
+      (*hist_norm) += (*hist_tbar);
       hist_norm->normalize();
     }
 
@@ -218,7 +240,6 @@ namespace Rivet {
       );
       declare(dressed_leptons, "DressedLeptons");
 
-
       // Jets
       VetoedFinalState fsForJets(fs);
       fsForJets.addVetoOnThisFinalState(dressed_leptons);
@@ -239,17 +260,17 @@ namespace Rivet {
       // Partonic top for differentiating between t and tbar events
       declare(PartonicTops(),"TopQuarks");
 
-      book(_hist_abs_top_pt,"d13-x01-y01");
-      book(_hist_norm_top_pt,"d37-x01-y01");
-      book(_hist_ratio_top_pt,"d59-x01-y01");
-      book(_hist_t_top_pt,"t_top_pt",refData(13, 1, 1));
-      book(_hist_tbar_top_pt,"tbar_top_pt",refData(13, 1, 1));
+      book(_hist_abs_top_pt, "d13-x01-y01");
+      book(_hist_norm_top_pt, "d37-x01-y01");
+      book(_hist_ratio_top_pt, "d59-x01-y01");
+      book(_hist_t_top_pt, "t_top_pt", refData(13, 1, 1));
+      book(_hist_tbar_top_pt, "tbar_top_pt", refData(13, 1, 1));
       
-      book(_hist_abs_top_y,"d15-x01-y01");
-      book(_hist_norm_top_y,"d39-x01-y01");
-      book(_hist_ratio_top_y,"d61-x01-y01");
-      book(_hist_t_top_y,"t_top_y",refData(15, 1, 1));
-      book(_hist_tbar_top_y,"tbar_top_y",refData(15, 1, 1));
+      book(_hist_abs_top_y, "d15-x01-y01");
+      book(_hist_norm_top_y, "d39-x01-y01");
+      book(_hist_ratio_top_y, "d61-x01-y01");
+      book(_hist_t_top_y, "t_top_y", refData(15, 1, 1));
+      book(_hist_tbar_top_y, "tbar_top_y", refData(15, 1, 1));
             
       book(_hist_abs_lepton_pt,"d17-x01-y01");
       book(_hist_norm_lepton_pt,"d41-x01-y01");
@@ -257,25 +278,24 @@ namespace Rivet {
       book(_hist_t_lepton_pt,"t_lepton_pt",refData(17, 1, 1));
       book(_hist_tbar_lepton_pt,"tbar_lepton_pt",refData(17, 1, 1));
       
-      book(_hist_abs_lepton_y,"d19-x01-y01");
-      book(_hist_norm_lepton_y,"d43-x01-y01");
-      book(_hist_ratio_lepton_y,"d65-x01-y01");
-      book(_hist_t_lepton_y,"t_lepton_y",refData(19, 1, 1));
-      book(_hist_tbar_lepton_y,"tbar_lepton_y",refData(19, 1, 1));
+      book(_hist_abs_lepton_y, "d19-x01-y01");
+      book(_hist_norm_lepton_y, "d43-x01-y01");
+      book(_hist_ratio_lepton_y, "d65-x01-y01");
+      book(_hist_t_lepton_y, "t_lepton_y", refData(19, 1, 1));
+      book(_hist_tbar_lepton_y, "tbar_lepton_y", refData(19, 1, 1));
       
-      book(_hist_abs_w_pt,"d21-x01-y01");
-      book(_hist_norm_w_pt,"d45-x01-y01");
-      book(_hist_ratio_w_pt,"d67-x01-y01");
-      book(_hist_t_w_pt,"t_w_pt",refData(21, 1, 1));
-      book(_hist_tbar_w_pt,"tbar_w_pt",refData(21, 1, 1));
+      book(_hist_abs_w_pt, "d21-x01-y01");
+      book(_hist_norm_w_pt, "d45-x01-y01");
+      book(_hist_ratio_w_pt, "d67-x01-y01");
+      book(_hist_t_w_pt, "t_w_pt", refData(21, 1, 1));
+      book(_hist_tbar_w_pt, "tbar_w_pt", refData(21, 1, 1));
       
-      book(_hist_abs_top_cos,"d23-x01-y01");
-      book(_hist_norm_top_cos,"d47-x01-y01");
-      book(_hist_t_top_cos,"t_top_cos",refData(23, 1, 1));
-      book(_hist_tbar_top_cos,"tbar_top_cos",refData(23, 1, 1));
+      book(_hist_abs_top_cos, "d23-x01-y01");
+      book(_hist_norm_top_cos, "d47-x01-y01");
+      book(_hist_t_top_cos, "t_top_cos", refData(23, 1, 1));
+      book(_hist_tbar_top_cos, "tbar_top_cos", refData(23, 1, 1));
       
     }
-
 
     void analyze(const Event& event) override {
       vector<Particle> topQuarks = applyProjection<PartonicTops>(
@@ -304,7 +324,7 @@ namespace Rivet {
       ).jets(jet_cut);
       
       std::vector<Jet> cleanedJets;
-      DeltaRLess dRFct(dressedLeptons[0],0.4);
+      DeltaRLess dRFct(dressedLeptons[0], 0.4);
       for (const auto& jet: jets) {
         if (not dRFct(jet)) {
           cleanedJets.push_back(jet);
@@ -321,24 +341,24 @@ namespace Rivet {
       ).particles();
       
       
-      FourMomentum met(0,0,0,0);
+      FourMomentum met(0, 0, 0, 0);
       for (const auto& neutrino: neutrinos) {
-        met+=neutrino.momentum();
+        met += neutrino.momentum();
       }
       
       std::pair<FourMomentum,FourMomentum> nuMomentum = NuMomentum(
-        dressedLeptons[0].px(), dressedLeptons[0].py(), dressedLeptons[0].pz(), dressedLeptons[0].pt(), 
+        dressedLeptons[0].px(), dressedLeptons[0].py(), dressedLeptons[0].pz(), 
         dressedLeptons[0].E(), met.px(), met.py()
       );
       
-      FourMomentum wboson = nuMomentum.first+dressedLeptons[0].momentum();
+      FourMomentum wboson = nuMomentum.first + dressedLeptons[0].momentum();
       
-      FourMomentum topQuark(0,0,0,0);
+      FourMomentum topQuark(0, 0, 0, 0);
       int bjetIndex = -1;
       for (size_t i = 0; i < cleanedJets.size(); ++i) {
         const auto& jet = cleanedJets[i];
-        FourMomentum topCandidate = jet.momentum()+wboson;
-        if (std::fabs(topQuark.mass()-TOPMASS)>std::fabs(topCandidate.mass()-TOPMASS)) {
+        FourMomentum topCandidate = jet.momentum() + wboson;
+        if (fabs(topQuark.mass() - TOPMASS) > fabs(topCandidate.mass() - TOPMASS)) {
           bjetIndex = i;
           topQuark = topCandidate;
         }
@@ -349,7 +369,7 @@ namespace Rivet {
       }
 
       Jet bjet = cleanedJets[bjetIndex];
-      Jet lightjet = cleanedJets[(bjetIndex+1)%2]; //select the other jet of the 2
+      Jet lightjet = cleanedJets[(bjetIndex + 1) % 2]; //select the other jet of the 2
       
       LorentzTransform boostToTopFrame = LorentzTransform::mkFrameTransform(topQuark);
       Vector3 ljetInTopFrame = boostToTopFrame.transform(lightjet.momentum()).vector3().unit();
@@ -357,69 +377,69 @@ namespace Rivet {
       double polarizationAngle = ljetInTopFrame.dot(leptonInTopFrame);
 
       if (topQuarks[0].charge() > 0) {
-        _hist_t_top_pt->fill(topQuark.pt()/GeV);
+        _hist_t_top_pt->fill(topQuark.pt() / GeV);
         _hist_t_top_y->fill(topQuark.absrapidity());
-        _hist_t_lepton_pt->fill(dressedLeptons[0].pt()/GeV);
+        _hist_t_lepton_pt->fill(dressedLeptons[0].pt() / GeV);
         _hist_t_lepton_y->fill(dressedLeptons[0].absrapidity());
-        _hist_t_w_pt->fill(wboson.pt()/GeV);
+        _hist_t_w_pt->fill(wboson.pt() / GeV);
         _hist_t_top_cos->fill(polarizationAngle);
         
       } else {
-        _hist_tbar_top_pt->fill(topQuark.pt()/GeV);
+        _hist_tbar_top_pt->fill(topQuark.pt() / GeV);
         _hist_tbar_top_y->fill(topQuark.absrapidity());
-        _hist_tbar_lepton_pt->fill(dressedLeptons[0].pt()/GeV);
+        _hist_tbar_lepton_pt->fill(dressedLeptons[0].pt() / GeV);
         _hist_tbar_lepton_y->fill(dressedLeptons[0].absrapidity());
-        _hist_tbar_w_pt->fill(wboson.pt()/GeV);
+        _hist_tbar_w_pt->fill(wboson.pt() / GeV);
         _hist_tbar_top_cos->fill(polarizationAngle);
       }
     }
 
     void finalize() override {
    
-      //multiply by 0.5 to average e/mu channels
-      scale(_hist_t_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_t_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_t_lepton_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_t_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_t_w_pt,0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_t_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
+      //multiply by 0.5 to average e/mu decay channels
+      scale(_hist_t_top_pt, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_t_top_y, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_t_lepton_pt, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_t_lepton_y, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_t_w_pt,0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_t_top_cos, 0.5 * crossSection() / picobarn / sumOfWeights());
 
-      scale(_hist_tbar_top_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_tbar_top_y, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_tbar_lepton_pt,0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_tbar_lepton_y, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_tbar_w_pt, 0.5*crossSection()/picobarn/sumOfWeights());
-      scale(_hist_tbar_top_cos, 0.5*crossSection()/picobarn/sumOfWeights());
+      scale(_hist_tbar_top_pt, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_tbar_top_y, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_tbar_lepton_pt,0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_tbar_lepton_y, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_tbar_w_pt, 0.5 * crossSection() / picobarn / sumOfWeights());
+      scale(_hist_tbar_top_cos, 0.5 * crossSection() /picobarn / sumOfWeights());
 
-      
       if (_hist_t_top_pt->numEntries() > 0 and _hist_tbar_top_pt->numEntries() > 0) {
-        fillAbsHist(_hist_abs_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
-        fillNormHist(_hist_norm_top_pt,_hist_t_top_pt,_hist_tbar_top_pt);
-        divide(_hist_t_top_pt,_hist_abs_top_pt,_hist_ratio_top_pt);
+        fillAbsHist(_hist_abs_top_pt, _hist_t_top_pt, _hist_tbar_top_pt);
+        fillNormHist(_hist_norm_top_pt, _hist_t_top_pt, _hist_tbar_top_pt);
+        divide(_hist_t_top_pt, _hist_abs_top_pt, _hist_ratio_top_pt);
         
-        fillAbsHist(_hist_abs_top_y,_hist_t_top_y,_hist_tbar_top_y);
-        fillNormHist(_hist_norm_top_y,_hist_t_top_y,_hist_tbar_top_y);
-        divide(_hist_t_top_y,_hist_abs_top_y,_hist_ratio_top_y);
+        fillAbsHist(_hist_abs_top_y, _hist_t_top_y, _hist_tbar_top_y);
+        fillNormHist(_hist_norm_top_y, _hist_t_top_y, _hist_tbar_top_y);
+        divide(_hist_t_top_y, _hist_abs_top_y, _hist_ratio_top_y);
         
-        fillAbsHist(_hist_abs_lepton_pt,_hist_t_lepton_pt,_hist_tbar_lepton_pt);
-        fillNormHist(_hist_norm_lepton_pt,_hist_t_lepton_pt,_hist_tbar_lepton_pt);
-        divide(_hist_t_lepton_pt,_hist_abs_lepton_pt,_hist_ratio_lepton_pt);
+        fillAbsHist(_hist_abs_lepton_pt, _hist_t_lepton_pt, _hist_tbar_lepton_pt);
+        fillNormHist(_hist_norm_lepton_pt, _hist_t_lepton_pt, _hist_tbar_lepton_pt);
+        divide(_hist_t_lepton_pt, _hist_abs_lepton_pt, _hist_ratio_lepton_pt);
         
-        fillAbsHist(_hist_abs_lepton_y,_hist_t_lepton_y,_hist_tbar_lepton_y);
-        fillNormHist(_hist_norm_lepton_y,_hist_t_lepton_y,_hist_tbar_lepton_y);
-        divide(_hist_t_lepton_y,_hist_abs_lepton_y,_hist_ratio_lepton_y);
+        fillAbsHist(_hist_abs_lepton_y, _hist_t_lepton_y, _hist_tbar_lepton_y);
+        fillNormHist(_hist_norm_lepton_y, _hist_t_lepton_y, _hist_tbar_lepton_y);
+        divide(_hist_t_lepton_y, _hist_abs_lepton_y, _hist_ratio_lepton_y);
         
-        fillAbsHist(_hist_abs_w_pt,_hist_t_w_pt,_hist_tbar_w_pt);
-        fillNormHist(_hist_norm_w_pt,_hist_t_w_pt,_hist_tbar_w_pt);
-        divide(_hist_t_w_pt,_hist_abs_w_pt,_hist_ratio_w_pt);
+        fillAbsHist(_hist_abs_w_pt, _hist_t_w_pt, _hist_tbar_w_pt);
+        fillNormHist(_hist_norm_w_pt, _hist_t_w_pt, _hist_tbar_w_pt);
+        divide(_hist_t_w_pt, _hist_abs_w_pt, _hist_ratio_w_pt);
         
-        fillAbsHist(_hist_abs_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
-        fillNormHist(_hist_norm_top_cos,_hist_t_top_cos,_hist_tbar_top_cos);
+        fillAbsHist(_hist_abs_top_cos, _hist_t_top_cos, _hist_tbar_top_cos);
+        fillNormHist(_hist_norm_top_cos, _hist_t_top_cos, _hist_tbar_top_cos);
       }
     }
     
-    static constexpr double WMASS = 80.399; //for reconstruction only
-    static constexpr double TOPMASS = 172.5; //for reconstruction only
+    //for reconstruction only
+    static constexpr double WMASS = 80.399;
+    static constexpr double TOPMASS = 172.5; 
     
     Histo1DPtr _hist_abs_top_pt;
     Histo1DPtr _hist_norm_top_pt;

@@ -436,6 +436,8 @@ namespace Rivet {
         fillNormHist(_hist_norm_top_cos, _hist_t_top_cos, _hist_tbar_top_cos);
       }
     }
+
+  private:
     
     //for reconstruction only
     static constexpr double WMASS = 80.399;

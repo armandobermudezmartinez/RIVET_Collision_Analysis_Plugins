@@ -4,7 +4,7 @@ Summary: Measurement of normalized differential ttbar cross sections in the dile
 Experiment: CMS
 Collider: LHC
 InspireID: 1620050
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - Youn Jung Roh <youn.jung.roh@cern.ch>,
  - Suyong Choi <su.yong.choi@cern.ch>, 
@@ -16,6 +16,7 @@ References:
  - DOI:10.1007/JHEP04(2018)060
  - arXiv:1708.07638
  - https://www.hepdata.net/record/81686
+ - CMS-TOP-16-007
 RunInfo:
   pp QCD interactions at $\sqrt{s} = 13$ TeV. Data collected by CMS during the year 2015. Selection of dilepton top pair candidate events at particle level. 
 NumEvents: 1000000

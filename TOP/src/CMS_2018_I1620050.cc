@@ -26,8 +26,8 @@ namespace Rivet {
           ifs.acceptIdPair(PID::PHOTON);
           ifs.acceptIdPair(PID::ELECTRON);
           ifs.acceptIdPair(PID::MUON);
-          addProjection(ifs, "IFS");
-          addProjection(FastJets(ifs, FastJets::ANTIKT, 0.1), "LeptonJets");
+          declare(ifs, "IFS");
+          declare(FastJets(ifs, FastJets::ANTIKT, 0.1), "LeptonJets");
         }
 
         /// Clone on the heap.
@@ -38,34 +38,28 @@ namespace Rivet {
         /// Retrieve the dressed leptons
         const vector<DressedLepton>& dressedLeptons() const { return _clusteredLeptons; }
 
-      private:
-        /// Container which stores the clustered lepton objects
-        vector<DressedLepton> _clusteredLeptons;
-
-      public:
+        /// Perform the calculation
         void project(const Event& e) {
           _theParticles.clear();
           _clusteredLeptons.clear();
 
           vector<DressedLepton> allClusteredLeptons;
-
-          const Jets jets = applyProjection<FastJets>(e, "LeptonJets").jetsByPt(5.*GeV);
-          foreach (const Jet& jet, jets) {
+          const Jets jets = applyProjection<FastJets>(e, "LeptonJets").jetsByPt(5*GeV);
+          for (const Jet& jet : jets) {
             Particle lepCand;
             for (const Particle& cand : jet.particles()) {
-              const int absPdgId = abs(cand.pdgId());
+              const int absPdgId = cand.abspid();
               if (absPdgId == PID::ELECTRON || absPdgId == PID::MUON) {
                 if (cand.pt() > lepCand.pt()) lepCand = cand;
               }
             }
-            //Central lepton must be the major component -> NOTE: not used in this analysis
-            if (lepCand.pdgId() == 0) continue;
+            
+            if (!lepCand.isChargedLepton()) continue;
 
             DressedLepton lepton = DressedLepton(lepCand);
-
             for (const Particle& cand : jet.particles()) {
-              if (cand == lepCand) continue;
-              lepton.addPhoton(cand, true);
+              if (isSame(cand, lepCand)) continue;
+              lepton.addConstituent(cand, true);
             }
             allClusteredLeptons.push_back(lepton);
           }
@@ -78,6 +72,11 @@ namespace Rivet {
             }
           }
         }
+    private:
+
+      /// Container which stores the clustered lepton objects
+      vector<DressedLepton> _clusteredLeptons;
+      
     };
   }
 
@@ -90,8 +89,8 @@ namespace Rivet {
 
         // Parton level top quark to analyze dilepton channels only
         // Note: 2nd argument of PartonicTops to toggle tau->lepton channel (true to inclusive, false to exclusive)
-        declare(PartonicTops(PartonicTops::MUON, acceptTauDecays), "PartonTopsToMuon"); // Partonic top decaying to mu
-        declare(PartonicTops(PartonicTops::ELECTRON, acceptTauDecays), "PartonTopsToElectron"); // Partonic top decaying to e
+        declare(PartonicTops(PartonicTops::DecayMode::MUON, acceptTauDecays), "PartonTopsToMuon"); // Partonic top decaying to mu
+        declare(PartonicTops(PartonicTops::DecayMode::ELECTRON, acceptTauDecays), "PartonTopsToElectron"); // Partonic top decaying to e
 
         // Build particle level tops starting from FinalState
         const FinalState fs(Cuts::pT > 0. && Cuts::abseta < 6.);
@@ -112,25 +111,23 @@ namespace Rivet {
         declare(dressedLeptons, "DressedLeptons");
 
         // Projection for jets
-        VetoedFinalState fs_jets(FinalState(-MAXDOUBLE, MAXDOUBLE, 0*GeV));
+        VetoedFinalState fs_jets(FinalState(Cuts::open()));
         fs_jets.addVetoOnThisFinalState(dressedLeptons);
         fs_jets.vetoNeutrinos();
         declare(FastJets(fs_jets, FastJets::ANTIKT, 0.4), "ak4jets");
 
         //book hists
-        _hist_lep_pt = bookHisto1D("d01-x01-y01");
-        _hist_jet_pt = bookHisto1D("d02-x01-y01");
-        _hist_top_pt = bookHisto1D("d03-x01-y01");
-        _hist_top_y = bookHisto1D("d04-x01-y01");
-        _hist_tt_pt = bookHisto1D("d05-x01-y01");
-        _hist_tt_y = bookHisto1D("d06-x01-y01");
-        _hist_tt_m = bookHisto1D("d07-x01-y01");
-        _hist_tt_dphi = bookHisto1D("d08-x01-y01");
+        book(_hist_lep_pt, "d01-x01-y01");
+        book(_hist_jet_pt, "d02-x01-y01");
+        book(_hist_top_pt, "d03-x01-y01");
+        book(_hist_top_y, "d04-x01-y01");
+        book(_hist_tt_pt, "d05-x01-y01");
+        book(_hist_tt_y, "d06-x01-y01");
+        book(_hist_tt_m, "d07-x01-y01");
+        book(_hist_tt_dphi, "d08-x01-y01");
       }
 
       void analyze(const Event& event) {
-
-        const double weight = event.weight();
 
         // Do the analysis only for the full-dleptonic channel
         const Particles partonTopsToMuon     = apply<ParticleFinder>(event, "PartonTopsToMuon").particles();
@@ -157,7 +154,7 @@ namespace Rivet {
 
         const FourMomentum& lepton1 = dressedLeptons[0].momentum();
         const FourMomentum& lepton2 = dressedLeptons[1].momentum();
-        const int channel = std::abs(dressedLeptons[0].pdgId())+std::abs(dressedLeptons[1].pdgId());
+        const int channel = dressedLeptons[0].abspid() + dressedLeptons[1].abspid();
         if ( !((channel == 22 and nPartonElectrons == 2) or
                (channel == 24 and nPartonElectrons == 1 and nPartonMuons == 1) or
                (channel == 26 and nPartonMuons == 2)) ) vetoEvent;
@@ -199,20 +196,20 @@ namespace Rivet {
         const FourMomentum t2 = w2 + bjet2;
         const FourMomentum tt = t1+t2;
 
-        _hist_lep_pt->fill(lepton1.pt(), weight);
-        _hist_lep_pt->fill(lepton2.pt(), weight);
-        _hist_jet_pt->fill(bjet1.pt(), weight);
-        _hist_jet_pt->fill(bjet2.pt(), weight);
+        _hist_lep_pt->fill(lepton1.pt());
+        _hist_lep_pt->fill(lepton2.pt());
+        _hist_jet_pt->fill(bjet1.pt());
+        _hist_jet_pt->fill(bjet2.pt());
 
-        _hist_top_pt->fill(t1.pt(), weight);
-        _hist_top_pt->fill(t2.pt(), weight);
-        _hist_top_y->fill(t1.rapidity(), weight);
-        _hist_top_y->fill(t2.rapidity(), weight);
+        _hist_top_pt->fill(t1.pt());
+        _hist_top_pt->fill(t2.pt());
+        _hist_top_y->fill(t1.rapidity());
+        _hist_top_y->fill(t2.rapidity());
 
-        _hist_tt_pt->fill(tt.pt(), weight);
-        _hist_tt_y->fill(tt.rapidity(), weight);
-        _hist_tt_m->fill(tt.mass(), weight);
-        _hist_tt_dphi->fill(deltaPhi(t1.phi(), t2.phi()), weight);
+        _hist_tt_pt->fill(tt.pt());
+        _hist_tt_y->fill(tt.rapidity());
+        _hist_tt_m->fill(tt.mass());
+        _hist_tt_dphi->fill(deltaPhi(t1.phi(), t2.phi()));
       }
 
       /// Normalise histograms etc., after the run

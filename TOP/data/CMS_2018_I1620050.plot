@@ -1,5 +1,5 @@
 # BEGIN PLOT /CMS_2018_I1620050/d01-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$p_\text{T}(\text{lepton})\;[\text{GeV}]$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{dp_\text{T}(\text{lepton})}\;[\text{GeV}^{-1}]$
 LogY=1
@@ -12,7 +12,7 @@ PlotSize=10.7,7.2
 #END PLOT
 
 # BEGIN PLOT /CMS_2018_I1620050/d02-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$p_\text{T}(\text{jet})\;[\text{GeV}]$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{dp_\text{T}(\text{jet})}\;[\text{GeV}^{-1}]$
 YMin=3e-5
@@ -21,7 +21,7 @@ PlotSize=10.7,7.2
 #END PLOT
 
 # BEGIN PLOT /CMS_2018_I1620050/d03-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$p_\text{T}(\text{t}) [\text{GeV}]$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{dp_\text{T}(\text{t})}\;[\text{GeV}^{-1}]$
 YMin=4e-5
@@ -30,7 +30,7 @@ PlotSize=10.7,7.2
 #END PLOT
 
 # BEGIN PLOT /CMS_2018_I1620050/d04-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$y(\text{t})$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{dy(\text{t})}$
 LogY=0
@@ -40,7 +40,7 @@ PlotSize=10.7,7.2
 #END PLOT
 
 # BEGIN PLOT /CMS_2018_I1620050/d05-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$p_\text{T}(\text{t}\bar{\text{t}})\;[\text{GeV}]$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{dp_\text{T}(\text{t}\bar{\text{t}})}\;[\text{GeV}^{-1}]$
 YMin=3e-5
@@ -49,7 +49,7 @@ PlotSize=10.7,7.2
 #END PLOT
 
 # BEGIN PLOT /CMS_2018_I1620050/d06-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$y(\text{t}\bar{\text{t}})$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{dy(\text{t}\bar{\text{t}})}$
 LogY=0
@@ -59,7 +59,7 @@ PlotSize=10.7,7.2
 #END PLOT
 
 # BEGIN PLOT /CMS_2018_I1620050/d07-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$M(\text{t}\bar{\text{t}})\;[\text{GeV}]$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{dM(\text{t}\bar{\text{t}})}\;[\text{GeV}^{-1}]$
 LogY=1
@@ -69,7 +69,7 @@ PlotSize=10.7,7.2
 #END PLOT
 
 # BEGIN PLOT /CMS_2018_I1620050/d08-x01-y01
-Title=$\text{CMS}\;2.1\,\text{fb}^{-1}\;(13\,\text{TeV})$
+Title=CMS, 13 TeV, $t\bar{t}$ dilepton
 XLabel=$\Delta\phi(\text{t},\bar{\text{t}})\;[\text{Radian}]$
 YLabel=$\frac{1}{\sigma}\frac{d\sigma}{d\,\Delta\phi(\text{t},\bar{\text{t}})}\;[\text{Radian}^{-1}]$
 YMin=1e-2

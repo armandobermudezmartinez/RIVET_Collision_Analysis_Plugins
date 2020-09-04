@@ -19,7 +19,11 @@ First, create a personal fork of this repository: https://gitlab.cern.ch/cms-gen
     git-cms-addpkg Configuration/Generator
 
     git clone ssh://git@gitlab.cern.ch:7999/${USER}/Rivet.git
+    cd Rivet
     git remote add cms-gen ssh://git@gitlab.cern.ch:7999/cms-gen/Rivet.git
+    git fetch cms-gen master-rivet2
+    git checkout master-rivet2
+    git pull cms-gen master-rivet2
 
     source Rivet/rivetSetup.sh
     scram b -j8

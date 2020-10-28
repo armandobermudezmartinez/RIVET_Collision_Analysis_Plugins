@@ -81,9 +81,10 @@ CMSSW_BASE=os.environ["CMSSW_BASE"]
 ccFile    = CMSSW_BASE+'/src/Rivet/'+opts.pag+'/src/'+PlugInName+'.cc'
 infoFile  = CMSSW_BASE+'/src/Rivet/'+opts.pag+'/data/'+PlugInName+'.info' 
 plotFile  = CMSSW_BASE+'/src/Rivet/'+opts.pag+'/data/'+PlugInName+'.plot' 
-if os.path.isfile(ccFile) or os.path.isfile(infoFile) or os.path.isfile(plotFile) :
+yodaFile  = CMSSW_BASE+'/src/Rivet/'+opts.pag+'/data/'+PlugInName+'.yoda'
+if os.path.isfile(ccFile) or os.path.isfile(infoFile) or os.path.isfile(plotFile) or os.path.isfile(yodaFile) :
    print "ERROR: Plugin already exist, will not overirdde it !!!! "
-   print "       Please check following files: ",ccFile,infoFile,plotFile
+   print "       Please check following files: ",ccFile,infoFile,plotFile,yodaFile
    exit()
 
 rivetCmd="rivet-mkanalysis "+PlugInName
@@ -93,9 +94,13 @@ out, err = proc.communicate()
 os.rename(PlugInName+'.cc'    , ccFile   )
 os.rename(PlugInName+'.info'  , infoFile )
 os.rename(PlugInName+'.plot'  , plotFile )
+if os.path.isfile(PlugInName+'.yoda'):
+   os.rename(PlugInName+'.yoda'  , yodaFile   )
 
 print "---> CC   File  : ",ccFile
 print "---> Info File  : ",infoFile
 print "---> Plot File  : ",plotFile
+if os.path.isfile(yodaFile):
+   print "---> YODA File  : ",yodaFile
 print " "
 

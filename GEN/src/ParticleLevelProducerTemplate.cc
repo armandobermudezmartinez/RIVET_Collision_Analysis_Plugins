@@ -115,11 +115,11 @@ namespace Rivet {
       declare(MissingMomentum(fs), "MET");
       
       // Booking of histograms
-      book(_h["n_lep"] ,  10, -0.5,   9.5);
-      book(_h["lep_pt"], 100,  0.0, 200.0);
-      book(_h["n_jet"] ,  10, -0.5,   9.5);
-      book(_h["jet_pt"], 100,  0.0, 500.0);
-      book(_h["n_bjet"],  10, -0.5,   9.5);
+      book(_h["n_lep"],  "n_lep",   10, -0.5,   9.5);
+      book(_h["lep_pt"], "lep_pt", 100,  0.0, 200.0);
+      book(_h["n_jet"],  "n_jet",   10, -0.5,   9.5);
+      book(_h["jet_pt"], "jet_pt", 100,  0.0, 500.0);
+      book(_h["n_bjet"], "n_bjet",  10, -0.5,   9.5);
     };
 
     // Apply Rivet projections

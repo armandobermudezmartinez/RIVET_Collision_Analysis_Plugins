@@ -6,7 +6,7 @@
 namespace Rivet {
 
 
-  /// @brief Add a short analysis description here
+  /// @brief Measurement of charged pion, kaon, and proton production in proton-proton collisions at 13 TeV
   class CMS_2017_I1608166 : public Analysis {
   public:
 

@@ -31,13 +31,9 @@ namespace Rivet {
         FinalState fs(-MAXDOUBLE, MAXDOUBLE, 0*GeV);
         addProjection(fs, "FS");
 
-        Cut cut_el = Cuts::abseta < 2.5 && Cuts::pT > 25*GeV;
         Cut cut_mu = Cuts::abseta < 2.1 && Cuts::pT > 20*GeV;
 
         // Dressed Ws ...
-        WFinder welnu_Finder(fs, cut_el, PID::ELECTRON, 0*GeV, MAXDOUBLE, 0*GeV, 0, WFinder::CLUSTERNODECAY, WFinder::NOTRACK, WFinder::TRANSMASS);
-        addProjection(welnu_Finder, "Welnu_Finder");
-
         WFinder wmunu_Finder(fs, cut_mu, PID::MUON, 0*GeV, MAXDOUBLE, 0*GeV, 0, WFinder::CLUSTERNODECAY, WFinder::NOTRACK, WFinder::TRANSMASS);
         addProjection(wmunu_Finder, "Wmunu_Finder");
 
@@ -47,11 +43,10 @@ namespace Rivet {
 
         // Histograms
         if ( _mode == 1) {
-          _hist_WtoElNuPt = bookHisto1D(1, 1, 1);
-          _hist_WtoMuNuPt = bookHisto1D(2, 1, 1);
+          _hist_WtoMuNuPt = bookHisto1D(1, 1, 1);
         }
         if( _mode == 2) {
-          _hist_ZtoMuMuPt = bookHisto1D(3, 1, 1);
+          _hist_ZtoMuMuPt = bookHisto1D(2, 1, 1);
         }
       }
 
@@ -62,13 +57,6 @@ namespace Rivet {
         const double weight = event.weight();
 
         if ( _mode == 1 ) {
-          // Get the W bosons - electron decay channel
-          const WFinder& welnu_Finder = applyProjection<WFinder>(event, "Welnu_Finder");
-          if (!welnu_Finder.bosons().empty()) {
-            const FourMomentum pWelnu = welnu_Finder.bosons()[0].momentum();
-            _hist_WtoElNuPt->fill(pWelnu.pT()/GeV, weight);
-          }
-
           // Get the W bosons - muon decay channel
           const WFinder& wmunu_Finder = applyProjection<WFinder>(event, "Wmunu_Finder");
           if (!wmunu_Finder.bosons().empty()) {
@@ -97,7 +85,6 @@ namespace Rivet {
         MSG_INFO("SumW          = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << sumOfWeights());
 
         if (_mode ==1) {
-          normalize(_hist_WtoElNuPt);
           normalize(_hist_WtoMuNuPt);
         }
 
@@ -121,7 +108,6 @@ namespace Rivet {
 
       /// @name Histograms
 
-      Histo1DPtr _hist_WtoElNuPt;
       Histo1DPtr _hist_WtoMuNuPt;
       Histo1DPtr _hist_ZtoMuMuPt;
 

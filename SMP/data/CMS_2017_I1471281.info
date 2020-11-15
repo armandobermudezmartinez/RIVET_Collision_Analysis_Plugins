@@ -4,7 +4,7 @@ Summary: Measurement of the transverse momentum spectra of weak vector bosons pr
 Experiment: CMS
 Collider: LHC
 InspireID: 1471281
-Status: UNVALIDATED
+Status: VALIDATED
 Authors:
  - SangEun Lee	<d4space@google.com>
  - Khakimjan Butanov	<khakimjan@yahoo.com>
@@ -40,6 +40,3 @@ BibTeX: '@article{Khachatryan:2016nbe,
       reportNumber   = "CMS-SMP-14-012, CERN-EP-2016-152",
       SLACcitation   = "%%CITATION = ARXIV:1606.05864;%%"
 }'
-ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
-

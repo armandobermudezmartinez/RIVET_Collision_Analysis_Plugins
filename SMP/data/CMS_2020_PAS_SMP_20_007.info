@@ -1,6 +1,6 @@
 Name: CMS_2020_PAS_SMP_20_007
 Year: 2020
-Summary: Study of double parton scattering in 4-jet production in proton-proton collisions at low transverse momentum at $\sqrt{s}$ = 13 TeV.
+Summary: Study of double-parton scattering in the inclusive production of four jets with low transverse momentum in proton-proton collisions at $\sqrt{s}$ = 13 TeV.
 Experiment: CMS
 Collider: LHC
 InspireID: <Insert the Inspire ID>
@@ -16,13 +16,12 @@ Authors:
 RunInfo: Event types Hard QCD; Cuts jet $\pT > 20$ GeV, $|\eta|$ < 4.7.
 Beams: [p+, p+]
 Energies: [13000]
-Luminosity_fb: 0.00004185 fb-1
+Luminosity_fb: 0.000042 fb-1
 Description:
-  'A study of four jet production in proton-proton collisions at a center of mass energy of 13 TeV is presented. The data sample was collected in 2016 with the CMS detector at the LHC during a low intensity run, with an integrated luminosity of 0.04 pb. Differential cross sections are measured as a function of the jet transverse momentum, pseudorapidity, and several other observables that exploit angular correlations. The
-lowest jet transverse momentum cuts required in this paper are 35, 30, 25, and 20 GeV for the 1st, 2nd, 3th, and 4th jet respectively within $|\eta|$ < 4.7. It is found that the data is very sensitive to different aspects of the underlying event, parton showers, and matrix element calculations. In particular the interplay between the decorrelations caused by parton showers and double parton scattering contributions is shown to be important. Models employing angular ordered parton showers, off-shell initial kinematics, as well as models with higher order matrix element calculations provide a better description of the data in certain observables. The $\Delta S$ observable, which characterizes the azimuthal angle between the hard and soft jet pair (calculated with $\pT >$ 50, 30, 30, and 30 GeV for the 1st, 2nd, 3th, and 4th jet respectively), is used to extract a double parton scattering contribution by means of a template fit method. Model dependent values of sigma effective are calculated and compared to previous measurements. While all extracted values of the effective cross section show agreement with measurements performed at lower center-of-energies, a strong model dependence of the double parton scattering contribution is found.'
+  'A study of inclusive four-jet production in proton-proton collisions at a center-of- mass energy of 13 TeV is presented. The transverse momentum of jets within $| \eta | < 4.7$ reaches down to 35, 30, 25, and 20 GeV for the first, second, third, and fourth lead- ing jet, respectively. Differential cross sections are measured as a function of the jet transverse momentum and pseudorapidity, and of several other observables that ex- ploit angular correlations between the jets. It is found that the measured distributions show sensitivity to different aspects of the underlying event, parton shower, and ma- trix element calculations. In particular, the interplay between decorrelations caused by parton shower and double-parton scattering contributions is shown to be impor- tant. The double-parton scattering contribution is extracted by means of a template fit of distributions for single-parton scattering obtained from Monte Carlo event genera- tors and a double-parton scattering distribution constructed from inclusive single-jet events in data. Values of the effective cross section are calculated and discussed in view of earlier measurements and of their dependence on the models used for the single-parton scattering background.'
 Keywords: []
 BibKey: 
 BibTeX: ''
 ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
+ - Get formal validation of analysis.
 

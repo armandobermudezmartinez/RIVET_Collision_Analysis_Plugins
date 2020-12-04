@@ -4,7 +4,7 @@ Current coverage: https://cms-rivet.web.cern.ch/cms-rivet/rivet-coverage-cms.htm
 
 ## Instructions for updating
 
-For the `mk-coverage-html-cms` step there might be the need to install the HTML package `pip install --user html`)
+For the `mk-coverage-html-cms` step there might be the need to install the HTML package (`pip install --user html`)
 
 API token needed for including merge requests, get it here: https://gitlab.cern.ch/profile/personal_access_tokens
 

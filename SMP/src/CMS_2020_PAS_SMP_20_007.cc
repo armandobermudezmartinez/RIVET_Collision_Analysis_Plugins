@@ -25,8 +25,8 @@ namespace Rivet {
 
       // the basic final-state projection: 
       // all final-state particles within 
-      // the given eta acceptance
-      const FinalState fs(Cuts::abseta < 4.9);
+      // the given eta acceptance: 4.7 (jet range) + 0.4 (cone size)
+      const FinalState fs(Cuts::abseta < 5.1); 
 
       // the final-state particles declared above are clustered using FastJet with
       // the anti-kT algorithm and a jet-radius parameter 0.4
@@ -67,12 +67,12 @@ namespace Rivet {
 
       /// @todo Do the event by event analysis here
 
-      // retrieve clustered jets, sorted by pT, with a minimum pT cut
-      Jets jets = apply<FastJets>(event, "jets").jetsByPt(Cuts::pT > 10*GeV);
+      // retrieve clustered jets, sorted by pT, with a minimum pT cut 10 GeV and eta range 4.7 (similar to PFJet collection)
+      Jets jets = apply<FastJets>(event, "jets").jetsByPt(Cuts::abseta < 4.7 && Cuts::pT > 10*GeV);
       
       // fill only if there are at least 4 jets
       if (jets.size() >= 4) {
-        if (jets[0].momentum().pt() > 35.0 && jets[1].momentum().pt() > 30.0 && jets[2].momentum().pt() > 25.0 && jets[3].momentum().pt() > 20.0) { 
+        if (jets[0].momentum().pt() > 35.0 && jets[1].momentum().pt() > 30.0 && jets[2].momentum().pt() > 25.0 && jets[3].momentum().pt() > 20.0) {
 		
 		double pt0 = jets[0].momentum().pt();
 		double pt1 = jets[1].momentum().pt();

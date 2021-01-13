@@ -26,6 +26,12 @@ namespace Rivet {
 
       /// Book histograms and initialise projections before the run
       void init() {
+        
+        // Get options from the new option system
+        // default to both.
+        if ( getOption("VMODE") == "BOTH" ) _mode = 0;
+        if ( getOption("VMODE") == "W" )    _mode = 1;
+        if ( getOption("VMODE") == "Z" )    _mode = 2;
 
         // Set up projections
         FinalState fs;
@@ -41,11 +47,11 @@ namespace Rivet {
         declare(zmumu_Finder, "Zmumu_Finder");
 
         // Histograms
-        if ( _mode == 1) {
-          book(_hist_WtoMuNuPt, 1, 1, 1);
+        if (_mode == 0 || _mode == 1) {
+          book(_hist_WtoMuNuPt, 8, 1, 1);
         }
-        if( _mode == 2) {
-          book(_hist_ZtoMuMuPt, 2, 1, 1);
+        if (_mode == 0 || _mode == 2) {
+          book(_hist_ZtoMuMuPt, 9, 1, 1);
         }
       }
 
@@ -53,7 +59,7 @@ namespace Rivet {
       /// Perform the per-event analysis
       void analyze(const Event& event) {
 
-        if ( _mode == 1 ) {
+        if (_mode == 0 || _mode == 1) {
           // Get the W bosons - muon decay channel
           const WFinder& wmunu_Finder = apply<WFinder>(event, "Wmunu_Finder");
           if (!wmunu_Finder.bosons().empty()) {
@@ -62,7 +68,7 @@ namespace Rivet {
           }
         }
 
-        else if ( _mode == 2 ) {
+        if (_mode == 0 || _mode == 2) {
           // Get the Z bosons - muon decay channel
           const ZFinder& zmumu_Finder = apply<ZFinder>(event, "Zmumu_Finder");
           if (!zmumu_Finder.bosons().empty()) {
@@ -81,11 +87,11 @@ namespace Rivet {
         MSG_INFO("# Events      = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << numEvents() );
         MSG_INFO("SumW          = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << sumOfWeights());
 
-        if (_mode ==1) {
+        if (_mode == 0 || _mode == 1) {
           normalize(_hist_WtoMuNuPt);
         }
 
-        else if (_mode ==2) {
+        if (_mode == 0 || _mode == 2) {
           normalize(_hist_ZtoMuMuPt);
         }
               
@@ -110,26 +116,7 @@ namespace Rivet {
 
   };
 
-  /// W part of the CMS_2017_I1471281 analysis
-  class CMS_2017_I1471281_W : public CMS_2017_I1471281 {
-    public:
-      CMS_2017_I1471281_W()
-        : CMS_2017_I1471281("CMS_2017_I1471281_W")
-      {_mode = 1;}
-  };
-
-  /// Z part of the CMS_2017_I1471281 analysis
-  class CMS_2017_I1471281_Z : public CMS_2017_I1471281 {
-    public:
-      CMS_2017_I1471281_Z()
-        : CMS_2017_I1471281("CMS_2017_I1471281_Z")
-      {_mode = 2;}
-  };
-
   // The hook for the plugin system
   DECLARE_RIVET_PLUGIN(CMS_2017_I1471281);
-  DECLARE_RIVET_PLUGIN(CMS_2017_I1471281_W);
-  DECLARE_RIVET_PLUGIN(CMS_2017_I1471281_Z);
-
 
 }

@@ -28,25 +28,24 @@ namespace Rivet {
       void init() {
 
         // Set up projections
-        FinalState fs(-MAXDOUBLE, MAXDOUBLE, 0*GeV);
-        addProjection(fs, "FS");
+        FinalState fs;
 
         Cut cut_mu = Cuts::abseta < 2.1 && Cuts::pT > 20*GeV;
 
         // Dressed Ws ...
-        WFinder wmunu_Finder(fs, cut_mu, PID::MUON, 0*GeV, MAXDOUBLE, 0*GeV, 0, WFinder::CLUSTERNODECAY, WFinder::NOTRACK, WFinder::TRANSMASS);
-        addProjection(wmunu_Finder, "Wmunu_Finder");
+        WFinder wmunu_Finder(fs, cut_mu, PID::MUON, 0*GeV, YODA::MAXDOUBLE, 0*GeV, 0, WFinder::ChargedLeptons::PROMPT, WFinder::ClusterPhotons::NODECAY, WFinder::AddPhotons::NO, WFinder::MassWindow::MT);
+        declare(wmunu_Finder, "Wmunu_Finder");
 
         // Dressed Zs ... 
-        ZFinder zmumu_Finder(fs, cut_mu, PID::MUON, 60*GeV, 120*GeV, 0, ZFinder::CLUSTERNODECAY, ZFinder::NOTRACK);
-        addProjection(zmumu_Finder, "Zmumu_Finder");
+        ZFinder zmumu_Finder(fs, cut_mu, PID::MUON, 60*GeV, 120*GeV, 0, ZFinder::ChargedLeptons::PROMPT, ZFinder::ClusterPhotons::NODECAY, ZFinder::AddPhotons::NO);
+        declare(zmumu_Finder, "Zmumu_Finder");
 
         // Histograms
         if ( _mode == 1) {
-          _hist_WtoMuNuPt = bookHisto1D(1, 1, 1);
+          book(_hist_WtoMuNuPt, 1, 1, 1);
         }
         if( _mode == 2) {
-          _hist_ZtoMuMuPt = bookHisto1D(2, 1, 1);
+          book(_hist_ZtoMuMuPt, 2, 1, 1);
         }
       }
 
@@ -54,23 +53,21 @@ namespace Rivet {
       /// Perform the per-event analysis
       void analyze(const Event& event) {
 
-        const double weight = event.weight();
-
         if ( _mode == 1 ) {
           // Get the W bosons - muon decay channel
-          const WFinder& wmunu_Finder = applyProjection<WFinder>(event, "Wmunu_Finder");
+          const WFinder& wmunu_Finder = apply<WFinder>(event, "Wmunu_Finder");
           if (!wmunu_Finder.bosons().empty()) {
             const FourMomentum pWmunu = wmunu_Finder.bosons()[0].momentum();
-            _hist_WtoMuNuPt->fill(pWmunu.pT()/GeV, weight);
+            _hist_WtoMuNuPt->fill(pWmunu.pT()/GeV);
           }
         }
 
         else if ( _mode == 2 ) {
           // Get the Z bosons - muon decay channel
-          const ZFinder& zmumu_Finder = applyProjection<ZFinder>(event, "Zmumu_Finder");
+          const ZFinder& zmumu_Finder = apply<ZFinder>(event, "Zmumu_Finder");
           if (!zmumu_Finder.bosons().empty()) {
             const FourMomentum pZmumu = zmumu_Finder.bosons()[0].momentum();
-            _hist_ZtoMuMuPt->fill(pZmumu.pT()/GeV, weight);
+            _hist_ZtoMuMuPt->fill(pZmumu.pT()/GeV);
           }
         }
 

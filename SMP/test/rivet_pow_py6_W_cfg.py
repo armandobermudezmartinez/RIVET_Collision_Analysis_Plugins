@@ -114,6 +114,6 @@ process.generator = cms.EDProducer("GenParticles2HepMCConverter",
 process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 process.rivetAnalyzer.HepMCCollection = cms.InputTag('generator','unsmeared')
 #process.rivetAnalyzer.CrossSection = cms.double(0.469e+09)
-process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2017_I1471281_W')
+process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2017_I1471281:VMODE=W')
 process.p = cms.Path(process.generator*process.rivetAnalyzer)
 process.rivetAnalyzer.OutputFile = cms.string('Rivet_W.yoda')

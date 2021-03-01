@@ -93,7 +93,6 @@ namespace Rivet {
       scale(_hist_pho_dr,       crossSection() / sumOfWeights());
       scale(_hist_pho_dr_lqt,   crossSection() / sumOfWeights());
       scale(_hist_pho_dr_hqt,   crossSection() / sumOfWeights());
-      std::cout << "Used new CMS_2015_I1346843" << std::endl;
     }
 
 

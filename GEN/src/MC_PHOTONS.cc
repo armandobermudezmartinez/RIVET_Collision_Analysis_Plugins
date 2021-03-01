@@ -140,7 +140,6 @@ namespace Rivet {
       scale(_h_DelR_weighted, crossSection() / sumOfWeights());
       scale(_h_DelR_R, crossSection() / sumOfWeights());
       scale(_h_DelR_R_weighted, crossSection() / sumOfWeights());
-      std::cout << "Used new MC_PHOTONS" << std::endl;
     }
 
     //@}

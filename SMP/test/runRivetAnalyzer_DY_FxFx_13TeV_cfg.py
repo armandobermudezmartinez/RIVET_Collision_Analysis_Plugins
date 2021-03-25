@@ -5,7 +5,7 @@ import FWCore.ParameterSet.VarParsing as VarParsing
 options = VarParsing.VarParsing ('standard')
 options.register('runOnly', '', VarParsing.VarParsing.multiplicity.singleton,VarParsing.VarParsing.varType.string, "Run only specified analysis")
 options.register('yodafile', 'test.yoda', VarParsing.VarParsing.multiplicity.singleton,VarParsing.VarParsing.varType.string, "Name of yoda output file")
-options.setDefault('maxEvents', 10000)
+options.setDefault('maxEvents', 100000)
 if(hasattr(sys, "argv")):
     options.parseArguments()
 print(options)
@@ -45,7 +45,7 @@ if options.runOnly:
     process.rivetAnalyzer.AnalysisNames = cms.vstring(options.runOnly)
 else:
     process.rivetAnalyzer.AnalysisNames = cms.vstring(
-        'CMS_2018_I1711625', 'CMS_2019_I1753680', 'MC_WEIGHTS', 'MC_XS',
+        'CMS_2018_I1711625', 'CMS_2019_I1753680', 'CMS_2020_I1837084', 'MC_WEIGHTS', 'MC_XS',
     )
 process.rivetAnalyzer.OutputFile      = options.yodafile
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")

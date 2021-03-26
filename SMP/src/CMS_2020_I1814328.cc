@@ -64,11 +64,7 @@ namespace Rivet {
       book(_h_WW_ptlmax_norm, 5, 1, 1);
       book(_h_WW_ptlmin_norm, 6, 1, 1);
       book(_h_WW_dphill_norm, 7, 1, 1);
-      book(_h_WW_ptj25	    , 8, 1, 1);
-      book(_h_WW_ptj30	    , 8, 1, 2);
-      book(_h_WW_ptj35	    , 8, 1, 3);
-      book(_h_WW_ptj45	    , 8, 1, 4);
-      book(_h_WW_ptj60	    , 8, 1, 5);
+      book(_h_WW_njet0	    , 8, 1, 1);
 
     }
 
@@ -115,11 +111,11 @@ namespace Rivet {
             _h_WW_dphill_norm->fill(deltaPhi(leptons[0], leptons[1]));
           }
 
-          if(jets25.size() == 0) _h_WW_ptj25->fill(0.5);
-          if(jets30.size() == 0) _h_WW_ptj30->fill(0.5);
-          if(jets35.size() == 0) _h_WW_ptj35->fill(0.5);
-          if(jets45.size() == 0) _h_WW_ptj45->fill(0.5);
-          if(jets60.size() == 0) _h_WW_ptj60->fill(0.5);
+          if(jets25.size() == 0) _h_WW_njet0->fill(0.0);
+          if(jets30.size() == 0) _h_WW_njet0->fill(1.0);
+          if(jets35.size() == 0) _h_WW_njet0->fill(2.0);
+          if(jets45.size() == 0) _h_WW_njet0->fill(3.0);
+          if(jets60.size() == 0) _h_WW_njet0->fill(4.0);
 
           sumSelnjEvents++;
           if(jets30.size() == 0) sum4p5Sel0jEvents++;
@@ -156,11 +152,7 @@ namespace Rivet {
       normalizeToSum(_h_WW_ptlmin_norm);
       normalizeToSum(_h_WW_dphill_norm);
 
-      scale(_h_WW_ptj25, norm);
-      scale(_h_WW_ptj30, norm);
-      scale(_h_WW_ptj35, norm);
-      scale(_h_WW_ptj45, norm);
-      scale(_h_WW_ptj60, norm);
+      scale(_h_WW_njet0, norm);
 
     }
 
@@ -170,7 +162,7 @@ namespace Rivet {
     //@{
     Histo1DPtr _h_WW_njets_norm;
     Histo1DPtr _h_WW_mll_norm, _h_WW_ptlmax_norm, _h_WW_ptlmin_norm, _h_WW_dphill_norm;
-    Histo1DPtr _h_WW_ptj25, _h_WW_ptj30, _h_WW_ptj35, _h_WW_ptj45, _h_WW_ptj60;
+    Histo1DPtr _h_WW_njet0;
     //@}
 
 

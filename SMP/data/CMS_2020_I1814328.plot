@@ -42,45 +42,9 @@ END PLOT
 
 BEGIN PLOT /CMS_2020_I1814328/d08-x01-y01
 Title=CMS, 13 TeV, $W^+ W^-$
-XMin=0
+XMin=-0.5
 LogX=0
 LogY=0
-XLabel=$\sigma(25)$
-YLabel=$d\sigma$ [pb]
-END PLOT
-
-BEGIN PLOT /CMS_2020_I1814328/d08-x01-y02
-Title=CMS, 13 TeV, $W^+ W^-$
-XMin=0
-LogX=0
-LogY=0
-XLabel=$\sigma(30)$
-YLabel=$d\sigma$ [pb]
-END PLOT
-
-BEGIN PLOT /CMS_2020_I1814328/d08-x01-y03
-Title=CMS, 13 TeV, $W^+ W^-$
-XMin=0
-LogX=0
-LogY=0
-XLabel=$\sigma(35)$
-YLabel=$d\sigma$ [pb]
-END PLOT
-
-BEGIN PLOT /CMS_2020_I1814328/d08-x01-y04
-Title=CMS, 13 TeV, $W^+ W^-$
-XMin=0
-LogX=0
-LogY=0
-XLabel=$\sigma(45)$
-YLabel=$d\sigma$ [pb]
-END PLOT
-
-BEGIN PLOT /CMS_2020_I1814328/d08-x01-y05
-Title=CMS, 13 TeV, $W^+ W^-$
-XMin=0
-LogX=0
-LogY=0
-XLabel=$\sigma(60)$
+XLabel=$\sigma(25/30/35/45/60)$
 YLabel=$d\sigma$ [pb]
 END PLOT

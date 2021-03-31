@@ -1,5 +1,5 @@
 
-BEGIN PLOT /CMS_2020_I1837084/d04-x01-y05
+BEGIN PLOT /CMS_2020_I1837084/d12-x01-y01
 Title=CMS, 13 TeV, $Z \to l^+ l^-/\nu \nu$
 XMin=200
 LogX=0
@@ -7,7 +7,7 @@ XLabel=$p_{T}^{Z}$ [GeV]
 YLabel=$d\sigma/dp_{T}^{Z}$ [fb/GeV]
 END PLOT
 
-BEGIN PLOT /CMS_2020_I1837084/d05-x01-y05
+BEGIN PLOT /CMS_2020_I1837084/d13-x01-y01
 Title=CMS, 13 TeV, $Z \to l^+ l^-/\nu \nu$
 XMin=200
 LogX=0

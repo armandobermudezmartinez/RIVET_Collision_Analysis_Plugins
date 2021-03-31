@@ -104,18 +104,18 @@ namespace Rivet {
           }
 
           if(std::abs(leptons[0].pid()) != std::abs(leptons[1].pid())){
-            _h_WW_njets_norm ->fill(min((double)jetsNj.size(),1.999));
+            _h_WW_njets_norm ->fill(min((double)jetsNj.size()+1,2.999));
             _h_WW_mll_norm   ->fill(min(dilCand.mass(),1499.999));
             _h_WW_ptlmax_norm->fill(min(ptlmax,399.999));
             _h_WW_ptlmin_norm->fill(min(ptlmin,149.999));
             _h_WW_dphill_norm->fill(deltaPhi(leptons[0], leptons[1]));
           }
 
-          if(jets25.size() == 0) _h_WW_njet0->fill(0.0);
-          if(jets30.size() == 0) _h_WW_njet0->fill(1.0);
-          if(jets35.size() == 0) _h_WW_njet0->fill(2.0);
-          if(jets45.size() == 0) _h_WW_njet0->fill(3.0);
-          if(jets60.size() == 0) _h_WW_njet0->fill(4.0);
+          if(jets25.size() == 0) _h_WW_njet0->fill(1.0);
+          if(jets30.size() == 0) _h_WW_njet0->fill(2.0);
+          if(jets35.size() == 0) _h_WW_njet0->fill(3.0);
+          if(jets45.size() == 0) _h_WW_njet0->fill(4.0);
+          if(jets60.size() == 0) _h_WW_njet0->fill(5.0);
 
           sumSelnjEvents++;
           if(jets30.size() == 0) sum4p5Sel0jEvents++;

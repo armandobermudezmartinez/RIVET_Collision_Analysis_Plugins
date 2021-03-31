@@ -1,22 +1,102 @@
-
-BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d02-x01-y01
-ErrorBreakdown: {0: {Statistical uncertainty: {dn: -0.008, up: 0.008}, Systematic uncertainty: {dn: -0.075, up: 0.075}}, 1: {Statistical uncertainty: {dn: -0.007, up: 0.007}, Systematic uncertainty: {dn: -0.043, up: 0.043}}, 2: {Statistical uncertainty: {dn: -0.006, up: 0.006}, Systematic uncertainty: {dn: -0.033, up: 0.033}}}
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d01-x01-y01
+ErrorBreakdown: {0: {total uncertainty: {dn: -9.9, up: 9.9}}, 1: {total uncertainty: {dn: -19.0, up: 19.0}}, 2: {total uncertainty: {dn: -14.7, up: 14.7}}, 3: {total uncertainty: {dn: -23.8, up: 23.8}}, 4: {total uncertainty: {dn: -8.4, up: 8.4}}, 5: {total uncertainty: {dn: -18.7, up: 18.7}}, 6: {total uncertainty: {dn: -6.8, up: 6.8}}}
 IsRef: 1
-Path: /REF/CMS_2020_I1814328/d02-x01-y01
-Title: doi:10.17182/hepdata.94259.v1/t2
+Path: /REF/CMS_2020_I1814328/d01-x01-y01
+Title: Table 5
 Type: Scatter2D
 ---
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
-0.000000e+00	5.000000e-01	5.000000e-01	0.681188 0.066467 0.066467
-1.000000e+00	5.000000e-01	5.000000e-01	0.219611 0.049573 0.049573
-2.000000e+00	5.000000e-01	5.000000e-01	0.054951 0.054209 0.054209
+1.000000e+00	5.000000e-01	5.000000e-01	1.252000e+02	9.900000e+00	9.900000e+00
+2.000000e+00	5.000000e-01	5.000000e-01	1.201000e+02	1.900000e+01	1.900000e+01
+3.000000e+00	5.000000e-01	5.000000e-01	1.105000e+02	1.470000e+01	1.470000e+01
+4.000000e+00	5.000000e-01	5.000000e-01	8.990000e+01	2.380000e+01	2.380000e+01
+5.000000e+00	5.000000e-01	5.000000e-01	1.220000e+02	8.400000e+00	8.400000e+00
+6.000000e+00	5.000000e-01	5.000000e-01	1.060000e+02	1.870000e+01	1.870000e+01
+7.000000e+00	5.000000e-01	5.000000e-01	1.176000e+02	6.800000e+00	6.800000e+00
 END YODA_SCATTER2D_V2
+
+
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d01-x01-y02
+ErrorBreakdown: {0: {total uncertainty: {dn: -0.083, up: 0.083}}, 1: {total uncertainty: {dn: -0.16, up: 0.16}}, 2: {total uncertainty: {dn: -0.124, up: 0.124}}, 3: {total uncertainty: {dn: -0.2, up: 0.2}}, 4: {total uncertainty: {dn: -0.071, up: 0.071}}, 5: {total uncertainty: {dn: -0.157, up: 0.157}}, 6: {total uncertainty: {dn: -0.057, up: 0.057}}}
+IsRef: 1
+Path: /REF/CMS_2020_I1814328/d01-x01-y02
+Title: Table 5
+Type: Scatter2D
+---
+# xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
+1.000000e+00	5.000000e-01	5.000000e-01	1.054000e+00	8.300000e-02	8.300000e-02
+2.000000e+00	5.000000e-01	5.000000e-01	1.011000e+00	1.600000e-01	1.600000e-01
+3.000000e+00	5.000000e-01	5.000000e-01	9.300000e-01	1.240000e-01	1.240000e-01
+4.000000e+00	5.000000e-01	5.000000e-01	7.570000e-01	2.000000e-01	2.000000e-01
+5.000000e+00	5.000000e-01	5.000000e-01	1.027000e+00	7.100000e-02	7.100000e-02
+6.000000e+00	5.000000e-01	5.000000e-01	8.920000e-01	1.570000e-01	1.570000e-01
+7.000000e+00	5.000000e-01	5.000000e-01	9.900000e-01	5.700000e-02	5.700000e-02
+END YODA_SCATTER2D_V2
+
+
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d02-x01-y01
+ErrorBreakdown: {0: {Statistical uncertainty: {dn: -0.008, up: 0.008}, Systematic uncertainty: {dn: -0.066467, up: 0.066467}}, 1: {Statistical uncertainty: {dn: -0.007, up: 0.007}, Systematic uncertainty: {dn: -0.049573, up: 0.049573}}, 2: {Statistical uncertainty: {dn: -0.006, up: 0.006}, Systematic uncertainty: {dn: -0.054209, up: 0.054209}}}
+IsRef: 1
+Path: /REF/CMS_2020_I1814328/d02-x01-y01
+Title: Table 8
+Type: Scatter2D
+---
+# xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
+1.000000e+00	5.000000e-01	5.000000e-01	6.811900e-01	6.694671e-02	6.694671e-02
+2.000000e+00	5.000000e-01	5.000000e-01	2.196100e-01	5.006478e-02	5.006478e-02
+3.000000e+00	5.000000e-01	5.000000e-01	5.495100e-02	5.454004e-02	5.454004e-02
+END YODA_SCATTER2D_V2
+
+
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d03-x01-y01
+ErrorBreakdown: {}
+IsRef: 1
+Path: /REF/CMS_2020_I1814328/d03-x01-y01
+Title: Table 9
+Type: Scatter2D
+---
+# xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
+END YODA_SCATTER2D_V2
+
+
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d03-x01-y02
+ErrorBreakdown: {}
+IsRef: 1
+Path: /REF/CMS_2020_I1814328/d03-x01-y02
+Title: Table 9
+Type: Scatter2D
+---
+# xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
+END YODA_SCATTER2D_V2
+
+
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d03-x01-y03
+ErrorBreakdown: {}
+IsRef: 1
+Path: /REF/CMS_2020_I1814328/d03-x01-y03
+Title: Table 9
+Type: Scatter2D
+---
+# xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
+END YODA_SCATTER2D_V2
+
+
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d03-x01-y04
+ErrorBreakdown: {}
+IsRef: 1
+Path: /REF/CMS_2020_I1814328/d03-x01-y04
+Title: Table 9
+Type: Scatter2D
+---
+# xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
+END YODA_SCATTER2D_V2
+
 
 BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d04-x01-y01
 ErrorBreakdown: {0: {Statistical Uncertainty: {dn: -0.0065976, up: 0.0065976}}, 1: {Statistical Uncertainty: {dn: -0.010636, up: 0.010636}}, 2: {Statistical Uncertainty: {dn: -0.011176, up: 0.011176}}, 3: {Statistical Uncertainty: {dn: -0.0081315, up: 0.0081315}}, 4: {Statistical Uncertainty: {dn: -0.0075735, up: 0.0075735}}, 5: {Statistical Uncertainty: {dn: -0.0074651, up: 0.0074651}}, 6: {Statistical Uncertainty: {dn: -0.0057653, up: 0.0057653}}, 7: {Statistical Uncertainty: {dn: -0.0043229, up: 0.0043229}}, 8: {Statistical Uncertainty: {dn: -0.0030937, up: 0.0030937}}, 9: {Statistical Uncertainty: {dn: -0.0016474, up: 0.0016474}}, 10: {Statistical Uncertainty: {dn: -0.00085324, up: 0.00085324}}, 11: {Statistical Uncertainty: {dn: -0.00027615, up: 0.00027615}}, 12: {Statistical Uncertainty: {dn: -3.2654e-05, up: 3.2654e-05}}}
 IsRef: 1
 Path: /REF/CMS_2020_I1814328/d04-x01-y01
-Title: doi:10.17182/hepdata.94259.v1/t4
+Title: Figure 6 top left
 Type: Scatter2D
 ---
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
@@ -40,7 +120,7 @@ BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d05-x01-y01
 ErrorBreakdown: {0: {Statistical Uncertainty: {dn: -0.0062617, up: 0.0062617}}, 1: {Statistical Uncertainty: {dn: -0.0085755, up: 0.0085755}}, 2: {Statistical Uncertainty: {dn: -0.0080725, up: 0.0080725}}, 3: {Statistical Uncertainty: {dn: -0.0077883, up: 0.0077883}}, 4: {Statistical Uncertainty: {dn: -0.0075493, up: 0.0075493}}, 5: {Statistical Uncertainty: {dn: -0.007067, up: 0.007067}}, 6: {Statistical Uncertainty: {dn: -0.0072463, up: 0.0072463}}, 7: {Statistical Uncertainty: {dn: -0.0070349, up: 0.0070349}}, 8: {Statistical Uncertainty: {dn: -0.0036792, up: 0.0036792}}, 9: {Statistical Uncertainty: {dn: -0.0030403, up: 0.0030403}}, 10: {Statistical Uncertainty: {dn: -0.0023537, up: 0.0023537}}, 11: {Statistical Uncertainty: {dn: -0.0012911, up: 0.0012911}}, 12: {Statistical Uncertainty: {dn: -0.00051458, up: 0.00051458}}, 13: {Statistical Uncertainty: {dn: -0.00026498, up: 0.00026498}}}
 IsRef: 1
 Path: /REF/CMS_2020_I1814328/d05-x01-y01
-Title: doi:10.17182/hepdata.94259.v1/t5
+Title: Figure 6 top right
 Type: Scatter2D
 ---
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
@@ -65,7 +145,7 @@ BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d06-x01-y01
 ErrorBreakdown: {0: {Statistical Uncertainty: {dn: -0.013704, up: 0.013704}}, 1: {Statistical Uncertainty: {dn: -0.010781, up: 0.010781}}, 2: {Statistical Uncertainty: {dn: -0.0097471, up: 0.0097471}}, 3: {Statistical Uncertainty: {dn: -0.0084402, up: 0.0084402}}, 4: {Statistical Uncertainty: {dn: -0.007762, up: 0.007762}}, 5: {Statistical Uncertainty: {dn: -0.0020718, up: 0.0020718}}, 6: {Statistical Uncertainty: {dn: -0.0012327, up: 0.0012327}}, 7: {Statistical Uncertainty: {dn: -0.00045379, up: 0.00045379}}}
 IsRef: 1
 Path: /REF/CMS_2020_I1814328/d06-x01-y01
-Title: doi:10.17182/hepdata.94259.v1/t6
+Title: Figure 6 bottom left
 Type: Scatter2D
 ---
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
@@ -84,7 +164,7 @@ BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d07-x01-y01
 ErrorBreakdown: {0: {Statistical Uncertainty: {dn: -0.0041131, up: 0.0041131}}, 1: {Statistical Uncertainty: {dn: -0.0045069, up: 0.0045069}}, 2: {Statistical Uncertainty: {dn: -0.0045434, up: 0.0045434}}, 3: {Statistical Uncertainty: {dn: -0.0048523, up: 0.0048523}}, 4: {Statistical Uncertainty: {dn: -0.0052584, up: 0.0052584}}, 5: {Statistical Uncertainty: {dn: -0.0056776, up: 0.0056776}}, 6: {Statistical Uncertainty: {dn: -0.0060098, up: 0.0060098}}, 7: {Statistical Uncertainty: {dn: -0.0066179, up: 0.0066179}}, 8: {Statistical Uncertainty: {dn: -0.0084897, up: 0.0084897}}}
 IsRef: 1
 Path: /REF/CMS_2020_I1814328/d07-x01-y01
-Title: doi:10.17182/hepdata.94259.v1/t7
+Title: Figure 6 bottom right
 Type: Scatter2D
 ---
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
@@ -99,17 +179,36 @@ Type: Scatter2D
 2.967050e+00	1.745500e-01	1.745500e-01	8.558400e-02	8.489700e-03	8.489700e-03
 END YODA_SCATTER2D_V2
 
+
 BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d08-x01-y01
 ErrorBreakdown: {0: {Total Uncertainty: {dn: -0.056, up: 0.056}}, 1: {Total Uncertainty: {dn: -0.055, up: 0.055}}, 2: {Total Uncertainty: {dn: -0.055, up: 0.055}}, 3: {Total Uncertainty: {dn: -0.058, up: 0.058}}, 4: {Total Uncertainty: {dn: -0.067, up: 0.067}}}
 IsRef: 1
 Path: /REF/CMS_2020_I1814328/d08-x01-y01
-Title: doi:10.17182/hepdata.94259.v1/t8
+Title: Table 6
 Type: Scatter2D
 ---
 # xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
-0.000000e+00	0.500000e+00	0.500000e+00	8.360000e-01	5.600000e-02	5.600000e-02
-1.000000e+00	0.500000e+00	0.500000e+00	8.920000e-01	5.500000e-02	5.500000e-02
-2.000000e+00	0.500000e+00	0.500000e+00	9.320000e-01	5.500000e-02	5.500000e-02
-3.000000e+00	0.500000e+00	0.500000e+00	1.011000e+00	5.800000e-02	5.800000e-02
-4.000000e+00	0.500000e+00	0.500000e+00	1.118000e+00	6.700000e-02	6.700000e-02
+1.000000e+00	5.000000e-01	5.000000e-01	8.360000e-01	5.600000e-02	5.600000e-02
+2.000000e+00	5.000000e-01	5.000000e-01	8.920000e-01	5.500000e-02	5.500000e-02
+3.000000e+00	5.000000e-01	5.000000e-01	9.320000e-01	5.500000e-02	5.500000e-02
+4.000000e+00	5.000000e-01	5.000000e-01	1.011000e+00	5.800000e-02	5.800000e-02
+5.000000e+00	5.000000e-01	5.000000e-01	1.118000e+00	6.700000e-02	6.700000e-02
 END YODA_SCATTER2D_V2
+
+
+BEGIN YODA_SCATTER2D_V2 /REF/CMS_2020_I1814328/d08-x01-y02
+ErrorBreakdown: {0: {Total Uncertainty: {dn: -0.073, up: 0.073}}, 1: {Total Uncertainty: {dn: -0.065, up: 0.065}}, 2: {Total Uncertainty: {dn: -0.06, up: 0.06}}, 3: {Total Uncertainty: {dn: -0.057, up: 0.057}}, 4: {Total Uncertainty: {dn: -0.059, up: 0.059}}}
+IsRef: 1
+Path: /REF/CMS_2020_I1814328/d08-x01-y02
+Title: Table 6
+Type: Scatter2D
+---
+# xval	 xerr-	 xerr+	 yval	 yerr-	 yerr+	
+1.000000e+00	5.000000e-01	5.000000e-01	1.091000e+00	7.300000e-02	7.300000e-02
+2.000000e+00	5.000000e-01	5.000000e-01	1.054000e+00	6.500000e-02	6.500000e-02
+3.000000e+00	5.000000e-01	5.000000e-01	1.020000e+00	6.000000e-02	6.000000e-02
+4.000000e+00	5.000000e-01	5.000000e-01	9.930000e-01	5.700000e-02	5.700000e-02
+5.000000e+00	5.000000e-01	5.000000e-01	9.850000e-01	5.900000e-02	5.900000e-02
+END YODA_SCATTER2D_V2
+
+

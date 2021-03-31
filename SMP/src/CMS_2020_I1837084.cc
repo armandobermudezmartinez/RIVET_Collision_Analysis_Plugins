@@ -34,8 +34,8 @@ namespace Rivet {
       declare(zmmFind, "ZmmFind");
       
       // Book histograms
-      book(_h_Z_pt,      4, 1, 5);
-      book(_h_Z_pt_norm, 5, 1, 5);
+      book(_h_Z_pt,      12, 1, 1);
+      book(_h_Z_pt_norm, 13, 1, 1);
 
     }
 
@@ -54,12 +54,22 @@ namespace Rivet {
 
     }
 
+    //void normalizeToSum(Histo1DPtr hist) {
+    //  double sum = 0.;
+    //  for (size_t i = 0; i < hist->numBins(); ++i) {
+    //    sum += hist->bin(i).height();
+    //  }
+    //  scale(hist, 1./sum);
+    //}
+
     void normalizeToSum(Histo1DPtr hist) {
       double sum = 0.;
       for (size_t i = 0; i < hist->numBins(); ++i) {
         sum += hist->bin(i).height();
+        float width = hist->bin(i).width();
+        hist->bin(i).scaleW(width != 0 ? width : 1.);
       }
-      scale(hist, 1./sum);
+      if(hist->integral() > 0) scale(hist, 1./hist->integral());
     }
 
     /// Normalise histograms etc., after the run

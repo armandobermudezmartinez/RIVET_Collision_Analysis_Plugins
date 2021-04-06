@@ -1,5 +1,5 @@
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d01-x01-y01
-Title=Leading jet p$_{\rm T}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=p$_{\rm T,1}$ [GeV]
 YLabel=d$\sigma$/dp$_{\rm T,1}$ [pb/GeV]
 YMin=100
@@ -9,7 +9,7 @@ RatioPlotYMax=5.5
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d02-x01-y01
-Title=Subleading jet p$_{\rm T}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=p$_{\rm T,2}$ [GeV]
 YLabel=d$\sigma$/dp$_{\rm T,2}$ [pb/GeV]
 YMin=70
@@ -19,7 +19,7 @@ RatioPlotYMax=3.8
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d03-x01-y01
-Title=Third leading jet p$_{\rm T}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=p$_{\rm T,3}$ [GeV]
 YLabel=d$\sigma$/dp$_{\rm T,3}$ [pb/GeV]
 YMin=12
@@ -29,7 +29,7 @@ RatioPlotYMax=3.8
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d04-x01-y01
-Title=Fourth leading jet p$_{\rm T}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=p$_{\rm T,4}$ [GeV]
 YLabel=d$\sigma$/dp$_{\rm T,4}$ [pb/GeV]
 YMin=10
@@ -39,7 +39,7 @@ RatioPlotYMax=3.8
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d05-x01-y01
-Title=Leading jet $\eta$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\eta_{1}$
 YLabel=d$\sigma$/d$\eta_{1}$ [pb]
 YMin=20000
@@ -49,7 +49,7 @@ RatioPlotYMax=3.8
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d06-x01-y01
-Title=Subleading jet $\eta$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\eta_{2}$
 YLabel=d$\sigma$/d$\eta_{2}$ [pb]
 YMin=20000
@@ -59,7 +59,7 @@ RatioPlotYMax=3.8
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d07-x01-y01
-Title=Third leading jet $\eta$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\eta_{3}$
 YLabel=d$\sigma$/d$\eta_{3}$ [pb]
 YMin=20000
@@ -69,7 +69,7 @@ RatioPlotYMax=3.8
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d08-x01-y01
-Title=Fourth leading jet $\eta$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\eta_{4}$
 YLabel=d$\sigma$/d$\eta_{4}$ [pb]
 YMin=20000
@@ -79,7 +79,7 @@ RatioPlotYMax=3.8
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d09-x01-y01
-Title=$\Delta\phi_{\rm Soft}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta\phi_{\rm Soft}$ [rad]
 YLabel=d$\sigma$/d$\Delta\phi_{\rm Soft}$ [pb/rad]
 YMin=300000
@@ -89,7 +89,7 @@ RatioPlotYMax=3.2
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d10-x01-y01
-Title=$\Delta\phi_{\rm 3j}^{\rm min}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta\phi_{\rm 3j}^{\rm min}$ [rad]
 YLabel=d$\sigma$/d$\Delta\phi_{\rm 3j}^{\rm min}$ [pb/rad]
 YMin=8500
@@ -99,7 +99,7 @@ RatioPlotYMax=3.2
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d11-x01-y01
-Title=$\Delta$Y
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta$Y
 YLabel=d$\sigma$/d$\Delta$Y [pb]
 YMin=5000
@@ -109,7 +109,7 @@ RatioPlotYMax=4.9
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d12-x01-y01
-Title=$\phi_{\rm ij}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\phi_{\rm ij}$ [rad]
 YLabel=d$\sigma$/d$\phi_{\rm ij}$ [pb/rad]
 YMin=200000
@@ -119,7 +119,7 @@ RatioPlotYMax=4.5
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d13-x01-y01
-Title=$\Delta{\rm p}_{\rm T,Soft}$
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta{\rm p}_{\rm T,Soft}$
 YLabel=d$\sigma$/d$\Delta{\rm p}_{\rm T,Soft}$ [pb]
 YMin=800000
@@ -129,7 +129,7 @@ RatioPlotYMax=3.2
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d14-x01-y01
-Title=$\Delta$S
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta$S [rad]
 YLabel=d$\sigma$/d$\Delta$S [pb/rad]
 YMin=10000
@@ -139,7 +139,7 @@ RatioPlotYMax=3.2
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d15-x01-y01
-Title=$\Delta\phi_{\rm Soft}$ (normalized to first 5 bins)
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta\phi_{\rm Soft}$ [rad]
 YLabel=dN/d$\Delta\phi_{\rm Soft}$ [a.u.]
 YMin=0.2
@@ -149,7 +149,7 @@ RatioPlotYMax=1.32
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d16-x01-y01
-Title=$\Delta\phi_{\rm 3j}^{\rm min}$ (normalized to first 4 bins)
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta\phi_{\rm 3j}^{\rm min}$ [rad]
 YLabel=dN/d$\Delta\phi_{\rm 3j}^{\rm min}$ [a.u.]
 YMin=0.03
@@ -159,7 +159,7 @@ RatioPlotYMax=1.72
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d17-x01-y01
-Title=$\Delta$Y (normalized to first 4 bins)
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta$Y
 YLabel=dN/d$\Delta$Y [a.u.]
 YMin=0.009
@@ -169,7 +169,7 @@ RatioPlotYMax=2.9
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d18-x01-y01
-Title=$\phi_{\rm ij}$ (normalized to last bin)
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\phi_{\rm ij}$ [rad]
 YLabel=dN/d$\phi_{\rm ij}$ [a.u.]
 YMin=0.04
@@ -179,7 +179,7 @@ RatioPlotYMax=1.95
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d19-x01-y01
-Title=$\Delta{\rm p}_{\rm T,Soft}$ (normalized to last bin)
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta{\rm p}_{\rm T,Soft}$
 YLabel=dN/d$\Delta{\rm p}_{\rm T,Soft}$ [a.u.]
 YMin=0.029
@@ -189,7 +189,7 @@ RatioPlotYMax=1.32
 END PLOT
 
 BEGIN PLOT /CMS_2020_PAS_SMP_20_007/d20-x01-y01
-Title=$\Delta$S (normalized to last bin)
+Title=CMS, 13 TeV, 4-jet production
 XLabel=$\Delta$S [rad]
 YLabel=dN/d$\Delta$S [a.u.]
 YMin=0.004

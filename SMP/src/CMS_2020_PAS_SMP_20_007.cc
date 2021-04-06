@@ -8,6 +8,10 @@ namespace Rivet {
 
 
   /// @brief Add a short analysis description here
+  /*
+  This analysis selects inclusive four jet events to study double parton scattering in four jet production in proton-proton collisions. The first, second, third, and fourth leading jet have a transverse momentum larger than 35, 30, 25, and 20 GeV respectively. All jets are required to be within an absolute pseudorapidity of 4.7, and the anti-kT algorithm with parameter 0.4 is used for reconstruction. Subquently all analysis observables are calculated according to the definition in CMS-PAS-SMP-20-007. For the DeltaS observable an additional restriction on transverse momentum of 50, 30, 30, 30 GeV is applied for the four leading jets. Six observables have a special bin normalised variant (indicated with *_binNorm) were the histogram is either normalised to the first/last bin content, or a mean value of certain bins.
+  */
+  
   class CMS_2020_PAS_SMP_20_007 : public Analysis {
   public:
 
@@ -71,93 +75,92 @@ namespace Rivet {
       Jets jets = apply<FastJets>(event, "jets").jetsByPt(Cuts::abseta < 4.7 && Cuts::pT > 10*GeV);
       
       // fill only if there are at least 4 jets
-      if (jets.size() >= 4) {
+      if (jets.size() < 4) vetoEvent;
       
-        double pt0 = jets[0].momentum().pt();
-        double pt1 = jets[1].momentum().pt();
-        double pt2 = jets[2].momentum().pt();
-        double pt3 = jets[3].momentum().pt();
+      double pt0 = jets[0].pt();
+      double pt1 = jets[1].pt();
+      double pt2 = jets[2].pt();
+      double pt3 = jets[3].pt();
 
-        if (pt0 > 35.0 && pt1 > 30.0 && pt2 > 25.0 && pt3 > 20.0) {
+      // pt selection
+      if (pt0 < 35.0 || pt1 < 30.0 || pt2 < 25.0 || pt3 < 20.0) vetoEvent;
 
-          double phi0 = jets[0].momentum().phi();
-          double phi1 = jets[1].momentum().phi();
-          double phi2 = jets[2].momentum().phi();
-          double phi3 = jets[3].momentum().phi();
+      double phi0 = jets[0].phi();
+      double phi1 = jets[1].phi();
+      double phi2 = jets[2].phi();
+      double phi3 = jets[3].phi();
 
-          _h["JetPt1"]->fill(pt0);
-          _h["JetPt2"]->fill(pt1);
-          _h["JetPt3"]->fill(pt2);
-          _h["JetPt4"]->fill(pt3);
+      _h["JetPt1"]->fill(pt0);
+      _h["JetPt2"]->fill(pt1);
+      _h["JetPt3"]->fill(pt2);
+      _h["JetPt4"]->fill(pt3);
 
-          _h["JetEta1"]->fill(jets[0].momentum().eta());
-          _h["JetEta2"]->fill(jets[1].momentum().eta());
-          _h["JetEta3"]->fill(jets[2].momentum().eta());
-          _h["JetEta4"]->fill(jets[3].momentum().eta());
+      _h["JetEta1"]->fill(jets[0].eta());
+      _h["JetEta2"]->fill(jets[1].eta());
+      _h["JetEta3"]->fill(jets[2].eta());
+      _h["JetEta4"]->fill(jets[3].eta());
 
-          // delta phi and eta of the 2 soft jets
-          _h["DeltaPhiSoft"]->fill(abs(deltaPhi(phi2, phi3)));
-          _h["DeltaPhiSoft_binNorm"]->fill(abs(deltaPhi(phi2, phi3)));
+      // delta phi and eta of the 2 soft jets
+      _h["DeltaPhiSoft"]->fill(abs(deltaPhi(phi2, phi3)));
+      _h["DeltaPhiSoft_binNorm"]->fill(abs(deltaPhi(phi2, phi3)));
 
-          // delta pt between soft jets
-          double DptSoft = sqrt(pow(pt2*cos(phi2) + pt3*cos(phi3), 2) + pow(pt2*sin(phi2) + pt3*sin(phi3), 2))/(pt2 + pt3);
-          _h["DeltaPtSoft"]->fill(DptSoft);
-          _h["DeltaPtSoft_binNorm"]->fill(DptSoft);
+      // delta pt between soft jets
+      double DptSoft = sqrt(pow(pt2*cos(phi2) + pt3*cos(phi3), 2) + pow(pt2*sin(phi2) + pt3*sin(phi3), 2))/(pt2 + pt3);
+      _h["DeltaPtSoft"]->fill(DptSoft);
+      _h["DeltaPtSoft_binNorm"]->fill(DptSoft);
 
-          // delta S
-          if (pt0 > 50.0 && pt1 > 30.0 && pt2 > 30.0 && pt3 > 30.0) {
-            double phiH = atan2(pt0*sin(phi0) + pt1*sin(phi1) , pt0*cos(phi0) + pt1*cos(phi1));
-            double phiS = atan2(pt2*sin(phi2) + pt3*sin(phi3) , pt2*cos(phi2) + pt3*cos(phi3));
-            double DS = abs(deltaPhi(phiH, phiS));
-            _h["DeltaS"]->fill(DS);
-            _h["DeltaS_binNorm"]->fill(DS);   
-          }
+      // delta S
+      if (pt0 > 50.0 && pt1 > 30.0 && pt2 > 30.0 && pt3 > 30.0) {
+        double phiH = atan2(pt0*sin(phi0) + pt1*sin(phi1) , pt0*cos(phi0) + pt1*cos(phi1));
+        double phiS = atan2(pt2*sin(phi2) + pt3*sin(phi3) , pt2*cos(phi2) + pt3*cos(phi3));
+        double DS = abs(deltaPhi(phiH, phiS));
+        _h["DeltaS"]->fill(DS);
+        _h["DeltaS_binNorm"]->fill(DS);   
+      }
 
-          // delta Y: most remote jets in rapidity, find min & max eta
-          double mineta = 99999;
-          double maxeta = -99999;
-          int minetapos = -1;
-          int maxetapos = -1;
+      // delta Y: most remote jets in rapidity, find min & max eta
+      double mineta = 99999;
+      double maxeta = -99999;
+      int minetapos = -1;
+      int maxetapos = -1;
   
-          for (int i = 0; i < 4; ++i) {
-            if (jets[i].momentum().eta() < mineta) {
-              mineta = jets[i].momentum().eta();
-              minetapos = i;
+      for (int i = 0; i < 4; ++i) {
+        if (jets[i].eta() < mineta) {
+          mineta = jets[i].eta();
+          minetapos = i;
+        }
+        if (jets[i].eta() > maxeta) {
+          maxeta = jets[i].eta();
+          maxetapos = i;
+        }  
+      }
+  
+      _h["DeltaY"]->fill(abs(jets[minetapos].eta() - jets[maxetapos].eta()));
+      _h["DeltaY_binNorm"]->fill(abs(jets[minetapos].eta() - jets[maxetapos].eta()));
+
+      // Delta phi Y: azimuthal angle between most remote jets in eta
+      _h["DeltaPhiY"]->fill(abs(deltaPhi(jets[minetapos].phi(), jets[maxetapos].phi())));
+      _h["DeltaPhiY_binNorm"]->fill(abs(deltaPhi(jets[minetapos].phi(), jets[maxetapos].phi())));
+
+      // delta phi3
+      double minphi3 = 999;
+      for (int iphi1 = 0; iphi1 < 4; ++iphi1) {
+        for (int iphi2 = 0; iphi2 < 4; ++iphi2) {
+          for (int iphi3 = 0; iphi3 < 4; ++iphi3) {
+            if ( !(iphi1 == iphi2 || iphi2 == iphi3 || iphi1 == iphi3) ) {
+              double temp_phi1= jets[iphi1].phi();
+              double temp_phi2= jets[iphi2].phi();
+              double temp_phi3= jets[iphi3].phi();
+              double temp_minphi3 = abs(deltaPhi(temp_phi1, temp_phi2)) + abs(deltaPhi(temp_phi2, temp_phi3));
+              if (temp_minphi3 < minphi3) minphi3 = temp_minphi3;
             }
-            if (jets[i].momentum().eta() > maxeta) {
-              maxeta = jets[i].momentum().eta();
-              maxetapos = i;
-            }  
           }
-  
-          _h["DeltaY"]->fill(abs(jets[minetapos].momentum().eta() - jets[maxetapos].momentum().eta()));
-          _h["DeltaY_binNorm"]->fill(abs(jets[minetapos].momentum().eta() - jets[maxetapos].momentum().eta()));
-
-          // Delta phi Y: azimuthal angle between most remote jets in eta
-          _h["DeltaPhiY"]->fill(abs(deltaPhi(jets[minetapos].momentum().phi(), jets[maxetapos].momentum().phi())));
-          _h["DeltaPhiY_binNorm"]->fill(abs(deltaPhi(jets[minetapos].momentum().phi(), jets[maxetapos].momentum().phi())));
-
-          // delta phi3
-          double minphi3 = 999;
-          for (int iphi1 = 0; iphi1 < 4; ++iphi1) {
-            for (int iphi2 = 0; iphi2 < 4; ++iphi2) {
-              for (int iphi3 = 0; iphi3 < 4; ++iphi3) {
-                if ( !(iphi1 == iphi2 || iphi2 == iphi3 || iphi1 == iphi3) ) {
-                  double temp_phi1= jets[iphi1].momentum().phi();
-                  double temp_phi2= jets[iphi2].momentum().phi();
-                  double temp_phi3= jets[iphi3].momentum().phi();
-                  double temp_minphi3 = abs(deltaPhi(temp_phi1, temp_phi2)) + abs(deltaPhi(temp_phi2, temp_phi3));
-                  if (temp_minphi3 < minphi3) minphi3 = temp_minphi3;
-                }
-              }
-            }
-          }
-  
-          _h["DeltaPhi3"]->fill(minphi3);
-          _h["DeltaPhi3_binNorm"]->fill(minphi3);
-  
         }
       }
+  
+      _h["DeltaPhi3"]->fill(minphi3);
+      _h["DeltaPhi3_binNorm"]->fill(minphi3);
+      
     }
 
 
@@ -209,17 +212,8 @@ namespace Rivet {
       scale(_h["DeltaS_binNorm"], _h["DeltaS_binNorm"]->bin(6).xWidth()/_h["DeltaS_binNorm"]->bin(6).sumW() );
 
     }
-
-    //@}
-
-
-    /// @name Histograms
-    //@{
+    
     map<string, Histo1DPtr> _h;
-    map<string, Profile1DPtr> _p;
-    map<string, CounterPtr> _c;
-    //@}
-
 
   };
 

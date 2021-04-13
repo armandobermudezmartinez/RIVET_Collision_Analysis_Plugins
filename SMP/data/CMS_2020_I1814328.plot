@@ -36,8 +36,8 @@ Title=CMS, 13 TeV, $W^+ W^-$, Figure 6 lower right
 XMin=0
 LogX=0
 LogY=0
-XLabel=$#Delta#phi_{ll}$
-YLabel=$1/\sigma d\sigma/#Delta#phi_{ll}$
+XLabel=$\Delta\phi_{ll}$
+YLabel=$1/\sigma d\sigma/\Delta\phi_{ll}$
 END PLOT
 
 BEGIN PLOT /CMS_2020_I1814328/d08-x01-y01

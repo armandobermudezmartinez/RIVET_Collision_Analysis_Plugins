@@ -5,10 +5,10 @@
 """\
 %prog: make tarball for a given Rivet Plugin
 
-Usage: %prog [--help|-h] --pag <PAG> --pubYear <YYYY> [--cadiId <PAG-YY-XXX>] [--spireId <InspireI>]
+Usage: %prog [--help|-h] --pag <PAG> --pubYear <YYYY> [--cadiId <PAG-YY-XXX>] [--spireId <InspireID>]
 
-       * Provide either [--cadiId <PAG-YY-XXX>] OR [--spireId <InspireI>]
-       * Use --spireId if available (otherwise --cadiId but final version will have to be changed to InspireI)
+       * Always provide [--cadiId <PAG-YY-XXX>] (this is always needed to pick validation plots)
+       * Provide [--spireId <InspireID>] if available (i.e. once you have renamed your plugin to use InspireID)
 
 """
 
@@ -49,8 +49,8 @@ if opts.pubYear == None or not valYear(opts.pubYear) :
    print "ERROR: Invalid publication year: ",opts.pubYear
    print "       It should be YYYY" 
    exit()
-if opts.cadiId == None and  opts.spireId == None:
-   print "ERROR: Please specify at least --cadiId OR --spireId"
+if opts.cadiId == None :
+   print "ERROR: Please specify at least --cadiId, this is used to find validation plots"
    exit()
 
 # Create Plug-In name
@@ -97,7 +97,7 @@ if not os.path.isfile(ccFile) or not os.path.isfile(infoFile) or not os.path.isf
 TmpDir    = tempfile.mkdtemp()
 os.mkdir(TmpDir+'/plots')
 
-TarFile   = CMSSW_BASE+'/src/Rivet/'+PlugInName+'.tgz'
+TarFile   = CMSSW_BASE+'/src/Rivet/'+PlugInName+'.tar'
 
 #### Source Files
 
@@ -136,7 +136,7 @@ if os.path.isdir(plotsDir) :
   for fName in os.listdir(plotsDir) :
     if (os.path.isfile(plotsDir+'/'+fName)): shutil.copy(plotsDir+'/'+fName,TmpDir+'/plots')
 else:
-  print "WARNING: NO PLOTS FOUND !!!!!!!!!!!!!!!!!! " 
+  print "WARNING: NO PLOTS FOUND, You can only run this script on CERN lxplus !!!!!!!!!!!!!!!!!! " 
 
 tarCmd= 'cd '+TmpDir +' ; tar czf '+TarFile+' * ; cd - '
 proc=subprocess.Popen(tarCmd, stderr = subprocess.PIPE,stdout = subprocess.PIPE, shell = True)

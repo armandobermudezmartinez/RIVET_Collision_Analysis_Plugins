@@ -1,33 +1,31 @@
 Name: CMS_2021_PAS_SMP_20_005
-Year: <Insert year of publication>
-Summary: <A one-line informative CMS_2021_PAS_SMP_20_005 headline>
-Experiment: <Insert the experiment name>
-Collider: <Insert the collider name>
-InspireID: <Insert the Inspire ID>
+Year: 2021
+Summary: $\mathrm{W}^{\pm}\gamma$ differential cross sections and effective field theory constraints at $\sqrt{s}=13\,\mathrm{TeV}$
+Experiment: CMS
+Collider: LHC
+InspireID: SMP_20_005
 Status: UNVALIDATED NOTREENTRY NOHEPDATA SINGLEWEIGHT UNPHYSICAL
 Authors:
- - Your Name <your@email.address>
+ - Andrew Gilbert <andrew.gilbert@cern.ch>
 References:
- - 'Example: Eur.Phys.J. C76 (2016) no.7, 392'
- - 'Example: DOI:10.1140/epjc/s10052-016-4184-8'
- - 'Example: arXiv:1605.03814'
-#RunInfo: <Describe event types, cuts, and other general generator config tips.>
-#Beams: [p+, p+]
-#Energies: [[6500,6500]]
-#Luminosity_fb: 139.0
+ - CMS-PAS-SMP-20-005
+
+RunInfo: pp to $\mathrm{W}^{\pm}\gamma$ at $\sqrt{s}=13$ TeV.
+Beams: [p+, p+]
+Energies: [[6500,6500]]
+Luminosity_fb: 137.0
 Description:
-  'A brief description of what is measured and what it is useful for
-  in terms of MC testing, tuning, reinterpretation, etc. Use LaTeX
-  for maths, e.g. $\pT > 50\;\GeV$.'
-ValidationInfo:
-  'A description of the process used to validate the Rivet code against
-  the original experimental analysis. Cut-flow tables and similar information
-  are welcome'
-#ReleaseTests:
-# - $A my-hepmc-prefix :MODE=some_rivet_flag
+  'Differential cross section measurements of $\mathrm{W}^{\pm}\gamma$ production in proton-proton collisions at
+   $\sqrt{s} = 13\,\mathrm{TeV}$ are presented. The data set used in this study is collected with the CMS detector
+   at the CERN LHC and corresponds to an integrated luminosity of $137\,\mathrm{fb}^{-1}$. Candidate events containing
+   an electron or muon, a photon, and missing transverse momentum are selected. The measurements are compared to standard
+   model predictions computed at next-to-leading order and next-to-next-to-leading order in perturbative quantum
+   chromodynamics. Constraints on the presence of heavy new physics affecting the $\mathrm{WW}\gamma$ vertex are determined
+   within an effective field theory framework, focusing on the $\mathcal{O}_{3W}$ operator. A simultaneous measurement of
+   the photon transverse momentum and the azimuthal angle of the charged lepton in a special reference frame is performed.'
 Keywords: []
 BibKey: 
 BibTeX: ''
 ToDo:
- - Implement the analysis, test it, remove this ToDo, and mark as VALIDATED :-)
+ - Update with submitted version
 

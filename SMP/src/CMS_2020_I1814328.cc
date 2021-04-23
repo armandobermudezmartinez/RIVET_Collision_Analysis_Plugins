@@ -9,7 +9,7 @@
 namespace Rivet {
 
 
-  /// @brief Add a short analysis description here
+  /// @brief Measurements of W+W- boson pair production in proton-proton collisions at 13 TeV
   class CMS_2020_I1814328 : public Analysis {
   public:
 

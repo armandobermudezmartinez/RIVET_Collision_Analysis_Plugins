@@ -9,7 +9,7 @@
 namespace Rivet {
 
 
-  /// @brief Add a short analysis description here
+  /// @brief Measurements of production cross sections of WZ and same-sign WW boson pairs in association with two jets in proton-proton collisions at 13 TeV
   class CMS_2020_I1794169 : public Analysis {
   public:
 

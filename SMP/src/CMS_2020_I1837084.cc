@@ -10,7 +10,7 @@
 namespace Rivet {
 
 
-  /// @brief Add a short analysis description here
+  /// @brief Measurements of differential Z boson production cross sections in proton-proton collisions at 13 TeV using neutrino and charged lepton final state
   class CMS_2020_I1837084 : public Analysis {
   public:
 

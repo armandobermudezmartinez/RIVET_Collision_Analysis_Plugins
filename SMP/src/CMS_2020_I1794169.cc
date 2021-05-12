@@ -156,10 +156,10 @@ namespace Rivet {
       std::cout << "eff(WW/WZ) = " << efficiency[0] << " / " << efficiency[1] << endl;
       std::cout << "xs(WW/WZ) = " << sumSelWWEvents*norm << " / " << sumSelWZEvents*norm << endl;
       
-      scale(_h_WW_mjj	, norm);
-      scale(_h_WW_mll	, norm);
+      scale(_h_WW_mjj   , norm);
+      scale(_h_WW_mll   , norm);
       scale(_h_WW_ptlmax, norm);
-      scale(_h_WZ_mjj	, norm);
+      scale(_h_WZ_mjj   , norm);
 
     }
 

@@ -64,7 +64,7 @@ namespace Rivet {
       book(_h_WW_ptlmax_norm, 5, 1, 1);
       book(_h_WW_ptlmin_norm, 6, 1, 1);
       book(_h_WW_dphill_norm, 7, 1, 1);
-      book(_h_WW_njet0	    , 8, 1, 1);
+      book(_h_WW_njet0      , 8, 1, 1);
 
     }
 

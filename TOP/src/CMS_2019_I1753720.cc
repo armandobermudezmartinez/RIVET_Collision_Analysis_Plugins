@@ -24,7 +24,7 @@ namespace Rivet {
       declare(FastJets(VisibleFinalState(Cuts::abseta < 6.), FastJets::ANTIKT, 0.4), "Jets");
 
       // Book xsec histo
-      _hist_xsec_fid = bookHisto1D("d01-x01-y01");
+      book(_hist_xsec_fid, "d01-x01-y01");
     }
 
 
@@ -35,7 +35,7 @@ namespace Rivet {
        const Jets bjets = filter_select(jets, [](const Jet& j) { return j.bTagged(); } );
 
        if (jets.size() >= 8 && jets_30.size() >= 6 && bjets.size() >= 4) {
-           _hist_xsec_fid->fill(0, event.weight());
+           _hist_xsec_fid->fill(1.);
        }
     }
 

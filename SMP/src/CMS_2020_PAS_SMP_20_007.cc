@@ -49,19 +49,19 @@ namespace Rivet {
       book(_h["JetEta3"], 7, 1, 1);
       book(_h["JetEta4"], 8, 1, 1);
       
-      book(_h["DeltaPhiSoft"], 9, 1, 1);
-      book(_h["DeltaPhi3"], 10, 1, 1);
-      book(_h["DeltaY"], 11, 1, 1);
-      book(_h["DeltaPhiY"], 12, 1, 1);
-      book(_h["DeltaPtSoft"], 13, 1, 1);
-      book(_h["DeltaS"], 14, 1, 1);
+      book(_h["DeltaPhiSoft_binNorm"], 9, 1, 1);
+      book(_h["DeltaPhi3_binNorm"], 10, 1, 1);
+      book(_h["DeltaY_binNorm"], 11, 1, 1);
+      book(_h["DeltaPhiY_binNorm"], 12, 1, 1);
+      book(_h["DeltaPtSoft_binNorm"], 13, 1, 1);
+      book(_h["DeltaS_binNorm"], 14, 1, 1);
       
-      book(_h["DeltaPhiSoft_binNorm"], 15, 1, 1);
-      book(_h["DeltaPhi3_binNorm"], 16, 1, 1);
-      book(_h["DeltaY_binNorm"], 17, 1, 1);
-      book(_h["DeltaPhiY_binNorm"], 18, 1, 1);
-      book(_h["DeltaPtSoft_binNorm"], 19, 1, 1);
-      book(_h["DeltaS_binNorm"], 20, 1, 1);
+      book(_h["DeltaPhiSoft"], 45, 1, 1);
+      book(_h["DeltaPhi3"], 46, 1, 1);
+      book(_h["DeltaY"], 47, 1, 1);
+      book(_h["DeltaPhiY"], 48, 1, 1);
+      book(_h["DeltaPtSoft"], 49, 1, 1);
+      book(_h["DeltaS"], 50, 1, 1);
 
     }
 

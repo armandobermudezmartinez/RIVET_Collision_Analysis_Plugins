@@ -7,7 +7,7 @@ do
 done
 
 # cmsRivet scripts
-export PATH=$PATH:$CMSSW_BASE/src/Rivet/scripts
+export PATH=$CMSSW_BASE/src/Rivet/scripts:$PATH
 
 # add latex package missing on lxplus7
 export TEXMFHOME=$TEXMFHOME:$CMSSW_BASE/src/Rivet/texmf

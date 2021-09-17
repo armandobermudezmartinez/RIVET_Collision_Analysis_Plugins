@@ -22,6 +22,13 @@ namespace Rivet {
     /// Book histograms and initialise projections before the run
     void init() {
 
+      // Get options from the new option system
+      // default to combined.
+      _mode = 2;
+      if ( getOption("LMODE") == "EL" ) _mode = 0;
+      if ( getOption("LMODE") == "MU" ) _mode = 1;
+      if ( getOption("LMODE") == "EMU" ) _mode = 2;
+
       // Initialise and register projections
       FinalState fs;
       Cut cut = Cuts::abseta < 2.4 && Cuts::pT > 25*GeV;
@@ -147,25 +154,27 @@ namespace Rivet {
     /// Normalise histograms etc., after the run
     void finalize() {
 
-      scale(_h_Zmm_pt,      crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_absY,    crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zmm_phiStar, crossSection()/picobarn/sumOfWeights());
+      double norm = (sumOfWeights() != 0) ? crossSection()/picobarn/sumOfWeights() : 1.0;
       
-      scale(_h_Zee_pt,      crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_absY,    crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zee_phiStar, crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zmm_pt,      norm);
+      scale(_h_Zmm_absY,    norm);
+      scale(_h_Zmm_phiStar, norm);
       
-      double aveFac = 0.5; // average ee and mumu for ll sample
-      if (_h_Zmm_pt->numEntries() == 0 or _h_Zee_pt->numEntries() == 0)
-        aveFac = 1.0; // for exclusive ee or mumu samples
-      scale(_h_Zll_pt,      aveFac*crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zll_absY,    aveFac*crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zll_phiStar, aveFac*crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zll_pt_Y0,   aveFac*crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zll_pt_Y1,   aveFac*crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zll_pt_Y2,   aveFac*crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zll_pt_Y3,   aveFac*crossSection()/picobarn/sumOfWeights());
-      scale(_h_Zll_pt_Y4,   aveFac*crossSection()/picobarn/sumOfWeights());
+      scale(_h_Zee_pt,      norm);
+      scale(_h_Zee_absY,    norm);
+      scale(_h_Zee_phiStar, norm);
+      
+      // when running in combined mode, need to average to get lepton xsec
+      if (_mode == 2) norm /= 2.;
+      
+      scale(_h_Zll_pt,      norm);
+      scale(_h_Zll_absY,    norm);
+      scale(_h_Zll_phiStar, norm);
+      scale(_h_Zll_pt_Y0,   norm);
+      scale(_h_Zll_pt_Y1,   norm);
+      scale(_h_Zll_pt_Y2,   norm);
+      scale(_h_Zll_pt_Y3,   norm);
+      scale(_h_Zll_pt_Y4,   norm);
 
       normalizeToSum(_h_Zll_pt_norm);
       normalizeToSum(_h_Zll_absY_norm);
@@ -180,6 +189,9 @@ namespace Rivet {
 
     //@}
 
+  protected:
+
+    size_t _mode;
 
     /// @name Histograms
 

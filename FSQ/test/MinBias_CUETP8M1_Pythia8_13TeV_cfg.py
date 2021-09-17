@@ -43,6 +43,7 @@ process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
 process.rivetAnalyzer.AnalysisNames = cms.vstring(
     'CMS_2017_I1511284', # CASTOR energy spectra
+    'CMS_2017_I1608166', # Identified particle spectra
 )
 process.rivetAnalyzer.OutputFile      = "MinBiasPythia8CUETP8M1.yoda"
 process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared")

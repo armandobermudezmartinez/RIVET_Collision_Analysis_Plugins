@@ -20,7 +20,7 @@ def valYear(year):
     return True
 
 ## Some Env cariables:
-PAGList=['FSQ','SMP','GEN','TOP','EXO','HIG','B2G','BPH','HIN','SUS']
+PAGList=['FSQ','SMP','GEN','TOP','EXO','HIG','B2G','BPH','HIN','SUS', 'QCD']
 wwwDir='/eos/project/c/cmsweb/www/generators/Rivet/ValPlots/'
 indPHP='/eos/project/c/cmsweb/www/generators/Rivet/ValPlots/index.php'
 HttpBase='https://cms-rivet.web.cern.ch/cms-rivet/ValPlots/'

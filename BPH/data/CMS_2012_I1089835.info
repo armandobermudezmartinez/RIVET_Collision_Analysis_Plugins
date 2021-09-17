@@ -1,16 +1,17 @@
-Name: CMS_2012_S9383875
-Year: 2011
-Summary:  Inclusive b- jet production in pp collisions at $\sqrt{s} = 7\;\TeV$
+Name: CMS_2012_I1089835
+Year: 2012
+Summary:  Inclusive b-jet production in pp collisions at 7 TeV
 Experiment: CMS
 Collider: LHC
-InspireID: 9383875
-Status: UNVALIDATED
+InspireID: 1089835
+Status: VALIDATED
 Authors:
  - Paolo Gunnellini <paolo.gunnellini@desy.de>
 References:
+ - CMS-BPH-11-022
  - JHEP 1204 (2012) 084
- - DOI: 10.1007/JHEP04(2012)084
- - arXiv:hep-ex/1202.4617 
+ - DOI:10.1007/JHEP04(2012)084
+ - arXiv:1202.4617 
 RunInfo:
  QCD events with transverse momentum greater than 10 GeV
 NumEvents: 1000000
@@ -44,3 +45,6 @@ BibTeX: '@article{Chatrchyan:2012dk,
       reportNumber   = "CMS-BPH-11-022, CERN-PH-EP-2012-036",
       SLACcitation   = "%%CITATION = ARXIV:1202.4617;%%"
 }'
+ReleaseTests:
+ - $A LHC-7-Bottom-0
+ - $A1 LHC-7-DiJets-1-A

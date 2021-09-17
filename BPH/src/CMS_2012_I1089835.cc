@@ -7,15 +7,15 @@
 namespace Rivet {
   
   
-  class CMS_2012_S9383875 : public Analysis {
+  class CMS_2012_I1089835 : public Analysis {
   public:
     
     /// @name Constructors etc.
     //@{
     
     /// Constructor
-    CMS_2012_S9383875()
-      : Analysis("CMS_2012_S9383875")
+    CMS_2012_I1089835()
+      : Analysis("CMS_2012_I1089835")
     {        
       
     }
@@ -105,6 +105,6 @@ namespace Rivet {
   
   
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2012_S9383875);
+  DECLARE_RIVET_PLUGIN(CMS_2012_I1089835);
 
 }

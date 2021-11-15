@@ -25,26 +25,23 @@ namespace Rivet {
 
       
       void bookHistos(std::string postfix = "") {
-        _h["weight"+postfix] = bookHisto1D("weight"+postfix, 200, -2., 2.);
-        _h["scale"+postfix]  = bookHisto1D("scale"+postfix, logspace(50, 100.0, 1000.0));
-        _h["stage"+postfix]  = bookHisto1D("stage"+postfix, 10, 0, 10);
-        //
-        _h["nbjet"+postfix]    = bookHisto1D("nbjet"+postfix, 10, 0, 10);
-        _h["nljet"+postfix]    = bookHisto1D("nljet"+postfix, 10, 0, 10);
-        _h["delta_mt"+postfix] = bookHisto1D("delta_mt"+postfix, 100, -100., 100.);
-        //
-        _h["wlep_mass"+postfix]       = bookHisto1D("wlep_mass"+postfix, 40, 60.4, 100.4);
-        _h["wlep_pt"+postfix]         = bookHisto1D("wlep_pt"+postfix, 50, 0., 400.);
-        _h["wlep_pt_scaled"+postfix]  = bookHisto1D("wlep_pt_scaled"+postfix, 50, 0., 400.);
-        _h["whad_mass"+postfix]       = bookHisto1D("whad_mass"+postfix, 75, 30., 180.);
-        _h["whad_pt"+postfix]         = bookHisto1D("whad_pt"+postfix, 50, 0., 400.);
-        _h["whad_pt_scaled"+postfix]  = bookHisto1D("whad_pt_scaled"+postfix, 50, 0., 400.);
-        _h["tlep_mass"+postfix]       = bookHisto1D("tlep_mass"+postfix, 100, 100., 300.);
-        _h["tlep_pt"+postfix]         = bookHisto1D("tlep_pt"+postfix, 50, 0., 400.);
-        _h["thad_mass"+postfix]       = bookHisto1D("thad_mass"+postfix, 100, 100., 300.);
-        _h["thad_pt"+postfix]         = bookHisto1D("thad_pt"+postfix, 50, 0., 400.);
-        _h["ttbar_mass"+postfix]      = bookHisto1D("ttbar_mass"+postfix, 50, 0., 1000.);
-        _h["ttbar_pt"+postfix]        = bookHisto1D("ttbar_pt"+postfix, 50, 0., 400.);
+        book(_h["scale"+postfix], "scale"+postfix, logspace(50, 100.0, 1000.0));
+        book(_h["stage"+postfix], "stage"+postfix, 10, 0, 10);
+        book(_h["nbjet"+postfix], "nbjet"+postfix, 10, 0, 10);
+        book(_h["nljet"+postfix], "nljet"+postfix, 10, 0, 10);
+        book(_h["delta_mt"+postfix], "delta_mt"+postfix, 100, -100., 100.);
+        book(_h["wlep_mass"+postfix], "wlep_mass"+postfix, 40, 60.4, 100.4);
+        book(_h["wlep_pt"+postfix], "wlep_pt"+postfix, 50, 0., 400.);
+        book(_h["wlep_pt_scaled"+postfix], "wlep_pt_scaled"+postfix, 50, 0., 400.);
+        book(_h["whad_mass"+postfix], "whad_mass"+postfix, 75, 30., 180.);
+        book(_h["whad_pt"+postfix], "whad_pt"+postfix, 50, 0., 400.);
+        book(_h["whad_pt_scaled"+postfix], "whad_pt_scaled"+postfix, 50, 0., 400.);
+        book(_h["tlep_mass"+postfix], "tlep_mass"+postfix, 100, 100., 300.);
+        book(_h["tlep_pt"+postfix], "tlep_pt"+postfix, 50, 0., 400.);
+        book(_h["thad_mass"+postfix], "thad_mass"+postfix, 100, 100., 300.);
+        book(_h["thad_pt"+postfix], "thad_pt"+postfix, 50, 0., 400.);
+        book(_h["ttbar_mass"+postfix], "ttbar_mass"+postfix, 50, 0., 1000.);
+        book(_h["ttbar_pt"+postfix], "ttbar_pt"+postfix, 50, 0., 400.);
       }
       
       /// Set up projections
@@ -78,7 +75,7 @@ namespace Rivet {
         VetoedFinalState jet_fs(fs);
         jet_fs.addVetoOnThisFinalState(dressed_leptons);
         declare(FastJets(jet_fs, FastJets::ANTIKT, 0.4), "Jets");
-        declare(FastJets(jet_fs, FastJets::ANTIKT, 0.4, JetAlg::ALL_MUONS, JetAlg::DECAY_INVISIBLES), "Jets_WithNu");
+        declare(FastJets(jet_fs, FastJets::ANTIKT, 0.4, JetAlg::Muons::ALL, JetAlg::Invisibles::DECAY), "Jets_WithNu");
         
         // MET
         declare(MissingMomentum(fs), "MET");
@@ -92,11 +89,9 @@ namespace Rivet {
       void analyzeWithPostfix(const Event& event, std::string postfix = "") {
         const double wmass = 80.4;
         
-        const double weight = event.weight();
-        _h["weight"+postfix]->fill(weight);
-        _h["scale"+postfix]->fill(event.genEvent()->event_scale(), weight);
+        _h["scale"+postfix]->fill(event.genEvent()->event_scale());
         int stage = 0;
-        _h["stage"+postfix]->fill(stage++, weight);
+        _h["stage"+postfix]->fill(stage++);
 
         // Get analysis objects from projections
         
@@ -104,7 +99,7 @@ namespace Rivet {
         const std::vector<DressedLepton>& leptons = applyProjection<DressedLeptons>(event, "DressedLeptons").dressedLeptons();
         if (leptons.size() != 1)
           vetoEvent;
-        _h["stage"+postfix]->fill(stage++, weight);
+        _h["stage"+postfix]->fill(stage++);
         const DressedLepton lepton = leptons[0];
 
         const Particles neutrinos = apply<PromptFinalState>(event, "Neutrinos").particlesByPt();
@@ -113,7 +108,7 @@ namespace Rivet {
         for (const Particle& nu : neutrinos) {
           if (nu.abspid() == lepton.abspid()+1 and nu.pid()*lepton.pid()<0) {
             wlep = lepton.momentum() + nu.momentum();
-            _h["wlep_mass"+postfix]->fill(wlep.mass(), weight);
+            _h["wlep_mass"+postfix]->fill(wlep.mass());
           }
           else
             continue;
@@ -124,7 +119,7 @@ namespace Rivet {
         }
         if (neutrino.pid() == 0)
           vetoEvent;
-        _h["stage"+postfix]->fill(stage++, weight);
+        _h["stage"+postfix]->fill(stage++);
         
         // Select events with at least 4 jets (2 b-tagged, 2 untagged)
         Cut jet_cut = (Cuts::abseta < 2.4) and (Cuts::pT > 30.*GeV);
@@ -134,11 +129,11 @@ namespace Rivet {
           if (jet.bTagged()) bjets.push_back(jet);
           else               ljets.push_back(jet);
         }
-        _h["nbjet"+postfix]->fill(bjets.size(), weight);
-        _h["nljet"+postfix]->fill(ljets.size(), weight);
+        _h["nbjet"+postfix]->fill(bjets.size());
+        _h["nljet"+postfix]->fill(ljets.size());
         if (bjets.size() < 2 or ljets.size() < 2)
           vetoEvent;
-        _h["stage"+postfix]->fill(stage++, weight);
+        _h["stage"+postfix]->fill(stage++);
         
         // Reconstruct top quarks
         // Constrain W candidate masses to 80.4 GeV
@@ -170,24 +165,24 @@ namespace Rivet {
         }
         FourMomentum ttbar = thad + tlep;
         
-        _h["whad_mass"+postfix]->fill(whad.mass(), weight);
+        _h["whad_mass"+postfix]->fill(whad.mass());
         double delta_mt = thad.mass() - tlep.mass();
-        _h["delta_mt"+postfix]->fill(delta_mt, weight);
+        _h["delta_mt"+postfix]->fill(delta_mt);
         if (not(inRange(whad.mass(), wmass-10., wmass+10.) and abs(delta_mt)<20.))
           vetoEvent;
-        _h["stage"+postfix]->fill(stage++, weight);
+        _h["stage"+postfix]->fill(stage++);
         
         // Fill plots
-        _h["wlep_pt"+postfix]->fill(wlep.pt(), weight);
-        _h["wlep_pt_scaled"+postfix]->fill(wlep.pt() * wmass/wlep.mass(), weight);
-        _h["whad_pt"+postfix]->fill(whad.pt(), weight);
-        _h["whad_pt_scaled"+postfix]->fill(whad.pt() * wmass/whad.mass(), weight);
-        _h["tlep_mass"+postfix]->fill(tlep.mass(), weight);
-        _h["tlep_pt"+postfix]->fill(tlep.pt(), weight);
-        _h["thad_mass"+postfix]->fill(thad.mass(), weight);
-        _h["thad_pt"+postfix]->fill(thad.pt(), weight);
-        _h["ttbar_mass"+postfix]->fill(ttbar.mass(), weight);
-        _h["ttbar_pt"+postfix]->fill(ttbar.pt(), weight);
+        _h["wlep_pt"+postfix]->fill(wlep.pt());
+        _h["wlep_pt_scaled"+postfix]->fill(wlep.pt() * wmass/wlep.mass());
+        _h["whad_pt"+postfix]->fill(whad.pt());
+        _h["whad_pt_scaled"+postfix]->fill(whad.pt() * wmass/whad.mass());
+        _h["tlep_mass"+postfix]->fill(tlep.mass());
+        _h["tlep_pt"+postfix]->fill(tlep.pt());
+        _h["thad_mass"+postfix]->fill(thad.mass());
+        _h["thad_pt"+postfix]->fill(thad.pt());
+        _h["ttbar_mass"+postfix]->fill(ttbar.mass());
+        _h["ttbar_pt"+postfix]->fill(ttbar.pt());
 
       }
       

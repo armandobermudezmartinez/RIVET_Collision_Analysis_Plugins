@@ -21,4 +21,3 @@
 <flags SKIP_FILES="CMS_2016_I1434354.cc"/>
 <flags SKIP_FILES="CMS_LesHouches2015.cc"/>
 <flags SKIP_FILES="MC_TCH.cc"/>
-<flags SKIP_FILES="MC_TOPMASS_LJETS.cc"/>

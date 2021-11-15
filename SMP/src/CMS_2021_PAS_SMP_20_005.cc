@@ -2,104 +2,80 @@
 #include "Rivet/Analysis.hh"
 #include "Rivet/Event.hh"
 #include "Rivet/Math/LorentzTrans.hh"
-#include "Rivet/Particle.fhh"
 #include "Rivet/Particle.hh"
 #include "Rivet/Projections/ChargedLeptons.hh"
 #include "Rivet/Projections/DressedLeptons.hh"
 #include "Rivet/Projections/FastJets.hh"
 #include "Rivet/Projections/FinalState.hh"
 #include "Rivet/Projections/IdentifiedFinalState.hh"
-#include "Rivet/Projections/JetAlg.hh"
 #include "Rivet/Projections/MissingMomentum.hh"
-#include "Rivet/Projections/NonPromptFinalState.hh"
 #include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/VetoedFinalState.hh"
 
-// This data structure needed for CMSSW to extract RIVET properties
-struct WGammaRivetVariables {
-  bool is_wg_gen;
-
-  double l0_pt;
-  double l0_eta;
-  double l0_phi;
-  double l0_M;
-  int l0_q;
-  unsigned l0_abs_pdgid;
-
-  double p0_pt;
-  double p0_eta;
-  double p0_phi;
-  double p0_M;
-  bool p0_frixione;
-  double p0_frixione_sum;
-
-  double l0p0_dr;
-  double mt_cluster;
-
-  double n0_pt;
-  double n0_eta;
-  double n0_phi;
-  double n0_M;
-
-  double met_pt;
-  double met_phi;
-
-  double true_phi;
-  double true_phi_f;
-
-  int n_jets;
-
-  WGammaRivetVariables() { resetVars(); }
-  void resetVars() {
-    is_wg_gen = false;
-    l0_pt = 0.;
-    l0_eta = 0.;
-    l0_phi = 0.;
-    l0_M = 0.;
-    l0_q = 0;
-    l0_abs_pdgid = 0;
-    p0_pt = 0.;
-    p0_eta = 0.;
-    p0_phi = 0.;
-    p0_M = 0.;
-    p0_frixione = false;
-    n0_pt = 0.;
-    n0_eta = 0.;
-    n0_phi = 0.;
-    n0_M = 0.;
-    met_pt = 0.;
-    met_phi = 0.;
-    true_phi = 0.;
-    true_phi_f = 0.;
-    l0p0_dr = 0.;
-    mt_cluster = 0.;
-    n_jets = 0;
-  }
-};
-
 namespace Rivet {
 
-/// @brief Add a short analysis description here
 class CMS_2021_PAS_SMP_20_005 : public Analysis {
  public:
-  /// Constructor
-  DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_PAS_SMP_20_005);
+  struct WGammaRivetVariables {
+    bool is_wg_gen;
 
-  double photon_iso_dr_ = 0.4;
-  double lepton_pt_cut_ = 30.;
-  double lepton_abs_eta_cut_ = 2.5;
-  double photon_pt_cut_ = 30.;
-  double photon_abs_eta_cut_ = 2.5;
-  double missing_pt_cut_ = 40.;
-  double lepton_photon_dr_cut_ = 0.7;
-  double dressed_lepton_cone_ = 0.1;
+    double l0_pt;
+    double l0_eta;
+    double l0_phi;
+    double l0_M;
+    int l0_q;
+    unsigned l0_abs_pdgid;
 
-  double eft_lepton_pt_cut_ = 80.;
-  double eft_photon_pt_cut_ = 150.;
+    double p0_pt;
+    double p0_eta;
+    double p0_phi;
+    double p0_M;
+    bool p0_frixione;
+    double p0_frixione_sum;
 
-  double jet_pt_cut_ = 30.;
-  double jet_abs_eta_cut_ = 2.5;
-  double jet_dr_cut_ = 0.4;
+    double l0p0_dr;
+    double mt_cluster;
+
+    double n0_pt;
+    double n0_eta;
+    double n0_phi;
+    double n0_M;
+
+    double met_pt;
+    double met_phi;
+
+    double true_phi;
+    double true_phi_f;
+
+    int n_jets;
+
+    WGammaRivetVariables() { resetVars(); }
+    void resetVars() {
+      is_wg_gen = false;
+      l0_pt = 0.;
+      l0_eta = 0.;
+      l0_phi = 0.;
+      l0_M = 0.;
+      l0_q = 0;
+      l0_abs_pdgid = 0;
+      p0_pt = 0.;
+      p0_eta = 0.;
+      p0_phi = 0.;
+      p0_M = 0.;
+      p0_frixione = false;
+      n0_pt = 0.;
+      n0_eta = 0.;
+      n0_phi = 0.;
+      n0_M = 0.;
+      met_pt = 0.;
+      met_phi = 0.;
+      true_phi = 0.;
+      true_phi_f = 0.;
+      l0p0_dr = 0.;
+      mt_cluster = 0.;
+      n_jets = 0;
+    }
+  };
 
   struct WGSystem {
     int lepton_charge;
@@ -122,13 +98,27 @@ class CMS_2021_PAS_SMP_20_005 : public Analysis {
     double SymPhi();
   };
 
- public:
+  double photon_iso_dr_ = 0.4;
+  double lepton_pt_cut_ = 30.;
+  double lepton_abs_eta_cut_ = 2.5;
+  double photon_pt_cut_ = 30.;
+  double photon_abs_eta_cut_ = 2.5;
+  double missing_pt_cut_ = 40.;
+  double lepton_photon_dr_cut_ = 0.7;
+  double dressed_lepton_cone_ = 0.1;
+
+  double eft_lepton_pt_cut_ = 80.;
+  double eft_photon_pt_cut_ = 150.;
+
+  double jet_pt_cut_ = 30.;
+  double jet_abs_eta_cut_ = 2.5;
+  double jet_dr_cut_ = 0.4;
+
   WGammaRivetVariables vars_;
+  map<string, Histo1DPtr> _h;
 
-  /// @name Analysis methods
-  //@{
+  DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_PAS_SMP_20_005);
 
-  /// Book histograms and initialise projections before the run
   void init() {
     vars_.resetVars();
 
@@ -323,45 +313,30 @@ class CMS_2021_PAS_SMP_20_005 : public Analysis {
           _h["eft_photon_pt_phi_2"]->fill(vars_.p0_pt / GeV);
         }
       }
-
     }
   }
 
-  /// Normalise histograms etc., after the run
   void finalize() {
-    double flavor_factor = 3. / 2.; // account for the fact that tau events are vetoed
+    double flavor_factor = 3. / 2.;  // account for the fact that tau events are vetoed
     // Scale according to cross section
-    for (std::string const& x : {
-          "baseline_photon_pt",
-          "baseline_photon_eta",
-          "baseline_leppho_dr",
-          "baseline_leppho_deta",
-          "baseline_mt_cluster",
-          "baseline_njet",
-          "raz_leppho_deta",
-          "eft_photon_pt_phi_0",
-          "eft_photon_pt_phi_1",
-          "eft_photon_pt_phi_2"
-        }) {
-      scale(_h[x], flavor_factor * crossSection() / femtobarn / sumOfWeights());
+    for (std::string const& x :
+         {"baseline_photon_pt", "baseline_photon_eta", "baseline_leppho_dr", "baseline_leppho_deta",
+          "baseline_mt_cluster", "baseline_njet", "raz_leppho_deta", "eft_photon_pt_phi_0",
+          "eft_photon_pt_phi_1", "eft_photon_pt_phi_2"}) {
+      if (crossSection() < 0.) {
+        // Assume av. evt weight gives xsec
+        scale(_h[x], flavor_factor / femtobarn / numEvents());
+      } else {
+        scale(_h[x], flavor_factor * crossSection() / femtobarn / sumOfWeights());
+      }
     }
 
     // Since these are really 2D, we need to divide by the y bin width:
-    for (std::string const& x : {
-          "eft_photon_pt_phi_0",
-          "eft_photon_pt_phi_1",
-          "eft_photon_pt_phi_2"
-        }) {
+    for (std::string const& x :
+         {"eft_photon_pt_phi_0", "eft_photon_pt_phi_1", "eft_photon_pt_phi_2"}) {
       scale(_h[x], 1. / (PI / 6.));
     }
   }
-
-  //@}
-
-  /// @name Histograms
-  //@{
-  map<string, Histo1DPtr> _h;
-  //@}
 };
 
 CMS_2021_PAS_SMP_20_005::WGSystem::WGSystem(Particle const& lep, Particle const& neu,

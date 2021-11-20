@@ -88,22 +88,21 @@ process.source.fileNames = cms.untracked.vstring(
 "root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv3/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8/MINIAODSIM/PUMoriond17_magnetOn_94X_mcRun2_asymptotic_v3-v2/40000/4C2304A9-1D21-E911-907E-0CC47AC52BAE.root",
 )
 
-process.generator = cms.EDProducer("GenParticles2HepMCConverter",
-    genParticles = cms.InputTag("prunedGenParticles", "", "PAT"),
-    genEventInfo = cms.InputTag("generator", "", "SIM"),
-    signalParticlePdgIds = cms.vint32(),
-)
-
+process.load("GeneratorInterface.RivetInterface.mergedGenParticles_cfi")
+process.load("GeneratorInterface.RivetInterface.genParticles2HepMC_cff")
 process.load("GeneratorInterface.RivetInterface.rivetAnalyzer_cfi")
 
+process.genParticles2HepMC.genParticles = cms.InputTag("mergedGenParticles")
+process.rivetAnalyzer.HepMCCollection = cms.InputTag("genParticles2HepMC:unsmeared")
 process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2020_PAS_SMP_20_011')
 process.rivetAnalyzer.CrossSection = cms.double(1975000000)
 process.rivetAnalyzer.OutputFile = cms.string('Pythia.yoda')
-process.rivetAnalyzer.HepMCCollection = cms.InputTag("generator:unsmeared") # TODO?
 
 common = cms.Sequence(
-    process.generator *
-    process.rivetAnalyzer)
+        process.mergedGenParticles *
+        process.genParticles2HepMC *
+        process.rivetAnalyzer
+        )
 
 process.finalPath = cms.Path(common)
 

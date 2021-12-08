@@ -1,0 +1,30 @@
+Name: CMS_2021_PAS_SMP_20_005
+Year: 2021
+Summary: Measurement of $\mathrm{W}^{\pm}\gamma$ differential cross sections in proton-proton collisions at $\sqrt{s}=13\,\mathrm{TeV}$ and effective field theory constraints
+Experiment: CMS
+Collider: LHC
+InspireID: SMP_20_005
+Status: UNVALIDATED NOTREENTRY NOHEPDATA SINGLEWEIGHT UNPHYSICAL
+Authors:
+ - Andrew Gilbert <andrew.gilbert@cern.ch>
+References:
+ - CMS-SMP-20-005
+
+RunInfo: pp to $\mathrm{W}^{\pm}\gamma$ at $\sqrt{s}=13$ TeV.
+Beams: [p+, p+]
+Energies: [[6500,6500]]
+Luminosity_fb: 138.0
+Description:
+  'Differential cross section measurements of $\mathrm{W}^{\pm}\gamma$ production in proton-proton collisions at $\sqrt{s} = 13\,\mathrm{TeV}$ are presented.
+   The data set used in this study was collected with the CMS detector at the CERN LHC in 2016--2018 with an integrated luminosity of $138\,\mathrm{fb}^{-1}$.
+   Candidate events containing an electron or muon, a photon, and missing transverse momentum are selected.
+   The measurements are compared with standard model predictions computed at next-to-leading and next-to-next-to-leading orders in perturbative quantum chromodynamics.
+   Constraints on the presence of TeV-scale new physics affecting the $\mathrm{WW}\gamma$ vertex are determined within an effective field theory framework, focusing on the $\mathcal{O}_{3W}$ operator.
+   A simultaneous measurement of the photon transverse momentum and the azimuthal angle of the charged lepton in a special reference frame is performed.'
+Keywords: []
+BibKey: 
+BibTeX: ''
+ToDo:
+ - Update with submitted version
+
+

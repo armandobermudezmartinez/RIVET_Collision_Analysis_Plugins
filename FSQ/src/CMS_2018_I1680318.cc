@@ -23,7 +23,6 @@ namespace Rivet {
       EtaCentralCut = 2.4;
       MinParticlePt = 0.5; // [GeV]
 
-
       // Initialise and register projections
       const FinalState fsa(Cuts::abseta < EtaForwardMax);
       declare(fsa, "FSA");
@@ -31,6 +30,13 @@ namespace Rivet {
       const ChargedFinalState cfs(Cuts::abseta < EtaCentralCut && Cuts::pT > MinParticlePt*GeV);
       declare(cfs, "CFS");
 
+      // Event counters
+      _num_evts_noCuts = 0;
+      _num_evts_after_cuts_or   = 0;
+      _num_evts_after_cuts_and  = 0;
+      _num_evts_after_cuts_xor  = 0;
+      _num_evts_after_cuts_xorm = 0;
+      _num_evts_after_cuts_xorp = 0;
 
       // Histograms
       book(_hist_dNch_all_dEta_OR,          1,1,1);
@@ -57,6 +63,7 @@ namespace Rivet {
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
+      const double weight = 1.;
 
       const ChargedFinalState& charged = apply<ChargedFinalState>(event, "CFS");
       const FinalState& fsa = apply<FinalState>(event, "FSA");
@@ -81,6 +88,15 @@ namespace Rivet {
       const bool cutsxor  = ((activity_plus_side && !activity_minus_side) || (!activity_plus_side && activity_minus_side));
       const bool cutsxorm = (!activity_plus_side &&  activity_minus_side);
       const bool cutsxorp = ( activity_plus_side && !activity_minus_side);
+
+      _num_evts_noCuts += weight;
+      if ( charged.size() >= 1 ) {
+        if (cutsor)   _num_evts_after_cuts_or   += weight;
+        if (cutsand)  _num_evts_after_cuts_and  += weight;
+        if (cutsxor)  _num_evts_after_cuts_xor  += weight;
+        if (cutsxorm) _num_evts_after_cuts_xorm += weight;
+        if (cutsxorp) _num_evts_after_cuts_xorp += weight;
+      }
 
       // Loop over charged particles
       double leading_pt = 0;
@@ -130,25 +146,33 @@ namespace Rivet {
 
     /// Normalise histograms etc., after the run
     void finalize() {
-      normalize(_hist_dNch_all_dEta_OR);
-      normalize(_hist_dNch_all_dEta_AND);
-      normalize(_hist_dNch_all_dEta_XOR);
-      normalize(_hist_dNch_all_dEta_XORpm);
+      MSG_INFO("Number of selected events: "                  << endl
+               << "\t All       = " << _num_evts_noCuts          << endl
+               << "\t Inelastic = " << _num_evts_after_cuts_or   << endl
+               << "\t NSD       = " << _num_evts_after_cuts_and  << endl
+               << "\t Xor       = " << _num_evts_after_cuts_xor  << endl
+               << "\t Xorm      = " << _num_evts_after_cuts_xorm << endl
+               << "\t Xorp      = " << _num_evts_after_cuts_xorp);
 
-      normalize(_hist_dNch_all_dpt_OR);
-      normalize(_hist_dNch_all_dpt_AND);
-      normalize(_hist_dNch_all_dpt_XOR);
+      scale(_hist_dNch_all_dEta_OR,    1./_num_evts_after_cuts_or);
+      scale(_hist_dNch_all_dEta_AND,   1./_num_evts_after_cuts_and);
+      scale(_hist_dNch_all_dEta_XOR,   1./_num_evts_after_cuts_xor);
+      scale(_hist_dNch_all_dEta_XORpm, 1./(_num_evts_after_cuts_xorm + _num_evts_after_cuts_xorp));
 
-      normalize(_hist_dNch_leading_dpt_OR);
-      normalize(_hist_dNch_leading_dpt_AND);
-      normalize(_hist_dNch_leading_dpt_XOR);
+      scale(_hist_dNch_all_dpt_OR,   1./_num_evts_after_cuts_or);
+      scale(_hist_dNch_all_dpt_AND,  1./_num_evts_after_cuts_and);
+      scale(_hist_dNch_all_dpt_XOR,  1./_num_evts_after_cuts_xor);
 
-      normalize(_hist_integrated_leading_pt_OR);
-      normalize(_hist_integrated_leading_pt_AND);
-      normalize(_hist_integrated_leading_pt_XOR);
+      scale(_hist_dNch_leading_dpt_OR,   1./_num_evts_after_cuts_or);
+      scale(_hist_dNch_leading_dpt_AND,  1./_num_evts_after_cuts_and);
+      scale(_hist_dNch_leading_dpt_XOR,  1./_num_evts_after_cuts_xor);
 
-      normalize(_hist_dNev_all_dM_OR);
-      normalize(_hist_dNev_all_dM_AND);
+      scale(_hist_integrated_leading_pt_OR,   1./_num_evts_after_cuts_or);
+      scale(_hist_integrated_leading_pt_AND,  1./_num_evts_after_cuts_and);
+      scale(_hist_integrated_leading_pt_XOR,  1./_num_evts_after_cuts_xor);
+
+      scale(_hist_dNev_all_dM_OR,   1./_num_evts_after_cuts_or);
+      scale(_hist_dNev_all_dM_AND,  1./_num_evts_after_cuts_and);
     }
 
 
@@ -156,6 +180,14 @@ namespace Rivet {
 
     // Cuts
     double MinEnergy, EtaForwardMin, EtaForwardMax, EtaCentralCut, MinParticlePt;
+
+    // Counters
+    double _num_evts_noCuts,
+                  _num_evts_after_cuts_and,
+                  _num_evts_after_cuts_or,
+                  _num_evts_after_cuts_xor,
+                  _num_evts_after_cuts_xorp,
+                  _num_evts_after_cuts_xorm;
 
     // Histograms
     Histo1DPtr

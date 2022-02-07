@@ -31,12 +31,12 @@ namespace Rivet {
       declare(cfs, "CFS");
 
       // Event counters
-      _num_evts_noCuts = 0;
-      _num_evts_after_cuts_or   = 0;
-      _num_evts_after_cuts_and  = 0;
-      _num_evts_after_cuts_xor  = 0;
-      _num_evts_after_cuts_xorm = 0;
-      _num_evts_after_cuts_xorp = 0;
+      book(_num_evts_noCuts,          "num_evts_noCuts");
+      book(_num_evts_after_cuts_or,   "num_evts_after_cuts_or");
+      book(_num_evts_after_cuts_and,  "num_evts_after_cuts_and");
+      book(_num_evts_after_cuts_xor,  "num_evts_after_cuts_xor");
+      book(_num_evts_after_cuts_xorm, "num_evts_after_cuts_xorm");
+      book(_num_evts_after_cuts_xorp, "num_evts_after_cuts_xorp");
 
       // Histograms
       book(_hist_dNch_all_dEta_OR,          1,1,1);
@@ -63,7 +63,6 @@ namespace Rivet {
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
-      const double weight = 1.;
 
       const ChargedFinalState& charged = apply<ChargedFinalState>(event, "CFS");
       const FinalState& fsa = apply<FinalState>(event, "FSA");
@@ -89,13 +88,13 @@ namespace Rivet {
       const bool cutsxorm = (!activity_plus_side &&  activity_minus_side);
       const bool cutsxorp = ( activity_plus_side && !activity_minus_side);
 
-      _num_evts_noCuts += weight;
+      _num_evts_noCuts->fill();
       if ( charged.size() >= 1 ) {
-        if (cutsor)   _num_evts_after_cuts_or   += weight;
-        if (cutsand)  _num_evts_after_cuts_and  += weight;
-        if (cutsxor)  _num_evts_after_cuts_xor  += weight;
-        if (cutsxorm) _num_evts_after_cuts_xorm += weight;
-        if (cutsxorp) _num_evts_after_cuts_xorp += weight;
+        if (cutsor)   _num_evts_after_cuts_or   ->fill();
+        if (cutsand)  _num_evts_after_cuts_and  ->fill();
+        if (cutsxor)  _num_evts_after_cuts_xor  ->fill();
+        if (cutsxorm) _num_evts_after_cuts_xorm ->fill();
+        if (cutsxorp) _num_evts_after_cuts_xorp ->fill();
       }
 
       // Loop over charged particles
@@ -147,32 +146,32 @@ namespace Rivet {
     /// Normalise histograms etc., after the run
     void finalize() {
       MSG_INFO("Number of selected events: "                  << endl
-               << "\t All       = " << _num_evts_noCuts          << endl
-               << "\t Inelastic = " << _num_evts_after_cuts_or   << endl
-               << "\t NSD       = " << _num_evts_after_cuts_and  << endl
-               << "\t Xor       = " << _num_evts_after_cuts_xor  << endl
-               << "\t Xorm      = " << _num_evts_after_cuts_xorm << endl
-               << "\t Xorp      = " << _num_evts_after_cuts_xorp);
+               << "\t All       = " << _num_evts_noCuts->val()          << endl
+               << "\t Inelastic = " << _num_evts_after_cuts_or->val()   << endl
+               << "\t NSD       = " << _num_evts_after_cuts_and->val()  << endl
+               << "\t Xor       = " << _num_evts_after_cuts_xor->val()  << endl
+               << "\t Xorm      = " << _num_evts_after_cuts_xorm->val() << endl
+               << "\t Xorp      = " << _num_evts_after_cuts_xorp->val());
 
-      scale(_hist_dNch_all_dEta_OR,    1./_num_evts_after_cuts_or);
-      scale(_hist_dNch_all_dEta_AND,   1./_num_evts_after_cuts_and);
-      scale(_hist_dNch_all_dEta_XOR,   1./_num_evts_after_cuts_xor);
-      scale(_hist_dNch_all_dEta_XORpm, 1./(_num_evts_after_cuts_xorm + _num_evts_after_cuts_xorp));
+      scale(_hist_dNch_all_dEta_OR,    1./ *_num_evts_after_cuts_or);
+      scale(_hist_dNch_all_dEta_AND,   1./ *_num_evts_after_cuts_and);
+      scale(_hist_dNch_all_dEta_XOR,   1./ *_num_evts_after_cuts_xor);
+      scale(_hist_dNch_all_dEta_XORpm, 1./ (*_num_evts_after_cuts_xorm + *_num_evts_after_cuts_xorp));
 
-      scale(_hist_dNch_all_dpt_OR,   1./_num_evts_after_cuts_or);
-      scale(_hist_dNch_all_dpt_AND,  1./_num_evts_after_cuts_and);
-      scale(_hist_dNch_all_dpt_XOR,  1./_num_evts_after_cuts_xor);
+      scale(_hist_dNch_all_dpt_OR,   1./ *_num_evts_after_cuts_or);
+      scale(_hist_dNch_all_dpt_AND,  1./ *_num_evts_after_cuts_and);
+      scale(_hist_dNch_all_dpt_XOR,  1./ *_num_evts_after_cuts_xor);
 
-      scale(_hist_dNch_leading_dpt_OR,   1./_num_evts_after_cuts_or);
-      scale(_hist_dNch_leading_dpt_AND,  1./_num_evts_after_cuts_and);
-      scale(_hist_dNch_leading_dpt_XOR,  1./_num_evts_after_cuts_xor);
+      scale(_hist_dNch_leading_dpt_OR,   1./ *_num_evts_after_cuts_or);
+      scale(_hist_dNch_leading_dpt_AND,  1./ *_num_evts_after_cuts_and);
+      scale(_hist_dNch_leading_dpt_XOR,  1./ *_num_evts_after_cuts_xor);
 
-      scale(_hist_integrated_leading_pt_OR,   1./_num_evts_after_cuts_or);
-      scale(_hist_integrated_leading_pt_AND,  1./_num_evts_after_cuts_and);
-      scale(_hist_integrated_leading_pt_XOR,  1./_num_evts_after_cuts_xor);
+      scale(_hist_integrated_leading_pt_OR,   1./ *_num_evts_after_cuts_or);
+      scale(_hist_integrated_leading_pt_AND,  1./ *_num_evts_after_cuts_and);
+      scale(_hist_integrated_leading_pt_XOR,  1./ *_num_evts_after_cuts_xor);
 
-      scale(_hist_dNev_all_dM_OR,   1./_num_evts_after_cuts_or);
-      scale(_hist_dNev_all_dM_AND,  1./_num_evts_after_cuts_and);
+      scale(_hist_dNev_all_dM_OR,   1./ *_num_evts_after_cuts_or);
+      scale(_hist_dNev_all_dM_AND,  1./ *_num_evts_after_cuts_and);
     }
 
 
@@ -182,7 +181,7 @@ namespace Rivet {
     double MinEnergy, EtaForwardMin, EtaForwardMax, EtaCentralCut, MinParticlePt;
 
     // Counters
-    double _num_evts_noCuts,
+    CounterPtr _num_evts_noCuts,
                   _num_evts_after_cuts_and,
                   _num_evts_after_cuts_or,
                   _num_evts_after_cuts_xor,

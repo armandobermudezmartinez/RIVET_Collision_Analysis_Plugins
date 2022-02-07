@@ -16,7 +16,7 @@ OUTPUT_FILE = "FSQ_16_011_PYTHIA8_CUETP8M1_MB_13TeV.yoda" #os.getenv('OUTPUT')
 process.RandomNumberGeneratorService.generator.initialSeed = SEED
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(EVENTS_PER_JOB))
 
-process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(10000)
+process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(100)
 process.source = cms.Source("EmptySource")
 
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
@@ -47,7 +47,17 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             # Section to play:
 
             ),
-    parameterSets = cms.vstring('processParameters')
+            pythia8PSweightsSettings = cms.vstring(
+                'UncertaintyBands:doVariations = on',
+                'UncertaintyBands:List = {isrDefHi isr:muRfac=0.5,fsrDefHi fsr:muRfac=0.5,isrDefLo isr:muRfac=2.0,fsrDefLo fsr:muRfac=2.0}',
+                'UncertaintyBands:nFlavQ = 4', # define X=bottom/top in X2XG variations
+                'UncertaintyBands:MPIshowers = on',
+                'UncertaintyBands:overSampleFSR = 10.0',
+                'UncertaintyBands:overSampleISR = 10.0',
+                'UncertaintyBands:FSRpTmin2Fac = 20',
+                'UncertaintyBands:ISRpTmin2Fac = 1',
+            ),
+    parameterSets = cms.vstring('processParameters', 'pythia8PSweightsSettings')
 	)
 )
 

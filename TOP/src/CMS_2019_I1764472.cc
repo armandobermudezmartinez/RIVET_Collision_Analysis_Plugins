@@ -169,9 +169,8 @@ namespace Rivet {
       if(hadjet.mass() < secondJetLepton.mass()) vetoEvent;
 
       // Fill histograms
-      const double weight = event.weight();
-      _hist_mass->fill(hadjet.mass(), weight);
-      _hist_mass_norm->fill(hadjet.mass(), weight);
+      _hist_mass->fill(hadjet.mass());
+      _hist_mass_norm->fill(hadjet.mass());
 
     }
 

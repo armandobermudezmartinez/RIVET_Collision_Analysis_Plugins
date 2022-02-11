@@ -9,11 +9,11 @@ namespace Rivet {
 
 
   /// Inclusive jet pT at 13 TeV
-  class CMS_2020_PAS_SMP_20_011 : public Analysis {
+  class CMS_2021_I1972986 : public Analysis {
   public:
 
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2020_PAS_SMP_20_011);
+    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_I1972986);
 
 
     /// Book histograms and initialize projections:
@@ -71,6 +71,6 @@ namespace Rivet {
 
 
   // This global object acts as a hook for the plugin system.
-  DECLARE_RIVET_PLUGIN(CMS_2020_PAS_SMP_20_011);
+  DECLARE_RIVET_PLUGIN(CMS_2021_I1972986);
 
 }

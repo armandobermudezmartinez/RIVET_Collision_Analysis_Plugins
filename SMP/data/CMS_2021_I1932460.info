@@ -6,6 +6,7 @@ Collider: LHC
 InspireID: 1932460
 Status: VALIDATED
 Authors:
+ - cms-pag-conveners-smp@cern.ch
  - Maxim Pieters <maxim.pieters@uantwerpen.be>
  - Hans Van Haevermaet <hans.vanhaevermaet@uantwerpen.be>
  - Pierre Van Mechelen <pierre.vanmechelen@uantwerpen.be>
@@ -30,4 +31,6 @@ BibTeX: '@article{CMS:2021lxi,
     month = "9",
     year = "2021"
 }'
-
+ReleaseTests:
+ - $A LHC-13-DiJets-boosted
+ - $A-2 LHC-13-Jets-0

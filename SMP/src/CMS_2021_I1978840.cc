@@ -14,7 +14,7 @@
 
 namespace Rivet {
 
-class CMS_2021_PAS_SMP_20_005 : public Analysis {
+class CMS_2021_I1978840 : public Analysis {
  public:
   struct WGammaRivetVariables {
     bool is_wg_gen;
@@ -117,7 +117,7 @@ class CMS_2021_PAS_SMP_20_005 : public Analysis {
   WGammaRivetVariables vars_;
   map<string, Histo1DPtr> _h;
 
-  DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_PAS_SMP_20_005);
+  DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_I1978840);
 
   void init() {
     vars_.resetVars();
@@ -339,7 +339,7 @@ class CMS_2021_PAS_SMP_20_005 : public Analysis {
   }
 };
 
-CMS_2021_PAS_SMP_20_005::WGSystem::WGSystem(Particle const& lep, Particle const& neu,
+CMS_2021_I1978840::WGSystem::WGSystem(Particle const& lep, Particle const& neu,
                                             Particle const& pho, bool verbose) {
   lepton_charge = lep.charge3() / 3;
   wg_system += lep.momentum();
@@ -408,12 +408,12 @@ CMS_2021_PAS_SMP_20_005::WGSystem::WGSystem(Particle const& lep, Particle const&
   }
 }
 
-double CMS_2021_PAS_SMP_20_005::WGSystem::Phi() {
+double CMS_2021_I1978840::WGSystem::Phi() {
   double lep_phi = r_charged_lepton.phi(PhiMapping::MINUSPI_PLUSPI);
   return mapAngleMPiToPi(lepton_charge > 0 ? (lep_phi) : (lep_phi + PI));
 }
 
-double CMS_2021_PAS_SMP_20_005::WGSystem::SymPhi() {
+double CMS_2021_I1978840::WGSystem::SymPhi() {
   double lep_phi = Phi();
   if (lep_phi > PI / 2.) {
     return PI - lep_phi;
@@ -424,6 +424,6 @@ double CMS_2021_PAS_SMP_20_005::WGSystem::SymPhi() {
   }
 }
 
-DECLARE_RIVET_PLUGIN(CMS_2021_PAS_SMP_20_005);
+DECLARE_RIVET_PLUGIN(CMS_2021_I1978840);
 
 }  // namespace Rivet

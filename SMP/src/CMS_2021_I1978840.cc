@@ -11,9 +11,11 @@
 #include "Rivet/Projections/MissingMomentum.hh"
 #include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/VetoedFinalState.hh"
+#include "Rivet/Projections/InvisibleFinalState.hh"
 
 namespace Rivet {
 
+/// @brief Measurement of Wgamma differential cross sections in proton-proton collisions at sqrt(s) = 13 TeV and effective field theory constraints
 class CMS_2021_I1978840 : public Analysis {
  public:
   struct WGammaRivetVariables {
@@ -92,7 +94,7 @@ class CMS_2021_I1978840 : public Analysis {
     FourMomentum r_neutrino;
     FourMomentum r_photon;
 
-    WGSystem(Particle const& lep, Particle const& neu, Particle const& pho, bool verbose);
+    WGSystem(Particle const& lep, FourMomentum const& neu, Particle const& pho, bool verbose);
 
     double Phi();
     double SymPhi();
@@ -117,7 +119,7 @@ class CMS_2021_I1978840 : public Analysis {
   WGammaRivetVariables vars_;
   map<string, Histo1DPtr> _h;
 
-  DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_I1978840);
+  RIVET_DEFAULT_ANALYSIS_CTOR(CMS_2021_I1978840);
 
   void init() {
     vars_.resetVars();
@@ -152,13 +154,9 @@ class CMS_2021_I1978840 : public Analysis {
     vetoed_prompt_photons.addVetoOnThisFinalState(dressed_leptons);
     declare(vetoed_prompt_photons, "Photons");
 
-    // Neutrinos
-    IdentifiedFinalState neutrinos(fs);
-    neutrinos.acceptNeutrinos();
-    PromptFinalState prompt_neutrinos(neutrinos);
-    prompt_neutrinos.acceptMuonDecays(true);
-    prompt_neutrinos.acceptTauDecays(true);
-    declare(prompt_neutrinos, "Neutrinos");
+    // Invisibles
+    InvisibleFinalState invisibles(true, true, true);
+    declare(invisibles, "Invisibles");
 
     // MET
     declare(MissingMomentum(fs), "MET");
@@ -180,37 +178,42 @@ class CMS_2021_I1978840 : public Analysis {
   void analyze(const Event& event) {
     vars_.resetVars();
 
-    const Particles leptons = applyProjection<FinalState>(event, "DressedLeptons").particlesByPt();
+    const Particles leptons = apply<FinalState>(event, "DressedLeptons").particlesByPt();
 
     if (leptons.size() == 0) {
       vetoEvent;
     }
     auto l0 = leptons.at(0);
 
-    const Particles photons = applyProjection<FinalState>(event, "Photons")
+    const Particles photons = apply<FinalState>(event, "Photons")
                                   .particlesByPt(DeltaRGtr(l0, lepton_photon_dr_cut_));
     if (photons.size() == 0) {
       vetoEvent;
     }
     auto p0 = photons.at(0);
 
-    const Particles neutrinos = applyProjection<FinalState>(event, "Neutrinos").particlesByPt();
-    if (neutrinos.size() == 0) {
+    
+    const Particles invisibles = apply<FinalState>(event, "Invisibles").particlesByPt();
+    FourMomentum n0;
+    for (auto const& inv : invisibles) {
+      n0 += inv.momentum();
+    }
+    
+    if (invisibles.size() == 0) {
       vetoEvent;
     }
-    auto n0 = neutrinos.at(0);
 
-    FourMomentum met = applyProjection<MissingMomentum>(event, "MET").missingMomentum();
+    FourMomentum met = apply<MissingMomentum>(event, "MET").missingMomentum();
     // Redefine the MET
     met = FourMomentum(met.pt(), met.px(), met.py(), 0.);
 
     // Filter jets on pT, eta and DR with lepton and photon
-    const Jets jets = applyProjection<FastJets>(event, "Jets").jetsByPt([&](Jet const& j) {
+    const Jets jets = apply<FastJets>(event, "Jets").jetsByPt([&](Jet const& j) {
       return j.pt() > jet_pt_cut_ && std::abs(j.eta()) < jet_abs_eta_cut_ &&
              deltaR(j, l0) > jet_dr_cut_ && deltaR(j, p0) > jet_dr_cut_;
     });
 
-    if (leptons.size() >= 1 && photons.size() >= 1 && neutrinos.size() >= 1) {
+    if (leptons.size() >= 1 && photons.size() >= 1 && invisibles.size() >= 1) {
       // Populate variables
       vars_.is_wg_gen = true;
       vars_.l0_pt = l0.pt();
@@ -232,16 +235,26 @@ class CMS_2021_I1978840 : public Analysis {
       vars_.met_pt = met.pt();
       vars_.met_phi = met.phi(PhiMapping::MINUSPI_PLUSPI);
 
-      // Here we build a list of particles to cluster jets, to
-      // be used in the photon isolation
-      Particles finalparts_iso = applyProjection<FinalState>(event, "FinalState").particles();
+      // Here we build a list of particles to cluster jets, to be used in the photon isolation.
+      // The selection of particles that we want to veto from this isolation sum is non-trivial:
+      // the leading pT lepton, the leading pT photon that has DeltaR > 0.7 from the leading pT
+      // lepton, the invisibles  and any tau decay products. Therefore, the selection is done
+      // here instead of in the initialise method.
+      Particles finalparts_iso = apply<FinalState>(event, "FinalState").particles();
       Particles filtered_iso;
       for (Particle const& p : finalparts_iso) {
-        if (p.genParticle() == l0.genParticle() || p.genParticle() == p0.genParticle() ||
-            p.genParticle() == n0.genParticle() || p.fromTau()) {
-          continue;
+        bool veto_particle = false;
+        if (p.genParticle() == l0.genParticle() || p.genParticle() == p0.genParticle() || p.fromTau()) {
+          veto_particle = true;
         }
-        filtered_iso.push_back(p);
+        for (auto const& inv : invisibles) {
+          if (p.genParticle() == inv.genParticle()) {
+            veto_particle = true;
+          } 
+        }
+        if (!veto_particle) {
+          filtered_iso.push_back(p);
+        }
       }
       auto proj = getProjection<FastJets>("Jets");
       proj.reset();
@@ -323,12 +336,7 @@ class CMS_2021_I1978840 : public Analysis {
          {"baseline_photon_pt", "baseline_photon_eta", "baseline_leppho_dr", "baseline_leppho_deta",
           "baseline_mt_cluster", "baseline_njet", "raz_leppho_deta", "eft_photon_pt_phi_0",
           "eft_photon_pt_phi_1", "eft_photon_pt_phi_2"}) {
-      if (crossSection() < 0.) {
-        // Assume av. evt weight gives xsec
-        scale(_h[x], flavor_factor / femtobarn / numEvents());
-      } else {
-        scale(_h[x], flavor_factor * crossSection() / femtobarn / sumOfWeights());
-      }
+      scale(_h[x], flavor_factor * crossSection() / femtobarn / sumOfWeights());
     }
 
     // Since these are really 2D, we need to divide by the y bin width:
@@ -339,18 +347,18 @@ class CMS_2021_I1978840 : public Analysis {
   }
 };
 
-CMS_2021_I1978840::WGSystem::WGSystem(Particle const& lep, Particle const& neu,
+CMS_2021_I1978840::WGSystem::WGSystem(Particle const& lep, FourMomentum const& neu,
                                             Particle const& pho, bool verbose) {
   lepton_charge = lep.charge3() / 3;
   wg_system += lep.momentum();
-  wg_system += neu.momentum();
+  wg_system += neu;
   wg_system += pho.momentum();
 
   if (verbose) {
     std::cout << "> charge:    " << lepton_charge << "\n";
     std::cout << "> wg_system: " << wg_system << "\n";
     std::cout << "> lepton   : " << lep.momentum() << "\n";
-    std::cout << "> neutrino : " << neu.momentum() << "\n";
+    std::cout << "> neutrino : " << neu << "\n";
     std::cout << "> photon   : " << pho.momentum() << "\n";
   }
 
@@ -424,6 +432,6 @@ double CMS_2021_I1978840::WGSystem::SymPhi() {
   }
 }
 
-DECLARE_RIVET_PLUGIN(CMS_2021_I1978840);
+RIVET_DECLARE_PLUGIN(CMS_2021_I1978840);
 
 }  // namespace Rivet

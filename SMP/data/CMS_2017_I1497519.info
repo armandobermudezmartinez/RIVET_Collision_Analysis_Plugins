@@ -41,5 +41,4 @@ BibTeX: '@article{Khachatryan:2016crw,
       SLACcitation   = "%%CITATION = ARXIV:1611.03844;%%"
 }'
 ReleaseTests:
- - $A LHC-13-Z-el-jets
- - $A-2 LHC-13-Z-mu-jets
+ - $A pp-8000-Zee-jets

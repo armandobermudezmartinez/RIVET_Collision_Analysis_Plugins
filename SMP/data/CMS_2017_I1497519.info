@@ -1,14 +1,18 @@
 Name: CMS_2017_I1497519
 Year: 2017
-Summary: Measurements of differential production cross sections for a Z boson in association with jets in pp collisions at $\sqrt{s} = 8\,$TeV
+Summary: Measurements of differential production cross sections for a Z boson in association with jets in pp collisions at 8 TeV
 Experiment: CMS
 Collider: LHC
 InspireID: 1497519
-Status: CMS INTERNAL
+Status: VALIDATED
 Authors:
-  - Philippe Gras (philippe.gras@cern.ch)
+ - cms-pag-conveners-smp@cern.ch
+ - Philippe Gras <philippe.gras@cern.ch>
 References:
-  - https://inspirehep.net/record/1497519
+ - CMS-SMP-14-013
+ - JHEP 04 (2017) 022
+ - DOI:10.1007/JHEP04(2017)022
+ - arXiv:1611.03844
 RunInfo:
   'Run MC generators with Z decaying leptonically into both electrons and muons at 8 TeV CoM energy. If only one of the two decay channels is included, multiply the provided cross-section value by two for a proper normalisation.'
 NeedCrossSection: yes
@@ -36,3 +40,6 @@ BibTeX: '@article{Khachatryan:2016crw,
       reportNumber   = "CMS-SMP-14-013, CERN-EP-2016-256",
       SLACcitation   = "%%CITATION = ARXIV:1611.03844;%%"
 }'
+ReleaseTests:
+ - $A LHC-13-Z-el-jets
+ - $A-2 LHC-13-Z-mu-jets

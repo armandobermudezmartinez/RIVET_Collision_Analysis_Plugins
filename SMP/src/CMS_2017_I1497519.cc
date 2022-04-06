@@ -11,9 +11,9 @@
 
 #include <iostream>
 
-//// Credits: code was copied from CMS_2015_I1410737.cc and adapted by Ph. Gras to CMS_2017_I1497519
-
 namespace Rivet {
+
+/// @brief Measurements of differential production cross sections for a Z boson in association with jets in pp collisions at 8 TeV
 
   class CMS_2017_I1497519 : public Analysis {
   private:
@@ -380,7 +380,7 @@ namespace Rivet {
 
   };
 
-  DECLARE_RIVET_PLUGIN(CMS_2017_I1497519);
+  RIVET_DECLARE_PLUGIN(CMS_2017_I1497519);
 }
 
 //  LocalWords:  fs

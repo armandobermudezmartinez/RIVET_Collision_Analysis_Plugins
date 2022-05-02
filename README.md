@@ -14,6 +14,8 @@ First, create a personal fork of this repository: https://gitlab.cern.ch/cms-gen
     cd CMSSW_11_2_4/src
     cmsenv
 
+    git cms-merge-topic mseidel42:RivetPaths_11_2
+
     git clone ssh://git@gitlab.cern.ch:7999/${USER}/Rivet.git
     cd Rivet
     git remote add cms-gen ssh://git@gitlab.cern.ch:7999/cms-gen/Rivet.git

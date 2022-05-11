@@ -36,16 +36,16 @@ namespace Rivet {
       // specify custom binning
       // take binning from reference data using HEPData ID (digits in "d01-x01-y01" etc.)
       
-      book(_h["inclusive"], 1, 1, 1);
-      book(_h["MN"], 2, 1, 1);
-      book(_s["R_incl"], 3, 1, 1);
-      book(_s["R_incl_veto"], 4, 1, 1);
-      book(_s["R_MN"], 5, 1, 1);
-      book(_s["R_MN_veto"], 6, 1, 1);
+      book(_h["inclusive"], 7, 1, 1);
+      book(_h["MN"], 8, 1, 1);
+      book(_s["R_incl"], 9, 1, 1);
+      book(_s["R_incl_veto"], 10, 1, 1);
+      book(_s["R_MN"], 11, 1, 1);
+      book(_s["R_MN_veto"], 12, 1, 1);
 
       // Temporary histograms (directly instantiated)
-      book(_h["exclusive"], "exclusive", refData(1, 1, 1));
-      book(_h["exclusive_veto"], "exclusive_veto", refData(1, 1, 1));
+      book(_h["exclusive"], "exclusive", refData(7, 1, 1));
+      book(_h["exclusive_veto"], "exclusive_veto", refData(7, 1, 1));
     }
 
 

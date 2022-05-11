@@ -8,7 +8,7 @@ process.load('Configuration.StandardSequences.Services_cff')
 
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(10000)
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100000))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10000))
 
 process.source = cms.Source("EmptySource")
 
@@ -28,7 +28,8 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             'PhaseSpace:pTHatMin = 15',
             'PhaseSpace:pTHatMax = 1000',
             'Tune:pp 14',
-            'Tune:ee 7'),
+            'Tune:ee 7'
+            ),
     parameterSets = cms.vstring('processParameters')
 	)
 )

@@ -14,9 +14,9 @@ Authors:
  - Grigory Pivovarov
  - Grigory Safronov
 References:
- - 'Example: TBU'
- - 'Example: TBU'
- - 'arXiv:2111.04605'
+ - JHEP 03 (2022) 189
+ - CMS-FSQ-13-004
+ - arXiv:2111.04605
 RunInfo: pp QCD interactions at $\sqrt{s} = 2.76$ TeV. Data collected by CMS during the year 2013.
 Beams: [p+, p+]
 Energies: [2760]
@@ -32,5 +32,18 @@ Description:
    jets with $p_T > 35$ GeV and $|y| < 4.7$, with integrated luminosity of
    5.4pb^-1. The measured observables are
    corrected for detector effects.'
-BibKey: 
-BibTeX: ''
+BibKey: CMS:2021maw
+BibTeX: '@article{CMS:2021maw,
+    author = "Tumasyan, Armen and others",
+    collaboration = "CMS",
+    title = "{Study of dijet events with large rapidity separation in proton-proton collisions at $ \sqrt{s} $ = 2.76 TeV}",
+    eprint = "2111.04605",
+    archivePrefix = "arXiv",
+    primaryClass = "hep-ex",
+    reportNumber = "CMS-FSQ-13-004, CERN-EP-2021-173",
+    doi = "10.1007/JHEP03(2022)189",
+    journal = "JHEP",
+    volume = "03",
+    pages = "189",
+    year = "2022"
+}'

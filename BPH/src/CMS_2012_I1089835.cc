@@ -6,7 +6,7 @@
 
 namespace Rivet {
   
-  
+  /// @brief Inclusive b-jet production in pp collisions at 7 TeV
   class CMS_2012_I1089835 : public Analysis {
   public:
     
@@ -31,12 +31,10 @@ namespace Rivet {
     /// Book histograms and initialise projections before the run
     void init() {
       
-      /// @todo Initialise and register projections here
       const FinalState cnfs;
       declare(cnfs, "FS");
       declare(FastJets(cnfs, FastJets::ANTIKT, 0.5), "Jets");
       
-      /// @todo Book histograms here, e.g.:
       book(_h_dsigdpty05, 4, 1, 1);
       book(_h_dsigdpty10, 5, 1, 1);
       book(_h_dsigdpty15, 6, 1, 1);
@@ -48,8 +46,6 @@ namespace Rivet {
     
     /// Perform the per-event analysis
     void analyze(const Event& event) {
-      
-      /// @todo Do the event by event analysis here
       
       const FastJets& fastjets = apply<FastJets>(event, "Jets"); 
       const Jets jets = fastjets.jetsByPt(10.);
@@ -72,8 +68,6 @@ namespace Rivet {
     
     /// Normalise histograms etc., after the run
     void finalize() {
-      
-      /// @todo Normalise, scale and otherwise manipulate histograms here
       
       double invlumi = crossSection()/picobarn/sumOfWeights();
       

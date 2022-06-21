@@ -15,7 +15,7 @@ namespace Rivet {
   public:
 
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2017_I1467451);
+    RIVET_DEFAULT_ANALYSIS_CTOR(CMS_2017_I1467451);
 
 
     /// Book histograms and initialise projections before the run
@@ -24,6 +24,9 @@ namespace Rivet {
       const double lepConeSize = 0.1;
       const double lepMaxEta = 2.5;
       const Cut lepton_cut = (Cuts::abseta < lepMaxEta);
+
+      MSG_WARNING("\033[91;1mLIMITED VALIDITY - check info file for details!\033[m");
+
 
       // Initialise and register projections
       FinalState fs((Cuts::etaIn(-2.5,2.5)));
@@ -98,6 +101,6 @@ namespace Rivet {
 
 
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2017_I1467451);
+  RIVET_DECLARE_PLUGIN(CMS_2017_I1467451);
 
 }

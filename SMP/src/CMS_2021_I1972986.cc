@@ -13,7 +13,7 @@ namespace Rivet {
   public:
 
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_I1972986);
+    RIVET_DEFAULT_ANALYSIS_CTOR(CMS_2021_I1972986);
 
 
     /// Book histograms and initialize projections:
@@ -37,14 +37,14 @@ namespace Rivet {
     void analyze(const Event &event) {
 
       // AK4 jets
-      const FastJets& fjAK4 = applyProjection<FastJets>(event, "JetsAK4");
+      const FastJets& fjAK4 = apply<FastJets>(event, "JetsAK4");
       const Jets& jetsAK4 = fjAK4.jets(Cuts::ptIn(97*GeV, 3103*GeV) && Cuts::absrap < 2.0);
       for (const Jet& j : jetsAK4) {
         _hist_sigmaAK4.fill(j.absrap(), j.pT());
       }
 
       // AK7 jets
-      const FastJets& fjAK7 = applyProjection<FastJets>(event, "JetsAK7");
+      const FastJets& fjAK7 = apply<FastJets>(event, "JetsAK7");
       const Jets& jetsAK7 = fjAK7.jets(Cuts::ptIn(97*GeV, 3103*GeV) && Cuts::absrap < 2.0);
       for (const Jet& j : jetsAK7) {
         _hist_sigmaAK7.fill(j.absrap(), j.pT());
@@ -71,6 +71,6 @@ namespace Rivet {
 
 
   // This global object acts as a hook for the plugin system.
-  DECLARE_RIVET_PLUGIN(CMS_2021_I1972986);
+  RIVET_DECLARE_PLUGIN(CMS_2021_I1972986);
 
 }

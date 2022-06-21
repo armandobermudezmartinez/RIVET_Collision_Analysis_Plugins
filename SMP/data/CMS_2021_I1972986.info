@@ -11,7 +11,7 @@ Authors:
 References:
   - arXiv:2111.10431
   - CMS-SMP-20-011
-  - JHEP XX (2021) YYY
+  - JHEP 02 (2022) 142
 RunInfo: pp to jets at $\sqrt{s} = 13$ TeV. Data collected by CMS during the year 2016.
 NeedCrossSection: yes
 Beams: [p+, p+]
@@ -32,4 +32,3 @@ BibTeX: '@article{CMS:2021yzl,
 }'
 ReleaseTests:
  - $A LHC-13-DiJets-boosted
- - $A-2 LHC-13-Jets-0

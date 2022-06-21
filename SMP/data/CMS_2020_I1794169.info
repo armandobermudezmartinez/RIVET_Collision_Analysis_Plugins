@@ -8,7 +8,7 @@ Status: VALIDATED
 Authors:
  - cms-pag-conveners-smp@cern.ch
  - Guillelmo Gomez-Ceballos <ceballos@cern.ch>
- - Kenneth Long kenneth.long@cern.ch
+ - Kenneth Long <kenneth.long@cern.ch>
 References:
   - arXiv:2005.01173
   - CMS-SMP-19-012
@@ -17,6 +17,7 @@ RunInfo: VBS WZ and W+W+ interactions at $\sqrt{s} = 13$ TeV. Data collected by 
 NeedCrossSection: yes
 Beams: [p+, p+]
 Energies: [13000]
+Luminosity_fb: 137
 Options:
  - LMODE=WW,WZ
 Description:

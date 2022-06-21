@@ -19,82 +19,20 @@
 using std::vector;
 using namespace fastjet;
 
+/// @brief Study of quark and gluon jet substructure in Z+jet and dijet events from pp collisions
 
 namespace Rivet {
-
-/// \class Angularity
-/// definition of angularity
-///
-class Angularity : public FunctionOfPseudoJet<double>{
-public:
-  /// ctor
-  Angularity(double alpha, double jet_radius, double kappa=1.0, Selector constitCut=SelectorPtMin(0.)) : _alpha(alpha), _radius(jet_radius), _kappa(kappa), _constitCut(constitCut) {}
-
-  /// computation of the angularity itself
-  double result(const PseudoJet &jet) const{
-    // get the jet constituents
-    vector<PseudoJet> constits = jet.constituents();
-
-    // get the reference axis
-    PseudoJet reference_axis = _get_reference_axis(jet);
-
-    // do the actual coputation
-    double numerator = 0.0, denominator = 0.0;
-    unsigned int num = 0;
-    for (const auto &c : constits){
-      if (!_constitCut.pass(c)) continue;
-      double pt = c.pt();
-      // Note: better compute (dist^2)^(alpha/2) to avoid an extra square root
-      numerator   += pow(pt, _kappa) * pow(c.squared_distance(reference_axis), 0.5*_alpha);
-      denominator += pt;
-      num += 1;
-    }
-    if (denominator == 0) return -1;
-    // the formula is only correct for the the typical angularities which satisfy either kappa==1 or alpha==0.
-    else return numerator/(pow(denominator, _kappa)*pow(_radius, _alpha));
-  }
-
-protected:
-  PseudoJet _get_reference_axis(const PseudoJet &jet) const{
-    if (_alpha>1) return jet;
-
-    Recluster recluster(JetDefinition(antikt_algorithm, JetDefinition::max_allowable_R, WTA_pt_scheme));
-    return recluster(jet);
-  }
-
-  double _alpha, _radius, _kappa;
-  Selector _constitCut;
-};
-
-
-/**
- * Lightweight class to hold info about Lambda variable
- */
-  class LambdaVar {
-
-  public:
-    LambdaVar(const std::string & name_, float kappa_, float beta_, bool isCharged_, Selector constitCut_):
-      name(name_),
-      kappa(kappa_),
-      beta(beta_),
-      isCharged(isCharged_),
-      constitCut(constitCut_)
-    {}
-
-    std::string name;
-    float kappa;
-    float beta;
-    bool isCharged;
-    Selector constitCut;
-  };
-
 
   /// @brief Routine for QG substructure analysis
   class CMS_2021_I1920187_ZJET : public Analysis {
   public:
 
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2021_I1920187_ZJET);
+    CMS_2021_I1920187_ZJET(const string name="CMS_2021_I1920187_ZJET",
+                           const string ref_data="CMS_2021_I1920187")
+                           : Analysis(name) {
+      setRefDataName(ref_data);
+    }
 
     /// Book histograms and initialise projections before the run
     void init() {
@@ -262,6 +200,72 @@ protected:
     /// Normalise histograms etc., after the run
     void finalize() {
     } // end of finalize
+
+    /// \class Angularity
+    /// definition of angularity
+    ///
+    class Angularity : public FunctionOfPseudoJet<double>{
+    public:
+      /// ctor
+      Angularity(double alpha, double jet_radius, double kappa=1.0, Selector constitCut=SelectorPtMin(0.)) : _alpha(alpha), _radius(jet_radius), _kappa(kappa), _constitCut(constitCut) {}
+
+      /// computation of the angularity itself
+      double result(const PseudoJet &jet) const{
+        // get the jet constituents
+        vector<PseudoJet> constits = jet.constituents();
+
+        // get the reference axis
+        PseudoJet reference_axis = _get_reference_axis(jet);
+
+        // do the actual coputation
+        double numerator = 0.0, denominator = 0.0;
+        unsigned int num = 0;
+        for (const auto &c : constits){
+          if (!_constitCut.pass(c)) continue;
+          double pt = c.pt();
+          // Note: better compute (dist^2)^(alpha/2) to avoid an extra square root
+          numerator   += pow(pt, _kappa) * pow(c.squared_distance(reference_axis), 0.5*_alpha);
+          denominator += pt;
+          num += 1;
+        }
+        if (denominator == 0) return -1;
+        // the formula is only correct for the the typical angularities which satisfy either kappa==1 or alpha==0.
+        else return numerator/(pow(denominator, _kappa)*pow(_radius, _alpha));
+      }
+
+    protected:
+      PseudoJet _get_reference_axis(const PseudoJet &jet) const{
+        if (_alpha>1) return jet;
+
+        Recluster recluster(JetDefinition(antikt_algorithm, JetDefinition::max_allowable_R, WTA_pt_scheme));
+        return recluster(jet);
+      }
+
+      double _alpha, _radius, _kappa;
+      Selector _constitCut;
+    };
+
+
+    /**
+    * Lightweight class to hold info about Lambda variable
+    */
+    class LambdaVar {
+
+    public:
+      LambdaVar(const std::string & name_, float kappa_, float beta_, bool isCharged_, Selector constitCut_):
+        name(name_),
+        kappa(kappa_),
+        beta(beta_),
+        isCharged(isCharged_),
+        constitCut(constitCut_)
+      {}
+
+      std::string name;
+      float kappa;
+      float beta;
+      bool isCharged;
+      Selector constitCut;
+    };
 
     // Order matters here
     const vector<float> _jetRadii = {0.4, 0.8};

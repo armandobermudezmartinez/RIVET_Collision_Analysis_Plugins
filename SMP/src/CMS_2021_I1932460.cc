@@ -7,10 +7,7 @@
 namespace Rivet {
 
 
-  /// @brief Add a short analysis description here
-  /*
-  This analysis selects inclusive four jet events to study double parton scattering in four jet production in proton-proton collisions. The first, second, third, and fourth leading jet have a transverse momentum larger than 35, 30, 25, and 20 GeV respectively. All jets are required to be within an absolute pseudorapidity of 4.7, and the anti-kT algorithm with parameter 0.4 is used for reconstruction. Subquently all analysis observables are calculated according to the definition in CMS-PAS-SMP-20-007. For the DeltaS observable an additional restriction on transverse momentum of 50, 30, 30, 30 GeV is applied for the four leading jets. Six observables have a special bin normalised variant (indicated with *_binNorm) were the histogram is either normalised to the first/last bin content, or a mean value of certain bins.
-  */
+  /// @brief Measurement of double-parton scattering in inclusive production of four jets with low transverse momentum in proton-proton collisions at $\sqrt{s}$ = 13 TeV.
   
   class CMS_2021_I1932460 : public Analysis {
   public:
@@ -39,7 +36,6 @@ namespace Rivet {
       declare(jetfs, "jets");
 
       // Book histograms
-      // take binning from reference data using HEPData ID (digits in "d01-x01-y01" etc.)
       book(_h["JetPt1"], 1, 1, 1);
       book(_h["JetPt2"], 2, 1, 1);
       book(_h["JetPt3"], 3, 1, 1);
@@ -68,8 +64,6 @@ namespace Rivet {
 
     /// Perform the per-event analysis
     void analyze(const Event& event) {
-
-      /// @todo Do the event by event analysis here
 
       // retrieve clustered jets, sorted by pT, with a minimum pT cut 10 GeV and eta range 4.7 (similar to PFJet collection)
       Jets jets = apply<FastJets>(event, "jets").jetsByPt(Cuts::abseta < 4.7 && Cuts::pT > 10*GeV);

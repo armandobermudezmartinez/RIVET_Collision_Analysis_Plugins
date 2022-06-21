@@ -4,9 +4,11 @@ Summary:  Underlying Event Measurements with Leading Particles and Jets in pp co
 Experiment: CMS
 Collider: LHC
 Status: VALIDATED
+Reentrant: false
 Authors:
  - Paolo Gunnellini <paolo.gunnellini@cern.ch>
 References:
+ - CMS-PAS-FSQ-15-007
  - <http://cds.cern.ch/record/2104473?ln=en>
 RunInfo:
    Minimum Bias inelastic collisions
@@ -37,4 +39,5 @@ BibTeX: '@techreport{CMS-PAS-FSQ-15-007,
       reportNumber  = "CMS-PAS-FSQ-15-007",
       url           = "http://cds.cern.ch/record/2104473",
 }'
-
+ReleaseTests:
+ - $A LHC-13-Minbias

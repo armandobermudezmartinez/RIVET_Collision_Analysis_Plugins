@@ -5,6 +5,7 @@ Experiment: CMS
 Collider: LHC
 InspireID: 1620050
 Status: VALIDATED
+Reentrant: true
 Authors:
  - Youn Jung Roh <youn.jung.roh@cern.ch>,
  - Suyong Choi <su.yong.choi@cern.ch>, 
@@ -41,4 +42,5 @@ This analysis is to be run on $\text{t}\bar{\text{t}}$ Monte Carlo. The particle
 A W boson at the particle level is defined by combining a dressed lepton and a neutrino. In each event, a pair of particle-level W bosons is chosen among the possible combinations such that the sum of the absolute values of the invariant mass differences with respect to the W boson mass is minimal. Similarly, a top quark at the particle level is defined by combining a particle-level W boson and a b jet. The combination of a W boson and a b jet with the minimum invariant mass difference from the correct top quark mass is selected.
 '  
 
-
+ReleaseTests:
+ - $A LHC-13-Top-All

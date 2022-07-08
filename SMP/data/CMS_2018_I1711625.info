@@ -5,10 +5,10 @@ Experiment: CMS
 Collider: LHC
 InspireID: 1711625
 Status: VALIDATED
+Reentrant: true
 Authors:
  - cms-pag-conveners-smp@cern.ch
  - Kyeongpil Lee <kplee@cern.ch>
-
 References:
   - arXiv:1812.10529
   - SMP-17-001
@@ -18,9 +18,11 @@ NumEvents: 1000000
 NeedCrossSection: yes
 Beams: [p+, p+]
 Energies: [13000]
+Luminosity_fb: 2.5 
 Description:
-  'Differential Drell-Yan cross sections $d\sigma/dm$ are presented. The cross section measurement is reported in the dilepton invariant mass range from 15 to 3000 GeV.
-  The results within detector acceptance are provided in muon and electron channel respectively. In addition, the results in muon channel are also obtained with the correction to the full phase space and the other correction for the effects of final state radiation.'
+  'Differential Drell-Yan cross sections $d\sigma/dm$ are presented. The cross section measurement is reported in the dilepton invariant mass range
+  from 15 to 3000 GeV. The results within detector acceptance are provided in muon and electron channel respectively. In addition, the results
+  in muon channel are also obtained with the correction to the full phase space and the other correction for the effects of final state radiation.'
 BibKey: Sirunyan:2018owv
 BibTeX: '@article{Sirunyan:2018owv,
       author         = "Sirunyan, Albert M and others",
@@ -39,4 +41,6 @@ BibTeX: '@article{Sirunyan:2018owv,
       reportNumber   = "CMS-SMP-17-001, CERN-EP-2018-320",
       SLACcitation   = "%%CITATION = ARXIV:1812.10529;%%"
 }'
-
+ReleaseTests:
+ - $A LHC-13-Z-mu
+ - $A-2 LHC-13-Z-e

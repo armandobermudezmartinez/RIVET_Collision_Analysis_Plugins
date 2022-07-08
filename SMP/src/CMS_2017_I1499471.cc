@@ -14,7 +14,7 @@ namespace Rivet {
   public:
     
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2017_I1499471);
+    RIVET_DEFAULT_ANALYSIS_CTOR(CMS_2017_I1499471);
     
     /// Book histograms and initialise projections before the run
     void init() {
@@ -188,7 +188,9 @@ namespace Rivet {
             _h_Zbb_mass_bb->fill(Zbb.mass(),w);
 
             _h_Dphi_bb->fill(deltaPhi(b1,b2),w);
-            _h_DR_bb->fill(deltaR(b1,b2),w);
+            if (deltaR(b1,b2)>0.5) {
+              _h_DR_bb->fill(deltaR(b1,b2),w);
+            }
 
             double DR_Z_b1(0.), DR_Z_b2(0.);
             if ( ee_event ) {
@@ -290,6 +292,6 @@ namespace Rivet {
   
   
   // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2017_I1499471);
+  RIVET_DECLARE_PLUGIN(CMS_2017_I1499471);
   
 }

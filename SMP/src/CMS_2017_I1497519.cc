@@ -1,15 +1,9 @@
 // -*- C++ -*-
 #include "Rivet/Analysis.hh"
 #include "Rivet/Projections/FastJets.hh"
-#include "Rivet/Projections/VisibleFinalState.hh"
 #include "Rivet/Projections/FinalState.hh"
-#include "Rivet/Projections/VetoedFinalState.hh"
+#include "Rivet/Projections/PromptFinalState.hh"
 #include "Rivet/Projections/DressedLeptons.hh"
-
-#include <cstdlib>
-#include <cstring>
-
-#include <iostream>
 
 namespace Rivet {
 
@@ -94,9 +88,6 @@ namespace Rivet {
       }
     }
 
-    ///Sign function that returns -1 (resp. +1) for negative (resp. positive or null) number
-    inline double sign(double x) { return x < 0 ? -1 : +1; }
-
   public:
 
     /// Constructor
@@ -138,27 +129,28 @@ namespace Rivet {
     /// Book histograms and initialise projections before the run
     void init() {
 
-      FinalState fs;
-      VisibleFinalState visfs(fs);
-      VetoedFinalState fs_notaudecay(fs);
-      fs_notaudecay.addDecayProductsVeto(PID::TAU);
-      fs_notaudecay.addDecayProductsVeto(-PID::TAU);
+      // Get options from the new option system
+      // default to combined.
+      _mode = 2;
+      if ( getOption("LMODE") == "EL" ) _mode = 0;
+      if ( getOption("LMODE") == "MU" ) _mode = 1;
+      if ( getOption("LMODE") == "EMU" ) _mode = 2;
 
-      IdentifiedFinalState bareMuons(fs_notaudecay);
-      bareMuons.acceptIdPair(PID::MUON);
+      FinalState fs;
+
+      PromptFinalState bareMuons(Cuts::abspid == PID::MUON);
       declare(DressedLeptons(fs, bareMuons, /*dRmax = */0.1,
-                             Cuts::open(),
+                             Cuts::pT > 20*GeV && Cuts::abseta < 2.4,
                              /*useDecayPhotons = */ true),
               "muons");
 
-      IdentifiedFinalState bareElectrons(fs_notaudecay);
-      bareElectrons.acceptIdPair(PID::ELECTRON);
+      PromptFinalState bareElectrons(Cuts::abspid == PID::ELECTRON);
       declare(DressedLeptons(fs, bareElectrons, /*dRmax =*/ 0.1,
-                             Cuts::open(),
+                             Cuts::pT > 20*GeV && Cuts::abseta < 2.4,
                              /*useDecayPhotons = */ true),
               "electrons");
 
-      FastJets jets(visfs, FastJets::ANTIKT, 0.5);
+      FastJets jets(fs, FastJets::ANTIKT, 0.5);
       declare(jets, "jets");
 
       _h = std::vector<Histo1DPtr>(nHistos);
@@ -188,18 +180,10 @@ namespace Rivet {
     }
 
     /// Perform the per-event analysis
-    void analyze(const Event& event) {;
+    void analyze(const Event& event) {
 
-      std::vector<DressedLepton> muons = applyProjection<DressedLeptons>(event, "muons").dressedLeptons();
-      ifilter_select(muons, [](const DressedLepton& l){
-          return l.pt() > 20*GeV && l.abseta() < 2.4;});
-      muons = sortByPt(muons);
-
-      std::vector<DressedLepton> electrons = applyProjection<DressedLeptons>(event, "electrons").dressedLeptons();
-      //We apply the pt and eta selections after the dressing as done for the measurement:
-      ifilter_select(electrons, [](const DressedLepton& l){
-          return l.pt() > 20*GeV && l.abseta() < 2.4;});
-      electrons = sortByPt(electrons);
+      std::vector<DressedLepton> muons = apply<DressedLeptons>(event, "muons").dressedLeptons();
+      std::vector<DressedLepton> electrons = apply<DressedLeptons>(event, "electrons").dressedLeptons();
 
       //Look for Z->ee
       std::unique_ptr<Particle> z = zfinder(electrons);
@@ -207,11 +191,11 @@ namespace Rivet {
       const std::vector<DressedLepton>* dressedLeptons = 0;
 
       //Look for Z->ee
-      if(z.get() != nullptr){
+      if(z.get() != nullptr && _mode != 1) {
         dressedLeptons = &electrons;
       } else{ //look for Z->mumu
         z = zfinder(muons);
-        if(z.get() != nullptr){
+        if(z.get() != nullptr && _mode != 0){
           dressedLeptons = &muons;
         } else{ //no Z boson found
           vetoEvent;
@@ -236,9 +220,7 @@ namespace Rivet {
       goodjets24 = sortByPt(goodjets24);
 
       // Compute jet pt scalar sum, H_T:
-      double ht = sum(goodjets24, [](const ParticleBase& j){
-          return j.pT();
-        }, 0.);
+      double ht = sum(goodjets24, Kin::pT, 0.);
 
       _h[kNjets_exc]->fill(goodjets24.size());
 
@@ -343,14 +325,13 @@ namespace Rivet {
 
       double norm = (sumOfWeights() != 0) ? crossSection()/sumOfWeights() : 1.0;
 
-      norm /= 2.; //assumes the MC sample contains both Z->ee and Z->mumu. if only
-      //            one decay channel is included the cross section input parameter
-      //            should include a factor 2 to compensate the missing channel.
+      // when running in combined mode, need to average to get lepton xsec
+      if (_mode == 2) norm /= 2.;
 
-      MSG_INFO("Cross section = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << crossSection() << " pb");
-      MSG_INFO("# Events      = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << numEvents() );
-      MSG_INFO("SumW          = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << sumOfWeights());
-      MSG_INFO("Norm factor   = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(6) << norm);
+      MSG_DEBUG("Cross section = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << crossSection() << " pb");
+      MSG_DEBUG("# Events      = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << numEvents() );
+      MSG_DEBUG("SumW          = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(3) << sumOfWeights());
+      MSG_DEBUG("Norm factor   = " << std::setfill(' ') << std::setw(14) << std::fixed << std::setprecision(6) << norm);
 
       unsigned ih = 0;
       for(auto& h: _h){
@@ -361,6 +342,9 @@ namespace Rivet {
 
     }
 
+  protected:
+
+    size_t _mode;
 
   private:
 
@@ -382,5 +366,3 @@ namespace Rivet {
 
   RIVET_DECLARE_PLUGIN(CMS_2017_I1497519);
 }
-
-//  LocalWords:  fs

@@ -1,12 +1,12 @@
 Name: CMS_2021_I1847230 
 Year: 2021
-Summary: Measurements of angular distance and momentum ratio distributions in three-jet and Z + two-jet final states in pp collisions
+Summary: Measurements of angular distance and momentum ratio distributions in three-jet and Z + two-jet final states in pp collisions at 8 and 13 TeV
 Experiment: CMS
 Collider: LHC
 InspireID: 1847230
 Status: VALIDATED
 Authors:
- - SMP Conveners <cms-phys-conveners-smp@cern.ch> 
+ - cms-pag-conveners-smp@cern.ch
  - Hannes Jung <hannes.jung@cern.ch>
  - Hyunyong Kim <hyunyong.kim@cenr.ch>
  - Olga Kodolova <Olga.Kodolova@cern.ch>
@@ -14,7 +14,7 @@ References:
   - arXiv:2102.08816
   - CMS-SMP-17-008
   - EPJC (Submitted)
-RunInfo: Measurements of angular distance and momentum ratio distributions
+RunInfo: QCD with pt>300 or Z -> mu+ mu-
 NeedCrossSection: yes
 Beams: [p+, p+]
 Energies: [8000, 13000]
@@ -35,3 +35,7 @@ BibTeX: '@article{Sirunyan:2021lwi,
     year = "2021"
 }' 
 
+#ReleaseTests:
+# - $A LHC-13-Z-mu-jets  :MODE=ZJet
+# - $A-2 LHC-8-Jets-0  :MODE=QCD8TeV
+# - $A-3 LHC-13-Jets-0  :MODE=QCD13TeV

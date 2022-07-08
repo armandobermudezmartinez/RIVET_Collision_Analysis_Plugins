@@ -6,6 +6,7 @@
 
 namespace Rivet {
 
+  /// @brief Measurements of angular distance and momentum ratio distributions in three-jet and Z + two-jet final states in pp collisions
   class CMS_2021_I1847230 : public Analysis {
   public:
 

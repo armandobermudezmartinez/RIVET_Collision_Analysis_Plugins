@@ -18,6 +18,8 @@ RunInfo:
 NeedCrossSection: yes
 Beams: [p+, p+]
 Energies: [8000]
+Options:
+ - LMODE=EL,MU,EMU
 Description:
 'Cross sections for the production of a Z boson in association with jets in proton-proton collisions at a centre-of-mass energy of $\sqrt{s} = 8\,$TeV are measured using a data sample collected by the CMS experiment at the LHC corresponding to 19.6 fb$^{-1}$. Differential cross sections are presented as functions of up to three observables that describe the jet kinematics and the jet activity. Correlations between the azimuthal directions and the rapidities of the jets and the Z boson are studied in detail. The predictions of a number of multileg generators with leading or next-to-leading order accuracy are compared with the measurements. The comparison shows the importance of including multi-parton contributions in the matrix elements and the improvement in the predictions when next-to-leading order terms are included.'
 Cuts: 'First two leading electrons or muons with $p_T > 20$ GeV and $|\eta| < 2.4$
@@ -41,4 +43,4 @@ BibTeX: '@article{Khachatryan:2016crw,
       SLACcitation   = "%%CITATION = ARXIV:1611.03844;%%"
 }'
 ReleaseTests:
- - $A pp-8000-Zee-jets
+ - $A pp-8000-Zee-jets :LMODE=EL

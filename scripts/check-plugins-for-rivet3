@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 
 import datetime
@@ -16,7 +16,7 @@ import requests
 hganas = []
 iPage = 0
 while True:
-    resp = requests.get('https://gitlab.com/api/v4/projects/15397086/repository/tree?path=analyses/pluginCMS&per_page=100&page=%i' % iPage)
+    resp = requests.get('https://gitlab.com/api/v4/projects/15397086/repository/tree?ref=release-3-1-x&path=analyses/pluginCMS&per_page=100&page=%i' % iPage)
     iPage += 1
     if resp.json() == []:
         break
@@ -25,7 +25,7 @@ while True:
             info = j['name'].split('.')[0]
             hganas.append(info)
 
-import urllib
+import urllib.request
 print('plugin, in this Rivet?, in Rivet master?')
 for p in plugins:
     pag = p.split('/')[0]
@@ -33,8 +33,19 @@ for p in plugins:
     print(p, name in ranas, name in hganas)
     
     # Download from Rivet master
-    # if name in hganas:
-    #     urllib.urlretrieve('https://gitlab.com/hepcedar/rivet/raw/master/analyses/pluginCMS/%s.cc' % name, '%s/src/%s.cc' % (pag, name))
+    if name in hganas:
+        urllib.request.urlretrieve('https://gitlab.com/hepcedar/rivet/raw/release-3-1-x/analyses/pluginCMS/%s.cc' % name, '%s/src/%s.cc' % (pag, name))
+        urllib.request.urlretrieve('https://gitlab.com/hepcedar/rivet/raw/release-3-1-x/analyses/pluginCMS/%s.info' % name, '%s/data/%s.info' % (pag, name))
+        try:
+            urllib.request.urlretrieve('https://gitlab.com/hepcedar/rivet/raw/release-3-1-x/analyses/pluginCMS/%s.yoda' % name, '%s/data/%s.yoda' % (pag, name))
+        except:
+            try:
+                urllib.request.urlretrieve('https://gitlab.com/hepcedar/rivet/raw/release-3-1-x/analyses/pluginCMS/%s.yoda.gz' % name, '%s/data/%s.yoda.gz' % (pag, name))
+                if os.path.exists('%s/data/%s.yoda' % (pag, name)):
+                    os.remove('%s/data/%s.yoda' % (pag, name))
+            except:
+                print('Warning: Could not download YODA file for %s, please handle manually' % name)
+        urllib.request.urlretrieve('https://gitlab.com/hepcedar/rivet/raw/release-3-1-x/analyses/pluginCMS/%s.plot' % name, '%s/data/%s.plot' % (pag, name))
 
 # Internal plugins
 # At this time, we assume that they still need to be updated for Rivet 3

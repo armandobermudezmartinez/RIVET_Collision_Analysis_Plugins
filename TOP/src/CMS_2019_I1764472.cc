@@ -19,7 +19,7 @@ namespace Rivet {
   public:
 
     /// Constructor
-    DEFAULT_RIVET_ANALYSIS_CTOR(CMS_2019_I1764472);
+    RIVET_DEFAULT_ANALYSIS_CTOR(CMS_2019_I1764472);
 
 
     /// @name Analysis methods
@@ -169,8 +169,8 @@ namespace Rivet {
       if(hadjet.mass() < secondJetLepton.mass()) vetoEvent;
 
       // Fill histograms
-      _hist_mass->fill(hadjet.mass());
-      _hist_mass_norm->fill(hadjet.mass());
+      _hist_mass->fill(hadjet.mass()/GeV);
+      _hist_mass_norm->fill(hadjet.mass()/GeV);
 
     }
 
@@ -188,11 +188,11 @@ namespace Rivet {
 
     // Histograms
     Histo1DPtr _hist_mass, _hist_mass_norm;
+
   };
 
 
-  // The hook for the plugin system
-  DECLARE_RIVET_PLUGIN(CMS_2019_I1764472);
 
+  RIVET_DECLARE_PLUGIN(CMS_2019_I1764472);
 
 }

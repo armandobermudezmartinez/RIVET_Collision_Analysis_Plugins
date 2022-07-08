@@ -5,6 +5,7 @@ Experiment: CMS
 Collider: LHC
 InspireID: 1473674
 Status: VALIDATED
+Reentrant: true
 Authors:
  - Markus Seidel <markus.seidel@cern.ch>
  - Lukas Kreczko <kreczko@cern.ch>
@@ -18,7 +19,7 @@ Luminosity: 19.7 / fb
 Beams: [p+, p+]
 Energies: [8000]
 Description:
-	'Measurements are reported of the normalized differential cross sections for top quark pair production with respect to four kinematic event variables: the missing transverse energy; the scalar sum of the jet transverse momentum (pT); the scalar sum of the pT of all objects in the event; and the pT of leptonically decaying W bosons from top quark decays.'
+  'Measurements are reported of the normalized differential cross sections for top quark pair production with respect to four kinematic event variables: the missing transverse energy; the scalar sum of the jet transverse momentum (pT); the scalar sum of the pT of all objects in the event; and the pT of leptonically decaying W bosons from top quark decays.'
 
 BibKey: Khachatryan:2016oou
 BibTeX: '@article{Khachatryan:2016oou,
@@ -35,3 +36,7 @@ BibTeX: '@article{Khachatryan:2016oou,
       reportNumber   = "CMS-TOP-12-042, CERN-EP-2016-139",
       SLACcitation   = "%%CITATION = ARXIV:1607.00837;%%"
 }'
+
+ReleaseTests:
+ - $A LHC-8-Top-All
+

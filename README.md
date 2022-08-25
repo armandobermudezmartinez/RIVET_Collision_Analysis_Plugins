@@ -8,7 +8,7 @@ Please follow the [contribution guide](CONTRIBUTING.md) for developing your plug
 
 ## Installation
 
-First, create a personal fork of this repository: https://gitlab.cern.ch/cms-gen/Rivet/forks/new
+First, create a personal fork of this repository: https://gitlab.cern.ch/cms-gen/Rivet/-/forks/new
 
     cmsrel CMSSW_11_2_4
     cd CMSSW_11_2_4/src

@@ -1,0 +1,25 @@
+Name: CMS_2022_PAS_SMP_21_003
+Year: 2020
+Summary: Differential cross section of Z boson production in association with jets in proton-proton collisions at $\sqrt{s} = 13TeV$
+Experiment: CMS
+Collider: LHC
+InspireID: 
+Status: CMS INTERNAL
+Authors:
+- Armando Bermudez Martinez (armando.bermudez.martinez@cern.ch)
+References:
+RunInfo:
+  'Run MC generators with Z decaying leptonically into both electrons and muons at 13 TeV CoM energy.'
+NeedCrossSection: yes
+Beams: [p+, p+]
+Energies: [13000]
+Description:
+'Differential cross section measurements of the Z($\rightarrow\mu\mu$) boson production in association with jets are presented, using 13 TeV proton-proton collisions data recorded by the CMS detector at the LHC, corresponding to an integrated luminosity of 35.9 fb$^{-1}$. The cross sections are presented as a function of the azimuthal separation between the Z and the leading jet ($\Delta\phi_{Z,Jet1}$) as well as the two leading jets ($\Delta\phi_{Jet1,Jet2}$), and as a function of the Z $p_T$. The jet multiplicity as a function of the Z $p_T$, and the transverse momentum $p_T^{bal}$ of the Z+jets system in inclusive 1- and 2-jet events are also presented. The cross section measurements are then compared with the predictions from a leading and next-to-leading order multi-leg Monte Carlo generators.'
+Cuts: 'Leading lepton $p_T > 25$ GeV, $|\eta| < 2.4$
+     Subleading lepton $p_T > 20$ GeV, $|\eta| < 2.4$
+     Dilepton invariant mass in the range [76,106] GeV
+     Jets $p_T > 30$ GeV and $|\eta| < 2.4$
+     $\Delta{R}($lepton,jet$) > 0.4$'
+BibKey:
+BibTeX:
+
